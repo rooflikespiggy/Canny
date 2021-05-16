@@ -1,3 +1,5 @@
 # Canny
 
-A Finance Tracking App
+A Finance Tracking App 
+
+Draft Version
