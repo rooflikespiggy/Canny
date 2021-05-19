@@ -28,9 +28,12 @@ We intend to create an **android application** to allow university students to h
 The following technologies will be used in the process of developing the mobile app:
 * **Flutter & Dart:** for app development and front-end purposes
 * **Firebase:** for back-end purposes
-* **Git & GitHub:** for respository and source-code control
+* **Git & GitHub:** for repository and source-code control
 
 ## 2. Features
-random features
-hello
-hello to you too
+| Function | Feature | Remark |
+| --- | --- | --- |
+| Main Features |
+| Login Function | Login Page (email + password) | Users will login using their registered email and password. If they do not have an account, link them to the register page. Login page will be linked to the Functions page. |
+| ^ | Register Page | Users will register an account with the app using their email and password if they are a first time user. |
+
