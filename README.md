@@ -31,4 +31,5 @@ The following technologies will be used in the process of developing the mobile 
 * **Git & GitHub:** for respository and source-code control
 
 ## 2. Features
+random features
 
