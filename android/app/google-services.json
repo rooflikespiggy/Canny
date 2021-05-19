@@ -1,0 +1,46 @@
+{
+  "project_info": {
+    "project_number": "204032333820",
+    "project_id": "canny-1088f",
+    "storage_bucket": "canny-1088f.appspot.com"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:204032333820:android:d0b4023036f8f811040479",
+        "android_client_info": {
+          "package_name": "com.ruthemily.Canny"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "204032333820-bpt9v41ohfvcputalfkf5finhlmttkbu.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "AIzaSyBLAVKkNsnx0-L7Otk585EtzF7FLTPMvPI"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": [
+            {
+              "client_id": "204032333820-bpt9v41ohfvcputalfkf5finhlmttkbu.apps.googleusercontent.com",
+              "client_type": 3
+            },
+            {
+              "client_id": "204032333820-8svlnvtdure7m6pkrnmmoanqp2f48vog.apps.googleusercontent.com",
+              "client_type": 2,
+              "ios_info": {
+                "bundle_id": "com.canny.projectCanny"
+              }
+            }
+          ]
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}
