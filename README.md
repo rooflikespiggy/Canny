@@ -31,9 +31,41 @@ The following technologies will be used in the process of developing the mobile 
 * **Git & GitHub:** for repository and source-code control
 
 ## 2. Features
-| Function | Feature | Remark |
-| --- | --- | --- |
-| Main Features |
-| Login Function | Login Page (email + password) | Users will login using their registered email and password. If they do not have an account, link them to the register page. Login page will be linked to the Functions page. |
-| ^ | Register Page | Users will register an account with the app using their email and password if they are a first time user. |
+### 2.1 Login Function
+* **Login Page (email + password)**
+  * Users will login using their registered email and password. If they do not have an account, link them to the register page. Login page will be linked to the Functions page.
+* **Register Page**
+  * Users will register an account with the app using their email and password if they are a first time user.
+* **Functions Page**
+  * Users can choose between inputting a quick input or viewing a comprehensive home screen. 
+* **Quick Input**
+  * Consists of just a number pad and buttons for the most used categories, which makes it easier for the user to just key in the amount and pick the category for the spending on the go.This segment will be linked to the receipt function.
+* **Customisable Quick Input Screen**
+  * Users can change the buttons to the most used categories to spendings the user makes on a frequent basis, to make keying in his expenditure even easier.
+
+### 2.2 Dashboard Function
+* **Category**
+  * Shows the users expenditure categories. Users are able to key in any category where their expenditure falls under. In each category, there will be the total amount spent by the user for that category.
+* **Statistics**
+  * Keeping track of the percentage spent on each category. There will be a part showing the total amount spent so far by the user and the amount left for them to spend based on their monthly targeted spending amount. Once the total amount spent reaches 90% of the targeted spending amount, the users will be notified. 
+
+### 2.3 Receipt Function
+* **Spending**
+  * Where users key in their spendings based on the category and date of spending. This segment will be linked to the categories and statistics fragment for calculation of statistics to determine the monthly spending by the user.
+
+### 2.4 Insert Function
+* **Add Targeted Expenditure**
+  * For users to add their categories.
+* **Add Category**
+  * Users can choose between inputting a quick input or viewing a comprehensive home screen. 
+* **Add Spending**
+  * For users to add their spendings.
+
+### 2.5 Reminder Function
+* **Notification**
+  * Reminds the user at a set time everyday to key in their expenses for the day. 
+
+### 2.6 User Interactions
+* **Forums**
+  * For users to interact and share with their peers good tips to save money. Users can also share different deals they come across on the forums. This will also include a like system where users are able to like the posts and comments posted by other users.
 
