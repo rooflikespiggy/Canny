@@ -16,7 +16,7 @@ class _FunctionScreenState extends State<FunctionScreen> {
     return Scaffold(
       backgroundColor: Colors.brown[50],
       body: Padding(
-        padding: EdgeInsets.symmetric(horizontal: 30.0),
+        padding: EdgeInsets.symmetric(horizontal: 45.0),
         child: Column(
           mainAxisAlignment: MainAxisAlignment.center,
           crossAxisAlignment: CrossAxisAlignment.stretch,
@@ -25,7 +25,7 @@ class _FunctionScreenState extends State<FunctionScreen> {
               tag: 'logo',
               child: Container(
                 child: Image.asset('styles/images/logo-2.png'),
-                height: 200.0,
+                height: 140.0,
               ),
             ),
             SizedBox(
@@ -98,6 +98,16 @@ class _FunctionScreenState extends State<FunctionScreen> {
                 ],
               ),
             ),
+            SizedBox(
+              height: 30.0,
+            ),
+            Hero(
+              tag: 'picture',
+              child: Container(
+                child: Image.asset('styles/images/stayathome.png'),
+                height: 200.0,
+              ),
+            ),
           ],
         ),
       ),
@@ -107,6 +117,7 @@ class _FunctionScreenState extends State<FunctionScreen> {
           },
           label: Text("logout"),
           icon: Icon(Icons.logout),
+          backgroundColor: Colors.red,
       ),
     );
   }
