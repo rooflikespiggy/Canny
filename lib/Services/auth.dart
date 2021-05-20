@@ -31,7 +31,7 @@ class AuthService {
     try {
       UserCredential result = await _auth.signInWithEmailAndPassword(email: email, password: password);
       User theUser = result.user;
-      return _userFromFirebaseUser(theUser);;
+      return _userFromFirebaseUser(theUser);
     } catch (error) {
       print(error.toString());
       return null;
@@ -51,7 +51,7 @@ class AuthService {
   }
 
   //sign out
-  Future signingOut() async {
+  Future signOut() async {
     try {
       return await _auth.signOut();
     } catch (error) {

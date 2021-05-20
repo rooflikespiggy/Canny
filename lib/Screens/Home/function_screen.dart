@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:Canny/Services/auth.dart';
 
 class FunctionScreen extends StatefulWidget {
   static final String id = 'function_screen';
@@ -8,6 +9,8 @@ class FunctionScreen extends StatefulWidget {
 }
 
 class _FunctionScreenState extends State<FunctionScreen> {
+  final AuthService _auth = AuthService();
+
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -95,16 +98,17 @@ class _FunctionScreenState extends State<FunctionScreen> {
                 ],
               ),
             ),
-            Hero(
-              tag: 'logo',
-              child: Container(
-                child: Image.asset('images/logo.png'),
-                height: 200.0,
-              ),
-            ),
           ],
         ),
+      ),
+      floatingActionButton: FloatingActionButton.extended(
+          onPressed: () async {
+            await _auth.signOut();
+          },
+          label: Text("logout"),
+          icon: Icon(Icons.logout),
       ),
     );
   }
 }
+
