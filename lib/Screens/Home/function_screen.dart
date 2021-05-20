@@ -28,9 +28,7 @@ class _FunctionScreenState extends State<FunctionScreen> {
                 height: 140.0,
               ),
             ),
-            SizedBox(
-              height: 25.0,
-            ),
+            SizedBox(height: 25.0),
             MaterialButton(
               onPressed: () {
                 print("Test Quick Input");
@@ -50,9 +48,7 @@ class _FunctionScreenState extends State<FunctionScreen> {
                     Icons.add,
                     color: Colors.white,
                   ),
-                  SizedBox(
-                    width: 10.0,
-                  ),
+                  SizedBox(width: 10.0),
                   Text(
                     'Quick Input',
                     style: TextStyle(
@@ -63,9 +59,7 @@ class _FunctionScreenState extends State<FunctionScreen> {
                 ],
               ),
             ),
-            SizedBox(
-              height: 25.0,
-            ),
+            SizedBox(height: 25.0),
             MaterialButton(
               onPressed: () {
                 print("Test Dashboard");
@@ -85,9 +79,7 @@ class _FunctionScreenState extends State<FunctionScreen> {
                     Icons.dashboard,
                     color: Colors.white,
                   ),
-                  SizedBox(
-                    width:10.0,
-                  ),
+                  SizedBox(width:10.0),
                   Text(
                     'Dashboard',
                     style: TextStyle(
@@ -98,9 +90,7 @@ class _FunctionScreenState extends State<FunctionScreen> {
                 ],
               ),
             ),
-            SizedBox(
-              height: 30.0,
-            ),
+            SizedBox(height: 30.0),
             Hero(
               tag: 'picture',
               child: Container(
