@@ -1,6 +1,6 @@
 import 'package:Canny/Models/own_user.dart';
 import 'package:Canny/Screens/Authentication/authenticate.dart';
-import 'package:Canny/Screens/Home/home.dart';
+import 'package:Canny/Screens/Home/function_screen.dart';
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
 
@@ -15,7 +15,7 @@ class Wrapper extends StatelessWidget {
     if (theUser == null) {
       return Authenticate();
     } else {
-      return Home();
+      return FunctionScreen();
     }
   }
 }
