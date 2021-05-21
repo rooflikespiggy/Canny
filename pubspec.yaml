@@ -72,6 +72,9 @@ flutter:
     - family: Lato
       fonts:
         - asset: styles/fonts/Lato-Black.ttf
+    - family: LatoThin
+      fonts:
+        - asset: styles/fonts/Lato-Thin.ttf
 
   #
   # For details regarding fonts from package dependencies,

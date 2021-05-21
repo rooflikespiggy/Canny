@@ -15,6 +15,7 @@ class AuthService {
         .map((User theUser) => _userFromFirebaseUser(theUser));
   }
 
+/*
   //sign in anonymously
   Future signInAnon() async {
     try {
@@ -26,6 +27,8 @@ class AuthService {
       return null;
     }
   }
+ */
+
   //sign in with email and password
   Future signInWithEmailAndPassword(String email, String password) async {
     try {
