@@ -124,7 +124,7 @@ class _RegisterState extends State<Register> {
                                 width: 40, height: 30),
                           ),
                           validator: (val) =>
-                          val == password
+                          val != password
                               ? 'Wrong Password, please try again.'
                               : null,
                           obscureText: true,

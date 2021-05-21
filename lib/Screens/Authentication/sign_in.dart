@@ -62,7 +62,7 @@ class _SignInState extends State<SignIn> {
                   Text(
                     "Good to see you again! Let's get you signed in.",
                     style: TextStyle(
-                      fontSize: 15.0,
+                      fontSize: 14.0,
                       fontFamily: 'Lato',
                       color: Colors.grey[800],
                     ),
