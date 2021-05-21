@@ -52,19 +52,19 @@ class _SignInState extends State<SignIn> {
                   Text(
                         'Welcome to Canny!',
                         style: TextStyle(
-                          fontSize: 18.0,
+                          fontSize: 23.0,
                           fontFamily: 'Lato',
                           fontWeight: FontWeight.bold,
-                          color: Colors.grey[850],
+                          color: Colors.blueGrey[800],
                         )
                     ),
-                  SizedBox(height: 15.0),
+                  SizedBox(height: 12.0),
                   Text(
                     "Good to see you again! Let's get you signed in.",
                     style: TextStyle(
                       fontSize: 14.0,
-                      fontFamily: 'Lato',
-                      color: Colors.grey[800],
+                      fontFamily: 'LatoThin',
+                      color: Colors.blueGrey[600],
                     ),
                     textAlign: TextAlign.center,
                   ),
@@ -119,7 +119,7 @@ class _SignInState extends State<SignIn> {
                   SizedBox(height: 18.0),
                   TextButton.icon(
                     style: TextButton.styleFrom(
-                      backgroundColor: Colors.grey[800], // background
+                      backgroundColor: Colors.lightBlue[700], // background
                     ),
                     label: Text(
                       'Sign In with Email and Password',
