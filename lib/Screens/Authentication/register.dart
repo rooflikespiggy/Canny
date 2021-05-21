@@ -62,7 +62,7 @@ class _RegisterState extends State<Register> {
                     "You took the first step to track your expenses, hassle free! Let's get started by registering.",
                     style: TextStyle(
                       fontSize: 14.0,
-                      fontFamily: 'LatoThin',
+                      fontFamily: 'Lato',
                       color: Colors.blueGrey[600],
                     ),
                     textAlign: TextAlign.center,
@@ -142,7 +142,10 @@ class _RegisterState extends State<Register> {
                       ),
                       label: Text(
                         "Register a new account with Canny",
-                        style: TextStyle(color: Colors.white),
+                        style: TextStyle(
+                            color: Colors.white,
+                            fontFamily: "Lato",
+                        ),
                       ),
                       icon: Icon(
                         Icons.person_add,
