@@ -51,19 +51,19 @@ class _RegisterState extends State<Register> {
                   Text(
                       'Welcome to Canny!',
                       style: TextStyle(
-                        fontSize: 18.0,
+                        fontSize: 23.0,
                         fontFamily: 'Lato',
                         fontWeight: FontWeight.bold,
-                        color: Colors.grey[850],
+                        color: Colors.blueGrey[800],
                       )
                   ),
-                  SizedBox(height: 15.0),
+                  SizedBox(height: 12.0),
                   Text(
                     "You took the first step to track your expenses, hassle free! Let's get started by registering.",
                     style: TextStyle(
-                      fontSize: 15.0,
-                      fontFamily: 'Lato',
-                      color: Colors.grey[800],
+                      fontSize: 14.0,
+                      fontFamily: 'LatoThin',
+                      color: Colors.blueGrey[600],
                     ),
                     textAlign: TextAlign.center,
                   ),
@@ -138,7 +138,7 @@ class _RegisterState extends State<Register> {
                   SizedBox(height: 20.0),
                   TextButton.icon(
                       style: TextButton.styleFrom(
-                        backgroundColor: Colors.grey[800], // background
+                        backgroundColor: Colors.lightBlue[700], // background
                       ),
                       label: Text(
                         "Register a new account with Canny",
