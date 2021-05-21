@@ -128,7 +128,10 @@ class _SignInState extends State<SignIn> {
                     ),
                     label: Text(
                       'Sign In with Email and Password',
-                      style: TextStyle(color: Colors.white),
+                      style: TextStyle(
+                          color: Colors.white,
+                          fontFamily: "Lato",
+                      ),
                     ),
                     icon: Icon(
                       Icons.login,

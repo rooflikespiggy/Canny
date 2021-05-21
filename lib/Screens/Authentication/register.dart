@@ -142,7 +142,10 @@ class _RegisterState extends State<Register> {
                       ),
                       label: Text(
                         "Register a new account with Canny",
-                        style: TextStyle(color: Colors.white),
+                        style: TextStyle(
+                            color: Colors.white,
+                            fontFamily: "Lato",
+                        ),
                       ),
                       icon: Icon(
                         Icons.person_add,
