@@ -1,3 +1,4 @@
+import 'package:Canny/Screens/Quick Input/quick_input.dart';
 import 'package:flutter/material.dart';
 import 'package:Canny/Services/auth.dart';
 
@@ -16,7 +17,7 @@ class _FunctionScreenState extends State<FunctionScreen> {
     return Scaffold(
       backgroundColor: Colors.brown[50],
       body: Padding(
-        padding: EdgeInsets.symmetric(horizontal: 45.0),
+        padding: EdgeInsets.symmetric(horizontal: 30.0),
         child: Column(
           mainAxisAlignment: MainAxisAlignment.center,
           crossAxisAlignment: CrossAxisAlignment.stretch,
@@ -28,19 +29,21 @@ class _FunctionScreenState extends State<FunctionScreen> {
                 height: 140.0,
               ),
             ),
-            SizedBox(height: 25.0),
             MaterialButton(
               onPressed: () {
-                print("Test Quick Input");
-                // Navigator.pushNamed(context, RegistrationScreen.id);
+                // print("Test Quick Input");
+                Navigator.push(
+                  context,
+                  MaterialPageRoute(builder: (context) => QuickInput())
+                );
               },
               shape: RoundedRectangleBorder(
-                  borderRadius: BorderRadius.all(Radius.circular(20.0)),
+                borderRadius: BorderRadius.all(Radius.circular(15.0)),
               ),
-              elevation: 5.0,
-              color: Colors.lightBlueAccent,
+              elevation: 3.0,
+              color: Colors.lightBlue[700],
               minWidth: 200.0,
-              height: 50.0,
+              height: 44.0,
               child: Row(
                 mainAxisAlignment: MainAxisAlignment.center,
                 children: <Widget>[
@@ -52,26 +55,27 @@ class _FunctionScreenState extends State<FunctionScreen> {
                   Text(
                     'Quick Input',
                     style: TextStyle(
-                        color: Colors.white,
-                        fontSize: 20.0
+                      color: Colors.white,
+                      fontSize: 20.0,
+                      fontFamily: "LatoThin",
                     ),
                   ),
                 ],
               ),
             ),
-            SizedBox(height: 25.0),
+            SizedBox(height: 22.0),
             MaterialButton(
               onPressed: () {
                 print("Test Dashboard");
                 // Navigator.pushNamed(context, RegistrationScreen.id);
               },
               shape: RoundedRectangleBorder(
-                  borderRadius: BorderRadius.all(Radius.circular(20.0))
+                  borderRadius: BorderRadius.all(Radius.circular(15.0))
               ),
-              elevation: 5.0,
-              color: Colors.blueAccent,
+              elevation: 3.0,
+              color: Colors.lightBlue[900],
               minWidth: 200.0,
-              height: 50.0,
+              height: 44.0,
               child: Row(
                 mainAxisAlignment: MainAxisAlignment.center,
                 children: <Widget>[
@@ -83,33 +87,66 @@ class _FunctionScreenState extends State<FunctionScreen> {
                   Text(
                     'Dashboard',
                     style: TextStyle(
-                        color: Colors.white,
-                        fontSize: 20.0
+                      color: Colors.white,
+                      fontSize: 20.0,
+                      fontFamily: "LatoThin",
                     ),
                   ),
                 ],
               ),
             ),
-            SizedBox(height: 30.0),
+            SizedBox(height: 35.0),
             Hero(
               tag: 'picture',
               child: Container(
-                child: Image.asset('styles/images/stayathome.png'),
+                width: 220.0,
+                height: 200.0,
+                alignment: Alignment.center,
+                decoration: BoxDecoration(
+                  image: DecorationImage(
+                      image: AssetImage('styles/images/Function-Screen-illustration.png'),
+                      fit: BoxFit.fill
+                  ),
+                ),
+              ),
+              /*
+              child: Container(
+                child: Image.asset('styles/images/Function-Screen-illustration.png'),
                 height: 200.0,
               ),
+               */
             ),
           ],
         ),
       ),
-      floatingActionButton: FloatingActionButton.extended(
-          onPressed: () async {
-            await _auth.signOut();
-          },
-          label: Text("logout"),
-          icon: Icon(Icons.logout),
-          backgroundColor: Colors.red,
+      floatingActionButton:
+      Padding(
+        padding: const EdgeInsets.symmetric(horizontal: 15.0),
+        child: Container(
+          height: 100.0,
+          width: 120.0,
+          child: FittedBox(
+            child: FloatingActionButton.extended(
+              onPressed: () async {
+                await _auth.signOut();
+              },
+              shape: RoundedRectangleBorder(
+                borderRadius: BorderRadius.all(Radius.circular(15.0)),
+              ),
+              elevation: 2.0,
+              label: Text(
+                "Logout",
+                style: TextStyle(
+                  fontSize: 18.0,
+                  fontFamily: "LatoThin",
+                ),
+              ),
+              icon: Icon(Icons.logout),
+              backgroundColor: Colors.lightBlue[700],
+            ),
+          ),
+        ),
       ),
     );
   }
 }
-
