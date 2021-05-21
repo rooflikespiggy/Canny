@@ -53,7 +53,7 @@ class _FunctionScreenState extends State<FunctionScreen> {
                     style: TextStyle(
                         color: Colors.white,
                         fontSize: 20.0,
-                        fontFamily: "LatoThin",
+                        fontFamily: "Lato",
                     ),
                   ),
                 ],
@@ -85,13 +85,13 @@ class _FunctionScreenState extends State<FunctionScreen> {
                     style: TextStyle(
                         color: Colors.white,
                         fontSize: 20.0,
-                        fontFamily: "LatoThin",
+                        fontFamily: "Lato",
                     ),
                   ),
                 ],
               ),
             ),
-            SizedBox(height: 35.0),
+            SizedBox(height: 27.0),
             Hero(
               tag: 'picture',
               child: Container(
@@ -134,7 +134,7 @@ class _FunctionScreenState extends State<FunctionScreen> {
                   "Logout",
                 style: TextStyle(
                     fontSize: 18.0,
-                    fontFamily: "LatoThin",
+                    fontFamily: "Lato",
                 ),
               ),
               icon: Icon(Icons.logout),

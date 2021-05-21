@@ -63,7 +63,7 @@ class _SignInState extends State<SignIn> {
                     "Good to see you again! Let's get you signed in.",
                     style: TextStyle(
                       fontSize: 14.0,
-                      fontFamily: 'LatoThin',
+                      fontFamily: 'Lato',
                       color: Colors.blueGrey[600],
                     ),
                     textAlign: TextAlign.center,
@@ -116,7 +116,12 @@ class _SignInState extends State<SignIn> {
                       ],
                     ),
                   ),
-                  SizedBox(height: 18.0),
+                  SizedBox(height: 12.0),
+                  Text(
+                    error,
+                    style: TextStyle(color: Colors.red, fontSize: 13.0),
+                  ),
+                  SizedBox(height: 12.0),
                   TextButton.icon(
                     style: TextButton.styleFrom(
                       backgroundColor: Colors.lightBlue[700], // background
@@ -136,7 +141,7 @@ class _SignInState extends State<SignIn> {
                         email, password);
                         if (result == null) {
                           setState(() {
-                            error = 'Could not sign in with email';
+                            error = 'Sign in failed, Email or Password incorrect';
                           });
                         }
                       }
