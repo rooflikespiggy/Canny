@@ -1,4 +1,5 @@
 import 'package:Canny/Services/auth.dart';
+import 'package:Canny/Shared/loading.dart';
 import 'package:flutter/material.dart';
 import 'package:email_validator/email_validator.dart';
 
@@ -15,16 +16,17 @@ class _RegisterState extends State<Register> {
 
   final AuthService _auth = AuthService();
   final _formKey = GlobalKey<FormState>();
-  String error = '';
 
   // text field state
   String email = '';
   String password = '';
   String confirmPassword = '';
+  //String error = '';
+  bool loading = false;
 
   @override
   Widget build(BuildContext context) {
-    return Scaffold(
+    return loading ? Loading() : Scaffold(
         backgroundColor: Colors.brown[50],
         appBar: AppBar(
           backgroundColor: Colors.brown[50],
@@ -103,8 +105,8 @@ class _RegisterState extends State<Register> {
                                 width: 40, height: 30),
                           ),
                           validator: (val) =>
-                          val.length < 6
-                              ? 'Enter a password 6+ chars long'
+                          val.length < 8
+                              ? 'Enter a password 8+ chars long'
                               : null,
                           obscureText: true,
                           onChanged: (val) {
@@ -138,7 +140,7 @@ class _RegisterState extends State<Register> {
                   SizedBox(height: 20.0),
                   TextButton.icon(
                       style: TextButton.styleFrom(
-                        backgroundColor: Colors.lightBlue[700], // background
+                        backgroundColor: Colors.blueGrey[700], // background
                       ),
                       label: Text(
                         "Register a new account with Canny",
@@ -154,11 +156,15 @@ class _RegisterState extends State<Register> {
                       ),
                       onPressed: () async {
                         if(_formKey.currentState.validate()){
+                          setState(() {
+                            loading = true;
+                          });
                           dynamic result = await _auth.registerWithEmailAndPassword(email, password);
                           if(result == null) {
                             setState(() {
-                              error = 'Please supply a valid email';
+                              //error = 'Please supply a valid email';
                               //i think register dont need error message, tmr try again!
+                              loading = false;
                             });
                           }
                         }
