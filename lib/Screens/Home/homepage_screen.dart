@@ -1,11 +1,13 @@
 import 'package:Canny/Screens/Dashboard/dashboard_screen.dart';
 import 'package:Canny/Screens/Forum/forum_screen.dart';
+import 'package:Canny/Screens/Insert%20Function/add_category.dart';
+import 'package:Canny/Screens/Insert%20Function/add_spending.dart';
+import 'package:Canny/Screens/Insert%20Function/add_targeted_expenditure.dart';
 import 'package:Canny/Screens/Leaderboard/leaderboard_screen.dart';
 import 'package:Canny/Screens/Receipt/receipt_screen.dart';
 import 'package:Canny/Services/auth.dart';
+import 'package:Canny/Screens/wrapper.dart';
 import 'package:flutter/material.dart';
-
-import '../wrapper.dart';
 
 class HomePageScreen extends StatefulWidget {
   static final String id = 'homepage_screen';
@@ -82,7 +84,7 @@ class _HomePageScreenState extends State<HomePageScreen> {
             label: 'Dashboard',
           ),
           BottomNavigationBarItem(
-            icon: Icon(Icons.list),
+            icon: Icon(Icons.view_list),
             label: 'Receipt',
           ),
           BottomNavigationBarItem(
@@ -103,35 +105,48 @@ class _HomePageScreenState extends State<HomePageScreen> {
             showModalBottomSheet(
               shape: RoundedRectangleBorder(
                   borderRadius: BorderRadius.only(
-                topLeft: Radius.circular(24),
-                topRight: Radius.circular(24),
-              )),
+                    topLeft: Radius.circular(24),
+                    topRight: Radius.circular(24),
+                  )),
               isScrollControlled: true,
               elevation: 5,
               context: context,
               builder: (context) =>
-                  Column(mainAxisSize: MainAxisSize.min, children: <Widget>[
-                ListTile(
-                    leading: Icon(Icons.money),
-                    title: Text('Add Spending'),
-                    onTap: () {
-                      print("Add Spending");
-                    }),
-                ListTile(
-                    leading: Icon(Icons.star),
-                    title: Text('Add Target Expenditure'),
-                    onTap: () {
-                      print('Add Target Expenditure');
-                    }),
-                ListTile(
-                    leading: Icon(Icons.category),
-                    title: Text('Add Category'),
-                    onTap: () {
-                      print('Add Category');
-                    }),
-              ]),
+                  Column(
+                    mainAxisSize: MainAxisSize.min,
+                    children: <Widget>[
+                      ListTile(
+                        leading: Icon(Icons.monetization_on_outlined),
+                        title: Text('Add Spending'),
+                        onTap: () {
+                          Navigator.push(context,
+                              MaterialPageRoute(builder: (context) => AddSpendingScreen()));
+                          // print("Add Spending");
+                        },
+                      ),
+                      ListTile(
+                        leading: Icon(Icons.star),
+                        title: Text('Add Target Expenditure'),
+                        onTap: () {
+                          Navigator.push(context,
+                              MaterialPageRoute(builder: (context) => AddTEScreen()));
+                          // print('Add Target Expenditure');
+                        },
+                      ),
+                      ListTile(
+                        leading: Icon(Icons.category),
+                        title: Text('Add Category'),
+                        onTap: () {
+                          Navigator.push(context,
+                              MaterialPageRoute(builder: (context) => AddCategoryScreen()));
+                          // print('Add Target Category');
+                        },
+                      ),
+                    ],
+                  ),
             );
-          }),
+          },
+      ),
     );
   }
 }
