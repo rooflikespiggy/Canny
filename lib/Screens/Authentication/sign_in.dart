@@ -25,6 +25,7 @@ class _SignInState extends State<SignIn> {
   String email = '';
   String password = '';
   String error = '';
+  bool obscurePwd = true;
 
   @override
   Widget build(BuildContext context) {
@@ -106,12 +107,25 @@ class _SignInState extends State<SignIn> {
                             ),
                             prefixIconConstraints: BoxConstraints.tightFor(
                                 width: 40, height: 30),
+                            suffixIcon: IconButton(
+                              icon: Icon(
+                                obscurePwd
+                                    ? Icons.visibility
+                                    : Icons.visibility_off,
+                                color: Colors.grey,
+                              ),
+                              onPressed: () {
+                                setState(() {
+                                  obscurePwd = !obscurePwd;
+                                });
+                              },
+                            ),
                           ),
                           validator: (val) =>
                           val.length < 8
                               ? 'Enter a password 8+ chars long'
                               : null,
-                          obscureText: true,
+                          obscureText: obscurePwd,
                           onChanged: (val) {
                             setState(() => password = val);
                           },

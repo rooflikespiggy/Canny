@@ -42,34 +42,9 @@ class QuickInputState extends State<QuickInput> {
       appBar: AppBar(
         backgroundColor: Colors.brown[200],
         elevation: 0.0,
-        /*
-        actions: <Widget>[
-          Padding(
-            padding: EdgeInsets.symmetric(horizontal: 15),
-            child: TextButton.icon(
-              icon: Icon(
-                Icons.arrow_back_ios_rounded,
-                color: kDarkGrey,
-              ),
-              label: Text(
-                'Return',
-                style: TextStyle(
-                  fontFamily: "Lato",
-                  fontSize: 20,
-                  color: kDarkGrey,
-                ),
-              ),
-              onPressed: () {
-                Navigator.pop(context);
-              },
-            ),
-          ),
-        ],
-
-         */
-    ),
+      ),
     //idk where that arrow on the left is from LOL
-    body: MaterialApp(
+      body: MaterialApp(
         debugShowCheckedModeBanner: false,
         title: 'Calculator',
         home: Scaffold(
