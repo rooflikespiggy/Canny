@@ -62,24 +62,16 @@ class _HomePageScreenState extends State<HomePageScreen> {
             _selectedTab = index;
             switch (index) {
               case 0:
-                {
-                  _title = 'DASHBOARD';
-                }
+                {_title = 'DASHBOARD';}
                 break;
               case 1:
-                {
-                  _title = 'RECEIPT';
-                }
+                {_title = 'RECEIPT';}
                 break;
               case 2:
-                {
-                  _title = 'FORUM';
-                }
+                {_title = 'FORUM';}
                 break;
               case 3:
-                {
-                  _title = 'LEADERBOARD';
-                }
+                {_title = 'LEADERBOARD';}
                 break;
             }
           });
