@@ -53,9 +53,9 @@ class _FunctionScreenState extends State<FunctionScreen> {
                   Text(
                     'Quick Input',
                     style: TextStyle(
-                        color: Colors.white,
-                        fontSize: 18.0,
-                        fontFamily: "Lato",
+                      color: Colors.white,
+                      fontSize: 18.0,
+                      fontFamily: "Lato",
                     ),
                   ),
                 ],
@@ -84,9 +84,9 @@ class _FunctionScreenState extends State<FunctionScreen> {
                   Text(
                     'Dashboard',
                     style: TextStyle(
-                        color: Colors.white,
-                        fontSize: 18.0,
-                        fontFamily: "Lato",
+                      color: Colors.white,
+                      fontSize: 18.0,
+                      fontFamily: "Lato",
                     ),
                   ),
                 ],
@@ -133,8 +133,8 @@ class _FunctionScreenState extends State<FunctionScreen> {
               label: Text(
                 "Logout",
                 style: TextStyle(
-                    fontSize: 18.0,
-                    fontFamily: "Lato",
+                  fontSize: 18.0,
+                  fontFamily: "Lato",
                 ),
               ),
               icon: Icon(Icons.logout),
