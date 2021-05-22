@@ -155,9 +155,9 @@ class QuickInputState extends State<QuickInput> {
                       callback: numClick,
                     ),
                     CalcButton(
-                      text: '/',
+                      text: '÷',
                       fillColor: kDeepOrangePrimary,
-                      textSize: 26,
+                      textSize: 28,
                       callback: numClick,
                     ),
                   ],
@@ -181,9 +181,9 @@ class QuickInputState extends State<QuickInput> {
                       callback: numClick,
                     ),
                     CalcButton(
-                      text: '*',
+                      text: 'x',
                       fillColor: kDeepOrangePrimary,
-                      textSize: 36,
+                      textSize: 26,
                       callback: numClick,
                     ),
                   ],
