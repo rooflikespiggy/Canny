@@ -1,3 +1,4 @@
+import 'package:Canny/Screens/Home/homepage_screen.dart';
 import 'package:Canny/Screens/Quick Input/quick_input.dart';
 import 'package:flutter/material.dart';
 import 'package:Canny/Services/auth.dart';
@@ -69,8 +70,8 @@ class _FunctionScreenState extends State<FunctionScreen> {
             SizedBox(height: 22.0),
             MaterialButton(
               onPressed: () {
-                print("Test Dashboard");
-                // Navigator.pushNamed(context, RegistrationScreen.id);
+                Navigator.push(context,
+                    MaterialPageRoute(builder: (context) => HomePageScreen()));
               },
               shape: RoundedRectangleBorder(
                   borderRadius: BorderRadius.all(Radius.circular(15.0))),
