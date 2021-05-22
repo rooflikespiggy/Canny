@@ -49,7 +49,7 @@ class AuthService {
       return _userFromFirebaseUser(theUser);
     } catch (e) {
       print(e.toString());
-      return null;
+      return "email-in-use";
     }
   }
 
