@@ -27,6 +27,7 @@ class _HomePageScreenState extends State<HomePageScreen> {
       appBar: AppBar(
         title: Text('Home Page'),
       ),
+      body: pageOptions[selectedTab],
       bottomNavigationBar: BottomNavigationBar(
         currentIndex: selectedTab,
         type: BottomNavigationBarType.fixed,
