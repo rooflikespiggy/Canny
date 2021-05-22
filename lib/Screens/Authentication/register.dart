@@ -22,7 +22,7 @@ class _RegisterState extends State<Register> {
   String email = '';
   String password = '';
   String confirmPassword = '';
-  //String error = '';
+  String error = '';
   bool loading = false;
 
   @override
@@ -138,7 +138,12 @@ class _RegisterState extends State<Register> {
                       ],
                     ),
                   ),
-                  SizedBox(height: 20.0),
+                  SizedBox(height: 12.0),
+                  Text(
+                    error,
+                    style: TextStyle(color: Colors.red, fontSize: 13.0),
+                  ),
+                  SizedBox(height: 12.0),
                   TextButton.icon(
                       style: TextButton.styleFrom(
                         backgroundColor: kDeepOrangePrimary, // background
@@ -161,10 +166,10 @@ class _RegisterState extends State<Register> {
                             loading = true;
                           });
                           dynamic result = await _auth.registerWithEmailAndPassword(email, password);
-                          if(result == null) {
+                          print(result);
+                          if(result == 'email-in-use') {
                             setState(() {
-                              //error = 'Please supply a valid email';
-                              //i think register dont need error message, tmr try again!
+                              error = 'The account already exists for that email';
                               loading = false;
                             });
                           }
