@@ -2,7 +2,7 @@ import 'package:Canny/Services/auth.dart';
 import 'package:Canny/Shared/loading.dart';
 import 'package:flutter/material.dart';
 import 'package:email_validator/email_validator.dart';
-import 'package:Canny/Shared/colors';
+import 'package:Canny/Shared/colors.dart';
 
 class Register extends StatefulWidget {
 
@@ -169,7 +169,7 @@ class _RegisterState extends State<Register> {
                           print(result);
                           if(result == 'email-in-use') {
                             setState(() {
-                              error = 'The account already exists for that email';
+                              error = 'An account already exists for that email';
                               loading = false;
                             });
                           }
