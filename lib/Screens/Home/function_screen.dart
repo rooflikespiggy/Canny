@@ -1,6 +1,7 @@
 import 'package:Canny/Screens/Quick Input/quick_input.dart';
 import 'package:flutter/material.dart';
 import 'package:Canny/Services/auth.dart';
+import 'package:Canny/Shared/colors';
 
 class FunctionScreen extends StatefulWidget {
   static final String id = 'function_screen';
@@ -15,9 +16,9 @@ class _FunctionScreenState extends State<FunctionScreen> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      backgroundColor: Colors.brown[50],
+      backgroundColor: kBackgroundColour,
       appBar: AppBar(
-        backgroundColor: Colors.brown[50],
+        backgroundColor: kBackgroundColour,
         elevation: 0.0,
       ),
       body: Padding(
@@ -43,7 +44,7 @@ class _FunctionScreenState extends State<FunctionScreen> {
                 borderRadius: BorderRadius.all(Radius.circular(15.0)),
               ),
               elevation: 1.0,
-              color: Colors.blueGrey[400],
+              color: kDeepOrangePrimary,
               minWidth: 200.0,
               height: 44.0,
               child: Row(
@@ -74,7 +75,7 @@ class _FunctionScreenState extends State<FunctionScreen> {
               shape: RoundedRectangleBorder(
                   borderRadius: BorderRadius.all(Radius.circular(15.0))),
               elevation: 1.0,
-              color: Colors.blueGrey[700],
+              color: kDeepOrangeLight,
               minWidth: 200.0,
               height: 44.0,
               child: Row(
@@ -143,7 +144,7 @@ class _FunctionScreenState extends State<FunctionScreen> {
                 ),
               ),
               icon: Icon(Icons.logout),
-              backgroundColor: Colors.blueGrey[400],
+              backgroundColor: Colors.grey,
             ),
           ),
         ),

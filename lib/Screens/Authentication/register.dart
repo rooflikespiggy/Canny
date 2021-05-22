@@ -2,6 +2,7 @@ import 'package:Canny/Services/auth.dart';
 import 'package:Canny/Shared/loading.dart';
 import 'package:flutter/material.dart';
 import 'package:email_validator/email_validator.dart';
+import 'package:Canny/Shared/colors';
 
 class Register extends StatefulWidget {
 
@@ -27,9 +28,9 @@ class _RegisterState extends State<Register> {
   @override
   Widget build(BuildContext context) {
     return loading ? Loading() : Scaffold(
-        backgroundColor: Colors.brown[50],
+        backgroundColor: kBackgroundColour,
         appBar: AppBar(
-          backgroundColor: Colors.brown[50],
+          backgroundColor: kBackgroundColour,
           elevation: 0.0,
         ),
         body: Container(
@@ -56,7 +57,7 @@ class _RegisterState extends State<Register> {
                         fontSize: 23.0,
                         fontFamily: 'Lato',
                         fontWeight: FontWeight.bold,
-                        color: Colors.blueGrey[800],
+                        color: kDeepOrange,
                       )
                   ),
                   SizedBox(height: 12.0),
@@ -140,7 +141,7 @@ class _RegisterState extends State<Register> {
                   SizedBox(height: 20.0),
                   TextButton.icon(
                       style: TextButton.styleFrom(
-                        backgroundColor: Colors.blueGrey[700], // background
+                        backgroundColor: kDeepOrangePrimary, // background
                       ),
                       label: Text(
                         "Register a new account with Canny",
