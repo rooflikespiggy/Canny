@@ -1,4 +1,5 @@
 import 'package:Canny/Services/auth.dart';
+import 'package:Canny/Shared/loading.dart';
 import 'package:flutter/material.dart';
 import 'package:email_validator/email_validator.dart';
 
@@ -17,15 +18,16 @@ class _SignInState extends State<SignIn> {
 
   final AuthService _auth = AuthService();
   final _formKey = GlobalKey<FormState>();
-  String error = '';
+  bool loading = false;
 
   // text field state
   String email = '';
   String password = '';
+  String error = '';
 
   @override
   Widget build(BuildContext context) {
-    return Scaffold(
+    return loading ? Loading() : Scaffold(
         backgroundColor: Colors.brown[50],
         appBar: AppBar(
           backgroundColor: Colors.brown[50],
@@ -124,7 +126,7 @@ class _SignInState extends State<SignIn> {
                   SizedBox(height: 12.0),
                   TextButton.icon(
                     style: TextButton.styleFrom(
-                      backgroundColor: Colors.lightBlue[700], // background
+                      backgroundColor: Colors.blueGrey[700], // background
                     ),
                     label: Text(
                       'Sign In with Email and Password',
@@ -140,11 +142,15 @@ class _SignInState extends State<SignIn> {
                     ),
                     onPressed: () async {
                       if (_formKey.currentState.validate()) {
+                        setState(() {
+                          loading = true;
+                        });
                         dynamic result = await _auth.signInWithEmailAndPassword(
                         email, password);
                         if (result == null) {
                           setState(() {
                             error = 'Sign in failed, Email or Password incorrect';
+                            loading = false;
                           });
                         }
                       }
@@ -163,7 +169,7 @@ class _SignInState extends State<SignIn> {
                           widget.toggleSignInStatus();
                         },
                         child: Text(
-                          "Create account",
+                          "Create an account",
                           style: TextStyle(
                             fontSize: 13.0,
                             color: Colors.blueAccent,

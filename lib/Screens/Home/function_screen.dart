@@ -16,10 +16,14 @@ class _FunctionScreenState extends State<FunctionScreen> {
   Widget build(BuildContext context) {
     return Scaffold(
       backgroundColor: Colors.brown[50],
+      appBar: AppBar(
+        backgroundColor: Colors.brown[50],
+        elevation: 0.0,
+      ),
       body: Padding(
         padding: EdgeInsets.symmetric(horizontal: 30.0),
         child: Column(
-          mainAxisAlignment: MainAxisAlignment.center,
+          mainAxisAlignment: MainAxisAlignment.start,
           crossAxisAlignment: CrossAxisAlignment.stretch,
           children: <Widget>[
             Hero(
@@ -38,8 +42,8 @@ class _FunctionScreenState extends State<FunctionScreen> {
               shape: RoundedRectangleBorder(
                 borderRadius: BorderRadius.all(Radius.circular(15.0)),
               ),
-              elevation: 3.0,
-              color: Colors.lightBlue[700],
+              elevation: 1.0,
+              color: Colors.blueGrey[400],
               minWidth: 200.0,
               height: 44.0,
               child: Row(
@@ -69,8 +73,8 @@ class _FunctionScreenState extends State<FunctionScreen> {
               },
               shape: RoundedRectangleBorder(
                   borderRadius: BorderRadius.all(Radius.circular(15.0))),
-              elevation: 3.0,
-              color: Colors.lightBlue[900],
+              elevation: 1.0,
+              color: Colors.blueGrey[700],
               minWidth: 200.0,
               height: 44.0,
               child: Row(
@@ -116,8 +120,9 @@ class _FunctionScreenState extends State<FunctionScreen> {
           ],
         ),
       ),
+      floatingActionButtonLocation: FloatingActionButtonLocation.centerDocked,
       floatingActionButton: Padding(
-        padding: const EdgeInsets.symmetric(horizontal: 15.0),
+        padding: const EdgeInsets.symmetric(horizontal: 13),
         child: Container(
           height: 100.0,
           width: 120.0,
@@ -127,9 +132,9 @@ class _FunctionScreenState extends State<FunctionScreen> {
                 await _auth.signOut();
               },
               shape: RoundedRectangleBorder(
-                borderRadius: BorderRadius.all(Radius.circular(15.0)),
+                borderRadius: BorderRadius.all(Radius.circular(12.0)),
               ),
-              elevation: 2.0,
+              elevation: 1.0,
               label: Text(
                 "Logout",
                 style: TextStyle(
@@ -138,7 +143,7 @@ class _FunctionScreenState extends State<FunctionScreen> {
                 ),
               ),
               icon: Icon(Icons.logout),
-              backgroundColor: Colors.lightBlue[700],
+              backgroundColor: Colors.blueGrey[400],
             ),
           ),
         ),
