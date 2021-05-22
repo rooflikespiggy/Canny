@@ -103,8 +103,8 @@ class _RegisterState extends State<Register> {
                                 width: 40, height: 30),
                           ),
                           validator: (val) =>
-                          val.length < 6
-                              ? 'Enter a password 6+ chars long'
+                          val.length < 8
+                              ? 'Enter a password 8+ chars long'
                               : null,
                           obscureText: true,
                           onChanged: (val) {
