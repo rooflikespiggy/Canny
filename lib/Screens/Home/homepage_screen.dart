@@ -2,7 +2,10 @@ import 'package:Canny/Screens/Dashboard/dashboard_screen.dart';
 import 'package:Canny/Screens/Forum/forum_screen.dart';
 import 'package:Canny/Screens/Leaderboard/leaderboard_screen.dart';
 import 'package:Canny/Screens/Receipt/receipt_screen.dart';
+import 'package:Canny/Services/auth.dart';
 import 'package:flutter/material.dart';
+
+import '../wrapper.dart';
 
 class HomePageScreen extends StatefulWidget {
   static final String id = 'homepage_screen';
@@ -12,9 +15,11 @@ class HomePageScreen extends StatefulWidget {
 }
 
 class _HomePageScreenState extends State<HomePageScreen> {
-  int selectedTab = 0;
+  AuthService _auth = AuthService();
+  int _selectedTab = 0;
+  String _title = 'CANNY';
 
-  List<Widget> pageOptions = [
+  List<Widget> _pageOptions = [
     DashboardScreen(),
     ReceiptScreen(),
     ForumScreen(),
@@ -25,20 +30,58 @@ class _HomePageScreenState extends State<HomePageScreen> {
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
-        title: Text('Home Page'),
+        title: Text(
+          _title,
+          style: TextStyle(fontFamily: 'Lato'),
+        ),
+        actions: <Widget>[
+          Padding(
+            padding: EdgeInsets.only(right: 20.0),
+            child: GestureDetector(
+              onTap: () async {
+                await _auth.signOut();
+                Navigator.push(context,
+                    MaterialPageRoute(builder: (context) => Wrapper()));
+              },
+              child: Icon(Icons.logout),
+            ),
+          ),
+        ],
       ),
-      body: pageOptions[selectedTab],
+      drawer: Drawer(),
+      body: _pageOptions[_selectedTab],
       bottomNavigationBar: BottomNavigationBar(
-        currentIndex: selectedTab,
+        currentIndex: _selectedTab,
         type: BottomNavigationBarType.fixed,
         unselectedItemColor: Colors.black,
         selectedItemColor: Colors.blueAccent,
         selectedLabelStyle: TextStyle(fontFamily: 'Lato'),
-        unselectedLabelStyle: TextStyle(fontFamily: 'Lato'),
-
+        unselectedLabelStyle: TextStyle(fontFamily: 'Lato-Thin'),
         onTap: (int index) {
           setState(() {
-            selectedTab = index;
+            _selectedTab = index;
+            switch (index) {
+              case 0:
+                {
+                  _title = 'DASHBOARD';
+                }
+                break;
+              case 1:
+                {
+                  _title = 'RECEIPT';
+                }
+                break;
+              case 2:
+                {
+                  _title = 'FORUM';
+                }
+                break;
+              case 3:
+                {
+                  _title = 'LEADERBOARD';
+                }
+                break;
+            }
           });
         },
         items: [
@@ -62,48 +105,41 @@ class _HomePageScreenState extends State<HomePageScreen> {
       ),
       floatingActionButtonLocation: FloatingActionButtonLocation.endFloat,
       floatingActionButton: FloatingActionButton(
-        child: Icon(Icons.add),
-        backgroundColor: Colors.blueGrey,
-        onPressed: () {
-          showModalBottomSheet(
-            shape: RoundedRectangleBorder(
-              borderRadius: BorderRadius.only(
+          child: Icon(Icons.add),
+          backgroundColor: Colors.blue,
+          onPressed: () {
+            showModalBottomSheet(
+              shape: RoundedRectangleBorder(
+                  borderRadius: BorderRadius.only(
                 topLeft: Radius.circular(24),
                 topRight: Radius.circular(24),
-              )
-            ),
-            isScrollControlled: true,
-            elevation: 5,
-            context: context,
-            builder: (context) => Column(
-              mainAxisSize: MainAxisSize.min,
-              children: <Widget> [
+              )),
+              isScrollControlled: true,
+              elevation: 5,
+              context: context,
+              builder: (context) =>
+                  Column(mainAxisSize: MainAxisSize.min, children: <Widget>[
                 ListTile(
-                  leading: Icon(Icons.money),
-                  title: Text('Add Spending'),
-                  onTap: () {
-                    print("Add Spending");
-                  }
-                ),
+                    leading: Icon(Icons.money),
+                    title: Text('Add Spending'),
+                    onTap: () {
+                      print("Add Spending");
+                    }),
                 ListTile(
-                  leading: Icon(Icons.star),
-                  title: Text('Add Target Expenditure'),
-                  onTap: () {
-                    print('Add Target Expenditure');
-                  }
-                ),
+                    leading: Icon(Icons.star),
+                    title: Text('Add Target Expenditure'),
+                    onTap: () {
+                      print('Add Target Expenditure');
+                    }),
                 ListTile(
-                  leading: Icon(Icons.category),
-                  title: Text('Add Category'),
-                  onTap: () {
-                    print('Add Category');
-                  }
-                ),
-              ]
-            ),
-          );
-        }
-      ),
+                    leading: Icon(Icons.category),
+                    title: Text('Add Category'),
+                    onTap: () {
+                      print('Add Category');
+                    }),
+              ]),
+            );
+          }),
     );
   }
 }
