@@ -165,7 +165,8 @@ class _RegisterState extends State<Register> {
                             loading = true;
                           });
                           dynamic result = await _auth.registerWithEmailAndPassword(email, password);
-                          if(result == null) {
+                          print(result);
+                          if(result == 'email-in-use') {
                             setState(() {
                               error = 'The account already exists for that email';
                               loading = false;
