@@ -28,6 +28,7 @@ class _FunctionScreenState extends State<FunctionScreen> {
           mainAxisAlignment: MainAxisAlignment.start,
           crossAxisAlignment: CrossAxisAlignment.stretch,
           children: <Widget>[
+            SizedBox(height: 30.0),
             Hero(
               tag: 'logo',
               child: Container(
@@ -112,12 +113,6 @@ class _FunctionScreenState extends State<FunctionScreen> {
                       fit: BoxFit.fill),
                 ),
               ),
-              /*
-              child: Container(
-                child: Image.asset('styles/images/Function-Screen-illustration.png'),
-                height: 200.0,
-              ),
-               */
             ),
           ],
         ),
