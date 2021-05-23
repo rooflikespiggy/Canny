@@ -1,8 +1,8 @@
 import 'package:Canny/Models/own_user.dart';
+import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 
 class AuthService {
-
   final FirebaseAuth _auth = FirebaseAuth.instance;
 
   OwnUser _userFromFirebaseUser(User theUser) {
