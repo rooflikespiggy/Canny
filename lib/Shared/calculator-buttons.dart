@@ -1,13 +1,13 @@
 import 'package:flutter/material.dart';
 
 class CalcButton extends StatelessWidget {
-  final String text;
+  String text;
   final Color fillColor;
   final Color textColor;
   final double textSize;
   final Function callback;
 
-  const CalcButton({
+  CalcButton({
     Key key,
     this.text,
     this.fillColor,
@@ -25,6 +25,11 @@ class CalcButton extends StatelessWidget {
         height: 70,
         child: TextButton(
           onPressed: () {
+            if (text == '÷') {
+              text = '/';
+            } else if (text == 'x') {
+              text = '*';
+            }
             callback(text);
           },
           child: Text(

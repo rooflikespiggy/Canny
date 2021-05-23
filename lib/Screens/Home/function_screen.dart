@@ -53,7 +53,7 @@ class _FunctionScreenState extends State<FunctionScreen> {
                 mainAxisAlignment: MainAxisAlignment.center,
                 children: <Widget>[
                   Icon(
-                    Icons.add,
+                    Icons.calculate_outlined,
                     color: Colors.white,
                   ),
                   SizedBox(width: 10.0),
@@ -139,7 +139,7 @@ class _FunctionScreenState extends State<FunctionScreen> {
                   fontFamily: "Lato",
                 ),
               ),
-              icon: Icon(Icons.logout),
+              icon: Icon(Icons.exit_to_app),
               backgroundColor: Colors.grey,
             ),
           ),

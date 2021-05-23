@@ -24,6 +24,8 @@ class _RegisterState extends State<Register> {
   String confirmPassword = '';
   String error = '';
   bool loading = false;
+  bool obscurePwd = true;
+  bool obscurePwd2 = true;
 
   @override
   Widget build(BuildContext context) {
@@ -104,12 +106,25 @@ class _RegisterState extends State<Register> {
                             ),
                             prefixIconConstraints: BoxConstraints.tightFor(
                                 width: 40, height: 30),
+                            suffixIcon: IconButton(
+                              icon: Icon(
+                                obscurePwd
+                                    ? Icons.visibility
+                                    : Icons.visibility_off,
+                                color: Colors.grey,
+                              ),
+                              onPressed: () {
+                                setState(() {
+                                  obscurePwd = !obscurePwd;
+                                });
+                              },
+                            ),
                           ),
                           validator: (val) =>
                           val.length < 8
                               ? 'Enter a password 8+ chars long'
                               : null,
-                          obscureText: true,
+                          obscureText: obscurePwd,
                           onChanged: (val) {
                             setState(() => password = val);
                           },
@@ -125,12 +140,25 @@ class _RegisterState extends State<Register> {
                             ),
                             prefixIconConstraints: BoxConstraints.tightFor(
                                 width: 40, height: 30),
+                            suffixIcon: IconButton(
+                              icon: Icon(
+                                obscurePwd2
+                                    ? Icons.visibility
+                                    : Icons.visibility_off,
+                                color: Colors.grey,
+                              ),
+                              onPressed: () {
+                                setState(() {
+                                  obscurePwd2 = !obscurePwd2;
+                                });
+                              },
+                            ),
                           ),
                           validator: (val) =>
                           val != password
                               ? 'Wrong Password, please try again.'
                               : null,
-                          obscureText: true,
+                          obscureText: obscurePwd2,
                           onChanged: (val) {
                             setState(() => confirmPassword = val);
                           },
