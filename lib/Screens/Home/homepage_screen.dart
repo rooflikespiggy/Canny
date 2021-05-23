@@ -1,10 +1,11 @@
 import 'package:Canny/Screens/Dashboard/dashboard_screen.dart';
 import 'package:Canny/Screens/Forum/forum_screen.dart';
-import 'package:Canny/Screens/Insert%20Function/add_category.dart';
-import 'package:Canny/Screens/Insert%20Function/add_spending.dart';
-import 'package:Canny/Screens/Insert%20Function/add_targeted_expenditure.dart';
+import 'package:Canny/Screens/Insert Function/add_category.dart';
+import 'package:Canny/Screens/Insert Function/add_spending.dart';
+import 'package:Canny/Screens/Insert Function/add_targeted_expenditure.dart';
 import 'package:Canny/Screens/Leaderboard/leaderboard_screen.dart';
 import 'package:Canny/Screens/Receipt/receipt_screen.dart';
+import 'package:Canny/Screens/Sidebar/sidebar_menu.dart';
 import 'package:Canny/Services/auth.dart';
 import 'package:Canny/Screens/wrapper.dart';
 import 'package:flutter/material.dart';
@@ -36,6 +37,7 @@ class _HomePageScreenState extends State<HomePageScreen> {
           _title,
           style: TextStyle(fontFamily: 'Lato'),
         ),
+        /*
         actions: <Widget>[
           Padding(
             padding: EdgeInsets.only(right: 20.0),
@@ -49,8 +51,9 @@ class _HomePageScreenState extends State<HomePageScreen> {
             ),
           ),
         ],
+         */
       ),
-      drawer: Drawer(),
+      drawer: SideBarMenu(),
       body: _pageOptions[_selectedTab],
       bottomNavigationBar: BottomNavigationBar(
         currentIndex: _selectedTab,
@@ -104,10 +107,11 @@ class _HomePageScreenState extends State<HomePageScreen> {
           onPressed: () {
             showModalBottomSheet(
               shape: RoundedRectangleBorder(
-                  borderRadius: BorderRadius.only(
-                    topLeft: Radius.circular(24),
-                    topRight: Radius.circular(24),
-                  )),
+                borderRadius: BorderRadius.only(
+                  topLeft: Radius.circular(24),
+                  topRight: Radius.circular(24),
+                ),
+              ),
               isScrollControlled: true,
               elevation: 5,
               context: context,
