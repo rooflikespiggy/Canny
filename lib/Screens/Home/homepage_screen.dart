@@ -1,4 +1,5 @@
 import 'package:Canny/Screens/Dashboard/dashboard_screen.dart';
+import 'package:Canny/Screens/Insert Function/add_discussion.dart';
 import 'package:Canny/Screens/Forum/forum_screen.dart';
 import 'package:Canny/Screens/Insert Function/add_category.dart';
 import 'package:Canny/Screens/Insert Function/add_spending.dart';
@@ -7,8 +8,8 @@ import 'package:Canny/Screens/Leaderboard/leaderboard_screen.dart';
 import 'package:Canny/Screens/Receipt/receipt_screen.dart';
 import 'package:Canny/Screens/Sidebar/sidebar_menu.dart';
 import 'package:Canny/Services/auth.dart';
-import 'package:Canny/Screens/wrapper.dart';
 import 'package:flutter/material.dart';
+import 'package:font_awesome_flutter/font_awesome_flutter.dart';
 
 class HomePageScreen extends StatefulWidget {
   static final String id = 'homepage_screen';
@@ -37,21 +38,6 @@ class _HomePageScreenState extends State<HomePageScreen> {
           _title,
           style: TextStyle(fontFamily: 'Lato'),
         ),
-        /*
-        actions: <Widget>[
-          Padding(
-            padding: EdgeInsets.only(right: 20.0),
-            child: GestureDetector(
-              onTap: () async {
-                await _auth.signOut();
-                Navigator.push(context,
-                    MaterialPageRoute(builder: (context) => Wrapper()));
-              },
-              child: Icon(Icons.logout),
-            ),
-          ),
-        ],
-         */
       ),
       drawer: SideBarMenu(),
       body: _pageOptions[_selectedTab],
@@ -121,7 +107,7 @@ class _HomePageScreenState extends State<HomePageScreen> {
                     children: <Widget>[
                       ListTile(
                         leading: Icon(Icons.monetization_on_outlined),
-                        title: Text('Add Spending'),
+                        title: Text('Add your Spendings'),
                         onTap: () {
                           Navigator.push(context,
                               MaterialPageRoute(builder: (context) => AddSpendingScreen()));
@@ -130,7 +116,7 @@ class _HomePageScreenState extends State<HomePageScreen> {
                       ),
                       ListTile(
                         leading: Icon(Icons.star),
-                        title: Text('Add Target Expenditure'),
+                        title: Text('Enter your Target Expenditure'),
                         onTap: () {
                           Navigator.push(context,
                               MaterialPageRoute(builder: (context) => AddTEScreen()));
@@ -139,10 +125,19 @@ class _HomePageScreenState extends State<HomePageScreen> {
                       ),
                       ListTile(
                         leading: Icon(Icons.category),
-                        title: Text('Add Category'),
+                        title: Text('Add a new Category'),
                         onTap: () {
                           Navigator.push(context,
                               MaterialPageRoute(builder: (context) => AddCategoryScreen()));
+                          // print('Add Target Category');
+                        },
+                      ),
+                      ListTile(
+                        leading: Icon(FontAwesomeIcons.pen),
+                        title: Text('Discuss in the Forum'),
+                        onTap: () {
+                          Navigator.push(context,
+                              MaterialPageRoute(builder: (context) => AddDiscussion()));
                           // print('Add Target Category');
                         },
                       ),
