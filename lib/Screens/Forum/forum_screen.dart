@@ -21,7 +21,6 @@ class _ForumScreenState extends State<ForumScreen> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      backgroundColor: kBackgroundColour,
       body: Container(
         color: kBackgroundColour,
         child: Center(
@@ -88,7 +87,7 @@ class _ForumScreenState extends State<ForumScreen> {
                                             icon: Icon(Icons.comment),
                                             onPressed: () {},
                                           ),
-                                          SizedBox(width: 170.0),
+                                          SizedBox(width: 145.0),
                                           if (snapshot.data.docs[index]["uid"] == uid)
                                             IconButton(
                                               icon: Icon(FontAwesomeIcons.edit),
