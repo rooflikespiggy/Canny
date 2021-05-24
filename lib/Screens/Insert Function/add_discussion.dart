@@ -26,68 +26,96 @@ class _AddDiscussionState extends State<AddDiscussion> {
           key: _formKey,
           child: SingleChildScrollView(
             child: Column(
-              children: <Widget>[
+              children: <Widget> [
+                Text(
+                  'Discuss in the Forum!',
+                  style: TextStyle(fontSize: 23.0,
+                    fontFamily: 'Lato',
+                    fontWeight: FontWeight.bold,
+                    color: kDeepOrange,
+                  ),
+                ),
+                SizedBox(height: 20.0),
                 Padding(
                   padding: EdgeInsets.all(20.0),
-                  child: Card(
-                    child: TextFormField(
-                      controller: nameController,
-                      decoration: InputDecoration(
-                        labelText: "Enter your Name",
-                        enabledBorder: OutlineInputBorder(
-                          borderRadius: BorderRadius.circular(10.0),
-                        ),
+                  child: TextFormField(
+                    controller: nameController,
+                    decoration: InputDecoration(
+                      labelText: "Enter your Name",
+                      prefixIcon: Icon(Icons.person),
+                      filled: true,
+                      fillColor: Colors.white,
+                      enabledBorder: OutlineInputBorder(
+                        borderRadius: BorderRadius.circular(10.0),
+                        borderSide: BorderSide(color: Colors.grey),
                       ),
-                      // The validator receives the text that the user has entered.
-                      validator: (value) {
-                        if (value.isEmpty) {
-                          return 'Enter your Name';
-                        }
-                        return null;
-                      },
+                      focusedBorder: OutlineInputBorder(
+                        borderRadius: BorderRadius.circular(10.0),
+                        borderSide: BorderSide(color: Colors.blue),
+                      ),
                     ),
+                    validator: (value) {
+                      if (value.isEmpty) {
+                        return 'Enter your Name';
+                      }
+                      return null;
+                      },
                   ),
                 ),
                 Padding(
                   padding: EdgeInsets.all(20.0),
-                  child: Card(
-                    child: TextFormField(
-                      controller: titleController,
-                      decoration: InputDecoration(
-                        labelText: "Enter your Discussion Title",
-                        enabledBorder: OutlineInputBorder(
-                          borderRadius: BorderRadius.circular(10.0),
-                        ),
+                  child: TextFormField(
+                    controller: titleController,
+                    decoration: InputDecoration(
+                      labelText: "Enter your Discussion Title",
+                      prefixIcon: Icon(Icons.title),
+                      filled: true,
+                      fillColor: Colors.white,
+                      enabledBorder: OutlineInputBorder(
+                        borderRadius: BorderRadius.circular(10.0),
+                        borderSide: BorderSide(color: Colors.grey),
                       ),
-                      // The validator receives the text that the user has entered.
-                      validator: (value) {
-                        if (value.isEmpty) {
-                          return 'Enter your Discussion Title';
-                        }
-                        return null;
-                      },
+                      focusedBorder: OutlineInputBorder(
+                        borderRadius: BorderRadius.circular(10.0),
+                        borderSide: BorderSide(color: Colors.blue),
+                      ),
                     ),
+                    // The validator receives the text that the user has entered.
+                    validator: (value) {
+                      if (value.isEmpty) {
+                        return 'Enter your Discussion Title';
+                      }
+                      return null;
+                      },
                   ),
                 ),
                 Padding(
                   padding: EdgeInsets.all(20.0),
-                  child: Card(
-                    child: TextFormField(
-                      controller: descriptionController,
-                      decoration: InputDecoration(
-                        labelText: "Enter your Discussion Description",
-                        enabledBorder: OutlineInputBorder(
-                          borderRadius: BorderRadius.circular(10.0),
-                        ),
+                  child: TextFormField(
+                    controller: descriptionController,
+                    keyboardType: TextInputType.multiline,
+                    maxLines: null,
+                    decoration: InputDecoration(
+                      labelText: "Enter your Discussion Description",
+                      prefixIcon: Icon(Icons.description_outlined),
+                      filled: true,
+                      fillColor: Colors.white,
+                      enabledBorder: OutlineInputBorder(
+                        borderRadius: BorderRadius.circular(10.0),
+                        borderSide: BorderSide(color: Colors.grey),
                       ),
-                      // The validator receives the text that the user has entered.
-                      validator: (value) {
-                        if (value.isEmpty) {
-                          return 'Enter your Discussion Description';
-                        }
-                        return null;
-                      },
+                      focusedBorder: OutlineInputBorder(
+                        borderRadius: BorderRadius.circular(10.0),
+                        borderSide: BorderSide(color: Colors.blue),
+                      ),
                     ),
+                    // The validator receives the text that the user has entered.
+                    validator: (value) {
+                      if (value.isEmpty) {
+                        return 'Enter your Discussion Description';
+                      }
+                      return null;
+                      },
                   ),
                 ),
                 Padding(
@@ -106,20 +134,46 @@ class _AddDiscussionState extends State<AddDiscussion> {
                               "title": titleController.text,
                               "description": descriptionController.text,
                             }).then((_) {
-                              ScaffoldMessenger.of(context).showSnackBar(SnackBar(
-                                  content: Text(
-                                      'Successfully Added Your Discussion')));
+                              showDialog(
+                                context: context,
+                                builder: (BuildContext context) {
+                                  return AlertDialog(
+                                    title: Text(
+                                      "Succesfully Submitted Your Discussion!",
+                                      style: TextStyle(fontFamily: 'Lato'),
+                                    ),
+                                    content: Text(
+                                      "If you would like to add any additional discussions, press No",
+                                      style: TextStyle(fontFamily: 'Lato.Thin'),
+                                    ),
+                                    actions: <Widget> [
+                                      TextButton(
+                                        child: Text("Yes"),
+                                        onPressed: () {
+                                          Navigator.push(context,
+                                              MaterialPageRoute(builder: (context) => HomePageScreen()));
+                                        },
+                                      ),
+                                      TextButton(
+                                        child: Text("No"),
+                                        onPressed: () {
+                                          Navigator.pop(context);
+                                        },
+                                      ),
+                                    ],
+                                  );
+                                },
+                              );
                               titleController.clear();
                               nameController.clear();
                               descriptionController.clear();
-                            }).catchError((onError) {
-                              ScaffoldMessenger.of(context).showSnackBar(
-                                  SnackBar(content: Text(onError)));
-                            }
-                            );
+                            });
                           }
                         },
                         child: Text('Submit'),
+                        style: ButtonStyle(
+                          backgroundColor: MaterialStateProperty.all(kDeepOrangeLight),
+                        )
                       ),
                       ElevatedButton(
                         onPressed: () {
@@ -129,6 +183,9 @@ class _AddDiscussionState extends State<AddDiscussion> {
                                   builder: (context) => HomePageScreen()));
                         },
                         child: Text('Return To Homepage'),
+                        style: ButtonStyle(
+                          backgroundColor: MaterialStateProperty.all(Colors.grey),
+                        )
                       ),
                     ],
                   ),

@@ -15,7 +15,9 @@ class _ForumScreenState extends State<ForumScreen> {
   String uid = FirebaseAuth.instance.currentUser.uid;
   final AuthForumService _auth = AuthForumService();
   final dbRef = FirebaseFirestore.instance
-      .collection("Users");
+      .collection("Users")
+      .doc(FirebaseAuth.instance.currentUser.uid)
+      .collection('Title');
 
   @override
   Widget build(BuildContext context) {
@@ -26,8 +28,7 @@ class _ForumScreenState extends State<ForumScreen> {
         child: Center(
           child: StreamBuilder(
             stream: dbRef.snapshots(),
-            builder:
-                (BuildContext context, AsyncSnapshot<QuerySnapshot> snapshot) {
+            builder: (BuildContext context, AsyncSnapshot<QuerySnapshot> snapshot) {
               if (snapshot.hasData) {
                 return Align(
                   alignment: Alignment.topCenter,
