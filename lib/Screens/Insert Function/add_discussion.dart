@@ -127,12 +127,14 @@ class _AddDiscussionState extends State<AddDiscussion> {
                         onPressed: () {
                           if (_formKey.currentState.validate()) {
                             dbRef
-                                .doc(uid)
-                                .collection("Title")
+                                //.doc(uid)
+                                //.collection("Title")
                                 .add({
+                              "uid": uid,
                               "name": nameController.text,
                               "title": titleController.text,
                               "description": descriptionController.text,
+                              "timestamp": new DateTime.now(),
                             }).then((_) {
                               showDialog(
                                 context: context,
@@ -167,7 +169,7 @@ class _AddDiscussionState extends State<AddDiscussion> {
                               titleController.clear();
                               nameController.clear();
                               descriptionController.clear();
-                            });
+                            }).catchError((error) => print(error));
                           }
                         },
                         child: Text('Submit'),
@@ -177,10 +179,7 @@ class _AddDiscussionState extends State<AddDiscussion> {
                       ),
                       ElevatedButton(
                         onPressed: () {
-                          Navigator.push(
-                              context,
-                              MaterialPageRoute(
-                                  builder: (context) => HomePageScreen()));
+                          Navigator.pop(context);
                         },
                         child: Text('Return To Homepage'),
                         style: ButtonStyle(

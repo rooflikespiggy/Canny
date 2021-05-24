@@ -6,12 +6,10 @@ class AuthForumService {
   String uid = FirebaseAuth.instance.currentUser.uid;
   final dbRef = FirebaseFirestore.instance.collection("Users");
 
-  Future removeDiscussion(String title) async {
+  Future removeDiscussion(String id) async {
     FirebaseFirestore.instance
         .collection('Users')
-        .doc(uid)
-        .collection('Title')
-        .doc(title)
+        .doc(id)
         .delete();
     return true;
   }
