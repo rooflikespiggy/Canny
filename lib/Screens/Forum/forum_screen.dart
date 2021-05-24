@@ -17,6 +17,7 @@ class _ForumScreenState extends State<ForumScreen> {
   String uid = FirebaseAuth.instance.currentUser.uid;
   final AuthForumService _auth = AuthForumService();
   final dbRef = FirebaseFirestore.instance.collection("Users");
+  bool _isLiked = false;
 
   @override
   Widget build(BuildContext context) {
@@ -38,6 +39,7 @@ class _ForumScreenState extends State<ForumScreen> {
                       TextEditingController nameInputController = TextEditingController(text: snapshot.data.docs[index]["name"]);
                       TextEditingController titleInputController = TextEditingController(text: snapshot.data.docs[index]["title"]);
                       TextEditingController descriptionInputController = TextEditingController(text: snapshot.data.docs[index]["description"]);
+                      int noOfLikes = snapshot.data.docs[index]["likes"];
                       return Padding(
                         padding: const EdgeInsets.only(bottom: 4.0),
                         child: Column(
@@ -80,8 +82,28 @@ class _ForumScreenState extends State<ForumScreen> {
                                         mainAxisAlignment: MainAxisAlignment.start,
                                         children: <Widget>[
                                           IconButton(
-                                            icon: Icon(Icons.favorite),
-                                            onPressed: () {},
+                                            icon: Icon(
+                                                Icons.favorite,
+                                                color: _isLiked ? Colors.red : Colors.black),
+                                            onPressed: () {
+                                              _isLiked = !_isLiked;
+                                              if (_isLiked) {
+                                                setState(() {
+                                                  dbRef.doc(snapshot.data.docs[index].id).update({
+                                                    "likes": noOfLikes += 1,
+                                                  });
+                                                });
+                                              } else {
+                                                setState(() {
+                                                  dbRef.doc(snapshot.data.docs[index].id).update({
+                                                    "likes": noOfLikes -= 1,
+                                                  });
+                                                });
+                                              }
+                                            },
+                                          ),
+                                          Text(
+                                            "${noOfLikes}",
                                           ),
                                           IconButton(
                                             icon: Icon(Icons.comment),

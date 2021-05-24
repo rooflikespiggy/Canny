@@ -134,7 +134,8 @@ class _AddDiscussionState extends State<AddDiscussion> {
                               "name": nameController.text,
                               "title": titleController.text,
                               "description": descriptionController.text,
-                              "timestamp": new DateTime.now(),
+                              "timestamp": DateTime.now(),
+                              "likes": 0,
                             }).then((_) {
                               showDialog(
                                 context: context,
