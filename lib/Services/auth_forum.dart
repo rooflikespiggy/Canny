@@ -13,6 +13,7 @@ class AuthForumService {
       TextEditingController descriptionController,
       BuildContext context,
       GlobalKey<FormState> _formKey) async {
+
     if (_formKey.currentState.validate()) {
       dbRef.add({
         "uid": uid,
@@ -22,6 +23,7 @@ class AuthForumService {
         "timestamp": DateTime.now(),
         "likes": 0,
         "liked": false,
+        "comments": 0,
       }).then((_) {
         showDialog(
           context: context,

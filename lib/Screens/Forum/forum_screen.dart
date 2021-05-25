@@ -1,3 +1,4 @@
+import 'package:Canny/Screens/Forum/forum_detail_screen.dart';
 import 'package:Canny/Services/auth_forum.dart';
 import 'package:Canny/Shared/colors.dart';
 import 'package:cloud_firestore/cloud_firestore.dart';
@@ -40,6 +41,7 @@ class _ForumScreenState extends State<ForumScreen> {
                         final titleInputController = TextEditingController(text: snapshot.data.docs[index]["title"]);
                         final descriptionInputController = TextEditingController(text: snapshot.data.docs[index]["description"]);
                         int noOfLikes = snapshot.data.docs[index]["likes"];
+                        int noOfComments = snapshot.data.docs[index]["comments"];
                         return Padding(
                           padding: EdgeInsets.only(bottom: 4.0),
                           child: Column(
@@ -56,19 +58,21 @@ class _ForumScreenState extends State<ForumScreen> {
                                       ListTile(
                                           contentPadding: EdgeInsets.all(18.0),
                                           title: Text(snapshot.data.docs[index]["title"]),
-                                          subtitle: Text(snapshot.data.docs[index]["description"]),
+                                          subtitle: Text(
+                                            snapshot.data.docs[index]["description"].length > 200
+                                                ? snapshot.data.docs[index]["description"].substring(0, 200) + "..."
+                                                : snapshot.data.docs[index]["description"]
+                                          ),
                                           leading: CircleAvatar(
                                             radius: 30,
-                                            child: Text(snapshot.data.docs[index]["name"].toString()[0]),
+                                            child: Text(snapshot.data.docs[index]["name"][0]),
                                           )
                                       ),
                                       Padding(
                                         padding: EdgeInsets.fromLTRB(20.0, 15.0, 20.0, 10.0),
                                         child: Row(
-                                          crossAxisAlignment:
-                                              CrossAxisAlignment.center,
-                                          mainAxisAlignment:
-                                              MainAxisAlignment.spaceBetween,
+                                          crossAxisAlignment: CrossAxisAlignment.center,
+                                          mainAxisAlignment: MainAxisAlignment.spaceBetween,
                                           children: <Widget>[
                                             Text("By: ${snapshot.data.docs[index]["name"]}"),
                                             Text(DateFormat("EEEE, d MMMM y")
@@ -79,13 +83,15 @@ class _ForumScreenState extends State<ForumScreen> {
                                         ),
                                       ),
                                       Padding(
-                                        padding: EdgeInsets.all(8.0),
+                                        padding: EdgeInsets.fromLTRB(8.0, 8.0, 8.0, 0.0),
                                         child: Row(
-                                          mainAxisAlignment:
-                                              MainAxisAlignment.start,
+                                          mainAxisAlignment: MainAxisAlignment.start,
                                           children: <Widget>[
                                             IconButton(
-                                              icon: Icon(Icons.favorite,
+                                              icon: Icon(
+                                                  snapshot.data.docs[index]["liked"]
+                                                      ? Icons.favorite
+                                                      : Icons.favorite_border,
                                                   color: snapshot.data.docs[index]["liked"]
                                                       ? Colors.red
                                                       : Colors.black),
@@ -109,14 +115,15 @@ class _ForumScreenState extends State<ForumScreen> {
                                                 }
                                               },
                                             ),
-                                            Text(
-                                              "${noOfLikes}",
-                                            ),
                                             IconButton(
-                                              icon: Icon(Icons.comment),
-                                              onPressed: () {},
+                                              icon: Icon(Icons.add_comment_outlined),
+                                              onPressed: () {
+                                                Navigator.push(context,
+                                                    MaterialPageRoute(builder: (context) =>
+                                                        ForumDetailScreen(inputId: snapshot.data.docs[index].id)));
+                                              },
                                             ),
-                                            SizedBox(width: 145.0),
+                                            SizedBox(width: 140.0),
                                             if (snapshot.data.docs[index]["uid"] == uid)
                                               IconButton(
                                                 icon:
@@ -131,6 +138,7 @@ class _ForumScreenState extends State<ForumScreen> {
                                                       index);
                                                 },
                                               ),
+                                            SizedBox(width: 10.0),
                                             if (snapshot.data.docs[index]["uid"] == uid)
                                               IconButton(
                                                 icon: Icon(
@@ -147,8 +155,7 @@ class _ForumScreenState extends State<ForumScreen> {
                                                           // usually buttons at the bottom of the dialog
                                                           TextButton(
                                                             child: Text("Yes"),
-                                                            onPressed:
-                                                                () async {
+                                                            onPressed: () async {
                                                               await _authForum.removeDiscussion(
                                                                 snapshot.data.docs[index].id,
                                                               );
@@ -170,6 +177,22 @@ class _ForumScreenState extends State<ForumScreen> {
                                                   );
                                                 },
                                               ),
+                                          ],
+                                        ),
+                                      ),
+                                      Padding(
+                                        padding: EdgeInsets.fromLTRB(8.0, 0.0, 8.0, 8.0),
+                                        child: Row(
+                                          mainAxisAlignment: MainAxisAlignment.start,
+                                          children: <Widget> [
+                                            SizedBox(width: 18.5),
+                                            Text(
+                                              "${noOfLikes}",
+                                            ),
+                                            SizedBox(width: 40.5),
+                                            Text(
+                                              "${noOfComments}",
+                                            ),
                                           ],
                                         ),
                                       ),
