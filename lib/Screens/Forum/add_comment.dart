@@ -21,6 +21,7 @@ class _AddCommentState extends State<AddComment> {
   final titleController = TextEditingController();
   final descriptionController = TextEditingController();
   final dbCommentRef = FirebaseFirestore.instance.collection("ForumComment");
+  final dbRef = FirebaseFirestore.instance.collection("Forum");
 
   final String inputId;
 
@@ -114,6 +115,9 @@ class _AddCommentState extends State<AddComment> {
                               context,
                               _formKey,
                             );
+                            dbRef.doc(inputId).update({
+                              "comments": FieldValue.increment(1),
+                            });
                           },
                           child: Text('Submit'),
                           style: ButtonStyle(

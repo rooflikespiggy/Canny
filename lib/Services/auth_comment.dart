@@ -5,9 +5,10 @@ import 'package:flutter/material.dart';
 
 
 class AuthCommentService {
-  String uid = FirebaseAuth.instance.currentUser.uid;
-  final dbCommentRef = FirebaseFirestore.instance.collection("ForumComment");
+  final String uid = FirebaseAuth.instance.currentUser.uid;
   final String inputId;
+  final dbCommentRef = FirebaseFirestore.instance.collection("ForumComment");
+  final dbRef = FirebaseFirestore.instance.collection("Forum");
 
   AuthCommentService(this.inputId);
 
@@ -49,7 +50,7 @@ class AuthCommentService {
                   child: Text("Yes"),
                   onPressed: () {
                     Navigator.push(context,
-                        MaterialPageRoute(builder: (context) => ForumDetailScreen()));
+                        MaterialPageRoute(builder: (context) => ForumDetailScreen(inputId: inputId)));
                   },
                 ),
                 TextButton(
@@ -75,6 +76,9 @@ class AuthCommentService {
         .collection("Comment")
         .doc(commentId)
         .delete();
+    dbRef.doc(inputId).update({
+      "comments": FieldValue.increment(-1),
+    });
     return true;
   }
 

@@ -15,7 +15,7 @@ class ForumScreen extends StatefulWidget {
 }
 
 class _ForumScreenState extends State<ForumScreen> {
-  String uid = FirebaseAuth.instance.currentUser.uid;
+  final String uid = FirebaseAuth.instance.currentUser.uid;
   final AuthForumService _authForum = AuthForumService();
   final dbRef = FirebaseFirestore.instance.collection("Forum");
 
@@ -102,7 +102,7 @@ class _ForumScreenState extends State<ForumScreen> {
                                                         .update({
                                                       "likes": noOfLikes -= 1,
                                                       "liked": false,
-                                                    });
+                                                    }).catchError((error) => print(error));
                                                   });
                                                 } else {
                                                   setState(() {
@@ -110,7 +110,7 @@ class _ForumScreenState extends State<ForumScreen> {
                                                         .update({
                                                       "likes": noOfLikes += 1,
                                                       "liked": true,
-                                                    });
+                                                    }).catchError((error) => print(error));
                                                   });
                                                 }
                                               },
