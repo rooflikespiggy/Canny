@@ -4,7 +4,7 @@ import 'package:Canny/Shared/colors.dart';
 import 'package:Canny/Screens/wrapper.dart';
 
 class SideBarMenu extends StatelessWidget {
-  AuthService _auth = AuthService();
+  final AuthService _auth = AuthService();
 
   @override
   Widget build(BuildContext context) {

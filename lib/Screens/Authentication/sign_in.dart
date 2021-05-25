@@ -31,10 +31,6 @@ class _SignInState extends State<SignIn> {
   Widget build(BuildContext context) {
     return loading ? Loading() : Scaffold(
         backgroundColor: kBackgroundColour,
-        appBar: AppBar(
-          backgroundColor: kBackgroundColour,
-          elevation: 0.0,
-        ),
         body: Container(
             padding: EdgeInsets.symmetric(horizontal: 40.0),
             child: SingleChildScrollView(
@@ -42,6 +38,7 @@ class _SignInState extends State<SignIn> {
                 mainAxisAlignment: MainAxisAlignment.start,
                 crossAxisAlignment: CrossAxisAlignment.center,
                 children: [
+                  SizedBox(height: 95.0),
                   Container(
                     width: 140.0,
                     height: 140.0,
@@ -54,14 +51,14 @@ class _SignInState extends State<SignIn> {
                     ),
                   ),
                   Text(
-                        'Welcome to Canny!',
-                        style: TextStyle(
-                          fontSize: 23.0,
-                          fontFamily: 'Lato',
-                          fontWeight: FontWeight.bold,
-                          color: kDeepOrange,
-                        )
-                    ),
+                      'Welcome to Canny!',
+                      style: TextStyle(
+                        fontSize: 23.0,
+                        fontFamily: 'Lato',
+                        fontWeight: FontWeight.bold,
+                        color: kDeepOrange,
+                      )
+                  ),
                   SizedBox(height: 12.0),
                   Text(
                     "Good to see you again! Let's get you signed in.",
