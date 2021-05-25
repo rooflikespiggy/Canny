@@ -1,10 +1,12 @@
 import 'package:Canny/Screens/Home/homepage_screen.dart';
+import 'package:Canny/Services/auth_forum.dart';
 import 'package:Canny/Shared/colors.dart';
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
 
 class AddDiscussion extends StatefulWidget {
+
   @override
   _AddDiscussionState createState() => _AddDiscussionState();
 }
@@ -16,6 +18,7 @@ class _AddDiscussionState extends State<AddDiscussion> {
   final titleController = TextEditingController();
   final descriptionController = TextEditingController();
   final dbRef = FirebaseFirestore.instance.collection("Users");
+  final AuthForumService _authForum = AuthForumService();
 
   @override
   Widget build(BuildContext context) {
@@ -124,54 +127,14 @@ class _AddDiscussionState extends State<AddDiscussion> {
                     mainAxisAlignment: MainAxisAlignment.spaceEvenly,
                     children: <Widget>[
                       ElevatedButton(
-                        onPressed: () {
-                          if (_formKey.currentState.validate()) {
-                            dbRef
-                                //.doc(uid)
-                                //.collection("Title")
-                                .add({
-                              "uid": uid,
-                              "name": nameController.text,
-                              "title": titleController.text,
-                              "description": descriptionController.text,
-                              "timestamp": DateTime.now(),
-                              "likes": 0,
-                            }).then((_) {
-                              showDialog(
-                                context: context,
-                                builder: (BuildContext context) {
-                                  return AlertDialog(
-                                    title: Text(
-                                      "Succesfully Submitted Your Discussion!",
-                                      style: TextStyle(fontFamily: 'Lato'),
-                                    ),
-                                    content: Text(
-                                      "If you would like to add any additional discussions, press No",
-                                      style: TextStyle(fontFamily: 'Lato.Thin'),
-                                    ),
-                                    actions: <Widget> [
-                                      TextButton(
-                                        child: Text("Yes"),
-                                        onPressed: () {
-                                          Navigator.push(context,
-                                              MaterialPageRoute(builder: (context) => HomePageScreen()));
-                                        },
-                                      ),
-                                      TextButton(
-                                        child: Text("No"),
-                                        onPressed: () {
-                                          Navigator.pop(context);
-                                        },
-                                      ),
-                                    ],
-                                  );
-                                },
-                              );
-                              titleController.clear();
-                              nameController.clear();
-                              descriptionController.clear();
-                            }).catchError((error) => print(error));
-                          }
+                        onPressed: () async {
+                          await _authForum.addDiscussion(
+                            nameController,
+                            titleController,
+                            descriptionController,
+                            context,
+                            _formKey,
+                          );
                         },
                         child: Text('Submit'),
                         style: ButtonStyle(
