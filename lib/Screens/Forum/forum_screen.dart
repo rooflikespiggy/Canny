@@ -17,7 +17,7 @@ class ForumScreen extends StatefulWidget {
 class _ForumScreenState extends State<ForumScreen> {
   String uid = FirebaseAuth.instance.currentUser.uid;
   final AuthForumService _authForum = AuthForumService();
-  final dbRef = FirebaseFirestore.instance.collection("Users");
+  final dbRef = FirebaseFirestore.instance.collection("Forum");
 
   @override
   Widget build(BuildContext context) {
@@ -69,7 +69,7 @@ class _ForumScreenState extends State<ForumScreen> {
                                           )
                                       ),
                                       Padding(
-                                        padding: EdgeInsets.fromLTRB(20.0, 15.0, 20.0, 10.0),
+                                        padding: EdgeInsets.fromLTRB(20.0, 5.0, 20.0, 10.0),
                                         child: Row(
                                           crossAxisAlignment: CrossAxisAlignment.center,
                                           mainAxisAlignment: MainAxisAlignment.spaceBetween,
@@ -83,7 +83,7 @@ class _ForumScreenState extends State<ForumScreen> {
                                         ),
                                       ),
                                       Padding(
-                                        padding: EdgeInsets.fromLTRB(8.0, 8.0, 8.0, 0.0),
+                                        padding: EdgeInsets.only(left: 8.0, right: 8.0, top: 5.0),
                                         child: Row(
                                           mainAxisAlignment: MainAxisAlignment.start,
                                           children: <Widget>[
@@ -187,11 +187,11 @@ class _ForumScreenState extends State<ForumScreen> {
                                           children: <Widget> [
                                             SizedBox(width: 18.5),
                                             Text(
-                                              "${noOfLikes}",
+                                              noOfLikes.toString(),
                                             ),
                                             SizedBox(width: 40.5),
                                             Text(
-                                              "${noOfComments}",
+                                              noOfComments.toString(),
                                             ),
                                           ],
                                         ),

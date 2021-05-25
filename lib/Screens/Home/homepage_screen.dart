@@ -1,5 +1,5 @@
 import 'package:Canny/Screens/Dashboard/dashboard_screen.dart';
-import 'package:Canny/Screens/Insert Function/add_discussion.dart';
+import 'package:Canny/Screens/Forum/add_discussion.dart';
 import 'package:Canny/Screens/Forum/forum_screen.dart';
 import 'package:Canny/Screens/Insert Function/add_category.dart';
 import 'package:Canny/Screens/Insert Function/add_spending.dart';
@@ -8,7 +8,6 @@ import 'package:Canny/Screens/Leaderboard/leaderboard_screen.dart';
 import 'package:Canny/Screens/Receipt/receipt_screen.dart';
 import 'package:Canny/Screens/Sidebar/sidebar_menu.dart';
 import 'package:flutter/material.dart';
-import 'package:font_awesome_flutter/font_awesome_flutter.dart';
 
 class HomePageScreen extends StatefulWidget {
   static final String id = 'homepage_screen';
@@ -36,6 +35,17 @@ class _HomePageScreenState extends State<HomePageScreen> {
           _title,
           style: TextStyle(fontFamily: 'Lato'),
         ),
+        actions: <Widget> [
+          _selectedTab == 2
+              ? IconButton(
+            icon: Icon(Icons.add_circle_outline_sharp),
+            onPressed: () {
+              Navigator.push(context,
+                  MaterialPageRoute(builder: (context) => AddDiscussion()));
+            },
+          )
+              : Text(""),
+        ],
       ),
       drawer: SideBarMenu(),
       body: _pageOptions[_selectedTab],
@@ -127,15 +137,6 @@ class _HomePageScreenState extends State<HomePageScreen> {
                         onTap: () {
                           Navigator.push(context,
                               MaterialPageRoute(builder: (context) => AddCategoryScreen()));
-                          // print('Add Target Category');
-                        },
-                      ),
-                      ListTile(
-                        leading: Icon(FontAwesomeIcons.pen),
-                        title: Text('Discuss in the Forum'),
-                        onTap: () {
-                          Navigator.push(context,
-                              MaterialPageRoute(builder: (context) => AddDiscussion()));
                           // print('Add Target Category');
                         },
                       ),

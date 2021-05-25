@@ -1,3 +1,4 @@
+import 'package:Canny/Screens/Forum/add_comment.dart';
 import 'package:Canny/Shared/colors.dart';
 import 'package:Canny/Shared/icon_with_text.dart';
 import 'package:cloud_firestore/cloud_firestore.dart';
@@ -15,9 +16,9 @@ class ForumDetailScreen extends StatefulWidget {
 }
 
 class _ForumDetailScreenState extends State<ForumDetailScreen> {
-  final dbRef = FirebaseFirestore.instance.collection("Users");
-
-  String inputId;
+  final dbRef = FirebaseFirestore.instance.collection("Forum");
+  final dbCommentRef = FirebaseFirestore.instance.collection("ForumComment");
+  final String inputId;
 
   _ForumDetailScreenState(this.inputId);
 
@@ -26,6 +27,15 @@ class _ForumDetailScreenState extends State<ForumDetailScreen> {
     return Scaffold(
       appBar: AppBar(
         elevation: 0.0,
+        actions: <Widget> [
+          IconButton(
+            icon: Icon(Icons.add_circle_outline_sharp),
+            onPressed: () {
+              Navigator.push(context,
+                  MaterialPageRoute(builder: (context) => AddComment(inputId: inputId)));
+            },
+          )
+        ],
       ),
       body: Container(
         color: kBackgroundColour,
@@ -64,7 +74,7 @@ class _ForumDetailScreenState extends State<ForumDetailScreen> {
                                     ),
                                     IconWithText(
                                       Icons.add_comment_outlined,
-                                      "${snapshot.data['comments']}",
+                                      snapshot.data['comments'].toString(),
                                     ),
                                   ],
                                 ),

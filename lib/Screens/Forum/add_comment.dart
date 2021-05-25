@@ -1,23 +1,30 @@
-import 'package:Canny/Services/auth_forum.dart';
+import 'package:Canny/Services/auth_comment.dart';
 import 'package:Canny/Shared/colors.dart';
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
 
-class AddDiscussion extends StatefulWidget {
+class AddComment extends StatefulWidget {
+  static final String id = 'add_comment';
+  final String inputId;
+
+  AddComment({this.inputId});
 
   @override
-  _AddDiscussionState createState() => _AddDiscussionState();
+  _AddCommentState createState() => _AddCommentState(this.inputId);
 }
 
-class _AddDiscussionState extends State<AddDiscussion> {
+class _AddCommentState extends State<AddComment> {
   String uid = FirebaseAuth.instance.currentUser.uid;
   final _formKey = GlobalKey<FormState>();
   final nameController = TextEditingController();
   final titleController = TextEditingController();
   final descriptionController = TextEditingController();
-  final dbRef = FirebaseFirestore.instance.collection("Users");
-  final AuthForumService _authForum = AuthForumService();
+  final dbCommentRef = FirebaseFirestore.instance.collection("ForumComment");
+
+  final String inputId;
+
+  _AddCommentState(this.inputId);
 
   @override
   Widget build(BuildContext context) {
@@ -30,7 +37,8 @@ class _AddDiscussionState extends State<AddDiscussion> {
             child: Column(
               children: <Widget> [
                 Text(
-                  'Discuss in the Forum!',
+                  'Answer the Question \n or Provide Feedback!',
+                  textAlign: TextAlign.center,
                   style: TextStyle(fontSize: 23.0,
                     fontFamily: 'Lato',
                     fontWeight: FontWeight.bold,
@@ -61,34 +69,7 @@ class _AddDiscussionState extends State<AddDiscussion> {
                         return 'Enter your Name';
                       }
                       return null;
-                      },
-                  ),
-                ),
-                Padding(
-                  padding: EdgeInsets.all(20.0),
-                  child: TextFormField(
-                    controller: titleController,
-                    decoration: InputDecoration(
-                      labelText: "Enter your Discussion Title",
-                      prefixIcon: Icon(Icons.title),
-                      filled: true,
-                      fillColor: Colors.white,
-                      enabledBorder: OutlineInputBorder(
-                        borderRadius: BorderRadius.circular(10.0),
-                        borderSide: BorderSide(color: Colors.grey),
-                      ),
-                      focusedBorder: OutlineInputBorder(
-                        borderRadius: BorderRadius.circular(10.0),
-                        borderSide: BorderSide(color: Colors.blue),
-                      ),
-                    ),
-                    // The validator receives the text that the user has entered.
-                    validator: (value) {
-                      if (value.isEmpty) {
-                        return 'Enter your Discussion Title';
-                      }
-                      return null;
-                      },
+                    },
                   ),
                 ),
                 Padding(
@@ -98,7 +79,7 @@ class _AddDiscussionState extends State<AddDiscussion> {
                     keyboardType: TextInputType.multiline,
                     maxLines: null,
                     decoration: InputDecoration(
-                      labelText: "Enter your Discussion Description",
+                      labelText: "Enter your Comment Description",
                       prefixIcon: Icon(Icons.description_outlined),
                       filled: true,
                       fillColor: Colors.white,
@@ -114,10 +95,10 @@ class _AddDiscussionState extends State<AddDiscussion> {
                     // The validator receives the text that the user has entered.
                     validator: (value) {
                       if (value.isEmpty) {
-                        return 'Enter your Discussion Description';
+                        return 'Enter your Comment Description';
                       }
                       return null;
-                      },
+                    },
                   ),
                 ),
                 Padding(
@@ -126,28 +107,27 @@ class _AddDiscussionState extends State<AddDiscussion> {
                     mainAxisAlignment: MainAxisAlignment.spaceEvenly,
                     children: <Widget>[
                       ElevatedButton(
-                        onPressed: () async {
-                          await _authForum.addDiscussion(
-                            nameController,
-                            titleController,
-                            descriptionController,
-                            context,
-                            _formKey,
-                          );
-                        },
-                        child: Text('Submit'),
-                        style: ButtonStyle(
-                          backgroundColor: MaterialStateProperty.all(kDeepOrangeLight),
-                        )
+                          onPressed: () async {
+                            await AuthCommentService(inputId).addComment(
+                              nameController,
+                              descriptionController,
+                              context,
+                              _formKey,
+                            );
+                          },
+                          child: Text('Submit'),
+                          style: ButtonStyle(
+                            backgroundColor: MaterialStateProperty.all(kDeepOrangeLight),
+                          )
                       ),
                       ElevatedButton(
-                        onPressed: () {
-                          Navigator.pop(context);
-                        },
-                        child: Text('Return To Homepage'),
-                        style: ButtonStyle(
-                          backgroundColor: MaterialStateProperty.all(Colors.grey),
-                        )
+                          onPressed: () {
+                            Navigator.pop(context);
+                          },
+                          child: Text('Back'),
+                          style: ButtonStyle(
+                            backgroundColor: MaterialStateProperty.all(Colors.grey),
+                          )
                       ),
                     ],
                   ),

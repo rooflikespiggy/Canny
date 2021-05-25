@@ -1,10 +1,12 @@
 import 'package:Canny/Services/auth.dart';
+import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
 import 'package:Canny/Shared/colors.dart';
 import 'package:Canny/Screens/wrapper.dart';
 
 class SideBarMenu extends StatelessWidget {
   final AuthService _auth = AuthService();
+  final String email = FirebaseAuth.instance.currentUser.email;
 
   @override
   Widget build(BuildContext context) {
@@ -21,6 +23,11 @@ class SideBarMenu extends StatelessWidget {
                   image: AssetImage('styles/images/logo-3.png'),
                   alignment: Alignment.bottomCenter,
                 ),
+              ),
+              child: Container(
+                child: Text(email),
+                alignment: Alignment.bottomCenter,
+                height: 40.0,
               ),
             ),
             ListTile(
