@@ -51,7 +51,9 @@ class _ForumScreenState extends State<ForumScreen> {
             child: Column(
               children: <Widget>[
                 StreamBuilder(
-                  stream: dbRef.orderBy("timestamp", descending: true).snapshots(),
+                  stream: dbRef
+                      .orderBy("timestamp", descending: true)
+                      .snapshots(),
                   builder: (BuildContext context, AsyncSnapshot<QuerySnapshot> snapshot) {
                     if (snapshot.hasData) {
                       return Align(
@@ -67,7 +69,6 @@ class _ForumScreenState extends State<ForumScreen> {
                             final descriptionInputController = TextEditingController(text: snapshot.data.docs[index]["description"]);
                             int noOfLikes = snapshot.data.docs[index]["likes"];
                             int noOfComments = snapshot.data.docs[index]["comments"];
-                            final List<bool> _liked = List.filled(snapshot.data.docs.length, false);
                             return Padding(
                               padding: EdgeInsets.only(bottom: 4.0),
                               child: Column(
@@ -76,7 +77,7 @@ class _ForumScreenState extends State<ForumScreen> {
                                 children: <Widget>[
                                   Container(
                                     child: Card(
-                                      elevation: 9,
+                                      elevation: 4,
                                       shape: RoundedRectangleBorder(
                                           borderRadius: BorderRadius.all(Radius.circular(12.0))),
                                       child: Column(
@@ -278,6 +279,10 @@ class _ForumScreenState extends State<ForumScreen> {
                     }
                     return CircularProgressIndicator();
                   },
+                ),
+                Container(
+                  color: kBackgroundColour,
+                  height: 50.0,
                 ),
               ],
             ),

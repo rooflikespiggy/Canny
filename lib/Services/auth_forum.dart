@@ -115,9 +115,6 @@ class AuthForumService {
           actions: <Widget> [
             TextButton(
                 onPressed: () {
-                  nameInputController.clear();
-                  titleInputController.clear();
-                  descriptionInputController.clear();
                   Navigator.pop(context);
                 },
                 child: Text("Cancel")
