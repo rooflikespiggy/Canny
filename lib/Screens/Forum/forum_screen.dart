@@ -52,7 +52,7 @@ class _ForumScreenState extends State<ForumScreen> {
                                 child: Card(
                                   elevation: 9,
                                   shape: RoundedRectangleBorder(
-                                      borderRadius: BorderRadius.all(Radius.circular(15.0))),
+                                      borderRadius: BorderRadius.all(Radius.circular(12.0))),
                                   child: Column(
                                     children: <Widget>[
                                       ListTile(
@@ -65,7 +65,12 @@ class _ForumScreenState extends State<ForumScreen> {
                                           ),
                                           leading: CircleAvatar(
                                             radius: 30,
-                                            child: Text(snapshot.data.docs[index]["name"][0]),
+                                            child: Text(
+                                              snapshot.data.docs[index]["name"][0],
+                                              style: TextStyle(
+                                                fontSize: 23.0,
+                                              ),
+                                            ),
                                           )
                                       ),
                                       Padding(
