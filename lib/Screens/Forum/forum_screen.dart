@@ -26,7 +26,9 @@ class _ForumScreenState extends State<ForumScreen> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
+      backgroundColor: kBackgroundColour,
       appBar: AppBar(
+        backgroundColor: kDeepOrangePrimary,
         title: Text(
           "FORUM",
           style: TextStyle(fontFamily: 'Lato'),
@@ -49,7 +51,9 @@ class _ForumScreenState extends State<ForumScreen> {
             child: Column(
               children: <Widget>[
                 StreamBuilder(
-                  stream: dbRef.snapshots(),
+                  stream: dbRef
+                      .orderBy("timestamp", descending: true)
+                      .snapshots(),
                   builder: (BuildContext context, AsyncSnapshot<QuerySnapshot> snapshot) {
                     if (snapshot.hasData) {
                       return Align(
@@ -73,40 +77,64 @@ class _ForumScreenState extends State<ForumScreen> {
                                 children: <Widget>[
                                   Container(
                                     child: Card(
-                                      elevation: 9,
+                                      elevation: 4,
                                       shape: RoundedRectangleBorder(
-                                          borderRadius: BorderRadius.all(Radius.circular(15.0))),
+                                          borderRadius: BorderRadius.all(Radius.circular(12.0))),
                                       child: Column(
                                         children: <Widget>[
                                           ListTile(
                                               contentPadding: EdgeInsets.all(18.0),
-                                              title: Text(snapshot.data.docs[index]["title"]),
+                                              title: Text(
+                                                  snapshot.data.docs[index]["title"],
+                                                style: TextStyle(
+                                                  fontSize: 20,
+                                                ),
+                                              ),
                                               subtitle: Text(
-                                                snapshot.data.docs[index]["description"].length > 200
-                                                    ? snapshot.data.docs[index]["description"].substring(0, 200) + "..."
-                                                    : snapshot.data.docs[index]["description"]
+                                                  snapshot.data.docs[index]["description"].length > 200
+                                                      ? snapshot.data.docs[index]["description"].substring(0, 200) + "..."
+                                                      : snapshot.data.docs[index]["description"],
+                                                  style: TextStyle(
+                                                    fontSize: 16,
+                                                  )
                                               ),
                                               leading: CircleAvatar(
+                                                backgroundColor: kDeepOrangePrimary,
                                                 radius: 30,
-                                                child: Text(snapshot.data.docs[index]["name"][0]),
+                                                child: Text(
+                                                    snapshot.data.docs[index]["name"][0],
+                                                  style: TextStyle(
+                                                    fontSize: 23,
+                                                    color: Colors.white,
+                                                  ),
+                                                ),
                                               )
                                           ),
                                           Padding(
-                                            padding: EdgeInsets.fromLTRB(20.0, 5.0, 20.0, 10.0),
+                                            padding: EdgeInsets.fromLTRB(20.0, 0, 20.0, 10.0),
                                             child: Row(
                                               crossAxisAlignment: CrossAxisAlignment.center,
                                               mainAxisAlignment: MainAxisAlignment.spaceBetween,
                                               children: <Widget>[
-                                                Text("By: ${snapshot.data.docs[index]["name"]}"),
+                                                Text("By: ${snapshot.data.docs[index]["name"]}",
+                                                  style: TextStyle(
+                                                    fontSize: 16,
+                                                    color: Colors.grey[850],
+                                                  )
+                                                ),
                                                 Text(DateFormat("EEEE, d MMMM y")
-                                                      .format(DateTime.fromMillisecondsSinceEpoch(
-                                                              snapshot.data.docs[index]["timestamp"].seconds * 1000)),
+                                                    .format(DateTime.fromMillisecondsSinceEpoch(
+                                                    snapshot.data.docs[index]["timestamp"].seconds * 1000)),
+                                                    style: TextStyle(
+                                                      fontSize: 16,
+                                                      color: Colors.grey[850],
+                                                    )
                                                 ),
                                               ],
                                             ),
                                           ),
                                           Padding(
-                                            padding: EdgeInsets.only(left: 8.0, right: 8.0, top: 5.0),
+                                            padding: EdgeInsets.only(left: 8.0, right: 8.0),
                                             child: Row(
                                               mainAxisAlignment: MainAxisAlignment.spaceBetween,
                                               children: <Widget>[
@@ -116,19 +144,19 @@ class _ForumScreenState extends State<ForumScreen> {
                                                     children: <Widget> [
                                                       IconButton(
                                                         icon: Icon(
-                                                            snapshot.data.docs[index]["liked"]
+                                                            snapshot.data.docs[index]["liked_uid"].contains(uid)
                                                                 ? Icons.favorite
                                                                 : Icons.favorite_border,
-                                                            color: snapshot.data.docs[index]["liked"]
+                                                            color: snapshot.data.docs[index]["liked_uid"].contains(uid)
                                                                 ? Colors.red
                                                                 : Colors.black),
                                                         onPressed: () {
-                                                          if (snapshot.data.docs[index]["liked"]) {
+                                                          if (snapshot.data.docs[index]["liked_uid"].contains(uid)) {
                                                             setState(() {
                                                               dbRef.doc(snapshot.data.docs[index].id)
                                                                   .update({
                                                                 "likes": noOfLikes -= 1,
-                                                                "liked": false,
+                                                                "liked_uid": FieldValue.arrayRemove([uid]),
                                                               }).catchError((error) => print(error));
                                                             });
                                                           } else {
@@ -136,7 +164,7 @@ class _ForumScreenState extends State<ForumScreen> {
                                                               dbRef.doc(snapshot.data.docs[index].id)
                                                                   .update({
                                                                 "likes": noOfLikes += 1,
-                                                                "liked": true,
+                                                                "liked_uid": FieldValue.arrayUnion([uid]),
                                                               }).catchError((error) => print(error));
                                                             });
                                                           }
@@ -156,61 +184,61 @@ class _ForumScreenState extends State<ForumScreen> {
                                                 Align(
                                                   alignment: Alignment.centerRight,
                                                   child: Row(
-                                                    children: <Widget> [
-                                                      if (snapshot.data.docs[index]["uid"] == uid)
-                                                        IconButton(
-                                                          icon:
-                                                          Icon(FontAwesomeIcons.edit),
-                                                          onPressed: () async {
-                                                            await _authForum.updateDiscussion(
-                                                                nameInputController,
-                                                                titleInputController,
-                                                                descriptionInputController,
-                                                                context,
-                                                                snapshot,
-                                                                index);
-                                                          },
-                                                        ),
-                                                      SizedBox(width: 8.0),
-                                                      if (snapshot.data.docs[index]["uid"] == uid)
-                                                        IconButton(
-                                                          icon: Icon(
-                                                              FontAwesomeIcons.trashAlt),
-                                                          onPressed: () {
-                                                            showDialog(
-                                                              context: context,
-                                                              builder:
-                                                                  (BuildContext context) {
-                                                                return AlertDialog(
-                                                                  title: Text("Are you sure you want to delete your discussion"),
-                                                                  content: Text("Once your discussion is deleted, you will not be able to retrieve it back."),
-                                                                  actions: <Widget>[
-                                                                    // usually buttons at the bottom of the dialog
-                                                                    TextButton(
-                                                                      child: Text("Yes"),
-                                                                      onPressed: () async {
-                                                                        await _authForum.removeDiscussion(
-                                                                          snapshot.data.docs[index].id,
-                                                                        );
-                                                                        setState(() {
-                                                                          snapshot.data.docs.removeAt(index);
-                                                                        });
-                                                                        Navigator.pop(context);
-                                                                      },
-                                                                    ),
-                                                                    TextButton(
-                                                                      child: Text("No"),
-                                                                      onPressed: () {
-                                                                        Navigator.pop(context);
-                                                                      },
-                                                                    ),
-                                                                  ],
-                                                                );
-                                                              },
-                                                            );
-                                                          },
-                                                        ),
-                                                    ]
+                                                      children: <Widget> [
+                                                        if (snapshot.data.docs[index]["uid"] == uid)
+                                                          IconButton(
+                                                            icon:
+                                                            Icon(FontAwesomeIcons.edit),
+                                                            onPressed: () async {
+                                                              await _authForum.updateDiscussion(
+                                                                  nameInputController,
+                                                                  titleInputController,
+                                                                  descriptionInputController,
+                                                                  context,
+                                                                  snapshot,
+                                                                  index);
+                                                            },
+                                                          ),
+                                                        SizedBox(width: 8.0),
+                                                        if (snapshot.data.docs[index]["uid"] == uid)
+                                                          IconButton(
+                                                            icon: Icon(
+                                                                FontAwesomeIcons.trashAlt),
+                                                            onPressed: () {
+                                                              showDialog(
+                                                                context: context,
+                                                                builder:
+                                                                    (BuildContext context) {
+                                                                  return AlertDialog(
+                                                                    title: Text("Are you sure you want to delete your discussion"),
+                                                                    content: Text("Once your discussion is deleted, you will not be able to retrieve it back."),
+                                                                    actions: <Widget>[
+                                                                      // usually buttons at the bottom of the dialog
+                                                                      TextButton(
+                                                                        child: Text("Yes"),
+                                                                        onPressed: () async {
+                                                                          await _authForum.removeDiscussion(
+                                                                            snapshot.data.docs[index].id,
+                                                                          );
+                                                                          setState(() {
+                                                                            snapshot.data.docs.removeAt(index);
+                                                                          });
+                                                                          Navigator.pop(context);
+                                                                        },
+                                                                      ),
+                                                                      TextButton(
+                                                                        child: Text("No"),
+                                                                        onPressed: () {
+                                                                          Navigator.pop(context);
+                                                                        },
+                                                                      ),
+                                                                    ],
+                                                                  );
+                                                                },
+                                                              );
+                                                            },
+                                                          ),
+                                                      ]
                                                   ),
                                                 ),
                                               ],
@@ -223,9 +251,12 @@ class _ForumScreenState extends State<ForumScreen> {
                                               child: Row(
                                                 mainAxisAlignment: MainAxisAlignment.start,
                                                 children: <Widget> [
-                                                  SizedBox(width: 18.5),
+                                                  SizedBox(width: 20),
                                                   Text(
                                                     noOfLikes.toString(),
+                                                    style: TextStyle(
+                                                      fontSize: 15,
+                                                    ),
                                                   ),
                                                   SizedBox(width: 40.5),
                                                   Text(
@@ -248,6 +279,10 @@ class _ForumScreenState extends State<ForumScreen> {
                     }
                     return CircularProgressIndicator();
                   },
+                ),
+                Container(
+                  color: kBackgroundColour,
+                  height: 50.0,
                 ),
               ],
             ),

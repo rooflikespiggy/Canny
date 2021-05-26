@@ -37,9 +37,9 @@ class _AddDiscussionState extends State<AddDiscussion> {
                     color: kDeepOrange,
                   ),
                 ),
-                SizedBox(height: 20.0),
+                SizedBox(height: 15.0),
                 Padding(
-                  padding: EdgeInsets.all(20.0),
+                  padding: EdgeInsets.symmetric(horizontal: 20.0),
                   child: TextFormField(
                     controller: nameController,
                     decoration: InputDecoration(
@@ -64,8 +64,9 @@ class _AddDiscussionState extends State<AddDiscussion> {
                       },
                   ),
                 ),
+                SizedBox(height: 15),
                 Padding(
-                  padding: EdgeInsets.all(20.0),
+                  padding: EdgeInsets.symmetric(horizontal: 20.0),
                   child: TextFormField(
                     controller: titleController,
                     decoration: InputDecoration(
@@ -91,8 +92,9 @@ class _AddDiscussionState extends State<AddDiscussion> {
                       },
                   ),
                 ),
+                SizedBox(height: 15),
                 Padding(
-                  padding: EdgeInsets.all(20.0),
+                  padding: EdgeInsets.symmetric(horizontal: 20.0),
                   child: TextFormField(
                     controller: descriptionController,
                     keyboardType: TextInputType.multiline,
@@ -120,8 +122,9 @@ class _AddDiscussionState extends State<AddDiscussion> {
                       },
                   ),
                 ),
+                SizedBox(height: 20),
                 Padding(
-                  padding: EdgeInsets.all(20.0),
+                  padding: EdgeInsets.symmetric(horizontal: 20.0),
                   child: Row(
                     mainAxisAlignment: MainAxisAlignment.spaceEvenly,
                     children: <Widget>[
@@ -149,7 +152,23 @@ class _AddDiscussionState extends State<AddDiscussion> {
                           backgroundColor: MaterialStateProperty.all(Colors.grey),
                         )
                       ),
+
                     ],
+                  ),
+                ),
+                SizedBox(height: 10),
+                Hero(
+                  tag: 'picture',
+                  child: Container(
+                    width: 500.0,
+                    height: 205.0,
+                    alignment: Alignment.center,
+                    decoration: BoxDecoration(
+                      image: DecorationImage(
+                          image: AssetImage(
+                              'styles/images/add-discussion-illustration.png'),
+                          fit: BoxFit.fill),
+                    ),
                   ),
                 ),
               ],

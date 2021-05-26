@@ -5,7 +5,7 @@ import 'package:flutter/material.dart';
 
 
 class AuthForumService {
-  String uid = FirebaseAuth.instance.currentUser.uid;
+  final String uid = FirebaseAuth.instance.currentUser.uid;
   final dbRef = FirebaseFirestore.instance.collection("Forum");
 
   Future addDiscussion(TextEditingController nameController,
@@ -22,7 +22,7 @@ class AuthForumService {
         "description": descriptionController.text,
         "timestamp": DateTime.now(),
         "likes": 0,
-        "liked": false,
+        "liked_uid": [],
         "comments": 0,
       }).then((_) {
         showDialog(
@@ -34,12 +34,12 @@ class AuthForumService {
                 style: TextStyle(fontFamily: 'Lato'),
               ),
               content: Text(
-                "If you would like to add any additional discussions, press No",
+                "Would you like to add another discussion?",
                 style: TextStyle(fontFamily: 'Lato.Thin'),
               ),
               actions: <Widget> [
                 TextButton(
-                  child: Text("Yes"),
+                  child: Text("Back to forum"),
                   onPressed: () {
                     int count = 0;
                     Navigator.popUntil(context, (route) {
@@ -48,7 +48,7 @@ class AuthForumService {
                   },
                 ),
                 TextButton(
-                  child: Text("No"),
+                  child: Text("Add another discussion"),
                   onPressed: () {
                     Navigator.pop(context);
                   },
@@ -82,26 +82,24 @@ class AuthForumService {
       context: context,
       builder: (BuildContext context) {
         return AlertDialog(
-          contentPadding: EdgeInsets.all(10),
+          contentPadding: EdgeInsets.all(20),
           content: Column(
             children: <Widget> [
               Text("Update discussion"),
-              Expanded(
-                child: TextField(
+              TextField(
                   decoration: InputDecoration(
                       labelText: "Edit Name"
                   ),
                   controller: nameInputController,
                 ),
-              ),
-              Expanded(
-                child: TextField(
+              SizedBox(height: 15),
+                TextField(
                   decoration: InputDecoration(
                       labelText: "Edit Title"
                   ),
                   controller: titleInputController,
                 ),
-              ),
+              SizedBox(height: 15),
               Expanded(
                 child: TextField(
                   keyboardType: TextInputType.multiline,
@@ -117,9 +115,6 @@ class AuthForumService {
           actions: <Widget> [
             TextButton(
                 onPressed: () {
-                  nameInputController.clear();
-                  titleInputController.clear();
-                  descriptionInputController.clear();
                   Navigator.pop(context);
                 },
                 child: Text("Cancel")

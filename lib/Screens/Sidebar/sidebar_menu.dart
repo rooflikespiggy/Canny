@@ -3,6 +3,7 @@ import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
 import 'package:Canny/Shared/colors.dart';
 import 'package:Canny/Screens/wrapper.dart';
+import 'package:Canny/Screens/Sidebar/category_screen.dart';
 
 class SideBarMenu extends StatelessWidget {
   final AuthService _auth = AuthService();
@@ -18,16 +19,24 @@ class SideBarMenu extends StatelessWidget {
           children: <Widget>[
             DrawerHeader(
               decoration: BoxDecoration(
-                color: Colors.white,
+                color: kDeepOrangePrimary,
                 image: DecorationImage(
-                  image: AssetImage('styles/images/logo-3.png'),
+                  image: AssetImage('styles/images/smaller-logo-3.png'),
                   alignment: Alignment.bottomCenter,
                 ),
               ),
-              child: Container(
-                child: Text(email),
-                alignment: Alignment.bottomCenter,
-                height: 40.0,
+              child: Padding(
+                padding: EdgeInsets.only(top: 7.0),
+                child: Container(
+                  child: Text(email,
+                    style: TextStyle(
+                      fontSize: 15,
+                      color: Colors.white,
+                    ),
+                  ),
+                  alignment: Alignment.bottomCenter,
+                  height: 40.0,
+                ),
               ),
             ),
             ListTile(
@@ -35,7 +44,9 @@ class SideBarMenu extends StatelessWidget {
               trailing: Icon(Icons.arrow_right),
               title: Text(
                 'Customise Quick Input',
-                style: TextStyle(fontFamily: 'Lato')
+                style: TextStyle(fontFamily: 'Lato',
+                  fontSize: 15,
+                )
               ),
               onTap: () => {Navigator.pop(context)},
             ),
@@ -45,9 +56,13 @@ class SideBarMenu extends StatelessWidget {
               trailing: Icon(Icons.arrow_right),
               title: Text(
                 'View Categories',
-                style: TextStyle(fontFamily: 'Lato')
+                  style: TextStyle(fontFamily: 'Lato',
+                    fontSize: 15,
+                  )
               ),
-              onTap: () => {Navigator.pop(context)},
+              onTap: () => {Navigator.push(context,
+                MaterialPageRoute(builder: (context) => CategoryScreen()))
+              },
             ),
             Divider(thickness: 1.0),
             // SizedBox(height: 400.0),
@@ -55,7 +70,9 @@ class SideBarMenu extends StatelessWidget {
               leading: Icon(Icons.exit_to_app),
               title: Text(
                 'Logout',
-                style: TextStyle(fontFamily: 'Lato')
+                  style: TextStyle(fontFamily: 'Lato',
+                    fontSize: 15,
+                  )
               ),
               onTap: () async {
                 await _auth.signOut();

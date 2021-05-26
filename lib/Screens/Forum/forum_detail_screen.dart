@@ -6,9 +6,8 @@ import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
 import 'package:intl/intl.dart';
-
 import 'comment_detail.dart';
-import 'forum_screen.dart';
+
 
 class ForumDetailScreen extends StatefulWidget {
   static final String id = 'individual_forum_screen';
@@ -33,6 +32,7 @@ class _ForumDetailScreenState extends State<ForumDetailScreen> {
     return Scaffold(
       backgroundColor: kBackgroundColour,
       appBar: AppBar(
+        backgroundColor: kDeepOrangePrimary,
         elevation: 0.0,
         leading: IconButton(
           icon: Icon(Icons.arrow_back),
@@ -58,7 +58,7 @@ class _ForumDetailScreenState extends State<ForumDetailScreen> {
             children: <Widget> [
               StreamBuilder<DocumentSnapshot>(
                 stream: dbRef.doc(inputId).snapshots(),
-                builder: (BuildContext context, AsyncSnapshot<DocumentSnapshot>snapshot) {
+                builder: (BuildContext context, AsyncSnapshot<DocumentSnapshot> snapshot) {
                   if (snapshot.hasData) {
                     return Align(
                       alignment: Alignment.topCenter,

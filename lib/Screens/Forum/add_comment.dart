@@ -48,7 +48,7 @@ class _AddCommentState extends State<AddComment> {
                 ),
                 SizedBox(height: 20.0),
                 Padding(
-                  padding: EdgeInsets.all(20.0),
+                  padding: EdgeInsets.symmetric(horizontal: 20.0),
                   child: TextFormField(
                     controller: nameController,
                     decoration: InputDecoration(
@@ -73,8 +73,9 @@ class _AddCommentState extends State<AddComment> {
                     },
                   ),
                 ),
+                SizedBox(height: 15),
                 Padding(
-                  padding: EdgeInsets.all(20.0),
+                  padding: EdgeInsets.symmetric(horizontal: 20.0),
                   child: TextFormField(
                     controller: descriptionController,
                     keyboardType: TextInputType.multiline,
@@ -102,8 +103,9 @@ class _AddCommentState extends State<AddComment> {
                     },
                   ),
                 ),
+                SizedBox(height: 20),
                 Padding(
-                  padding: EdgeInsets.all(20.0),
+                  padding: EdgeInsets.symmetric(horizontal: 20.0),
                   child: Row(
                     mainAxisAlignment: MainAxisAlignment.spaceEvenly,
                     children: <Widget>[
@@ -134,6 +136,21 @@ class _AddCommentState extends State<AddComment> {
                           )
                       ),
                     ],
+                  ),
+                ),
+                SizedBox(height: 15),
+                Hero(
+                  tag: 'picture',
+                  child: Container(
+                    width: 500.0,
+                    height: 205.0,
+                    alignment: Alignment.center,
+                    decoration: BoxDecoration(
+                      image: DecorationImage(
+                          image: AssetImage(
+                              'styles/images/add-comment-illustration.png'),
+                          fit: BoxFit.fill),
+                    ),
                   ),
                 ),
               ],
