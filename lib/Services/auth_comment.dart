@@ -42,19 +42,19 @@ class AuthCommentService {
                 style: TextStyle(fontFamily: 'Lato'),
               ),
               content: Text(
-                "If you would like to add any additional comments, press No",
+                "Would you like to add another comment?",
                 style: TextStyle(fontFamily: 'Lato.Thin'),
               ),
               actions: <Widget> [
                 TextButton(
-                  child: Text("Yes"),
+                  child: Text("Back to discussion"),
                   onPressed: () {
                     Navigator.push(context,
                         MaterialPageRoute(builder: (context) => ForumDetailScreen(inputId: inputId)));
                   },
                 ),
                 TextButton(
-                  child: Text("No"),
+                  child: Text("Add another comment"),
                   onPressed: () {
                     Navigator.pop(context);
                   },
@@ -91,18 +91,17 @@ class AuthCommentService {
       context: context,
       builder: (BuildContext context) {
         return AlertDialog(
-          contentPadding: EdgeInsets.all(10),
+          contentPadding: EdgeInsets.all(20),
           content: Column(
             children: <Widget> [
               Text("Update discussion"),
-              Expanded(
-                child: TextField(
+              TextField(
                   decoration: InputDecoration(
                       labelText: "Edit Name"
                   ),
                   controller: nameInputController,
                 ),
-              ),
+              SizedBox(height: 20),
               Expanded(
                 child: TextField(
                   keyboardType: TextInputType.multiline,

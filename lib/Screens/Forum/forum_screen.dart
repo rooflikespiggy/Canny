@@ -75,38 +75,61 @@ class _ForumScreenState extends State<ForumScreen> {
                                     child: Card(
                                       elevation: 9,
                                       shape: RoundedRectangleBorder(
-                                          borderRadius: BorderRadius.all(Radius.circular(15.0))),
+                                          borderRadius: BorderRadius.all(Radius.circular(12.0))),
                                       child: Column(
                                         children: <Widget>[
                                           ListTile(
                                               contentPadding: EdgeInsets.all(18.0),
-                                              title: Text(snapshot.data.docs[index]["title"]),
+                                              title: Text(
+                                                  snapshot.data.docs[index]["title"],
+                                                style: TextStyle(
+                                                  fontSize: 20,
+
+                                                ),
+                                              ),
                                               subtitle: Text(
                                                   snapshot.data.docs[index]["description"].length > 200
                                                       ? snapshot.data.docs[index]["description"].substring(0, 200) + "..."
-                                                      : snapshot.data.docs[index]["description"]
+                                                      : snapshot.data.docs[index]["description"],
+                                                  style: TextStyle(
+                                                    fontSize: 16,
+                                                  )
                                               ),
                                               leading: CircleAvatar(
                                                 radius: 30,
-                                                child: Text(snapshot.data.docs[index]["name"][0]),
+                                                child: Text(
+                                                    snapshot.data.docs[index]["name"][0],
+                                                  style: TextStyle(
+                                                    fontSize: 22,
+                                                  ),
+                                                ),
                                               )
                                           ),
                                           Padding(
-                                            padding: EdgeInsets.fromLTRB(20.0, 5.0, 20.0, 10.0),
+                                            padding: EdgeInsets.fromLTRB(20.0, 0, 20.0, 10.0),
                                             child: Row(
                                               crossAxisAlignment: CrossAxisAlignment.center,
                                               mainAxisAlignment: MainAxisAlignment.spaceBetween,
                                               children: <Widget>[
-                                                Text("By: ${snapshot.data.docs[index]["name"]}"),
+                                                Text("By: ${snapshot.data.docs[index]["name"]}",
+                                                  style: TextStyle(
+                                                    fontSize: 16,
+                                                    color: Colors.grey[850],
+                                                  )
+                                                ),
                                                 Text(DateFormat("EEEE, d MMMM y")
                                                     .format(DateTime.fromMillisecondsSinceEpoch(
                                                     snapshot.data.docs[index]["timestamp"].seconds * 1000)),
+                                                    style: TextStyle(
+                                                      fontSize: 16,
+                                                      color: Colors.grey[850],
+                                                    )
                                                 ),
                                               ],
                                             ),
                                           ),
                                           Padding(
-                                            padding: EdgeInsets.only(left: 8.0, right: 8.0, top: 5.0),
+                                            padding: EdgeInsets.only(left: 8.0, right: 8.0),
                                             child: Row(
                                               mainAxisAlignment: MainAxisAlignment.spaceBetween,
                                               children: <Widget>[
@@ -223,9 +246,12 @@ class _ForumScreenState extends State<ForumScreen> {
                                               child: Row(
                                                 mainAxisAlignment: MainAxisAlignment.start,
                                                 children: <Widget> [
-                                                  SizedBox(width: 18.5),
+                                                  SizedBox(width: 20),
                                                   Text(
                                                     noOfLikes.toString(),
+                                                    style: TextStyle(
+                                                      fontSize: 15,
+                                                    ),
                                                   ),
                                                   SizedBox(width: 40.5),
                                                   Text(
