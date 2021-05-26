@@ -65,6 +65,7 @@ class _ForumScreenState extends State<ForumScreen> {
                             final descriptionInputController = TextEditingController(text: snapshot.data.docs[index]["description"]);
                             int noOfLikes = snapshot.data.docs[index]["likes"];
                             int noOfComments = snapshot.data.docs[index]["comments"];
+                            final List<bool> _liked = List.filled(snapshot.data.docs.length, false);
                             return Padding(
                               padding: EdgeInsets.only(bottom: 4.0),
                               child: Column(
@@ -116,19 +117,19 @@ class _ForumScreenState extends State<ForumScreen> {
                                                     children: <Widget> [
                                                       IconButton(
                                                         icon: Icon(
-                                                            snapshot.data.docs[index]["liked"]
+                                                            snapshot.data.docs[index]["liked_uid"].contains(uid)
                                                                 ? Icons.favorite
                                                                 : Icons.favorite_border,
-                                                            color: snapshot.data.docs[index]["liked"]
+                                                            color: snapshot.data.docs[index]["liked_uid"].contains(uid)
                                                                 ? Colors.red
                                                                 : Colors.black),
                                                         onPressed: () {
-                                                          if (snapshot.data.docs[index]["liked"]) {
+                                                          if (snapshot.data.docs[index]["liked_uid"].contains(uid)) {
                                                             setState(() {
                                                               dbRef.doc(snapshot.data.docs[index].id)
                                                                   .update({
                                                                 "likes": noOfLikes -= 1,
-                                                                "liked": false,
+                                                                "liked_uid": FieldValue.arrayRemove([uid]),
                                                               }).catchError((error) => print(error));
                                                             });
                                                           } else {
@@ -136,7 +137,7 @@ class _ForumScreenState extends State<ForumScreen> {
                                                               dbRef.doc(snapshot.data.docs[index].id)
                                                                   .update({
                                                                 "likes": noOfLikes += 1,
-                                                                "liked": true,
+                                                                "liked_uid": FieldValue.arrayUnion([uid]),
                                                               }).catchError((error) => print(error));
                                                             });
                                                           }

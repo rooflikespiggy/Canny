@@ -30,8 +30,8 @@ class AuthCommentService {
         "timestamp": DateTime.now(),
         "likes": 0,
         "dislikes": 0,
-        "liked": false,
-        "disliked": false,
+        "liked_uid": [],
+        "disliked_uid": [],
       }).then((_) {
         showDialog(
           context: context,
