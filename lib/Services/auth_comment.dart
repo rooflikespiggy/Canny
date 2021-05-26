@@ -75,7 +75,9 @@ class AuthCommentService {
         .collection("Comment")
         .doc(commentId)
         .delete();
-    dbRef.doc(inputId).update({
+    dbRef
+        .doc(inputId)
+        .update({
       "comments": FieldValue.increment(-1),
     });
     return true;
