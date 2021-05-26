@@ -5,7 +5,7 @@ import 'package:flutter/material.dart';
 
 
 class AuthForumService {
-  String uid = FirebaseAuth.instance.currentUser.uid;
+  final String uid = FirebaseAuth.instance.currentUser.uid;
   final dbRef = FirebaseFirestore.instance.collection("Forum");
 
   Future addDiscussion(TextEditingController nameController,
@@ -22,7 +22,7 @@ class AuthForumService {
         "description": descriptionController.text,
         "timestamp": DateTime.now(),
         "likes": 0,
-        "liked": false,
+        "liked_uid": [],
         "comments": 0,
       }).then((_) {
         showDialog(

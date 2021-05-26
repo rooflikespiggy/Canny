@@ -86,19 +86,19 @@ class CommentDetail extends StatelessWidget {
                                               children: <Widget> [
                                                 IconButton(
                                                   icon: Icon(
-                                                      snapshot.data.docs[index]["liked"]
+                                                      snapshot.data.docs[index]["liked_uid"].contains(uid)
                                                           ? Icons.thumb_up_alt
                                                           : Icons.thumb_up_alt_outlined,
                                                       color: Colors.black),
                                                   onPressed: () {
-                                                    if (snapshot.data.docs[index]["liked"]) {
+                                                    if (snapshot.data.docs[index]["liked_uid"].contains(uid)) {
                                                       dbCommentRef
                                                           .doc(inputId)
                                                           .collection("Comment")
                                                           .doc(snapshot.data.docs[index].id)
                                                           .update({
                                                         "likes": noOfLikes -= 1,
-                                                        "liked": false,
+                                                        "liked_uid": FieldValue.arrayRemove([uid]),
                                                       }).catchError((error) => print(error));
                                                     } else {
                                                       dbCommentRef
@@ -107,26 +107,26 @@ class CommentDetail extends StatelessWidget {
                                                           .doc(snapshot.data.docs[index].id)
                                                           .update({
                                                         "likes": noOfLikes += 1,
-                                                        "liked": true,
+                                                        "liked_uid": FieldValue.arrayUnion([uid]),
                                                       }).catchError((error) => print(error));
                                                     }
                                                   },
                                                 ),
                                                 IconButton(
                                                   icon: Icon(
-                                                      snapshot.data.docs[index]["disliked"]
+                                                      snapshot.data.docs[index]["disliked_uid"].contains(uid)
                                                           ? Icons.thumb_down_alt
                                                           : Icons.thumb_down_alt_outlined,
                                                       color: Colors.black),
                                                   onPressed: () {
-                                                    if (snapshot.data.docs[index]["disliked"]) {
+                                                    if (snapshot.data.docs[index]["disliked_uid"].contains(uid)) {
                                                       dbCommentRef
                                                           .doc(inputId)
                                                           .collection("Comment")
                                                           .doc(snapshot.data.docs[index].id)
                                                           .update({
                                                         "dislikes": noOfDislikes -= 1,
-                                                        "disliked": false,
+                                                        "disliked_uid": FieldValue.arrayRemove([uid]),
                                                       }).catchError((error) => print(error));
                                                     } else {
                                                       dbCommentRef
@@ -135,7 +135,7 @@ class CommentDetail extends StatelessWidget {
                                                           .doc(snapshot.data.docs[index].id)
                                                           .update({
                                                         "dislikes": noOfDislikes += 1,
-                                                        "disliked": true,
+                                                        "disliked_uid": FieldValue.arrayUnion([uid]),
                                                       }).catchError((error) => print(error));
                                                     }
                                                   },
