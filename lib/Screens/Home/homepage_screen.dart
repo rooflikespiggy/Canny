@@ -115,6 +115,8 @@ class _HomePageScreenState extends State<HomePageScreen> {
         backgroundColor: kDeepOrangePrimary,
         shape: CircleBorder(),
         buttonSize: 50.0,
+        childMarginTop: 15.0,
+        childMarginBottom: 15.0,
         children: _speedDailItems,
       ),
     );
