@@ -22,7 +22,7 @@ class _ReceiptScreenState extends State<ReceiptScreen> {
         ),
       ),
       drawer: SideBarMenu(),
-      backgroundColor: Colors.brown[100],
+      backgroundColor: kBackgroundColour,
       body: Center(
         child: Text('Receipt'),
       ),
