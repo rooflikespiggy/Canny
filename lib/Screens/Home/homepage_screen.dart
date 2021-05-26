@@ -62,23 +62,23 @@ class _HomePageScreenState extends State<HomePageScreen> {
       ),
       floatingActionButtonLocation: FloatingActionButtonLocation.endFloat,
       floatingActionButton: FloatingActionButton(
-          child: Icon(Icons.add),
-          backgroundColor: Colors.blue,
-          onPressed: () {
-            showModalBottomSheet(
-              shape: RoundedRectangleBorder(
-                borderRadius: BorderRadius.only(
-                  topLeft: Radius.circular(24),
-                  topRight: Radius.circular(24),
-                ),
+        child: Icon(Icons.add),
+        backgroundColor: Colors.blue,
+        onPressed: () {
+          showModalBottomSheet(
+            shape: RoundedRectangleBorder(
+              borderRadius: BorderRadius.only(
+                topLeft: Radius.circular(24),
+                topRight: Radius.circular(24),
               ),
-              isScrollControlled: true,
-              elevation: 5,
-              context: context,
-              builder: (context) =>
-                  Column(
-                    mainAxisSize: MainAxisSize.min,
-                    children: <Widget>[
+            ),
+            isScrollControlled: true,
+            elevation: 5,
+            context: context,
+            builder: (context) =>
+                Column(
+                  mainAxisSize: MainAxisSize.min,
+                  children: <Widget>[
                       ListTile(
                         leading: Text('no idea what'),
                         trailing: Icon(Icons.clear),
@@ -113,8 +113,8 @@ class _HomePageScreenState extends State<HomePageScreen> {
                           // print('Add Target Category');
                         },
                       ),
-                    ],
-                  ),
+                  ],
+                ),
             );
           },
       ),

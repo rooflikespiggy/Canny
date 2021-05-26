@@ -21,7 +21,11 @@ class CommentDetail extends StatelessWidget {
       child: Column(
         children: <Widget>[
           StreamBuilder(
-            stream: dbCommentRef.doc(inputId).collection("Comment").orderBy("timestamp", descending: true).snapshots(),
+            stream: dbCommentRef
+                .doc(inputId)
+                .collection("Comment")
+                .orderBy("timestamp", descending: true)
+                .snapshots(),
             builder: (BuildContext context, AsyncSnapshot<QuerySnapshot> snapshot) {
               if (snapshot.hasData) {
                 return Align(
@@ -53,9 +57,7 @@ class CommentDetail extends StatelessWidget {
                                         contentPadding: EdgeInsets.all(18.0),
                                         title: Text(snapshot.data.docs[index]["name"]),
                                         subtitle: Text(
-                                            snapshot.data.docs[index]["description"].length > 200
-                                                ? snapshot.data.docs[index]["description"].substring(0, 200) + "..."
-                                                : snapshot.data.docs[index]["description"]
+                                            snapshot.data.docs[index]["description"],
                                         ),
                                         leading: CircleAvatar(
                                           radius: 30,
@@ -100,6 +102,17 @@ class CommentDetail extends StatelessWidget {
                                                         "likes": noOfLikes -= 1,
                                                         "liked_uid": FieldValue.arrayRemove([uid]),
                                                       }).catchError((error) => print(error));
+                                                    } else if (snapshot.data.docs[index]["disliked_uid"].contains(uid)) {
+                                                      dbCommentRef
+                                                          .doc(inputId)
+                                                          .collection("Comment")
+                                                          .doc(snapshot.data.docs[index].id)
+                                                          .update({
+                                                        "likes": noOfLikes += 1,
+                                                        "dislikes": noOfDislikes -= 1,
+                                                        "liked_uid": FieldValue.arrayUnion([uid]),
+                                                        "disliked_uid": FieldValue.arrayRemove([uid]),
+                                                      }).catchError((error) => print(error));
                                                     } else {
                                                       dbCommentRef
                                                           .doc(inputId)
@@ -128,7 +141,18 @@ class CommentDetail extends StatelessWidget {
                                                         "dislikes": noOfDislikes -= 1,
                                                         "disliked_uid": FieldValue.arrayRemove([uid]),
                                                       }).catchError((error) => print(error));
-                                                    } else {
+                                                    } else if (snapshot.data.docs[index]["liked_uid"].contains(uid)) {
+                                                      dbCommentRef
+                                                          .doc(inputId)
+                                                          .collection("Comment")
+                                                          .doc(snapshot.data.docs[index].id)
+                                                          .update({
+                                                        "likes": noOfLikes -= 1,
+                                                        "dislikes": noOfDislikes += 1,
+                                                        "liked_uid": FieldValue.arrayRemove([uid]),
+                                                        "disliked_uid": FieldValue.arrayUnion([uid]),
+                                                      }).catchError((error) => print(error));
+                                                    }  else {
                                                       dbCommentRef
                                                           .doc(inputId)
                                                           .collection("Comment")
