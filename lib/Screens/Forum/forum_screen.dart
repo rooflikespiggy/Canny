@@ -69,6 +69,7 @@ class _ForumScreenState extends State<ForumScreen> {
                             final descriptionInputController = TextEditingController(text: snapshot.data.docs[index]["description"]);
                             int noOfLikes = snapshot.data.docs[index]["likes"];
                             int noOfComments = snapshot.data.docs[index]["comments"];
+                            final snapshotData = snapshot.data.docs[index];
                             return Padding(
                               padding: EdgeInsets.only(bottom: 4.0),
                               child: Column(
@@ -85,15 +86,15 @@ class _ForumScreenState extends State<ForumScreen> {
                                           ListTile(
                                               contentPadding: EdgeInsets.all(18.0),
                                               title: Text(
-                                                  snapshot.data.docs[index]["title"],
+                                                snapshotData["title"],
                                                 style: TextStyle(
                                                   fontSize: 20,
                                                 ),
                                               ),
                                               subtitle: Text(
-                                                  snapshot.data.docs[index]["description"].length > 200
-                                                      ? snapshot.data.docs[index]["description"].substring(0, 200) + "..."
-                                                      : snapshot.data.docs[index]["description"],
+                                                  snapshotData["description"].length > 200
+                                                      ? snapshotData["description"].substring(0, 200) + "..."
+                                                      : snapshotData["description"],
                                                   style: TextStyle(
                                                     fontSize: 16,
                                                   )
@@ -102,7 +103,7 @@ class _ForumScreenState extends State<ForumScreen> {
                                                 backgroundColor: kDeepOrangePrimary,
                                                 radius: 30,
                                                 child: Text(
-                                                    snapshot.data.docs[index]["name"][0],
+                                                  snapshotData["name"][0],
                                                   style: TextStyle(
                                                     fontSize: 23,
                                                     color: Colors.white,
@@ -116,7 +117,7 @@ class _ForumScreenState extends State<ForumScreen> {
                                               crossAxisAlignment: CrossAxisAlignment.center,
                                               mainAxisAlignment: MainAxisAlignment.spaceBetween,
                                               children: <Widget>[
-                                                Text("By: ${snapshot.data.docs[index]["name"]}",
+                                                Text("By: ${snapshotData["name"]}",
                                                   style: TextStyle(
                                                     fontSize: 16,
                                                     color: Colors.grey[850],
@@ -124,7 +125,7 @@ class _ForumScreenState extends State<ForumScreen> {
                                                 ),
                                                 Text(DateFormat("EEEE, d MMMM y")
                                                     .format(DateTime.fromMillisecondsSinceEpoch(
-                                                    snapshot.data.docs[index]["timestamp"].seconds * 1000)),
+                                                    snapshotData["timestamp"].seconds * 1000)),
                                                     style: TextStyle(
                                                       fontSize: 16,
                                                       color: Colors.grey[850],
@@ -144,16 +145,16 @@ class _ForumScreenState extends State<ForumScreen> {
                                                     children: <Widget> [
                                                       IconButton(
                                                         icon: Icon(
-                                                            snapshot.data.docs[index]["liked_uid"].contains(uid)
+                                                            snapshotData["liked_uid"].contains(uid)
                                                                 ? Icons.favorite
                                                                 : Icons.favorite_border,
-                                                            color: snapshot.data.docs[index]["liked_uid"].contains(uid)
+                                                            color: snapshotData["liked_uid"].contains(uid)
                                                                 ? Colors.red
                                                                 : Colors.black),
                                                         onPressed: () {
-                                                          if (snapshot.data.docs[index]["liked_uid"].contains(uid)) {
+                                                          if (snapshotData["liked_uid"].contains(uid)) {
                                                             setState(() {
-                                                              dbRef.doc(snapshot.data.docs[index].id)
+                                                              dbRef.doc(snapshotData.id)
                                                                   .update({
                                                                 "likes": noOfLikes -= 1,
                                                                 "liked_uid": FieldValue.arrayRemove([uid]),
@@ -161,7 +162,7 @@ class _ForumScreenState extends State<ForumScreen> {
                                                             });
                                                           } else {
                                                             setState(() {
-                                                              dbRef.doc(snapshot.data.docs[index].id)
+                                                              dbRef.doc(snapshotData.id)
                                                                   .update({
                                                                 "likes": noOfLikes += 1,
                                                                 "liked_uid": FieldValue.arrayUnion([uid]),
@@ -175,7 +176,7 @@ class _ForumScreenState extends State<ForumScreen> {
                                                         onPressed: () {
                                                           Navigator.push(context,
                                                               MaterialPageRoute(builder: (context) =>
-                                                                  ForumDetailScreen(inputId: snapshot.data.docs[index].id)));
+                                                                  ForumDetailScreen(inputId: snapshotData.id)));
                                                         },
                                                       ),
                                                     ],
@@ -185,7 +186,7 @@ class _ForumScreenState extends State<ForumScreen> {
                                                   alignment: Alignment.centerRight,
                                                   child: Row(
                                                       children: <Widget> [
-                                                        if (snapshot.data.docs[index]["uid"] == uid)
+                                                        if (snapshotData["uid"] == uid)
                                                           IconButton(
                                                             icon:
                                                             Icon(FontAwesomeIcons.edit),
@@ -200,7 +201,7 @@ class _ForumScreenState extends State<ForumScreen> {
                                                             },
                                                           ),
                                                         SizedBox(width: 8.0),
-                                                        if (snapshot.data.docs[index]["uid"] == uid)
+                                                        if (snapshotData["uid"] == uid)
                                                           IconButton(
                                                             icon: Icon(
                                                                 FontAwesomeIcons.trashAlt),
@@ -218,7 +219,7 @@ class _ForumScreenState extends State<ForumScreen> {
                                                                         child: Text("Yes"),
                                                                         onPressed: () async {
                                                                           await _authForum.removeDiscussion(
-                                                                            snapshot.data.docs[index].id,
+                                                                            snapshotData.id,
                                                                           );
                                                                           setState(() {
                                                                             snapshot.data.docs.removeAt(index);
@@ -279,10 +280,6 @@ class _ForumScreenState extends State<ForumScreen> {
                     }
                     return CircularProgressIndicator();
                   },
-                ),
-                Container(
-                  color: kBackgroundColour,
-                  height: 50.0,
                 ),
               ],
             ),
