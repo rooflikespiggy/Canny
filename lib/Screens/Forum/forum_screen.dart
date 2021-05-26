@@ -49,7 +49,7 @@ class _ForumScreenState extends State<ForumScreen> {
             child: Column(
               children: <Widget>[
                 StreamBuilder(
-                  stream: dbRef.snapshots(),
+                  stream: dbRef.orderBy("timestamp", descending: true).snapshots(),
                   builder: (BuildContext context, AsyncSnapshot<QuerySnapshot> snapshot) {
                     if (snapshot.hasData) {
                       return Align(

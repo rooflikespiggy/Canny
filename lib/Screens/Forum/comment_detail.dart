@@ -21,7 +21,7 @@ class CommentDetail extends StatelessWidget {
       child: Column(
         children: <Widget>[
           StreamBuilder(
-            stream: dbCommentRef.doc(inputId).collection("Comment").snapshots(),
+            stream: dbCommentRef.doc(inputId).collection("Comment").orderBy("timestamp", descending: true).snapshots(),
             builder: (BuildContext context, AsyncSnapshot<QuerySnapshot> snapshot) {
               if (snapshot.hasData) {
                 return Align(
