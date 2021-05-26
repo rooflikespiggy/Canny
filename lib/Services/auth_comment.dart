@@ -18,7 +18,6 @@ class AuthCommentService {
       GlobalKey<FormState> _formKey) async {
 
     if (_formKey.currentState.validate()) {
-      print(inputId);
       dbCommentRef
           .doc(inputId)
           .collection("Comment")
