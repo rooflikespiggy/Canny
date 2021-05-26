@@ -39,6 +39,7 @@ dependencies:
   math_expressions: "^2.1.1"
   intl: ^0.17.0
   like_button: ^2.0.2
+  persistent_bottom_nav_bar: ^4.0.2
 
 
 dev_dependencies:
