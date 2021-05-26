@@ -70,7 +70,7 @@ class _HomePageScreenState extends State<HomePageScreen> {
       floatingActionButtonLocation: FloatingActionButtonLocation.endDocked,
       floatingActionButton: FloatingActionButton(
         child: Icon(Icons.add),
-        backgroundColor: Colors.blue,
+        backgroundColor: kDeepOrangePrimary,
         onPressed: () {
           showModalBottomSheet(
             shape: RoundedRectangleBorder(

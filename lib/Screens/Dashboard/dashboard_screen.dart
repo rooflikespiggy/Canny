@@ -22,7 +22,7 @@ class _DashboardScreenState extends State<DashboardScreen> {
         ),
       ),
       drawer: SideBarMenu(),
-      backgroundColor: Colors.brown[100],
+      backgroundColor: kBackgroundColour,
       body: Center(
         child: Text('Dashboard'),
       ),

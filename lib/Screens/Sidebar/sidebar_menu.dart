@@ -26,13 +26,14 @@ class SideBarMenu extends StatelessWidget {
                 ),
               ),
               child: Padding(
-                padding: EdgeInsets.only(top: 7.0),
+                padding: EdgeInsets.only(bottom: 1.0),
                 child: Container(
-                  child: Text(email,
+                  child: Text("Account Email: \n" +  email,
                     style: TextStyle(
-                      fontSize: 15,
-                      color: Colors.white,
+                      fontSize: 16,
+                      color: Colors.deepOrange[50],
                     ),
+                    textAlign: TextAlign.center,
                   ),
                   alignment: Alignment.bottomCenter,
                   height: 40.0,
@@ -45,7 +46,7 @@ class SideBarMenu extends StatelessWidget {
               title: Text(
                 'Customise Quick Input',
                 style: TextStyle(fontFamily: 'Lato',
-                  fontSize: 15,
+                  fontSize: 16,
                 )
               ),
               onTap: () => {Navigator.pop(context)},
@@ -57,7 +58,7 @@ class SideBarMenu extends StatelessWidget {
               title: Text(
                 'View Categories',
                   style: TextStyle(fontFamily: 'Lato',
-                    fontSize: 15,
+                    fontSize: 16,
                   )
               ),
               onTap: () => {Navigator.push(context,
@@ -71,7 +72,7 @@ class SideBarMenu extends StatelessWidget {
               title: Text(
                 'Logout',
                   style: TextStyle(fontFamily: 'Lato',
-                    fontSize: 15,
+                    fontSize: 16,
                   )
               ),
               onTap: () async {
