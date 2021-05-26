@@ -1,14 +1,11 @@
 import 'package:Canny/Screens/Dashboard/dashboard_screen.dart';
-import 'package:Canny/Screens/Insert Function/add_discussion.dart';
 import 'package:Canny/Screens/Forum/forum_screen.dart';
 import 'package:Canny/Screens/Insert Function/add_category.dart';
 import 'package:Canny/Screens/Insert Function/add_spending.dart';
 import 'package:Canny/Screens/Insert Function/add_targeted_expenditure.dart';
 import 'package:Canny/Screens/Leaderboard/leaderboard_screen.dart';
 import 'package:Canny/Screens/Receipt/receipt_screen.dart';
-import 'package:Canny/Screens/Sidebar/sidebar_menu.dart';
 import 'package:flutter/material.dart';
-import 'package:font_awesome_flutter/font_awesome_flutter.dart';
 
 class HomePageScreen extends StatefulWidget {
   static final String id = 'homepage_screen';
@@ -18,8 +15,8 @@ class HomePageScreen extends StatefulWidget {
 }
 
 class _HomePageScreenState extends State<HomePageScreen> {
-  int _selectedTab = 0;
-  String _title = 'CANNY';
+  int _selectedTab = 2;
+  // String _title = 'CANNY';
 
   List<Widget> _pageOptions = [
     DashboardScreen(),
@@ -31,13 +28,6 @@ class _HomePageScreenState extends State<HomePageScreen> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      appBar: AppBar(
-        title: Text(
-          _title,
-          style: TextStyle(fontFamily: 'Lato'),
-        ),
-      ),
-      drawer: SideBarMenu(),
       body: _pageOptions[_selectedTab],
       bottomNavigationBar: BottomNavigationBar(
         currentIndex: _selectedTab,
@@ -49,20 +39,6 @@ class _HomePageScreenState extends State<HomePageScreen> {
         onTap: (int index) {
           setState(() {
             _selectedTab = index;
-            switch (index) {
-              case 0:
-                {_title = 'DASHBOARD';}
-                break;
-              case 1:
-                {_title = 'RECEIPT';}
-                break;
-              case 2:
-                {_title = 'FORUM';}
-                break;
-              case 3:
-                {_title = 'LEADERBOARD';}
-                break;
-            }
           });
         },
         items: [
@@ -104,6 +80,13 @@ class _HomePageScreenState extends State<HomePageScreen> {
                     mainAxisSize: MainAxisSize.min,
                     children: <Widget>[
                       ListTile(
+                        leading: Text('no idea what'),
+                        trailing: Icon(Icons.clear),
+                        onTap: () {
+                          Navigator.pop(context);
+                        },
+                      ),
+                      ListTile(
                         leading: Icon(Icons.monetization_on_outlined),
                         title: Text('Add your Spendings'),
                         onTap: () {
@@ -127,15 +110,6 @@ class _HomePageScreenState extends State<HomePageScreen> {
                         onTap: () {
                           Navigator.push(context,
                               MaterialPageRoute(builder: (context) => AddCategoryScreen()));
-                          // print('Add Target Category');
-                        },
-                      ),
-                      ListTile(
-                        leading: Icon(FontAwesomeIcons.pen),
-                        title: Text('Discuss in the Forum'),
-                        onTap: () {
-                          Navigator.push(context,
-                              MaterialPageRoute(builder: (context) => AddDiscussion()));
                           // print('Add Target Category');
                         },
                       ),

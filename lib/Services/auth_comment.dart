@@ -1,50 +1,56 @@
-import 'package:Canny/Screens/Home/homepage_screen.dart';
+import 'package:Canny/Screens/Forum/forum_detail_screen.dart';
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
 
 
-class AuthForumService {
-  String uid = FirebaseAuth.instance.currentUser.uid;
+class AuthCommentService {
+  final String uid = FirebaseAuth.instance.currentUser.uid;
+  final String inputId;
+  final dbCommentRef = FirebaseFirestore.instance.collection("ForumComment");
   final dbRef = FirebaseFirestore.instance.collection("Forum");
 
-  Future addDiscussion(TextEditingController nameController,
-      TextEditingController titleController,
+  AuthCommentService(this.inputId);
+
+  Future addComment(TextEditingController nameController,
       TextEditingController descriptionController,
       BuildContext context,
       GlobalKey<FormState> _formKey) async {
 
     if (_formKey.currentState.validate()) {
-      dbRef.add({
+      print(inputId);
+      dbCommentRef
+          .doc(inputId)
+          .collection("Comment")
+          .add({
         "uid": uid,
+        "did": inputId,
         "name": nameController.text,
-        "title": titleController.text,
         "description": descriptionController.text,
         "timestamp": DateTime.now(),
         "likes": 0,
+        "dislikes": 0,
         "liked": false,
-        "comments": 0,
+        "disliked": false,
       }).then((_) {
         showDialog(
           context: context,
           builder: (BuildContext context) {
             return AlertDialog(
               title: Text(
-                "Succesfully Submitted Your Discussion!",
+                "Succesfully Submitted Your Comment!",
                 style: TextStyle(fontFamily: 'Lato'),
               ),
               content: Text(
-                "If you would like to add any additional discussions, press No",
+                "If you would like to add any additional comments, press No",
                 style: TextStyle(fontFamily: 'Lato.Thin'),
               ),
               actions: <Widget> [
                 TextButton(
                   child: Text("Yes"),
                   onPressed: () {
-                    int count = 0;
-                    Navigator.popUntil(context, (route) {
-                      return count++ == 2;
-                    });
+                    Navigator.push(context,
+                        MaterialPageRoute(builder: (context) => ForumDetailScreen(inputId: inputId)));
                   },
                 ),
                 TextButton(
@@ -57,7 +63,6 @@ class AuthForumService {
             );
           },
         );
-        titleController.clear();
         nameController.clear();
         descriptionController.clear();
       }).catchError((error) => print(error));
@@ -65,15 +70,19 @@ class AuthForumService {
     return true;
   }
 
-  Future removeDiscussion(String id) async {
-    dbRef
-        .doc(id)
+  Future removeComment(String commentId) async {
+    dbCommentRef
+        .doc(inputId)
+        .collection("Comment")
+        .doc(commentId)
         .delete();
+    dbRef.doc(inputId).update({
+      "comments": FieldValue.increment(-1),
+    });
     return true;
   }
 
-  Future updateDiscussion(TextEditingController nameInputController,
-      TextEditingController titleInputController,
+  Future updateComment(TextEditingController nameInputController,
       TextEditingController descriptionInputController,
       BuildContext context,
       AsyncSnapshot<QuerySnapshot> snapshot,
@@ -96,14 +105,6 @@ class AuthForumService {
               ),
               Expanded(
                 child: TextField(
-                  decoration: InputDecoration(
-                      labelText: "Edit Title"
-                  ),
-                  controller: titleInputController,
-                ),
-              ),
-              Expanded(
-                child: TextField(
                   keyboardType: TextInputType.multiline,
                   maxLines: null,
                   decoration: InputDecoration(
@@ -118,7 +119,6 @@ class AuthForumService {
             TextButton(
                 onPressed: () {
                   nameInputController.clear();
-                  titleInputController.clear();
                   descriptionInputController.clear();
                   Navigator.pop(context);
                 },
@@ -127,17 +127,17 @@ class AuthForumService {
             TextButton(
                 onPressed: () {
                   if (nameInputController.text.isNotEmpty &&
-                      titleInputController.text.isNotEmpty &&
                       descriptionInputController.text.isNotEmpty) {
-                    dbRef.doc(snapshot.data.docs[index].id).update({
+                    dbCommentRef
+                        .doc(inputId)
+                        .collection("Comment")
+                        .doc(snapshot.data.docs[index].id).update({
                       "uid": uid,
                       "name": nameInputController.text,
-                      "title": titleInputController.text,
                       "description": descriptionInputController.text,
                       "timestamp": DateTime.now(),
                     }).then((_) {
                       nameInputController.clear();
-                      titleInputController.clear();
                       descriptionInputController.clear();
                       Navigator.pop(context);
                     }).catchError((error) => print(error));

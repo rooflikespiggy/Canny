@@ -16,7 +16,7 @@ class _AddDiscussionState extends State<AddDiscussion> {
   final nameController = TextEditingController();
   final titleController = TextEditingController();
   final descriptionController = TextEditingController();
-  final dbRef = FirebaseFirestore.instance.collection("Users");
+  final dbRef = FirebaseFirestore.instance.collection("Forum");
   final AuthForumService _authForum = AuthForumService();
 
   @override
