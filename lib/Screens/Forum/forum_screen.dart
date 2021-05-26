@@ -26,7 +26,9 @@ class _ForumScreenState extends State<ForumScreen> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
+      backgroundColor: kBackgroundColour,
       appBar: AppBar(
+        backgroundColor: kDeepOrangePrimary,
         title: Text(
           "FORUM",
           style: TextStyle(fontFamily: 'Lato'),
@@ -49,7 +51,7 @@ class _ForumScreenState extends State<ForumScreen> {
             child: Column(
               children: <Widget>[
                 StreamBuilder(
-                  stream: dbRef.snapshots(),
+                  stream: dbRef.orderBy("timestamp", descending: true).snapshots(),
                   builder: (BuildContext context, AsyncSnapshot<QuerySnapshot> snapshot) {
                     if (snapshot.hasData) {
                       return Align(
@@ -85,7 +87,6 @@ class _ForumScreenState extends State<ForumScreen> {
                                                   snapshot.data.docs[index]["title"],
                                                 style: TextStyle(
                                                   fontSize: 20,
-
                                                 ),
                                               ),
                                               subtitle: Text(
@@ -97,11 +98,13 @@ class _ForumScreenState extends State<ForumScreen> {
                                                   )
                                               ),
                                               leading: CircleAvatar(
+                                                backgroundColor: kDeepOrangePrimary,
                                                 radius: 30,
                                                 child: Text(
                                                     snapshot.data.docs[index]["name"][0],
                                                   style: TextStyle(
-                                                    fontSize: 22,
+                                                    fontSize: 23,
+                                                    color: Colors.white,
                                                   ),
                                                 ),
                                               )

@@ -32,6 +32,7 @@ class _ForumDetailScreenState extends State<ForumDetailScreen> {
     return Scaffold(
       backgroundColor: kBackgroundColour,
       appBar: AppBar(
+        backgroundColor: kDeepOrangePrimary,
         elevation: 0.0,
         leading: IconButton(
           icon: Icon(Icons.arrow_back),

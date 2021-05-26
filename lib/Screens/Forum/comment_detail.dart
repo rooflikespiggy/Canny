@@ -21,7 +21,8 @@ class CommentDetail extends StatelessWidget {
       child: Column(
         children: <Widget>[
           StreamBuilder(
-            stream: dbCommentRef.doc(inputId).collection("Comment").snapshots(),
+            stream: dbCommentRef.doc(inputId).collection("Comment")
+                .orderBy("timestamp", descending: true).snapshots(),
             builder: (BuildContext context, AsyncSnapshot<QuerySnapshot> snapshot) {
               if (snapshot.hasData) {
                 return Align(
@@ -51,15 +52,31 @@ class CommentDetail extends StatelessWidget {
                                   children: <Widget>[
                                     ListTile(
                                         contentPadding: EdgeInsets.all(18.0),
-                                        title: Text(snapshot.data.docs[index]["name"]),
+                                        title: Text(
+                                          snapshot.data.docs[index]["name"],
+                                          style: TextStyle(
+                                            fontSize: 20,
+
+                                          ),
+                                        ),
                                         subtitle: Text(
                                             snapshot.data.docs[index]["description"].length > 200
                                                 ? snapshot.data.docs[index]["description"].substring(0, 200) + "..."
-                                                : snapshot.data.docs[index]["description"]
+                                                : snapshot.data.docs[index]["description"],
+                                            style: TextStyle(
+                                              fontSize: 16,
+                                            )
                                         ),
                                         leading: CircleAvatar(
+                                          backgroundColor: kDeepOrangePrimary,
                                           radius: 30,
-                                          child: Text(snapshot.data.docs[index]["name"][0]),
+                                          child: Text(
+                                            snapshot.data.docs[index]["name"][0],
+                                            style: TextStyle(
+                                              fontSize: 23,
+                                              color: Colors.white,
+                                            ),
+                                          ),
                                         )
                                     ),
                                     Padding(
@@ -204,7 +221,7 @@ class CommentDetail extends StatelessWidget {
                                       ),
                                     ),
                                     Padding(
-                                      padding: EdgeInsets.fromLTRB(8.0, 0.0, 8.0, 8.0),
+                                      padding: EdgeInsets.fromLTRB(8.0, 0.0, 8.0, 15),
                                       child: Align(
                                         alignment: Alignment.centerLeft,
                                         child: Row(
