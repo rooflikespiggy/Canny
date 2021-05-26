@@ -1,3 +1,4 @@
+import 'package:Canny/Screens/Sidebar/sidebar_menu.dart';
 import 'package:flutter/material.dart';
 
 class DashboardScreen extends StatefulWidget {
@@ -8,9 +9,17 @@ class DashboardScreen extends StatefulWidget {
 }
 
 class _DashboardScreenState extends State<DashboardScreen> {
+
   @override
   Widget build(BuildContext context) {
     return Scaffold(
+      appBar: AppBar(
+        title: Text(
+          "DASHBOARD",
+          style: TextStyle(fontFamily: 'Lato'),
+        ),
+      ),
+      drawer: SideBarMenu(),
       backgroundColor: Colors.brown[100],
       body: Center(
         child: Text('Dashboard'),

@@ -28,14 +28,14 @@ class CommentDetail extends StatelessWidget {
                   alignment: Alignment.topCenter,
                   child: ListView.builder(
                     padding: EdgeInsets.all(10),
-                    physics: const NeverScrollableScrollPhysics(),
+                    physics: NeverScrollableScrollPhysics(),
                     shrinkWrap: true,
                     itemCount: snapshot.data.docs.length,
                     itemBuilder: (BuildContext context, int index) {
                       final nameInputController = TextEditingController(text: snapshot.data.docs[index]["name"]);
                       final descriptionInputController = TextEditingController(text: snapshot.data.docs[index]["description"]);
                       int noOfLikes = snapshot.data.docs[index]["likes"];
-                      // int noOfDislikes = snapshot.data.docs[index]["dislikes"];
+                      int noOfDislikes = snapshot.data.docs[index]["dislikes"];
                       return Padding(
                         padding: EdgeInsets.only(bottom: 4.0),
                         child: Column(
@@ -78,102 +78,148 @@ class CommentDetail extends StatelessWidget {
                                     Padding(
                                       padding: EdgeInsets.only(left: 8.0, right: 8.0, top: 5.0),
                                       child: Row(
-                                        mainAxisAlignment: MainAxisAlignment.start,
+                                        mainAxisAlignment: MainAxisAlignment.spaceBetween,
                                         children: <Widget>[
-                                          IconButton(
-                                            icon: Icon(
-                                                snapshot.data.docs[index]["liked"]
-                                                    ? Icons.favorite
-                                                    : Icons.favorite_border,
-                                                color: snapshot.data.docs[index]["liked"]
-                                                    ? Colors.red
-                                                    : Colors.black),
-                                            onPressed: () {
-                                              if (snapshot.data.docs[index]["liked"]) {
-                                                dbCommentRef
-                                                    .doc(inputId)
-                                                    .collection("Comment")
-                                                    .doc(snapshot.data.docs[index].id)
-                                                    .update({
-                                                  "likes": noOfLikes -= 1,
-                                                  "liked": false,
-                                                }).catchError((error) => print(error));
-                                              } else {
-                                                dbCommentRef
-                                                    .doc(inputId)
-                                                    .collection("Comment")
-                                                    .doc(snapshot.data.docs[index].id)
-                                                    .update({
-                                                  "likes": noOfLikes += 1,
-                                                  "liked": true,
-                                                }).catchError((error) => print(error));
-                                              }
-                                            },
-                                          ),
-                                          SizedBox(width: 140.0),
-                                          if (snapshot.data.docs[index]["uid"] == uid)
-                                            IconButton(
-                                              icon:
-                                              Icon(FontAwesomeIcons.edit),
-                                              onPressed: () async {
-                                                await AuthCommentService(inputId).updateComment(
-                                                    nameInputController,
-                                                    descriptionInputController,
-                                                    context,
-                                                    snapshot,
-                                                    index);
-                                              },
-                                            ),
-                                          SizedBox(width: 10.0),
-                                          if (snapshot.data.docs[index]["uid"] == uid)
-                                            IconButton(
-                                              icon: Icon(
-                                                  FontAwesomeIcons.trashAlt),
-                                              onPressed: () {
-                                                showDialog(
-                                                  context: context,
-                                                  builder:
-                                                      (BuildContext context) {
-                                                    return AlertDialog(
-                                                      title: Text("Are you sure you want to delete your discussion"),
-                                                      content: Text("Once your discussion is deleted, you will not be able to retrieve it back."),
-                                                      actions: <Widget>[
-                                                        // usually buttons at the bottom of the dialog
-                                                        TextButton(
-                                                          child: Text("Yes"),
-                                                          onPressed: () async {
-                                                            await AuthCommentService(inputId).removeComment(
-                                                              snapshot.data.docs[index].id,
-                                                            );
-                                                            snapshot.data.docs.removeAt(index);
-                                                            Navigator.pop(context);
-                                                          },
-                                                        ),
-                                                        TextButton(
-                                                          child: Text("No"),
-                                                          onPressed: () {
-                                                            Navigator.pop(context);
-                                                          },
-                                                        ),
-                                                      ],
-                                                    );
+                                          Align(
+                                            alignment: Alignment.centerLeft,
+                                            child: Row(
+                                              children: <Widget> [
+                                                IconButton(
+                                                  icon: Icon(
+                                                      snapshot.data.docs[index]["liked"]
+                                                          ? Icons.thumb_up_alt
+                                                          : Icons.thumb_up_alt_outlined,
+                                                      color: Colors.black),
+                                                  onPressed: () {
+                                                    if (snapshot.data.docs[index]["liked"]) {
+                                                      dbCommentRef
+                                                          .doc(inputId)
+                                                          .collection("Comment")
+                                                          .doc(snapshot.data.docs[index].id)
+                                                          .update({
+                                                        "likes": noOfLikes -= 1,
+                                                        "liked": false,
+                                                      }).catchError((error) => print(error));
+                                                    } else {
+                                                      dbCommentRef
+                                                          .doc(inputId)
+                                                          .collection("Comment")
+                                                          .doc(snapshot.data.docs[index].id)
+                                                          .update({
+                                                        "likes": noOfLikes += 1,
+                                                        "liked": true,
+                                                      }).catchError((error) => print(error));
+                                                    }
                                                   },
-                                                );
-                                              },
-                                            ),
+                                                ),
+                                                IconButton(
+                                                  icon: Icon(
+                                                      snapshot.data.docs[index]["disliked"]
+                                                          ? Icons.thumb_down_alt
+                                                          : Icons.thumb_down_alt_outlined,
+                                                      color: Colors.black),
+                                                  onPressed: () {
+                                                    if (snapshot.data.docs[index]["disliked"]) {
+                                                      dbCommentRef
+                                                          .doc(inputId)
+                                                          .collection("Comment")
+                                                          .doc(snapshot.data.docs[index].id)
+                                                          .update({
+                                                        "dislikes": noOfDislikes -= 1,
+                                                        "disliked": false,
+                                                      }).catchError((error) => print(error));
+                                                    } else {
+                                                      dbCommentRef
+                                                          .doc(inputId)
+                                                          .collection("Comment")
+                                                          .doc(snapshot.data.docs[index].id)
+                                                          .update({
+                                                        "dislikes": noOfDislikes += 1,
+                                                        "disliked": true,
+                                                      }).catchError((error) => print(error));
+                                                    }
+                                                  },
+                                                ),
+                                              ],
+                                            )
+                                          ),
+                                          Align(
+                                            alignment: Alignment.centerRight,
+                                            child: Row(
+                                              children: <Widget> [
+                                                if (snapshot.data.docs[index]["uid"] == uid)
+                                                  IconButton(
+                                                    icon:
+                                                    Icon(FontAwesomeIcons.edit),
+                                                    onPressed: () async {
+                                                      await AuthCommentService(inputId).updateComment(
+                                                          nameInputController,
+                                                          descriptionInputController,
+                                                          context,
+                                                          snapshot,
+                                                          index);
+                                                    },
+                                                  ),
+                                                SizedBox(width: 10.0),
+                                                if (snapshot.data.docs[index]["uid"] == uid)
+                                                  IconButton(
+                                                    icon: Icon(
+                                                        FontAwesomeIcons.trashAlt),
+                                                    onPressed: () {
+                                                      showDialog(
+                                                        context: context,
+                                                        builder:
+                                                            (BuildContext context) {
+                                                          return AlertDialog(
+                                                            title: Text("Are you sure you want to delete your discussion"),
+                                                            content: Text("Once your discussion is deleted, you will not be able to retrieve it back."),
+                                                            actions: <Widget>[
+                                                              // usually buttons at the bottom of the dialog
+                                                              TextButton(
+                                                                child: Text("Yes"),
+                                                                onPressed: () async {
+                                                                  await AuthCommentService(inputId).removeComment(
+                                                                    snapshot.data.docs[index].id,
+                                                                  );
+                                                                  snapshot.data.docs.removeAt(index);
+                                                                  Navigator.pop(context);
+                                                                },
+                                                              ),
+                                                              TextButton(
+                                                                child: Text("No"),
+                                                                onPressed: () {
+                                                                  Navigator.pop(context);
+                                                                },
+                                                              ),
+                                                            ],
+                                                          );
+                                                        },
+                                                      );
+                                                    },
+                                                  ),
+                                              ],
+                                            )
+                                          )
                                         ],
                                       ),
                                     ),
                                     Padding(
                                       padding: EdgeInsets.fromLTRB(8.0, 0.0, 8.0, 8.0),
-                                      child: Row(
-                                        mainAxisAlignment: MainAxisAlignment.start,
-                                        children: <Widget> [
-                                          SizedBox(width: 18.5),
-                                          Text(
-                                            noOfLikes.toString(),
-                                          ),
-                                        ],
+                                      child: Align(
+                                        alignment: Alignment.centerLeft,
+                                        child: Row(
+                                          mainAxisAlignment: MainAxisAlignment.start,
+                                          children: <Widget> [
+                                            SizedBox(width: 18.5),
+                                            Text(
+                                              noOfLikes.toString(),
+                                            ),
+                                            SizedBox(width: 40.5),
+                                            Text(
+                                              noOfDislikes.toString(),
+                                            ),
+                                          ],
+                                        ),
                                       ),
                                     ),
                                   ],

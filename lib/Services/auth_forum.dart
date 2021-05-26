@@ -41,8 +41,10 @@ class AuthForumService {
                 TextButton(
                   child: Text("Yes"),
                   onPressed: () {
-                    Navigator.push(context,
-                        MaterialPageRoute(builder: (context) => HomePageScreen()));
+                    int count = 0;
+                    Navigator.popUntil(context, (route) {
+                      return count++ == 2;
+                    });
                   },
                 ),
                 TextButton(

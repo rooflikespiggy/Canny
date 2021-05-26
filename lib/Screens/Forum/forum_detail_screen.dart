@@ -1,5 +1,4 @@
 import 'package:Canny/Screens/Forum/add_comment.dart';
-import 'package:Canny/Screens/Forum/forum_screen.dart';
 import 'package:Canny/Screens/Home/homepage_screen.dart';
 import 'package:Canny/Shared/colors.dart';
 import 'package:Canny/Shared/icon_with_text.dart';
@@ -9,6 +8,7 @@ import 'package:flutter/material.dart';
 import 'package:intl/intl.dart';
 
 import 'comment_detail.dart';
+import 'forum_screen.dart';
 
 class ForumDetailScreen extends StatefulWidget {
   static final String id = 'individual_forum_screen';
@@ -31,6 +31,7 @@ class _ForumDetailScreenState extends State<ForumDetailScreen> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
+      backgroundColor: kBackgroundColour,
       appBar: AppBar(
         elevation: 0.0,
         leading: IconButton(
@@ -103,7 +104,7 @@ class _ForumDetailScreenState extends State<ForumDetailScreen> {
                   return CircularProgressIndicator();
                 },
               ),
-              Divider(),
+              Divider(thickness: 2.0),
               CommentDetail(inputId),
             ],
           ),
