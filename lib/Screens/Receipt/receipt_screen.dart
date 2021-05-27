@@ -23,8 +23,13 @@ class _ReceiptScreenState extends State<ReceiptScreen> {
       ),
       drawer: SideBarMenu(),
       backgroundColor: kBackgroundColour,
-      body: Center(
-        child: Text('Receipt'),
+      body: Container(
+        decoration: BoxDecoration(
+          image: DecorationImage(
+            image: AssetImage("styles/images/receipt.png"),
+            fit: BoxFit.fill,
+          ),
+        ),
       ),
     );
   }

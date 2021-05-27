@@ -72,4 +72,3 @@ The following technologies will be used in the process of developing the mobile 
 ### User Interactions
 * **Forums**
   * For users to interact and share with their peers good tips to save money. Users can also share different deals they come across on the forums. This will also include a like system where users are able to like the posts and comments posted by other users.
-
