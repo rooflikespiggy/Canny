@@ -88,7 +88,10 @@ class _HomePageScreenState extends State<HomePageScreen> {
                   mainAxisSize: MainAxisSize.min,
                   children: <Widget>[
                       ListTile(
-                        leading: Text('no idea what'),
+                        leading: Text('What input would you like to Add?',
+                        style: TextStyle(
+                          fontSize: 18,
+                        )),
                         trailing: Icon(Icons.clear),
                         onTap: () {
                           Navigator.pop(context);
