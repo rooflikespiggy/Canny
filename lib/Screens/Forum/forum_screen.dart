@@ -1,6 +1,6 @@
 import 'package:Canny/Screens/Forum/forum_detail_screen.dart';
 import 'package:Canny/Screens/Sidebar/sidebar_menu.dart';
-import 'package:Canny/Services/auth_forum.dart';
+import 'package:Canny/Services/Forum/auth_forum.dart';
 import 'package:Canny/Shared/colors.dart';
 import 'package:Canny/Shared/loading.dart';
 import 'package:cloud_firestore/cloud_firestore.dart';
@@ -9,7 +9,7 @@ import 'package:flutter/material.dart';
 import 'package:font_awesome_flutter/font_awesome_flutter.dart';
 import 'package:intl/intl.dart';
 
-import 'add_discussion.dart';
+import '../../Services/Forum/add_discussion.dart';
 
 class ForumScreen extends StatefulWidget {
   static final String id = 'forum_screen';

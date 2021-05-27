@@ -1,6 +1,6 @@
 import 'package:Canny/Screens/Home/homepage_screen.dart';
 import 'package:Canny/Screens/Sidebar/sidebar_menu.dart';
-import 'package:Canny/Shared/category-tiles.dart';
+import 'package:Canny/Shared/category_tiles.dart';
 import 'package:Canny/Shared/colors.dart';
 import 'package:flutter/material.dart';
 import 'package:font_awesome_flutter/font_awesome_flutter.dart';

@@ -1,4 +1,4 @@
-import 'package:Canny/Services/auth_forum.dart';
+import 'package:Canny/Services/Forum/auth_forum.dart';
 import 'package:Canny/Shared/colors.dart';
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:firebase_auth/firebase_auth.dart';

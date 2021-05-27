@@ -1,6 +1,6 @@
 import 'package:Canny/Models/own_user.dart';
 import 'package:Canny/Screens/wrapper.dart';
-import 'package:Canny/Services/auth.dart';
+import 'package:Canny/Services/Users/auth.dart';
 import 'package:flutter/material.dart';
 import 'package:firebase_core/firebase_core.dart';
 import 'package:provider/provider.dart';

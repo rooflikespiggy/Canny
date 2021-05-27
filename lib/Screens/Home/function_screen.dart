@@ -1,7 +1,7 @@
 import 'package:Canny/Screens/Home/homepage_screen.dart';
 import 'package:Canny/Screens/Quick Input/quick_input.dart';
 import 'package:flutter/material.dart';
-import 'package:Canny/Services/auth.dart';
+import 'package:Canny/Services/Users/auth.dart';
 import 'package:Canny/Shared/colors.dart';
 
 class FunctionScreen extends StatefulWidget {

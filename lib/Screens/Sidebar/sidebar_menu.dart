@@ -1,4 +1,4 @@
-import 'package:Canny/Services/auth.dart';
+import 'package:Canny/Services/Users/auth.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
 import 'package:Canny/Shared/colors.dart';

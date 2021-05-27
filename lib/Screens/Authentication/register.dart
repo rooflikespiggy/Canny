@@ -1,4 +1,4 @@
-import 'package:Canny/Services/auth.dart';
+import 'package:Canny/Services/Users/auth.dart';
 import 'package:Canny/Shared/loading.dart';
 import 'package:flutter/material.dart';
 import 'package:email_validator/email_validator.dart';

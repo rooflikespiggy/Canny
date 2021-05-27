@@ -2,9 +2,9 @@ import 'package:flutter/material.dart';
 import 'package:font_awesome_flutter/font_awesome_flutter.dart';
 
 class CategoryTile extends StatelessWidget {
-  String categoryName;
-  Color categoryColor;
-  FaIcon categoryIcon;
+  final String categoryName;
+  final Color categoryColor;
+  final FaIcon categoryIcon;
 
   CategoryTile({
     Key key,
