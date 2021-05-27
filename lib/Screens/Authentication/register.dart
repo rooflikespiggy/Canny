@@ -31,10 +31,6 @@ class _RegisterState extends State<Register> {
   Widget build(BuildContext context) {
     return loading ? Loading() : Scaffold(
         backgroundColor: kBackgroundColour,
-        appBar: AppBar(
-          backgroundColor: kBackgroundColour,
-          elevation: 0.0,
-        ),
         body: Container(
             padding: EdgeInsets.symmetric(horizontal: 40.0),
             child: SingleChildScrollView(
@@ -42,6 +38,7 @@ class _RegisterState extends State<Register> {
                 mainAxisAlignment: MainAxisAlignment.start,
                 crossAxisAlignment: CrossAxisAlignment.center,
                 children: [
+                  SizedBox(height: 95.0),
                   Container(
                     width: 140.0,
                     height: 140.0,

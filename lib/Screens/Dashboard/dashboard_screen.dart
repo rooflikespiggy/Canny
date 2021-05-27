@@ -23,8 +23,13 @@ class _DashboardScreenState extends State<DashboardScreen> {
       ),
       drawer: SideBarMenu(),
       backgroundColor: kBackgroundColour,
-      body: Center(
-        child: Text('Dashboard'),
+      body: Container(
+        decoration: BoxDecoration(
+          image: DecorationImage(
+            image: AssetImage("styles/images/tracking-expenses.png"),
+            fit: BoxFit.fill,
+          ),
+        ),
       ),
     );
   }

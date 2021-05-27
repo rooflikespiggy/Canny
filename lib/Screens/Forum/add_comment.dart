@@ -31,6 +31,7 @@ class _AddCommentState extends State<AddComment> {
   Widget build(BuildContext context) {
     return Scaffold(
       backgroundColor: kBackgroundColour,
+      resizeToAvoidBottomInset: false,
       body: Center(
         child: Form(
           key: _formKey,
@@ -47,61 +48,14 @@ class _AddCommentState extends State<AddComment> {
                   ),
                 ),
                 SizedBox(height: 20.0),
-                Padding(
-                  padding: EdgeInsets.symmetric(horizontal: 20.0),
-                  child: TextFormField(
-                    controller: nameController,
-                    decoration: InputDecoration(
-                      labelText: "Enter your Name",
-                      prefixIcon: Icon(Icons.person),
-                      filled: true,
-                      fillColor: Colors.white,
-                      enabledBorder: OutlineInputBorder(
-                        borderRadius: BorderRadius.circular(10.0),
-                        borderSide: BorderSide(color: Colors.grey),
-                      ),
-                      focusedBorder: OutlineInputBorder(
-                        borderRadius: BorderRadius.circular(10.0),
-                        borderSide: BorderSide(color: Colors.blue),
-                      ),
-                    ),
-                    validator: (value) {
-                      if (value.isEmpty) {
-                        return 'Enter your Name';
-                      }
-                      return null;
-                    },
-                  ),
+                _showTextFormFields(nameController,
+                  "Enter your Name",
+                  Icon(Icons.person),
                 ),
                 SizedBox(height: 15),
-                Padding(
-                  padding: EdgeInsets.symmetric(horizontal: 20.0),
-                  child: TextFormField(
-                    controller: descriptionController,
-                    keyboardType: TextInputType.multiline,
-                    maxLines: null,
-                    decoration: InputDecoration(
-                      labelText: "Enter your Comment Description",
-                      prefixIcon: Icon(Icons.description_outlined),
-                      filled: true,
-                      fillColor: Colors.white,
-                      enabledBorder: OutlineInputBorder(
-                        borderRadius: BorderRadius.circular(10.0),
-                        borderSide: BorderSide(color: Colors.grey),
-                      ),
-                      focusedBorder: OutlineInputBorder(
-                        borderRadius: BorderRadius.circular(10.0),
-                        borderSide: BorderSide(color: Colors.blue),
-                      ),
-                    ),
-                    // The validator receives the text that the user has entered.
-                    validator: (value) {
-                      if (value.isEmpty) {
-                        return 'Enter your Comment Description';
-                      }
-                      return null;
-                    },
-                  ),
+                _showTextFormFields(descriptionController,
+                  "Enter your Comment Description",
+                  Icon(Icons.description_outlined),
                 ),
                 SizedBox(height: 20),
                 Padding(
@@ -157,6 +111,38 @@ class _AddCommentState extends State<AddComment> {
             ),
           ),
         ),
+      ),
+    );
+  }
+
+  Widget _showTextFormFields(TextEditingController text, String label, Icon icon) {
+    return Padding(
+      padding: EdgeInsets.symmetric(horizontal: 20.0),
+      child: TextFormField(
+        controller: text,
+        keyboardType: TextInputType.multiline,
+        maxLines: null,
+        decoration: InputDecoration(
+          labelText: label,
+          prefixIcon: icon,
+          filled: true,
+          fillColor: Colors.white,
+          enabledBorder: OutlineInputBorder(
+            borderRadius: BorderRadius.circular(10.0),
+            borderSide: BorderSide(color: Colors.grey),
+          ),
+          focusedBorder: OutlineInputBorder(
+            borderRadius: BorderRadius.circular(10.0),
+            borderSide: BorderSide(color: Colors.blue),
+          ),
+        ),
+        // The validator receives the text that the user has entered.
+        validator: (value) {
+          if (value.isEmpty) {
+            return label;
+          }
+          return null;
+        },
       ),
     );
   }
