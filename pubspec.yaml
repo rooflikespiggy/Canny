@@ -38,7 +38,7 @@ dependencies:
   flutter_spinkit: "^4.1.2"
   math_expressions: "^2.1.1"
   intl: ^0.17.0
-  like_button: ^2.0.2
+  flutter_speed_dial: ^3.0.5
 
 
 dev_dependencies:

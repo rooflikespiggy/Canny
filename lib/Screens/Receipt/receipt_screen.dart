@@ -17,7 +17,7 @@ class _ReceiptScreenState extends State<ReceiptScreen> {
       appBar: AppBar(
         backgroundColor: kDeepOrangePrimary,
         title: Text(
-          "LEADERBOARD",
+          "RECEIPT",
           style: TextStyle(fontFamily: 'Lato'),
         ),
       ),
