@@ -38,89 +38,19 @@ class _AddDiscussionState extends State<AddDiscussion> {
                   ),
                 ),
                 SizedBox(height: 15.0),
-                Padding(
-                  padding: EdgeInsets.symmetric(horizontal: 20.0),
-                  child: TextFormField(
-                    controller: nameController,
-                    decoration: InputDecoration(
-                      labelText: "Enter your Name",
-                      prefixIcon: Icon(Icons.person),
-                      filled: true,
-                      fillColor: Colors.white,
-                      enabledBorder: OutlineInputBorder(
-                        borderRadius: BorderRadius.circular(10.0),
-                        borderSide: BorderSide(color: Colors.grey),
-                      ),
-                      focusedBorder: OutlineInputBorder(
-                        borderRadius: BorderRadius.circular(10.0),
-                        borderSide: BorderSide(color: Colors.blue),
-                      ),
-                    ),
-                    validator: (value) {
-                      if (value.isEmpty) {
-                        return 'Enter your Name';
-                      }
-                      return null;
-                      },
-                  ),
+                _showTextFormFields(nameController,
+                  "Enter your Name",
+                  Icon(Icons.person),
                 ),
                 SizedBox(height: 15),
-                Padding(
-                  padding: EdgeInsets.symmetric(horizontal: 20.0),
-                  child: TextFormField(
-                    controller: titleController,
-                    decoration: InputDecoration(
-                      labelText: "Enter your Discussion Title",
-                      prefixIcon: Icon(Icons.title),
-                      filled: true,
-                      fillColor: Colors.white,
-                      enabledBorder: OutlineInputBorder(
-                        borderRadius: BorderRadius.circular(10.0),
-                        borderSide: BorderSide(color: Colors.grey),
-                      ),
-                      focusedBorder: OutlineInputBorder(
-                        borderRadius: BorderRadius.circular(10.0),
-                        borderSide: BorderSide(color: Colors.blue),
-                      ),
-                    ),
-                    // The validator receives the text that the user has entered.
-                    validator: (value) {
-                      if (value.isEmpty) {
-                        return 'Enter your Discussion Title';
-                      }
-                      return null;
-                      },
-                  ),
+                _showTextFormFields(titleController,
+                    "Enter your Discussion Title",
+                    Icon(Icons.title),
                 ),
                 SizedBox(height: 15),
-                Padding(
-                  padding: EdgeInsets.symmetric(horizontal: 20.0),
-                  child: TextFormField(
-                    controller: descriptionController,
-                    keyboardType: TextInputType.multiline,
-                    maxLines: null,
-                    decoration: InputDecoration(
-                      labelText: "Enter your Discussion Description",
-                      prefixIcon: Icon(Icons.description_outlined),
-                      filled: true,
-                      fillColor: Colors.white,
-                      enabledBorder: OutlineInputBorder(
-                        borderRadius: BorderRadius.circular(10.0),
-                        borderSide: BorderSide(color: Colors.grey),
-                      ),
-                      focusedBorder: OutlineInputBorder(
-                        borderRadius: BorderRadius.circular(10.0),
-                        borderSide: BorderSide(color: Colors.blue),
-                      ),
-                    ),
-                    // The validator receives the text that the user has entered.
-                    validator: (value) {
-                      if (value.isEmpty) {
-                        return 'Enter your Discussion Description';
-                      }
-                      return null;
-                      },
-                  ),
+                _showTextFormFields(descriptionController,
+                    "Enter your Discussion Description",
+                    Icon(Icons.description_outlined),
                 ),
                 SizedBox(height: 20),
                 Padding(
@@ -175,6 +105,38 @@ class _AddDiscussionState extends State<AddDiscussion> {
             ),
           ),
         ),
+      ),
+    );
+  }
+
+  Widget _showTextFormFields(TextEditingController text, String label, Icon icon) {
+    return Padding(
+      padding: EdgeInsets.symmetric(horizontal: 20.0),
+      child: TextFormField(
+        controller: text,
+        keyboardType: TextInputType.multiline,
+        maxLines: null,
+        decoration: InputDecoration(
+          labelText: label,
+          prefixIcon: icon,
+          filled: true,
+          fillColor: Colors.white,
+          enabledBorder: OutlineInputBorder(
+            borderRadius: BorderRadius.circular(10.0),
+            borderSide: BorderSide(color: Colors.grey),
+          ),
+          focusedBorder: OutlineInputBorder(
+            borderRadius: BorderRadius.circular(10.0),
+            borderSide: BorderSide(color: Colors.blue),
+          ),
+        ),
+        // The validator receives the text that the user has entered.
+        validator: (value) {
+          if (value.isEmpty) {
+            return label;
+          }
+          return null;
+        },
       ),
     );
   }
