@@ -31,6 +31,7 @@ class _AddCommentState extends State<AddComment> {
   Widget build(BuildContext context) {
     return Scaffold(
       backgroundColor: kBackgroundColour,
+      resizeToAvoidBottomInset: false,
       body: Center(
         child: Form(
           key: _formKey,
