@@ -40,8 +40,6 @@ The following technologies will be used in the process of developing the mobile 
   * Users can choose between inputting a quick input or viewing a comprehensive home screen. 
 * **Quick Input**
   * Consists of just a number pad and buttons for the most used categories, which makes it easier for the user to just key in the amount and pick the category for the spending on the go.This segment will be linked to the receipt function.
-* **Customisable Quick Input Screen**
-  * Users can change the buttons to the most used categories to spendings the user makes on a frequent basis, to make keying in his expenditure even easier.
 
 ### Dashboard Function
 * **Category**
@@ -51,7 +49,7 @@ The following technologies will be used in the process of developing the mobile 
 
 ### Receipt Function
 * **Spending**
-  * Where users key in their spendings based on the category and date of spending. This segment will be linked to the categories and statistics fragment for calculation of statistics to determine the monthly spending by the user.
+  * Where the user's history of transactions will be displayed, together with its category and date of transaction. This segment will be linked to the categories and statistics fragment for calculation of statistics to determine the monthly spending by the user.
 
 ### Insert Function
 * **Add Targeted Expenditure**
@@ -65,7 +63,12 @@ The following technologies will be used in the process of developing the mobile 
 * **Notification**
   * Reminds the user at a set time everyday to key in their expenses for the day. 
 
+### Side Bar
+* **Customise Quick Input**
+  * Users can change the buttons on the quick input screen to the most used categories to spendings the user makes on a frequent basis, to make keying in his expenditure even easier.
+* **View Categories**
+  * Users are able to view all their current categories
+
 ### User Interactions
 * **Forums**
   * For users to interact and share with their peers good tips to save money. Users can also share different deals they come across on the forums. This will also include a like system where users are able to like the posts and comments posted by other users.
-
