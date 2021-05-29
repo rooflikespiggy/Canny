@@ -106,37 +106,10 @@ class CommentDetail extends StatelessWidget {
                                                           : Icons.thumb_up_alt_outlined,
                                                       color: Colors.black),
                                                   onPressed: () async {
-                                                    if (snapshot.data.docs[index]["liked_uid"].contains(uid)) {
-                                                      await dbCommentRef
-                                                          .doc(inputId)
-                                                          .collection("Comment")
-                                                          .doc(snapshot.data.docs[index].id)
-                                                          .update({
-                                                        "likes": noOfLikes -= 1,
-                                                        "liked_uid": FieldValue.arrayRemove([uid]),
-                                                      }).catchError((error) => print(error));
-                                                    } else if (snapshot.data.docs[index]["disliked_uid"].contains(uid)) {
-                                                      await dbCommentRef
-                                                          .doc(inputId)
-                                                          .collection("Comment")
-                                                          .doc(snapshot.data.docs[index].id)
-                                                          .update({
-                                                        "likes": noOfLikes += 1,
-                                                        "dislikes": noOfDislikes -= 1,
-                                                        "liked_uid": FieldValue.arrayUnion([uid]),
-                                                        "disliked_uid": FieldValue.arrayRemove([uid]),
-                                                      }).catchError((error) => print(error));
-                                                    } else {
-                                                      await dbCommentRef
-                                                          .doc(inputId)
-                                                          .collection("Comment")
-                                                          .doc(snapshot.data.docs[index].id)
-                                                          .update({
-                                                        "likes": noOfLikes += 1,
-                                                        "liked_uid": FieldValue.arrayUnion([uid]),
-                                                      }).catchError((error) => print(error));
-                                                    }
-                                                  },
+                                                    await AuthCommentService(inputId).updateLikes(snapshot.data.docs[index]["liked_uid"],
+                                                        snapshot.data.docs[index]["disliked_uid"],
+                                                        snapshot.data.docs[index].id);
+                                                  }
                                                 ),
                                                 IconButton(
                                                   icon: Icon(
@@ -145,37 +118,10 @@ class CommentDetail extends StatelessWidget {
                                                           : Icons.thumb_down_alt_outlined,
                                                       color: Colors.black),
                                                   onPressed: () async {
-                                                    if (snapshot.data.docs[index]["disliked_uid"].contains(uid)) {
-                                                      await dbCommentRef
-                                                          .doc(inputId)
-                                                          .collection("Comment")
-                                                          .doc(snapshot.data.docs[index].id)
-                                                          .update({
-                                                        "dislikes": noOfDislikes -= 1,
-                                                        "disliked_uid": FieldValue.arrayRemove([uid]),
-                                                      }).catchError((error) => print(error));
-                                                    } else if (snapshot.data.docs[index]["liked_uid"].contains(uid)) {
-                                                      await dbCommentRef
-                                                          .doc(inputId)
-                                                          .collection("Comment")
-                                                          .doc(snapshot.data.docs[index].id)
-                                                          .update({
-                                                        "likes": noOfLikes -= 1,
-                                                        "dislikes": noOfDislikes += 1,
-                                                        "liked_uid": FieldValue.arrayRemove([uid]),
-                                                        "disliked_uid": FieldValue.arrayUnion([uid]),
-                                                      }).catchError((error) => print(error));
-                                                    }  else {
-                                                      await dbCommentRef
-                                                          .doc(inputId)
-                                                          .collection("Comment")
-                                                          .doc(snapshot.data.docs[index].id)
-                                                          .update({
-                                                        "dislikes": noOfDislikes += 1,
-                                                        "disliked_uid": FieldValue.arrayUnion([uid]),
-                                                      }).catchError((error) => print(error));
-                                                    }
-                                                  },
+                                                    await AuthCommentService(inputId).updateDislikes(snapshot.data.docs[index]["liked_uid"],
+                                                        snapshot.data.docs[index]["disliked_uid"],
+                                                        snapshot.data.docs[index].id);
+                                                  }
                                                 ),
                                               ],
                                             )
@@ -189,12 +135,63 @@ class CommentDetail extends StatelessWidget {
                                                     icon:
                                                     Icon(FontAwesomeIcons.edit),
                                                     onPressed: () async {
-                                                      await AuthCommentService(inputId).updateComment(
-                                                          nameInputController,
-                                                          descriptionInputController,
-                                                          context,
-                                                          snapshot,
-                                                          index);
+                                                      showDialog(
+                                                        context: context,
+                                                        builder: (BuildContext context) {
+                                                          return AlertDialog(
+                                                            contentPadding: EdgeInsets.all(20),
+                                                            content: Column(
+                                                              children: <Widget> [
+                                                                Text("Update discussion"),
+                                                                TextField(
+                                                                  decoration: InputDecoration(
+                                                                      labelText: "Edit Name"
+                                                                  ),
+                                                                  controller: nameInputController,
+                                                                ),
+                                                                SizedBox(height: 20),
+                                                                Expanded(
+                                                                  child: TextField(
+                                                                    keyboardType: TextInputType.multiline,
+                                                                    maxLines: null,
+                                                                    decoration: InputDecoration(
+                                                                        labelText: "Edit Description"
+                                                                    ),
+                                                                    controller: descriptionInputController,
+                                                                  ),
+                                                                ),
+                                                              ],
+                                                            ),
+                                                            actions: <Widget> [
+                                                              TextButton(
+                                                                  onPressed: () {
+                                                                    nameInputController.clear();
+                                                                    descriptionInputController.clear();
+                                                                    Navigator.pop(context);
+                                                                  },
+                                                                  child: Text("Cancel")
+                                                              ),
+                                                              TextButton(
+                                                                  onPressed: () async {
+                                                                    if (nameInputController.text.isNotEmpty &&
+                                                                        descriptionInputController.text.isNotEmpty) {
+                                                                      await AuthCommentService(inputId).updateComment(
+                                                                        snapshot.data.docs[index].id,
+                                                                        nameInputController.text,
+                                                                        descriptionInputController.text
+                                                                      ).then((_) {
+                                                                        nameInputController.clear();
+                                                                        descriptionInputController.clear();
+                                                                        Navigator.pop(context);
+                                                                      }).catchError((error) => print(error));
+                                                                    }
+                                                                  },
+                                                                  child: Text("Update")
+                                                              ),
+                                                            ],
+                                                          );
+                                                        },
+                                                      );
                                                     },
                                                   ),
                                                 SizedBox(width: 10.0),

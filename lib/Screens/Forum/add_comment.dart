@@ -3,6 +3,9 @@ import 'package:Canny/Shared/colors.dart';
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
+import 'package:Canny/Models/comment.dart';
+
+import 'forum_detail_screen.dart';
 
 class AddComment extends StatefulWidget {
   static final String id = 'add_comment';
@@ -65,15 +68,47 @@ class _AddCommentState extends State<AddComment> {
                     children: <Widget>[
                       ElevatedButton(
                           onPressed: () async {
-                            await AuthCommentService(inputId).addComment(
-                              nameController,
-                              descriptionController,
-                              context,
-                              _formKey,
-                            );
-                            dbRef.doc(inputId).update({
-                              "comments": FieldValue.increment(1),
-                            });
+                            final Comment comment = Comment(uid: uid,
+                                did: inputId,
+                                name: nameController.text,
+                                description: descriptionController.text);
+                            if (_formKey.currentState.validate()) {
+                              await AuthCommentService(inputId)
+                                  .addComment(comment).then((_) {
+                                showDialog(
+                                  context: context,
+                                  builder: (BuildContext context) {
+                                    return AlertDialog(
+                                      title: Text(
+                                        "Succesfully Submitted Your Comment!",
+                                        style: TextStyle(fontFamily: 'Lato'),
+                                      ),
+                                      content: Text(
+                                        "Would you like to add another comment?",
+                                        style: TextStyle(fontFamily: 'Lato.Thin'),
+                                      ),
+                                      actions: <Widget> [
+                                        TextButton(
+                                          child: Text("Back to discussion"),
+                                          onPressed: () {
+                                            Navigator.push(context,
+                                                MaterialPageRoute(builder: (context) => ForumDetailScreen(inputId: inputId)));
+                                          },
+                                        ),
+                                        TextButton(
+                                          child: Text("Add another comment"),
+                                          onPressed: () {
+                                            Navigator.pop(context);
+                                          },
+                                        ),
+                                      ],
+                                    );
+                                  },
+                                );
+                                nameController.clear();
+                                descriptionController.clear();
+                              });
+                            }
                           },
                           child: Text('Submit'),
                           style: ButtonStyle(
