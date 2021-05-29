@@ -14,9 +14,7 @@ class CategoryScreen extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return StreamProvider<QuerySnapshot>.value(
-      value: CategoryDatabaseService().categories,
-      child: Scaffold(
+    return Scaffold(
         backgroundColor: kBackgroundColour,
         drawer: SideBarMenu(),
         appBar: AppBar(
@@ -68,7 +66,6 @@ class CategoryScreen extends StatelessWidget {
             )
           )
         ),
-      ),
-    );
+      );
   }
 }
