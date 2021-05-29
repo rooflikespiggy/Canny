@@ -3,13 +3,13 @@ import 'package:firebase_auth/firebase_auth.dart';
 import 'package:Canny/Models/comment.dart';
 
 
-class AuthCommentService {
+class CommentDatabaseService {
   final String uid = FirebaseAuth.instance.currentUser.uid;
   final String inputId;
   final dbCommentRef = FirebaseFirestore.instance.collection("ForumComment");
   final dbRef = FirebaseFirestore.instance.collection("Forum");
 
-  AuthCommentService(this.inputId);
+  CommentDatabaseService(this.inputId);
 
 
   Future addComment(Comment comment) async {

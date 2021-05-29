@@ -3,15 +3,14 @@ import 'package:font_awesome_flutter/font_awesome_flutter.dart';
 
 class CategoryTile extends StatelessWidget {
   final String categoryName;
-  final String categoryColor;
-  final String categoryIcon;
+  final int categoryColorValue;
+  final int categoryIconCodePoint;
 
   CategoryTile({
-    Key key,
     this.categoryName,
-    this.categoryColor,
-    this.categoryIcon,
-  }) : super(key: key);
+    this.categoryColorValue,
+    this.categoryIconCodePoint,
+  });
 
   @override
   Widget build(BuildContext context) {
@@ -33,8 +32,8 @@ class CategoryTile extends StatelessWidget {
             backgroundColor: Colors.deepOrange[50],
             radius: 30,
             child: IconTheme(
-              data: IconThemeData(color: Color(int.parse(categoryColor)).withOpacity(1), size: 25),
-              child: FaIcon(IconData(int.parse(categoryIcon), fontFamily: 'MaterialIcons'))
+              data: IconThemeData(color: Color(categoryColorValue).withOpacity(1), size: 25),
+              child: FaIcon(IconData(categoryIconCodePoint, fontFamily: 'MaterialIcons'))
             ),
           )
       ),

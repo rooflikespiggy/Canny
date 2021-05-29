@@ -1,4 +1,4 @@
-import 'package:Canny/Services/Forum/auth_comment.dart';
+import 'package:Canny/Services/Forum/comment_database.dart';
 import 'package:Canny/Shared/colors.dart';
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:firebase_auth/firebase_auth.dart';
@@ -107,7 +107,7 @@ class CommentDetail extends StatelessWidget {
                                                           : Icons.thumb_up_alt_outlined,
                                                       color: Colors.black),
                                                   onPressed: () async {
-                                                    await AuthCommentService(inputId).updateLikes(snapshotData["liked_uid"],
+                                                    await CommentDatabaseService(inputId).updateLikes(snapshotData["liked_uid"],
                                                         snapshotData["disliked_uid"],
                                                         snapshotData.id);
                                                   }
@@ -119,7 +119,7 @@ class CommentDetail extends StatelessWidget {
                                                           : Icons.thumb_down_alt_outlined,
                                                       color: Colors.black),
                                                   onPressed: () async {
-                                                    await AuthCommentService(inputId).updateDislikes(snapshotData["liked_uid"],
+                                                    await CommentDatabaseService(inputId).updateDislikes(snapshotData["liked_uid"],
                                                         snapshotData["disliked_uid"],
                                                         snapshotData.id);
                                                   }
@@ -176,7 +176,7 @@ class CommentDetail extends StatelessWidget {
                                                                   onPressed: () async {
                                                                     if (nameInputController.text.isNotEmpty &&
                                                                         descriptionInputController.text.isNotEmpty) {
-                                                                      await AuthCommentService(inputId).updateComment(
+                                                                      await CommentDatabaseService(inputId).updateComment(
                                                                         snapshotData.id,
                                                                         nameInputController.text,
                                                                         descriptionInputController.text
@@ -213,7 +213,7 @@ class CommentDetail extends StatelessWidget {
                                                               TextButton(
                                                                 child: Text("Yes"),
                                                                 onPressed: () async {
-                                                                  await AuthCommentService(inputId).removeComment(
+                                                                  await CommentDatabaseService(inputId).removeComment(
                                                                     snapshotData.id,
                                                                   );
                                                                   snapshot.data.docs.removeAt(index);

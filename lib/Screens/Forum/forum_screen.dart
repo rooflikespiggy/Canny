@@ -1,6 +1,6 @@
 import 'package:Canny/Screens/Forum/forum_detail_screen.dart';
 import 'package:Canny/Screens/Sidebar/sidebar_menu.dart';
-import 'package:Canny/Services/Forum/auth_forum.dart';
+import 'package:Canny/Services/Forum/forum_database.dart';
 import 'package:Canny/Shared/colors.dart';
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:firebase_auth/firebase_auth.dart';
@@ -17,7 +17,7 @@ class ForumScreen extends StatefulWidget {
 
 class _ForumScreenState extends State<ForumScreen> {
   final String uid = FirebaseAuth.instance.currentUser.uid;
-  final AuthForumService _authForum = AuthForumService();
+  final ForumDatabaseService _authForum = ForumDatabaseService();
   final CollectionReference dbRef = FirebaseFirestore.instance.collection("Forum");
 
   @override
