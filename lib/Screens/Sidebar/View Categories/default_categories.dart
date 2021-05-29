@@ -20,19 +20,19 @@ List<Category> defaultCategories = [
 
 Category foodDrinks = Category(
   categoryName: 'Food & Drinks',
-  categoryIcon: Icon(Icons.fastfood),
+  categoryIcon: Icon(FontAwesomeIcons.hamburger),
   categoryColor: Colors.green[800],
 );
 
 Category transportation = Category(
   categoryName: 'Transportation',
-  categoryIcon: Icon(Icons.train),
+  categoryIcon: Icon(FontAwesomeIcons.car),
   categoryColor: Colors.red[800],
 );
 
 Category shopping = Category(
   categoryName: 'Shopping',
-  categoryIcon: Icon(Icons.shopping_bag),
+  categoryIcon: Icon(FontAwesomeIcons.shoppingBag),
   categoryColor: Colors.pinkAccent,
 );
 
