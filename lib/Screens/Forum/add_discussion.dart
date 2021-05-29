@@ -1,4 +1,5 @@
-import 'package:Canny/Services/auth_forum.dart';
+import 'package:Canny/Models/forum.dart';
+import 'package:Canny/Services/Forum/auth_forum.dart';
 import 'package:Canny/Shared/colors.dart';
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:firebase_auth/firebase_auth.dart';
@@ -61,13 +62,49 @@ class _AddDiscussionState extends State<AddDiscussion> {
                     children: <Widget>[
                       ElevatedButton(
                         onPressed: () async {
-                          await _authForum.addDiscussion(
-                            nameController,
-                            titleController,
-                            descriptionController,
-                            context,
-                            _formKey,
-                          );
+                          final Forum forum = Forum(uid: uid,
+                              name: nameController.text,
+                              title: titleController.text,
+                              description: descriptionController.text);
+                          if (_formKey.currentState.validate()) {
+                            await _authForum.addDiscussion(forum).then((_) {
+                              showDialog(
+                                context: context,
+                                builder: (BuildContext context) {
+                                  return AlertDialog(
+                                    title: Text(
+                                      "Succesfully Submitted Your Discussion!",
+                                      style: TextStyle(fontFamily: 'Lato'),
+                                    ),
+                                    content: Text(
+                                      "Would you like to add another discussion?",
+                                      style: TextStyle(fontFamily: 'Lato.Thin'),
+                                    ),
+                                    actions: <Widget> [
+                                      TextButton(
+                                        child: Text("Back to forum"),
+                                        onPressed: () {
+                                          int count = 0;
+                                          Navigator.popUntil(context, (route) {
+                                            return count++ == 2;
+                                          });
+                                        },
+                                      ),
+                                      TextButton(
+                                        child: Text("Add another discussion"),
+                                        onPressed: () {
+                                          Navigator.pop(context);
+                                        },
+                                      ),
+                                    ],
+                                  );
+                                },
+                              );
+                              titleController.clear();
+                              nameController.clear();
+                              descriptionController.clear();
+                            });
+                          }
                         },
                         child: Text('Submit'),
                         style: ButtonStyle(

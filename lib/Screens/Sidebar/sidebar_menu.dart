@@ -1,9 +1,9 @@
-import 'package:Canny/Services/auth.dart';
+import 'package:Canny/Services/Users/auth.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
 import 'package:Canny/Shared/colors.dart';
 import 'package:Canny/Screens/wrapper.dart';
-import 'package:Canny/Screens/Sidebar/category_screen.dart';
+import 'package:Canny/Screens/Sidebar/View%20Categories/category-screen.dart';
 
 class SideBarMenu extends StatelessWidget {
   final AuthService _auth = AuthService();

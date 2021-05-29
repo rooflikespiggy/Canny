@@ -1,4 +1,4 @@
-import 'package:Canny/Services/auth.dart';
+import 'package:Canny/Services/Users/auth.dart';
 import 'package:Canny/Shared/loading.dart';
 import 'package:flutter/material.dart';
 import 'package:email_validator/email_validator.dart';
@@ -106,8 +106,8 @@ class _RegisterState extends State<Register> {
                             suffixIcon: IconButton(
                               icon: Icon(
                                 obscurePwd
-                                    ? Icons.visibility
-                                    : Icons.visibility_off,
+                                    ? Icons.visibility_off
+                                    : Icons.visibility,
                                 color: Colors.grey,
                               ),
                               onPressed: () {
@@ -140,8 +140,8 @@ class _RegisterState extends State<Register> {
                             suffixIcon: IconButton(
                               icon: Icon(
                                 obscurePwd2
-                                    ? Icons.visibility
-                                    : Icons.visibility_off,
+                                    ? Icons.visibility_off
+                                    : Icons.visibility,
                                 color: Colors.grey,
                               ),
                               onPressed: () {

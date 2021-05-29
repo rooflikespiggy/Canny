@@ -1,6 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:math_expressions/math_expressions.dart';
-import 'package:Canny/Shared/calculator-buttons.dart';
+import 'package:Canny/Shared/calculator_buttons.dart';
 import 'package:Canny/Shared/colors.dart';
 
 class QuickInput extends StatefulWidget {
