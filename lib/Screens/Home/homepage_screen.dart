@@ -3,7 +3,6 @@ import 'package:Canny/Screens/Forum/forum_screen.dart';
 import 'package:Canny/Screens/Insert Function/add_category.dart';
 import 'package:Canny/Screens/Insert Function/add_spending.dart';
 import 'package:Canny/Screens/Insert Function/add_targeted_expenditure.dart';
-import 'package:Canny/Screens/Leaderboard/leaderboard_screen.dart';
 import 'package:Canny/Screens/Receipt/receipt_screen.dart';
 import 'package:Canny/Shared/colors.dart';
 import 'package:flutter/material.dart';

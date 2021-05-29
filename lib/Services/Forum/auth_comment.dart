@@ -1,7 +1,6 @@
-import 'package:Canny/Screens/Forum/forum_detail_screen.dart';
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:firebase_auth/firebase_auth.dart';
-import 'package:flutter/material.dart';
+import 'package:Canny/Models/comment.dart';
 
 
 class AuthCommentService {
@@ -12,70 +11,21 @@ class AuthCommentService {
 
   AuthCommentService(this.inputId);
 
-  Future addComment(TextEditingController nameController,
-      TextEditingController descriptionController,
-      BuildContext context,
-      GlobalKey<FormState> _formKey) async {
 
-    if (_formKey.currentState.validate()) {
-      dbCommentRef
-          .doc(inputId)
-          .collection("Comment")
-          .add({
-        "uid": uid,
-        "did": inputId,
-        "name": nameController.text,
-        "description": descriptionController.text,
-        "timestamp": DateTime.now(),
-        "likes": 0,
-        "dislikes": 0,
-        "liked_uid": [],
-        "disliked_uid": [],
-      }).then((_) {
-        showDialog(
-          context: context,
-          builder: (BuildContext context) {
-            return AlertDialog(
-              title: Text(
-                "Succesfully Submitted Your Comment!",
-                style: TextStyle(fontFamily: 'Lato'),
-              ),
-              content: Text(
-                "Would you like to add another comment?",
-                style: TextStyle(fontFamily: 'Lato.Thin'),
-              ),
-              actions: <Widget> [
-                TextButton(
-                  child: Text("Back to discussion"),
-                  onPressed: () {
-                    Navigator.push(context,
-                        MaterialPageRoute(builder: (context) => ForumDetailScreen(inputId: inputId)));
-                  },
-                ),
-                TextButton(
-                  child: Text("Add another comment"),
-                  onPressed: () {
-                    Navigator.pop(context);
-                  },
-                ),
-              ],
-            );
-          },
-        );
-        nameController.clear();
-        descriptionController.clear();
-      }).catchError((error) => print(error));
-    }
+  Future addComment(Comment comment) async {
+    await dbCommentRef.doc(inputId)
+        .collection("Comment")
+        .add(comment.toMap());
     return true;
   }
 
   Future removeComment(String commentId) async {
-    dbCommentRef
+    await dbCommentRef
         .doc(inputId)
         .collection("Comment")
         .doc(commentId)
         .delete();
-    dbRef
+    await dbRef
         .doc(inputId)
         .update({
       "comments": FieldValue.increment(-1),
@@ -83,72 +33,92 @@ class AuthCommentService {
     return true;
   }
 
-  Future updateComment(TextEditingController nameInputController,
-      TextEditingController descriptionInputController,
-      BuildContext context,
-      AsyncSnapshot<QuerySnapshot> snapshot,
-      int index) async {
-    showDialog(
-      context: context,
-      builder: (BuildContext context) {
-        return AlertDialog(
-          contentPadding: EdgeInsets.all(20),
-          content: Column(
-            children: <Widget> [
-              Text("Update discussion"),
-              TextField(
-                  decoration: InputDecoration(
-                      labelText: "Edit Name"
-                  ),
-                  controller: nameInputController,
-                ),
-              SizedBox(height: 20),
-              Expanded(
-                child: TextField(
-                  keyboardType: TextInputType.multiline,
-                  maxLines: null,
-                  decoration: InputDecoration(
-                      labelText: "Edit Description"
-                  ),
-                  controller: descriptionInputController,
-                ),
-              ),
-            ],
-          ),
-          actions: <Widget> [
-            TextButton(
-                onPressed: () {
-                  nameInputController.clear();
-                  descriptionInputController.clear();
-                  Navigator.pop(context);
-                },
-                child: Text("Cancel")
-            ),
-            TextButton(
-                onPressed: () {
-                  if (nameInputController.text.isNotEmpty &&
-                      descriptionInputController.text.isNotEmpty) {
-                    dbCommentRef
-                        .doc(inputId)
-                        .collection("Comment")
-                        .doc(snapshot.data.docs[index].id).update({
-                      "uid": uid,
-                      "name": nameInputController.text,
-                      "description": descriptionInputController.text,
-                      "timestamp": DateTime.now(),
-                    }).then((_) {
-                      nameInputController.clear();
-                      descriptionInputController.clear();
-                      Navigator.pop(context);
-                    }).catchError((error) => print(error));
-                  }
-                },
-                child: Text("Update")
-            ),
-          ],
-        );
-      },
-    );
+  Future updateComment(String commentId,
+      String newName,
+      String newDescription) async {
+    await dbCommentRef.doc(inputId)
+        .collection("Comment")
+        .doc(commentId)
+        .update({
+      "name": newName,
+      "description": newDescription,
+      "timestamp": DateTime.now(),
+    });
+    await dbRef.doc(inputId).update({
+      "comments": FieldValue.increment(1),
+    });
+    return true;
+  }
+
+  Future updateLikes(List liked_uid,
+      List disliked_uid,
+      String commentId) async {
+    if (liked_uid.contains(uid)) {
+      await dbCommentRef
+          .doc(inputId)
+          .collection("Comment")
+          .doc(commentId)
+          .update({
+        "likes": FieldValue.increment(-1),
+        "liked_uid": FieldValue.arrayRemove([uid]),
+      }).catchError((error) => print(error));
+    } else if (disliked_uid.contains(uid)) {
+      await dbCommentRef
+          .doc(inputId)
+          .collection("Comment")
+          .doc(commentId)
+          .update({
+        "likes": FieldValue.increment(1),
+        "dislikes": FieldValue.increment(-1),
+        "liked_uid": FieldValue.arrayUnion([uid]),
+        "disliked_uid": FieldValue.arrayRemove([uid]),
+      }).catchError((error) => print(error));
+    } else {
+      await dbCommentRef
+          .doc(inputId)
+          .collection("Comment")
+          .doc(commentId)
+          .update({
+        "likes": FieldValue.increment(1),
+        "liked_uid": FieldValue.arrayUnion([uid]),
+      }).catchError((error) => print(error));
+    }
+    return true;
+  }
+
+  Future updateDislikes(List liked_uid,
+      List disliked_uid,
+      String commentId) async {
+    if (disliked_uid.contains(uid)) {
+      await dbCommentRef
+          .doc(inputId)
+          .collection("Comment")
+          .doc(commentId)
+          .update({
+        "dislikes": FieldValue.increment(-1),
+        "disliked_uid": FieldValue.arrayRemove([uid]),
+      }).catchError((error) => print(error));
+    } else if (liked_uid.contains(uid)) {
+      await dbCommentRef
+          .doc(inputId)
+          .collection("Comment")
+          .doc(commentId)
+          .update({
+        "likes": FieldValue.increment(-1),
+        "dislikes": FieldValue.increment(1),
+        "liked_uid": FieldValue.arrayRemove([uid]),
+        "disliked_uid": FieldValue.arrayUnion([uid]),
+      }).catchError((error) => print(error));
+    } else {
+      await dbCommentRef
+          .doc(inputId)
+          .collection("Comment")
+          .doc(commentId)
+          .update({
+        "dislikes": FieldValue.increment(1),
+        "disliked_uid": FieldValue.arrayUnion([uid]),
+      }).catchError((error) => print(error));
+    }
     return true;
   }
 }

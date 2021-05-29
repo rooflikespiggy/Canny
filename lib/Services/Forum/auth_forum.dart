@@ -1,67 +1,14 @@
-import 'package:Canny/Screens/Home/homepage_screen.dart';
+import 'package:Canny/Models/forum.dart';
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:firebase_auth/firebase_auth.dart';
-import 'package:flutter/material.dart';
 
 
 class AuthForumService {
   final String uid = FirebaseAuth.instance.currentUser.uid;
   final dbRef = FirebaseFirestore.instance.collection("Forum");
 
-  Future addDiscussion(TextEditingController nameController,
-      TextEditingController titleController,
-      TextEditingController descriptionController,
-      BuildContext context,
-      GlobalKey<FormState> _formKey) async {
-
-    if (_formKey.currentState.validate()) {
-      dbRef.add({
-        "uid": uid,
-        "name": nameController.text,
-        "title": titleController.text,
-        "description": descriptionController.text,
-        "timestamp": DateTime.now(),
-        "likes": 0,
-        "liked_uid": [],
-        "comments": 0,
-      }).then((_) {
-        showDialog(
-          context: context,
-          builder: (BuildContext context) {
-            return AlertDialog(
-              title: Text(
-                "Succesfully Submitted Your Discussion!",
-                style: TextStyle(fontFamily: 'Lato'),
-              ),
-              content: Text(
-                "Would you like to add another discussion?",
-                style: TextStyle(fontFamily: 'Lato.Thin'),
-              ),
-              actions: <Widget> [
-                TextButton(
-                  child: Text("Back to forum"),
-                  onPressed: () {
-                    int count = 0;
-                    Navigator.popUntil(context, (route) {
-                      return count++ == 2;
-                    });
-                  },
-                ),
-                TextButton(
-                  child: Text("Add another discussion"),
-                  onPressed: () {
-                    Navigator.pop(context);
-                  },
-                ),
-              ],
-            );
-          },
-        );
-        titleController.clear();
-        nameController.clear();
-        descriptionController.clear();
-      }).catchError((error) => print(error));
-    }
+  Future addDiscussion(Forum forum) async {
+    await dbRef.add(forum.toMap());
     return true;
   }
 
@@ -72,78 +19,33 @@ class AuthForumService {
     return true;
   }
 
-  Future updateDiscussion(TextEditingController nameInputController,
-      TextEditingController titleInputController,
-      TextEditingController descriptionInputController,
-      BuildContext context,
-      AsyncSnapshot<QuerySnapshot> snapshot,
-      int index) async {
-    showDialog(
-      context: context,
-      builder: (BuildContext context) {
-        return AlertDialog(
-          contentPadding: EdgeInsets.all(20),
-          content: Column(
-            children: <Widget> [
-              Text("Update discussion"),
-              TextField(
-                  decoration: InputDecoration(
-                      labelText: "Edit Name"
-                  ),
-                  controller: nameInputController,
-                ),
-              SizedBox(height: 15),
-                TextField(
-                  decoration: InputDecoration(
-                      labelText: "Edit Title"
-                  ),
-                  controller: titleInputController,
-                ),
-              SizedBox(height: 15),
-              Expanded(
-                child: TextField(
-                  keyboardType: TextInputType.multiline,
-                  maxLines: null,
-                  decoration: InputDecoration(
-                      labelText: "Edit Description"
-                  ),
-                  controller: descriptionInputController,
-                ),
-              ),
-            ],
-          ),
-          actions: <Widget> [
-            TextButton(
-                onPressed: () {
-                  Navigator.pop(context);
-                },
-                child: Text("Cancel")
-            ),
-            TextButton(
-                onPressed: () {
-                  if (nameInputController.text.isNotEmpty &&
-                      titleInputController.text.isNotEmpty &&
-                      descriptionInputController.text.isNotEmpty) {
-                    dbRef.doc(snapshot.data.docs[index].id).update({
-                      "uid": uid,
-                      "name": nameInputController.text,
-                      "title": titleInputController.text,
-                      "description": descriptionInputController.text,
-                      "timestamp": DateTime.now(),
-                    }).then((_) {
-                      nameInputController.clear();
-                      titleInputController.clear();
-                      descriptionInputController.clear();
-                      Navigator.pop(context);
-                    }).catchError((error) => print(error));
-                  }
-                },
-                child: Text("Update")
-            ),
-          ],
-        );
-      },
-    );
+  Future updateDiscussion(String id,
+      String newName,
+      String newTitle,
+      String newDescription) async {
+    await dbRef.doc(id).update({
+      "name": newName,
+      "title": newTitle,
+      "description": newDescription,
+      "timestamp": DateTime.now(),
+    });
     return true;
+  }
+
+  Future updateLikes(List liked_uid,
+      String id) async {
+    if (liked_uid.contains(uid)) {
+      await dbRef.doc(id)
+          .update({
+        "likes": FieldValue.increment(-1),
+        "liked_uid": FieldValue.arrayRemove([uid]),
+      }).catchError((error) => print(error));
+    } else {
+      await dbRef.doc(id)
+          .update({
+        "likes": FieldValue.increment(1),
+        "liked_uid": FieldValue.arrayUnion([uid]),
+      }).catchError((error) => print(error));
+    }
   }
 }
