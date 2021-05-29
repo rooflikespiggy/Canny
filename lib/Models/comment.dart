@@ -19,7 +19,7 @@ class Comment {
 
   Comment.fromMap(Map<String, dynamic> json) {
     uid = json['uid'];
-    did: json['did'];
+    did = json['did'];
     name = json['name'];
     description = json['description'];
     datetime = json['timestamp'];

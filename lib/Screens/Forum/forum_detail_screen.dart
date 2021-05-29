@@ -20,8 +20,8 @@ class ForumDetailScreen extends StatefulWidget {
 }
 
 class _ForumDetailScreenState extends State<ForumDetailScreen> {
-  final dbRef = FirebaseFirestore.instance.collection("Forum");
-  final dbCommentRef = FirebaseFirestore.instance.collection("ForumComment");
+  final CollectionReference dbRef = FirebaseFirestore.instance.collection("Forum");
+  final CollectionReference dbCommentRef = FirebaseFirestore.instance.collection("ForumComment");
   final String inputId;
   final String uid = FirebaseAuth.instance.currentUser.uid;
 

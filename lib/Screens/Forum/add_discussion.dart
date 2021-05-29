@@ -14,10 +14,10 @@ class AddDiscussion extends StatefulWidget {
 class _AddDiscussionState extends State<AddDiscussion> {
   String uid = FirebaseAuth.instance.currentUser.uid;
   final _formKey = GlobalKey<FormState>();
-  final nameController = TextEditingController();
-  final titleController = TextEditingController();
-  final descriptionController = TextEditingController();
-  final dbRef = FirebaseFirestore.instance.collection("Forum");
+  final TextEditingController nameController = TextEditingController();
+  final TextEditingController titleController = TextEditingController();
+  final TextEditingController descriptionController = TextEditingController();
+  final CollectionReference dbRef = FirebaseFirestore.instance.collection("Forum");
   final AuthForumService _authForum = AuthForumService();
 
   @override

@@ -11,7 +11,6 @@ import 'package:intl/intl.dart';
 import 'add_discussion.dart';
 
 class ForumScreen extends StatefulWidget {
-  static final String id = 'forum_screen';
 
   @override
   _ForumScreenState createState() => _ForumScreenState();
@@ -20,7 +19,7 @@ class ForumScreen extends StatefulWidget {
 class _ForumScreenState extends State<ForumScreen> {
   final String uid = FirebaseAuth.instance.currentUser.uid;
   final AuthForumService _authForum = AuthForumService();
-  final dbRef = FirebaseFirestore.instance.collection("Forum");
+  final CollectionReference dbRef = FirebaseFirestore.instance.collection("Forum");
 
   @override
   Widget build(BuildContext context) {

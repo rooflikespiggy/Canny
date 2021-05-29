@@ -5,7 +5,7 @@ import 'package:firebase_auth/firebase_auth.dart';
 
 class AuthForumService {
   final String uid = FirebaseAuth.instance.currentUser.uid;
-  final dbRef = FirebaseFirestore.instance.collection("Forum");
+  final CollectionReference dbRef = FirebaseFirestore.instance.collection("Forum");
 
   Future addDiscussion(Forum forum) async {
     await dbRef.add(forum.toMap());
@@ -13,7 +13,7 @@ class AuthForumService {
   }
 
   Future removeDiscussion(String id) async {
-    dbRef
+    await dbRef
         .doc(id)
         .delete();
     return true;

@@ -20,11 +20,11 @@ class AddComment extends StatefulWidget {
 class _AddCommentState extends State<AddComment> {
   String uid = FirebaseAuth.instance.currentUser.uid;
   final _formKey = GlobalKey<FormState>();
-  final nameController = TextEditingController();
-  final titleController = TextEditingController();
-  final descriptionController = TextEditingController();
-  final dbCommentRef = FirebaseFirestore.instance.collection("ForumComment");
-  final dbRef = FirebaseFirestore.instance.collection("Forum");
+  final TextEditingController nameController = TextEditingController();
+  final TextEditingController titleController = TextEditingController();
+  final TextEditingController descriptionController = TextEditingController();
+  final CollectionReference dbCommentRef = FirebaseFirestore.instance.collection("ForumComment");
+  final CollectionReference dbRef = FirebaseFirestore.instance.collection("Forum");
 
   final String inputId;
 
