@@ -20,73 +20,73 @@ List<Category> defaultCategories = [
 
 Category foodDrinks = Category(
   categoryName: 'Food & Drinks',
-  categoryIcon: FaIcon(FontAwesomeIcons.hamburger),
+  categoryIcon: Icon(Icons.fastfood),
   categoryColor: Colors.green[800],
 );
 
 Category transportation = Category(
   categoryName: 'Transportation',
-  categoryIcon: FaIcon(FontAwesomeIcons.car),
+  categoryIcon: Icon(Icons.train),
   categoryColor: Colors.red[800],
 );
 
 Category shopping = Category(
   categoryName: 'Shopping',
-  categoryIcon: FaIcon(FontAwesomeIcons.shoppingBag),
+  categoryIcon: Icon(Icons.shopping_bag),
   categoryColor: Colors.pinkAccent,
 );
 
 Category entertainment = Category(
   categoryName: 'Entertainment',
-  categoryIcon: FaIcon(FontAwesomeIcons.film),
+  categoryIcon: Icon(FontAwesomeIcons.film),
   categoryColor: Colors.deepOrange,
 );
 
 Category billAndFees = Category(
   categoryName: 'Bills and Fees',
-  categoryIcon: FaIcon(FontAwesomeIcons.fileInvoiceDollar),
+  categoryIcon: Icon(FontAwesomeIcons.fileInvoiceDollar),
   categoryColor: Colors.purple[800],
 );
 
 Category education = Category(
   categoryName: 'Education',
-  categoryIcon: FaIcon(FontAwesomeIcons.graduationCap),
+  categoryIcon: Icon(FontAwesomeIcons.graduationCap),
   categoryColor: Colors.blue,
 );
 
 Category gift = Category(
   categoryName: 'Gift',
-  categoryIcon: FaIcon(FontAwesomeIcons.gift),
+  categoryIcon: Icon(FontAwesomeIcons.gift),
   categoryColor: Colors.amber[700],
 );
 
 Category household = Category(
   categoryName: 'Household',
-  categoryIcon: FaIcon(FontAwesomeIcons.couch),
+  categoryIcon: Icon(FontAwesomeIcons.couch),
   categoryColor: Colors.teal,
 );
 
 Category allowance = Category(
   categoryName: 'Allowance',
-  categoryIcon: FaIcon(FontAwesomeIcons.handHoldingUsd),
+  categoryIcon: Icon(FontAwesomeIcons.handHoldingUsd),
   categoryColor: Colors.indigo[600],
 );
 
 Category salary = Category(
   categoryName: 'Salary',
-  categoryIcon: FaIcon(FontAwesomeIcons.moneyBillWave),
+  categoryIcon: Icon(FontAwesomeIcons.moneyBillWave),
   categoryColor: Colors.pink[900],
 );
 
 Category loan = Category(
   categoryName: 'Loan',
-  categoryIcon: FaIcon(FontAwesomeIcons.landmark),
+  categoryIcon: Icon(FontAwesomeIcons.landmark),
   categoryColor: Colors.orange,
 );
 
 Category others = Category(
   categoryName: 'Others',
-  categoryIcon: FaIcon(FontAwesomeIcons.archive),
+  categoryIcon: Icon(FontAwesomeIcons.archive),
   categoryColor: Colors.grey,
 );
 

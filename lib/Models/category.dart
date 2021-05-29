@@ -4,7 +4,7 @@ import 'package:font_awesome_flutter/font_awesome_flutter.dart';
 class Category {
   String categoryName;
   Color categoryColor;
-  FaIcon categoryIcon;
+  Icon categoryIcon;
 
   Category({
     this.categoryName,
@@ -15,7 +15,7 @@ class Category {
   factory Category.newBlankCategory() {
     return Category(
       categoryName: '',
-      categoryIcon: FaIcon(FontAwesomeIcons.question),
+      categoryIcon: Icon(FontAwesomeIcons.question),
       categoryColor: Colors.orange,
     );
   }

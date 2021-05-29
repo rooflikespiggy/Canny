@@ -15,7 +15,6 @@ class CategoryScreen extends StatefulWidget {
 
 class _CategoryScreenState extends State<CategoryScreen> {
   final String uid = FirebaseAuth.instance.currentUser.uid;
-  final CategoryDatabaseService _authCategory = CategoryDatabaseService();
   final CollectionReference dbRef = FirebaseFirestore.instance.collection("Users");
 
   @override
