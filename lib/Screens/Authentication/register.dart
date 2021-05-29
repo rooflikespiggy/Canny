@@ -106,8 +106,8 @@ class _RegisterState extends State<Register> {
                             suffixIcon: IconButton(
                               icon: Icon(
                                 obscurePwd
-                                    ? Icons.visibility
-                                    : Icons.visibility_off,
+                                    ? Icons.visibility_off
+                                    : Icons.visibility,
                                 color: Colors.grey,
                               ),
                               onPressed: () {
@@ -140,8 +140,8 @@ class _RegisterState extends State<Register> {
                             suffixIcon: IconButton(
                               icon: Icon(
                                 obscurePwd2
-                                    ? Icons.visibility
-                                    : Icons.visibility_off,
+                                    ? Icons.visibility_off
+                                    : Icons.visibility,
                                 color: Colors.grey,
                               ),
                               onPressed: () {

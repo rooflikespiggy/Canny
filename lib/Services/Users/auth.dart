@@ -1,5 +1,12 @@
 import 'package:Canny/Models/own_user.dart';
+import 'package:Canny/Screens/Sidebar/View%20Categories/default-categories.dart';
+import 'package:Canny/Services/Users/category-database.dart';
+import 'package:Canny/Shared/category_tiles.dart';
 import 'package:firebase_auth/firebase_auth.dart';
+import 'package:flutter/cupertino.dart';
+import 'package:flutter/material.dart';
+import 'package:font_awesome_flutter/font_awesome_flutter.dart';
+
 
 class AuthService {
   final FirebaseAuth _auth = FirebaseAuth.instance;
@@ -45,6 +52,10 @@ class AuthService {
     try {
       UserCredential result = await _auth.createUserWithEmailAndPassword(email: email, password: password);
       User theUser = result.user;
+      //create a default list of categories for the user when he registers
+      await CategoryDatabaseService(uid: theUser.uid).updateUserData(
+        DefaultCategories().createList()
+      );
       return _userFromFirebaseUser(theUser);
     } catch (e) {
       print(e.toString());
