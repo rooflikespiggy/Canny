@@ -33,7 +33,7 @@ class CategoryTile extends StatelessWidget {
             backgroundColor: Colors.deepOrange[50],
             radius: 30,
             child: IconTheme(
-              data: IconThemeData(color: Color(int.parse(categoryColor)), size: 25),
+              data: IconThemeData(color: Color(int.parse(categoryColor)).withOpacity(1), size: 25),
               child: FaIcon(IconData(int.parse(categoryIcon), fontFamily: 'MaterialIcons'))
             ),
           )

@@ -22,7 +22,7 @@ class CategoryDatabaseService {
   List<Category> _categoryFromSnapshot(QuerySnapshot snapshot) {
     return snapshot.docs.map((doc) {
       return Category(
-        defaultCategories: doc['defaultCategories'] ?? {},
+        defaultCategories: doc['defaultCategories'] ,
       );
     }).toList();
   }
