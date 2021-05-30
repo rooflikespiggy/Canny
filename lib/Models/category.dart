@@ -1,5 +1,4 @@
 import 'package:flutter/material.dart';
-import 'package:font_awesome_flutter/font_awesome_flutter.dart';
 
 class Category {
   String categoryName;
@@ -15,8 +14,8 @@ class Category {
   factory Category.newBlankCategory() {
     return Category(
       categoryName: '',
-      categoryIcon: Icon(FontAwesomeIcons.question),
-      categoryColor: Colors.orange,
+      categoryIcon: Icon(Icons.check_box_outline_blank_rounded),
+      categoryColor: Colors.white,
     );
   }
 
