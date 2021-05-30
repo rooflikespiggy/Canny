@@ -7,11 +7,13 @@ class CategoryTile extends StatefulWidget {
   final String categoryName;
   final int categoryColorValue;
   final int categoryIconCodePoint;
+  final String categoryId;
 
   CategoryTile({
     this.categoryName,
     this.categoryColorValue,
     this.categoryIconCodePoint,
+    this.categoryId
   });
 
   @override
@@ -68,7 +70,7 @@ class _CategoryTileState extends State<CategoryTile> {
                         onPressed: () {
                           setState(() => currentColor = pickerColor);
                           _authCategory.updateCategoryColor(
-                            widget.categoryName,
+                              widget.categoryId,
                               currentColor);
                           Navigator.of(context).pop();
                         },

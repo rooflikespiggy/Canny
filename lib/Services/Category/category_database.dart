@@ -10,12 +10,7 @@ class CategoryDatabaseService {
   final String uid;
 
   // collection reference
-<<<<<<< HEAD
   final CollectionReference categoryCollection = Database().categoryDatabase();
-=======
-  final CollectionReference categoryCollection = FirebaseFirestore.instance
-      .collection('Users');
->>>>>>> 93795b980f1bd123495f0e5a47338e93f254dfcb
   List<Category> categories = defaultCategories;
 
   CategoryDatabaseService({this.uid});
@@ -27,7 +22,6 @@ class CategoryDatabaseService {
     return true;
   }
 
-<<<<<<< HEAD
   Future addDefaultCategory(Category category) async {
     await categoryCollection
         .add(category.toMap());
@@ -49,20 +43,17 @@ class CategoryDatabaseService {
       'Salary': defaultCategories[9],
       'Loan': defaultCategories[10],
       'Other': defaultCategories[11],
-=======
+   */
+
   Future updateCategoryColor(
-      String catName,
+      String categoryId,
       Color newColor
       ) async {
     await categoryCollection
-        .doc(uid)
-        .collection("Categories")
-        .doc(catName) //how to get id of each category
+        .doc(categoryId) //how to get id of each category
         .update({
       "categoryColorValue": newColor.value
->>>>>>> 93795b980f1bd123495f0e5a47338e93f254dfcb
     });
     return true;
   }
 }
-

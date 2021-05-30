@@ -39,11 +39,8 @@ dependencies:
   math_expressions: "^2.1.1"
   intl: ^0.17.0
   flutter_speed_dial: ^3.0.5
-<<<<<<< HEAD
   material_floating_search_bar: ^0.3.4
-=======
   flutter_colorpicker: ^0.4.0
->>>>>>> 93795b980f1bd123495f0e5a47338e93f254dfcb
 
 
 dev_dependencies:

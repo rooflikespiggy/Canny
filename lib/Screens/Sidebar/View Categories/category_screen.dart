@@ -17,12 +17,8 @@ class CategoryScreen extends StatefulWidget {
 
 class _CategoryScreenState extends State<CategoryScreen> {
   final String uid = FirebaseAuth.instance.currentUser.uid;
-<<<<<<< HEAD
   final CollectionReference categoryCollection = Database().categoryDatabase();
-=======
   CategoryDatabaseService _authCategory = CategoryDatabaseService();
-  final CollectionReference dbRef = FirebaseFirestore.instance.collection("Users");
->>>>>>> 93795b980f1bd123495f0e5a47338e93f254dfcb
 
   @override
   Widget build(BuildContext context) {
@@ -50,14 +46,8 @@ class _CategoryScreenState extends State<CategoryScreen> {
                 child: Column(
                   children: <Widget>[
                     StreamBuilder(
-<<<<<<< HEAD
                         stream: categoryCollection
-=======
-                        stream: dbRef
-                            .doc(uid)
-                            .collection("Categories")
                             .orderBy("categoryName")
->>>>>>> 93795b980f1bd123495f0e5a47338e93f254dfcb
                             .snapshots(),
                         builder: (BuildContext context, AsyncSnapshot<QuerySnapshot> snapshot) {
                           if (snapshot.hasData) {
@@ -74,6 +64,7 @@ class _CategoryScreenState extends State<CategoryScreen> {
                                       categoryName: snapshotData['categoryName'],
                                       categoryColorValue: snapshotData['categoryColorValue'],
                                       categoryIconCodePoint: snapshotData['categoryIconCodePoint'],
+                                      categoryId: snapshotData.id,
                                     );
                                   },
                                 )
