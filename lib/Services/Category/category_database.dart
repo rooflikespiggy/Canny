@@ -13,7 +13,7 @@ class CategoryDatabaseService {
 
   CategoryDatabaseService({this.uid});
 
-  Category getCategories(String categoryId) {
+  Category getCategory(String categoryId) {
     return categories[int.parse(categoryId)];
   }
 

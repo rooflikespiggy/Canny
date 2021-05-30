@@ -49,10 +49,10 @@ class _ExpenseTileState extends State<ExpenseTile> {
           radius: 30,
           child: IconTheme(
               data: IconThemeData(color: _authCategory
-                  .getCategories(widget.categoryId).categoryColor.withOpacity(1),
+                  .getCategory(widget.categoryId).categoryColor.withOpacity(1),
                   size: 25),
               child: _authCategory
-                  .getCategories(widget.categoryId)
+                  .getCategory(widget.categoryId)
                   .categoryIcon
           ),
         ),

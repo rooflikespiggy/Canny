@@ -1,7 +1,10 @@
+import 'package:Canny/Models/category.dart';
+import 'package:Canny/Shared/calculator_icon_buttons.dart';
 import 'package:flutter/material.dart';
 import 'package:math_expressions/math_expressions.dart';
 import 'package:Canny/Shared/calculator_buttons.dart';
 import 'package:Canny/Shared/colors.dart';
+import 'package:Canny/Services/Quick Input/quickinput_database.dart';
 
 class QuickInput extends StatefulWidget {
   static final String id = 'quickinput_screen';
@@ -13,6 +16,7 @@ class QuickInput extends StatefulWidget {
 class QuickInputState extends State<QuickInput> {
   String _history = '';
   String _expression = '';
+  final QuickInputDatabaseService _authQuickInput = QuickInputDatabaseService();
 
   void numClick(String text) {
     setState(() => _expression += text);
@@ -91,23 +95,17 @@ class QuickInputState extends State<QuickInput> {
                       callback: allClear,
                       textSize: 22,
                     ),
-                    CalcButton(
-                      text: 'cat',
+                    CalcIconButton(
+                      icon: _authQuickInput.getSpecificCategory(0).categoryIcon,
                       fillColor: Colors.red,
-                      textSize: 20,
-                      callback: numClick,
                     ),
-                    CalcButton(
-                      text: 'cat',
+                    CalcIconButton(
+                      icon: _authQuickInput.getSpecificCategory(1).categoryIcon,
                       fillColor: Colors.red,
-                      textSize: 20,
-                      callback: numClick,
                     ),
-                    CalcButton(
-                      text: 'cat',
+                    CalcIconButton(
+                      icon: _authQuickInput.getSpecificCategory(2).categoryIcon,
                       fillColor: Colors.red,
-                      textSize: 20,
-                      callback: numClick,
                     ),
                   ],
                 ),
