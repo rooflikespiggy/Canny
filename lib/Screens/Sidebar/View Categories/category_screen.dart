@@ -2,6 +2,7 @@ import 'package:Canny/Database/all_database.dart';
 import 'package:Canny/Screens/Home/homepage_screen.dart';
 import 'package:Canny/Screens/Sidebar/sidebar_menu.dart';
 import 'package:Canny/Services/Category/category_database.dart';
+import 'package:Canny/Services/Category/default_categories.dart';
 import 'package:Canny/Shared/category_tiles.dart';
 import 'package:Canny/Shared/colors.dart';
 import 'package:cloud_firestore/cloud_firestore.dart';
@@ -18,7 +19,8 @@ class CategoryScreen extends StatefulWidget {
 class _CategoryScreenState extends State<CategoryScreen> {
   final String uid = FirebaseAuth.instance.currentUser.uid;
   final CollectionReference categoryCollection = Database().categoryDatabase();
-  CategoryDatabaseService _authCategory = CategoryDatabaseService();
+  final CategoryDatabaseService _authCategory = CategoryDatabaseService();
+  final int categoriesSize = defaultCategories.length;
 
   @override
   Widget build(BuildContext context) {
@@ -60,6 +62,26 @@ class _CategoryScreenState extends State<CategoryScreen> {
                                   itemCount: snapshot.data.docs.length,
                                   itemBuilder: (BuildContext context, int index) {
                                     final snapshotData = snapshot.data.docs[index];
+                                    if (index >= categoriesSize) {
+                                      return Dismissible(
+                                        child: CategoryTile(
+                                          categoryName: snapshotData['categoryName'],
+                                          categoryColorValue: snapshotData['categoryColorValue'],
+                                          categoryIconCodePoint: snapshotData['categoryIconCodePoint'],
+                                          categoryId: snapshotData.id,
+                                        ),
+                                        key: ValueKey(snapshotData),
+                                        onDismissed: (DismissDirection direction) {
+                                          _authCategory.removeCategory(snapshotData.id);
+                                          setState(() {
+                                            snapshot.data.docs.removeAt(index);
+                                          });
+                                        },
+                                        background: Container(
+                                          color: Colors.red,
+                                        ),
+                                      );
+                                    }
                                     return CategoryTile(
                                       categoryName: snapshotData['categoryName'],
                                       categoryColorValue: snapshotData['categoryColorValue'],

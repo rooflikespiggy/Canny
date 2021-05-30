@@ -1,12 +1,10 @@
 import 'package:Canny/Database/all_database.dart';
 import 'package:Canny/Models/category.dart';
-import 'package:Canny/Screens/Sidebar/View%20Categories/default_categories.dart';
+import 'package:Canny/Services/Category/default_categories.dart';
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:flutter/material.dart';
 
-
 class CategoryDatabaseService {
-
   final String uid;
 
   // collection reference
@@ -17,43 +15,37 @@ class CategoryDatabaseService {
 
   Future initStartCategories() async {
     for (int i = 0; i < categories.length; i++) {
-      await addDefaultCategory(categories[i]);
+      await addDefaultCategory(categories[i], i);
     }
     return true;
   }
 
-  Future addDefaultCategory(Category category) async {
+  Future addDefaultCategory(Category category, int categoryId) async {
     await categoryCollection
-        .add(category.toMap());
+        .doc(categoryId.toString())
+        .set(category.toMap());
     return true;
   }
 
-  /*
-  Future updateUserData(List<Map<String, String>> defaultCategories) async {
-    return await categoryCollection.doc(uid).set({
-      'Food and Drink': defaultCategories[0],
-      'Transportation': defaultCategories[1],
-      'Shopping': defaultCategories[2],
-      'Entertainment': defaultCategories[3],
-      'Bills and Fees': defaultCategories[4],
-      'Education': defaultCategories[5],
-      'Gift': defaultCategories[6],
-      'Household': defaultCategories[7],
-      'Allowance': defaultCategories[8],
-      'Salary': defaultCategories[9],
-      'Loan': defaultCategories[10],
-      'Other': defaultCategories[11],
-   */
-
-  Future updateCategoryColor(
-      String categoryId,
-      Color newColor
-      ) async {
+  Future addNewCategory(Category category) async {
+    categories.add(category);
     await categoryCollection
-        .doc(categoryId) //how to get id of each category
-        .update({
-      "categoryColorValue": newColor.value
-    });
+        .doc((categories.length - 1).toString())
+        .set(category.toMap());
+    return true;
+  }
+
+  Future removeCategory(String id) async {
+    categories.remove(id);
+    await categoryCollection
+        .doc(id)
+        .delete();
+    return true;
+  }
+
+  Future updateCategoryColor(String categoryId, Color newColor) async {
+    await categoryCollection.doc(categoryId) //how to get id of each category
+        .update({"categoryColorValue": newColor.value});
     return true;
   }
 }

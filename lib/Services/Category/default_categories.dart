@@ -1,7 +1,6 @@
 import 'package:Canny/Models/category.dart';
 import 'package:flutter/material.dart';
 
-
 List<Category> defaultCategories = [
   foodDrinks,
   transportation,

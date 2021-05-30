@@ -23,7 +23,7 @@ class CategoryTile extends StatefulWidget {
 class _CategoryTileState extends State<CategoryTile> {
 
   final _formKey = GlobalKey<FormState>();
-  CategoryDatabaseService _authCategory = CategoryDatabaseService();
+  final CategoryDatabaseService _authCategory = CategoryDatabaseService();
 
   // create some values
   Color pickerColor = Color(0xff443a49);
@@ -37,8 +37,7 @@ class _CategoryTileState extends State<CategoryTile> {
   @override
   Widget build(BuildContext context) {
     void _editCatPanel() {
-      showModalBottomSheet(context: context, builder: (context)
-      {
+      showModalBottomSheet(context: context, builder: (context) {
         return Container(
             padding: EdgeInsets.all(20),
             child: Form(
