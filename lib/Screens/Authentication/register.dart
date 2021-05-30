@@ -186,6 +186,7 @@ class _RegisterState extends State<Register> {
                         size: 20,
                       ),
                       onPressed: () async {
+
                         if(_formKey.currentState.validate()){
                           setState(() {
                             loading = true;

@@ -1,31 +1,32 @@
+import 'package:Canny/Database/all_database.dart';
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:Canny/Models/comment.dart';
 
 
-class AuthCommentService {
+class CommentDatabaseService {
   final String uid = FirebaseAuth.instance.currentUser.uid;
   final String inputId;
-  final dbCommentRef = FirebaseFirestore.instance.collection("ForumComment");
-  final dbRef = FirebaseFirestore.instance.collection("Forum");
+  final CollectionReference forumCollection = Database().forumDatabase();
+  final CollectionReference forumCommentCollection = Database().forumCommentDatabase();
 
-  AuthCommentService(this.inputId);
+  CommentDatabaseService(this.inputId);
 
 
   Future addComment(Comment comment) async {
-    await dbCommentRef.doc(inputId)
+    await forumCommentCollection.doc(inputId)
         .collection("Comment")
         .add(comment.toMap());
     return true;
   }
 
   Future removeComment(String commentId) async {
-    await dbCommentRef
+    await forumCommentCollection
         .doc(inputId)
         .collection("Comment")
         .doc(commentId)
         .delete();
-    await dbRef
+    await forumCollection
         .doc(inputId)
         .update({
       "comments": FieldValue.increment(-1),
@@ -36,7 +37,7 @@ class AuthCommentService {
   Future updateComment(String commentId,
       String newName,
       String newDescription) async {
-    await dbCommentRef.doc(inputId)
+    await forumCommentCollection.doc(inputId)
         .collection("Comment")
         .doc(commentId)
         .update({
@@ -44,7 +45,7 @@ class AuthCommentService {
       "description": newDescription,
       "timestamp": DateTime.now(),
     });
-    await dbRef.doc(inputId).update({
+    await forumCollection.doc(inputId).update({
       "comments": FieldValue.increment(1),
     });
     return true;
@@ -54,7 +55,7 @@ class AuthCommentService {
       List disliked_uid,
       String commentId) async {
     if (liked_uid.contains(uid)) {
-      await dbCommentRef
+      await forumCommentCollection
           .doc(inputId)
           .collection("Comment")
           .doc(commentId)
@@ -63,7 +64,7 @@ class AuthCommentService {
         "liked_uid": FieldValue.arrayRemove([uid]),
       }).catchError((error) => print(error));
     } else if (disliked_uid.contains(uid)) {
-      await dbCommentRef
+      await forumCommentCollection
           .doc(inputId)
           .collection("Comment")
           .doc(commentId)
@@ -74,7 +75,7 @@ class AuthCommentService {
         "disliked_uid": FieldValue.arrayRemove([uid]),
       }).catchError((error) => print(error));
     } else {
-      await dbCommentRef
+      await forumCommentCollection
           .doc(inputId)
           .collection("Comment")
           .doc(commentId)
@@ -90,7 +91,7 @@ class AuthCommentService {
       List disliked_uid,
       String commentId) async {
     if (disliked_uid.contains(uid)) {
-      await dbCommentRef
+      await forumCommentCollection
           .doc(inputId)
           .collection("Comment")
           .doc(commentId)
@@ -99,7 +100,7 @@ class AuthCommentService {
         "disliked_uid": FieldValue.arrayRemove([uid]),
       }).catchError((error) => print(error));
     } else if (liked_uid.contains(uid)) {
-      await dbCommentRef
+      await forumCommentCollection
           .doc(inputId)
           .collection("Comment")
           .doc(commentId)
@@ -110,7 +111,7 @@ class AuthCommentService {
         "disliked_uid": FieldValue.arrayUnion([uid]),
       }).catchError((error) => print(error));
     } else {
-      await dbCommentRef
+      await forumCommentCollection
           .doc(inputId)
           .collection("Comment")
           .doc(commentId)

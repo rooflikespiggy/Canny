@@ -1,5 +1,6 @@
+import 'package:Canny/Database/all_database.dart';
 import 'package:Canny/Models/forum.dart';
-import 'package:Canny/Services/Forum/auth_forum.dart';
+import 'package:Canny/Services/Forum/forum_database.dart';
 import 'package:Canny/Shared/colors.dart';
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:firebase_auth/firebase_auth.dart';
@@ -14,11 +15,10 @@ class AddDiscussion extends StatefulWidget {
 class _AddDiscussionState extends State<AddDiscussion> {
   String uid = FirebaseAuth.instance.currentUser.uid;
   final _formKey = GlobalKey<FormState>();
-  final nameController = TextEditingController();
-  final titleController = TextEditingController();
-  final descriptionController = TextEditingController();
-  final dbRef = FirebaseFirestore.instance.collection("Forum");
-  final AuthForumService _authForum = AuthForumService();
+  final TextEditingController nameController = TextEditingController();
+  final TextEditingController titleController = TextEditingController();
+  final TextEditingController descriptionController = TextEditingController();
+  final ForumDatabaseService _authForum = ForumDatabaseService();
 
   @override
   Widget build(BuildContext context) {

@@ -1,4 +1,4 @@
-import 'package:Canny/Services/Forum/auth_comment.dart';
+import 'package:Canny/Services/Forum/comment_database.dart';
 import 'package:Canny/Shared/colors.dart';
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:firebase_auth/firebase_auth.dart';
@@ -20,11 +20,9 @@ class AddComment extends StatefulWidget {
 class _AddCommentState extends State<AddComment> {
   String uid = FirebaseAuth.instance.currentUser.uid;
   final _formKey = GlobalKey<FormState>();
-  final nameController = TextEditingController();
-  final titleController = TextEditingController();
-  final descriptionController = TextEditingController();
-  final dbCommentRef = FirebaseFirestore.instance.collection("ForumComment");
-  final dbRef = FirebaseFirestore.instance.collection("Forum");
+  final TextEditingController nameController = TextEditingController();
+  final TextEditingController titleController = TextEditingController();
+  final TextEditingController descriptionController = TextEditingController();
 
   final String inputId;
 
@@ -73,7 +71,7 @@ class _AddCommentState extends State<AddComment> {
                                 name: nameController.text,
                                 description: descriptionController.text);
                             if (_formKey.currentState.validate()) {
-                              await AuthCommentService(inputId)
+                              await CommentDatabaseService(inputId)
                                   .addComment(comment).then((_) {
                                 showDialog(
                                   context: context,

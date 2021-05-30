@@ -3,7 +3,7 @@ import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
 import 'package:Canny/Shared/colors.dart';
 import 'package:Canny/Screens/wrapper.dart';
-import 'package:Canny/Screens/Sidebar/View%20Categories/category-screen.dart';
+import 'package:Canny/Screens/Sidebar/View Categories/category_screen.dart';
 
 class SideBarMenu extends StatelessWidget {
   final AuthService _auth = AuthService();

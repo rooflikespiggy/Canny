@@ -1,3 +1,4 @@
+import 'package:Canny/Database/all_database.dart';
 import 'package:Canny/Screens/Forum/add_comment.dart';
 import 'package:Canny/Screens/Home/homepage_screen.dart';
 import 'package:Canny/Shared/colors.dart';
@@ -20,10 +21,9 @@ class ForumDetailScreen extends StatefulWidget {
 }
 
 class _ForumDetailScreenState extends State<ForumDetailScreen> {
-  final dbRef = FirebaseFirestore.instance.collection("Forum");
-  final dbCommentRef = FirebaseFirestore.instance.collection("ForumComment");
   final String inputId;
   final String uid = FirebaseAuth.instance.currentUser.uid;
+  final CollectionReference forumCollection = Database().forumDatabase();
 
   _ForumDetailScreenState(this.inputId);
 
@@ -57,7 +57,7 @@ class _ForumDetailScreenState extends State<ForumDetailScreen> {
           child: Column(
             children: <Widget> [
               StreamBuilder<DocumentSnapshot>(
-                stream: dbRef.doc(inputId).snapshots(),
+                stream: forumCollection.doc(inputId).snapshots(),
                 builder: (BuildContext context, AsyncSnapshot<DocumentSnapshot> snapshot) {
                   if (snapshot.hasData) {
                     return Align(

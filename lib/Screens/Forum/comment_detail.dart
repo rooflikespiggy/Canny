@@ -1,4 +1,5 @@
-import 'package:Canny/Services/Forum/auth_comment.dart';
+import 'package:Canny/Database/all_database.dart';
+import 'package:Canny/Services/Forum/comment_database.dart';
 import 'package:Canny/Shared/colors.dart';
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:firebase_auth/firebase_auth.dart';
@@ -8,8 +9,7 @@ import 'package:intl/intl.dart';
 
 class CommentDetail extends StatelessWidget {
   final String uid = FirebaseAuth.instance.currentUser.uid;
-  final dbRef = FirebaseFirestore.instance.collection("Forum");
-  final dbCommentRef = FirebaseFirestore.instance.collection("ForumComment");
+  final CollectionReference forumCommentCollection = Database().forumCommentDatabase();
   final String inputId;
 
   CommentDetail(this.inputId);
@@ -21,7 +21,7 @@ class CommentDetail extends StatelessWidget {
       child: Column(
         children: <Widget>[
           StreamBuilder(
-            stream: dbCommentRef
+            stream: forumCommentCollection
                 .doc(inputId)
                 .collection("Comment")
                 .orderBy("timestamp", descending: true)
@@ -40,6 +40,7 @@ class CommentDetail extends StatelessWidget {
                       final descriptionInputController = TextEditingController(text: snapshot.data.docs[index]["description"]);
                       int noOfLikes = snapshot.data.docs[index]["likes"];
                       int noOfDislikes = snapshot.data.docs[index]["dislikes"];
+                      final snapshotData = snapshot.data.docs[index];
                       return Padding(
                         padding: EdgeInsets.only(bottom: 4.0),
                         child: Column(
@@ -56,20 +57,20 @@ class CommentDetail extends StatelessWidget {
                                     ListTile(
                                         contentPadding: EdgeInsets.all(18.0),
                                         title: Text(
-                                          snapshot.data.docs[index]["name"],
+                                          snapshotData["name"],
                                           style: TextStyle(
                                             fontSize: 20,
 
                                           ),
                                         ),
                                         subtitle: Text(
-                                            snapshot.data.docs[index]["description"],
+                                          snapshotData["description"],
                                         ),
                                         leading: CircleAvatar(
                                           backgroundColor: kDeepOrangePrimary,
                                           radius: 30,
                                           child: Text(
-                                            snapshot.data.docs[index]["name"][0],
+                                            snapshotData["name"][0],
                                             style: TextStyle(
                                               fontSize: 23,
                                               color: Colors.white,
@@ -85,7 +86,7 @@ class CommentDetail extends StatelessWidget {
                                         children: <Widget>[
                                           Text(DateFormat("EEEE, d MMMM y")
                                               .format(DateTime.fromMillisecondsSinceEpoch(
-                                              snapshot.data.docs[index]["timestamp"].seconds * 1000)),
+                                              snapshotData["timestamp"].seconds * 1000)),
                                           ),
                                         ],
                                       ),
@@ -101,26 +102,26 @@ class CommentDetail extends StatelessWidget {
                                               children: <Widget> [
                                                 IconButton(
                                                   icon: Icon(
-                                                      snapshot.data.docs[index]["liked_uid"].contains(uid)
+                                                      snapshotData["liked_uid"].contains(uid)
                                                           ? Icons.thumb_up_alt
                                                           : Icons.thumb_up_alt_outlined,
                                                       color: Colors.black),
                                                   onPressed: () async {
-                                                    await AuthCommentService(inputId).updateLikes(snapshot.data.docs[index]["liked_uid"],
-                                                        snapshot.data.docs[index]["disliked_uid"],
-                                                        snapshot.data.docs[index].id);
+                                                    await CommentDatabaseService(inputId).updateLikes(snapshotData["liked_uid"],
+                                                        snapshotData["disliked_uid"],
+                                                        snapshotData.id);
                                                   }
                                                 ),
                                                 IconButton(
                                                   icon: Icon(
-                                                      snapshot.data.docs[index]["disliked_uid"].contains(uid)
+                                                      snapshotData["disliked_uid"].contains(uid)
                                                           ? Icons.thumb_down_alt
                                                           : Icons.thumb_down_alt_outlined,
                                                       color: Colors.black),
                                                   onPressed: () async {
-                                                    await AuthCommentService(inputId).updateDislikes(snapshot.data.docs[index]["liked_uid"],
-                                                        snapshot.data.docs[index]["disliked_uid"],
-                                                        snapshot.data.docs[index].id);
+                                                    await CommentDatabaseService(inputId).updateDislikes(snapshotData["liked_uid"],
+                                                        snapshotData["disliked_uid"],
+                                                        snapshotData.id);
                                                   }
                                                 ),
                                               ],
@@ -130,7 +131,7 @@ class CommentDetail extends StatelessWidget {
                                             alignment: Alignment.centerRight,
                                             child: Row(
                                               children: <Widget> [
-                                                if (snapshot.data.docs[index]["uid"] == uid)
+                                                if (snapshotData["uid"] == uid)
                                                   IconButton(
                                                     icon:
                                                     Icon(FontAwesomeIcons.edit),
@@ -175,8 +176,8 @@ class CommentDetail extends StatelessWidget {
                                                                   onPressed: () async {
                                                                     if (nameInputController.text.isNotEmpty &&
                                                                         descriptionInputController.text.isNotEmpty) {
-                                                                      await AuthCommentService(inputId).updateComment(
-                                                                        snapshot.data.docs[index].id,
+                                                                      await CommentDatabaseService(inputId).updateComment(
+                                                                        snapshotData.id,
                                                                         nameInputController.text,
                                                                         descriptionInputController.text
                                                                       ).then((_) {
@@ -195,7 +196,7 @@ class CommentDetail extends StatelessWidget {
                                                     },
                                                   ),
                                                 SizedBox(width: 10.0),
-                                                if (snapshot.data.docs[index]["uid"] == uid)
+                                                if (snapshotData["uid"] == uid)
                                                   IconButton(
                                                     icon: Icon(
                                                         FontAwesomeIcons.trashAlt),
@@ -212,8 +213,8 @@ class CommentDetail extends StatelessWidget {
                                                               TextButton(
                                                                 child: Text("Yes"),
                                                                 onPressed: () async {
-                                                                  await AuthCommentService(inputId).removeComment(
-                                                                    snapshot.data.docs[index].id,
+                                                                  await CommentDatabaseService(inputId).removeComment(
+                                                                    snapshotData.id,
                                                                   );
                                                                   snapshot.data.docs.removeAt(index);
                                                                   Navigator.pop(context);
