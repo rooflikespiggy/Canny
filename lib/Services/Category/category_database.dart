@@ -28,23 +28,6 @@ class CategoryDatabaseService {
     return true;
   }
 
-  /*
-  Future updateUserData(List<Map<String, String>> defaultCategories) async {
-    return await categoryCollection.doc(uid).set({
-      'Food and Drink': defaultCategories[0],
-      'Transportation': defaultCategories[1],
-      'Shopping': defaultCategories[2],
-      'Entertainment': defaultCategories[3],
-      'Bills and Fees': defaultCategories[4],
-      'Education': defaultCategories[5],
-      'Gift': defaultCategories[6],
-      'Household': defaultCategories[7],
-      'Allowance': defaultCategories[8],
-      'Salary': defaultCategories[9],
-      'Loan': defaultCategories[10],
-      'Other': defaultCategories[11],
-   */
-
   Future updateCategoryColor(
       String categoryId,
       Color newColor

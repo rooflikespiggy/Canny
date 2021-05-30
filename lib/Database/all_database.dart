@@ -23,4 +23,10 @@ class Database {
         .doc(uid)
         .collection('Category');
   }
+
+  CollectionReference expensesDatabase() {
+    return userCollection
+        .doc(uid)
+        .collection('Receipt');
+  }
 }
