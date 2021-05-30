@@ -1,3 +1,4 @@
+import 'package:Canny/Services/Category/category_database.dart';
 import 'package:Canny/Services/Receipt/receipt_database.dart';
 import 'package:Canny/Shared/colors.dart';
 import 'package:flutter/material.dart';
@@ -22,6 +23,8 @@ class ExpenseTile extends StatefulWidget {
 }
 
 class _ExpenseTileState extends State<ExpenseTile> {
+  final CategoryDatabaseService _authCategory = CategoryDatabaseService();
+
   @override
   Widget build(BuildContext context) {
     return Card(
@@ -45,8 +48,12 @@ class _ExpenseTileState extends State<ExpenseTile> {
           backgroundColor: Colors.deepOrange[50],
           radius: 30,
           child: IconTheme(
-              data: IconThemeData(color: Color(widget.categoryId.color).withOpacity(1), size: 25),
-              child: Icon(IconData(widget.categoryId.icon, fontFamily: 'MaterialIcons'))
+              data: IconThemeData(color: _authCategory
+                  .getCategories(widget.categoryId).categoryColor.withOpacity(1),
+                  size: 25),
+              child: _authCategory
+                  .getCategories(widget.categoryId)
+                  .categoryIcon
           ),
         ),
         trailing: Row(
@@ -57,12 +64,11 @@ class _ExpenseTileState extends State<ExpenseTile> {
             IconButton(
               icon: Icon(Icons.more_vert),
               onPressed: () {
-
               },
             ),
           ],
+        ),
       ),
-    );
     );
   }
 }

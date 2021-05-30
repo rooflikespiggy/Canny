@@ -13,6 +13,10 @@ class CategoryDatabaseService {
 
   CategoryDatabaseService({this.uid});
 
+  Category getCategories(String categoryId) {
+    return categories[int.parse(categoryId)];
+  }
+
   Future initStartCategories() async {
     for (int i = 0; i < categories.length; i++) {
       await addDefaultCategory(categories[i], i);
@@ -36,6 +40,7 @@ class CategoryDatabaseService {
   }
 
   Future removeCategory(String id) async {
+    // if removeCategory all the expenses should go to Others category
     categories.remove(id);
     await categoryCollection
         .doc(id)

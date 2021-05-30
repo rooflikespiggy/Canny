@@ -8,6 +8,7 @@ import 'package:Canny/Shared/colors.dart';
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
+import 'package:font_awesome_flutter/font_awesome_flutter.dart';
 
 
 class CategoryScreen extends StatefulWidget {
@@ -49,7 +50,7 @@ class _CategoryScreenState extends State<CategoryScreen> {
                   children: <Widget>[
                     StreamBuilder(
                         stream: categoryCollection
-                            .orderBy("categoryName")
+                            .orderBy("categoryId")
                             .snapshots(),
                         builder: (BuildContext context, AsyncSnapshot<QuerySnapshot> snapshot) {
                           if (snapshot.hasData) {
@@ -76,9 +77,24 @@ class _CategoryScreenState extends State<CategoryScreen> {
                                           setState(() {
                                             snapshot.data.docs.removeAt(index);
                                           });
+                                          ScaffoldMessenger.of(context)
+                                              .showSnackBar(SnackBar(content: Text(snapshotData['categoryName'] + ' deleted')));
                                         },
-                                        background: Container(
+                                        background: Card(
+                                          elevation: 3,
+                                          shape: RoundedRectangleBorder(
+                                              borderRadius: BorderRadius.all(Radius.circular(12.0))),
                                           color: Colors.red,
+                                          child: Align(
+                                            alignment: Alignment.centerRight,
+                                            child: Padding(
+                                              padding: const EdgeInsets.all(15.0),
+                                              child: Icon(
+                                                FontAwesomeIcons.trashAlt,
+                                                color: Colors.white,
+                                              ),
+                                            )
+                                          )
                                         ),
                                       );
                                     }
