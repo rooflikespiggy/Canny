@@ -23,8 +23,6 @@ class _AddCommentState extends State<AddComment> {
   final TextEditingController nameController = TextEditingController();
   final TextEditingController titleController = TextEditingController();
   final TextEditingController descriptionController = TextEditingController();
-  final CollectionReference dbCommentRef = FirebaseFirestore.instance.collection("ForumComment");
-  final CollectionReference dbRef = FirebaseFirestore.instance.collection("Forum");
 
   final String inputId;
 

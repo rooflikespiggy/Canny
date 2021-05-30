@@ -1,3 +1,4 @@
+import 'package:Canny/Database/all_database.dart';
 import 'package:Canny/Models/forum.dart';
 import 'package:Canny/Services/Forum/forum_database.dart';
 import 'package:Canny/Shared/colors.dart';
@@ -17,7 +18,6 @@ class _AddDiscussionState extends State<AddDiscussion> {
   final TextEditingController nameController = TextEditingController();
   final TextEditingController titleController = TextEditingController();
   final TextEditingController descriptionController = TextEditingController();
-  final CollectionReference dbRef = FirebaseFirestore.instance.collection("Forum");
   final ForumDatabaseService _authForum = ForumDatabaseService();
 
   @override

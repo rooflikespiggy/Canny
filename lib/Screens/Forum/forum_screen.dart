@@ -1,3 +1,4 @@
+import 'package:Canny/Database/all_database.dart';
 import 'package:Canny/Screens/Forum/forum_detail_screen.dart';
 import 'package:Canny/Screens/Sidebar/sidebar_menu.dart';
 import 'package:Canny/Services/Forum/forum_database.dart';
@@ -8,6 +9,7 @@ import 'package:flutter/material.dart';
 import 'package:font_awesome_flutter/font_awesome_flutter.dart';
 import 'package:intl/intl.dart';
 import 'add_discussion.dart';
+import 'forum_search.dart';
 
 class ForumScreen extends StatefulWidget {
 
@@ -18,7 +20,7 @@ class ForumScreen extends StatefulWidget {
 class _ForumScreenState extends State<ForumScreen> {
   final String uid = FirebaseAuth.instance.currentUser.uid;
   final ForumDatabaseService _authForum = ForumDatabaseService();
-  final CollectionReference dbRef = FirebaseFirestore.instance.collection("Forum");
+  final CollectionReference forumCollection = Database().forumDatabase();
 
   @override
   Widget build(BuildContext context) {
@@ -32,12 +34,19 @@ class _ForumScreenState extends State<ForumScreen> {
         ),
         actions: <Widget> [
           IconButton(
+            icon: Icon(Icons.search),
+            onPressed: () {
+              showSearch(context: context,
+                  delegate: ForumSearch());
+            },
+          ),
+          IconButton(
             icon: Icon(Icons.add_circle_outline_sharp),
             onPressed: () {
               Navigator.push(context,
                   MaterialPageRoute(builder: (context) => AddDiscussion()));
             },
-          )
+          ),
         ],
       ),
       drawer: SideBarMenu(),
@@ -48,7 +57,7 @@ class _ForumScreenState extends State<ForumScreen> {
             child: Column(
               children: <Widget>[
                 StreamBuilder(
-                  stream: dbRef
+                  stream: forumCollection
                       .orderBy("timestamp", descending: true)
                       .snapshots(),
                   builder: (BuildContext context, AsyncSnapshot<QuerySnapshot> snapshot) {

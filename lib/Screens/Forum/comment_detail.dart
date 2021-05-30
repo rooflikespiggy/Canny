@@ -1,3 +1,4 @@
+import 'package:Canny/Database/all_database.dart';
 import 'package:Canny/Services/Forum/comment_database.dart';
 import 'package:Canny/Shared/colors.dart';
 import 'package:cloud_firestore/cloud_firestore.dart';
@@ -8,8 +9,7 @@ import 'package:intl/intl.dart';
 
 class CommentDetail extends StatelessWidget {
   final String uid = FirebaseAuth.instance.currentUser.uid;
-  final CollectionReference dbRef = FirebaseFirestore.instance.collection("Forum");
-  final CollectionReference dbCommentRef = FirebaseFirestore.instance.collection("ForumComment");
+  final CollectionReference forumCommentCollection = Database().forumCommentDatabase();
   final String inputId;
 
   CommentDetail(this.inputId);
@@ -21,7 +21,7 @@ class CommentDetail extends StatelessWidget {
       child: Column(
         children: <Widget>[
           StreamBuilder(
-            stream: dbCommentRef
+            stream: forumCommentCollection
                 .doc(inputId)
                 .collection("Comment")
                 .orderBy("timestamp", descending: true)

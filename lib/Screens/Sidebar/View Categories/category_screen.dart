@@ -1,3 +1,4 @@
+import 'package:Canny/Database/all_database.dart';
 import 'package:Canny/Screens/Home/homepage_screen.dart';
 import 'package:Canny/Screens/Sidebar/sidebar_menu.dart';
 import 'package:Canny/Shared/category_tiles.dart';
@@ -15,7 +16,7 @@ class CategoryScreen extends StatefulWidget {
 
 class _CategoryScreenState extends State<CategoryScreen> {
   final String uid = FirebaseAuth.instance.currentUser.uid;
-  final CollectionReference dbRef = FirebaseFirestore.instance.collection("Users");
+  final CollectionReference categoryCollection = Database().categoryDatabase();
 
   @override
   Widget build(BuildContext context) {
@@ -43,9 +44,7 @@ class _CategoryScreenState extends State<CategoryScreen> {
                 child: Column(
                   children: <Widget>[
                     StreamBuilder(
-                        stream: dbRef
-                            .doc(uid)
-                            .collection("Categories")
+                        stream: categoryCollection
                             .snapshots(),
                         builder: (BuildContext context, AsyncSnapshot<QuerySnapshot> snapshot) {
                           if (snapshot.hasData) {
