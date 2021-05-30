@@ -1,6 +1,5 @@
 import 'package:Canny/Models/category.dart';
 import 'package:flutter/material.dart';
-import 'package:font_awesome_flutter/font_awesome_flutter.dart';
 
 
 List<Category> defaultCategories = [
@@ -20,95 +19,73 @@ List<Category> defaultCategories = [
 
 Category foodDrinks = Category(
   categoryName: 'Food & Drinks',
-  categoryIcon: Icon(FontAwesomeIcons.hamburger),
+  categoryIcon: Icon(Icons.fastfood_rounded),
   categoryColor: Colors.green[800],
 );
 
 Category transportation = Category(
   categoryName: 'Transportation',
-  categoryIcon: Icon(FontAwesomeIcons.car),
+  categoryIcon: Icon(Icons.directions_bus),
   categoryColor: Colors.red[800],
 );
 
 Category shopping = Category(
   categoryName: 'Shopping',
-  categoryIcon: Icon(FontAwesomeIcons.shoppingBag),
+  categoryIcon: Icon(Icons.shopping_bag_rounded),
   categoryColor: Colors.pinkAccent,
 );
 
 Category entertainment = Category(
   categoryName: 'Entertainment',
-  categoryIcon: Icon(FontAwesomeIcons.film),
+  categoryIcon: Icon(Icons.local_movies_rounded),
   categoryColor: Colors.deepOrange,
 );
 
 Category billAndFees = Category(
   categoryName: 'Bills and Fees',
-  categoryIcon: Icon(FontAwesomeIcons.fileInvoiceDollar),
+  categoryIcon: Icon(Icons.sticky_note_2_rounded),
   categoryColor: Colors.purple[800],
 );
 
 Category education = Category(
   categoryName: 'Education',
-  categoryIcon: Icon(FontAwesomeIcons.graduationCap),
+  categoryIcon: Icon(Icons.school_rounded),
   categoryColor: Colors.blue,
 );
 
 Category gift = Category(
   categoryName: 'Gift',
-  categoryIcon: Icon(FontAwesomeIcons.gift),
+  categoryIcon: Icon(Icons.card_giftcard_rounded),
   categoryColor: Colors.amber[700],
 );
 
 Category household = Category(
   categoryName: 'Household',
-  categoryIcon: Icon(FontAwesomeIcons.couch),
+  categoryIcon: Icon(Icons.home_work_rounded),
   categoryColor: Colors.teal,
 );
 
 Category allowance = Category(
   categoryName: 'Allowance',
-  categoryIcon: Icon(FontAwesomeIcons.handHoldingUsd),
+  categoryIcon: Icon(Icons.person),
   categoryColor: Colors.indigo[600],
 );
 
 Category salary = Category(
   categoryName: 'Salary',
-  categoryIcon: Icon(FontAwesomeIcons.moneyBillWave),
+  categoryIcon: Icon(Icons.attach_money_rounded),
   categoryColor: Colors.pink[900],
 );
 
 Category loan = Category(
   categoryName: 'Loan',
-  categoryIcon: Icon(FontAwesomeIcons.landmark),
+  categoryIcon: Icon(Icons.location_city_rounded),
   categoryColor: Colors.orange,
 );
 
 Category others = Category(
   categoryName: 'Others',
-  categoryIcon: Icon(FontAwesomeIcons.archive),
-  categoryColor: Colors.grey,
+  categoryIcon: Icon(Icons.scatter_plot),
+  categoryColor: Colors.grey[700],
 );
 
-/*
-class DefaultCategories {
-
-  List<Map<String, String>> createList() {
-    return [
-      {Category()}
-      {'categoryName': "Food and Drinks", 'categoryColor':Colors.green[800].value.toString(), 'categoryIcon': FaIcon(FontAwesomeIcons.hamburger).toString()},
-      {'categoryName': "Transportation", 'categoryColor':Colors.red[800].value.toString(), 'categoryIcon': FaIcon(FontAwesomeIcons.car).toString()},
-      {'categoryName': "Shopping", 'categoryColor':Colors.pinkAccent.value.toString(), 'categoryIcon': FaIcon(FontAwesomeIcons.shoppingBag).toString()},
-      {'categoryName': "Entertainment", 'categoryColor':Colors.deepOrange.value.toString(), 'categoryIcon': FaIcon(FontAwesomeIcons.film).toString()},
-      {'categoryName': "Bills and Fees", 'categoryColor':Colors.purple[800].value.toString(), 'categoryIcon': FaIcon(FontAwesomeIcons.fileInvoiceDollar).toString()},
-      {'categoryName': "Education", 'categoryColor':Colors.blue.value.toString(), 'categoryIcon': FaIcon(FontAwesomeIcons.graduationCap).toString()},
-      {'categoryName': "Gift", 'categoryColor':Colors.amber[700].value.toString(), 'categoryIcon': FaIcon(FontAwesomeIcons.gift).toString()},
-      {'categoryName': "Household", 'categoryColor':Colors.teal.value.toString(), 'categoryIcon': FaIcon(FontAwesomeIcons.couch).toString()},
-      {'categoryName': "Allowance", 'categoryColor':Colors.indigo[600].value.toString(), 'categoryIcon': FaIcon(FontAwesomeIcons.handHoldingUsd).toString()},
-      {'categoryName': "Salary", 'categoryColor':Colors.pink[900].value.toString(), 'categoryIcon': FaIcon(FontAwesomeIcons.moneyBillWave).toString()},
-      {'categoryName': "Loan", 'categoryColor':Colors.orange.value.toString(), 'categoryIcon': FaIcon(FontAwesomeIcons.landmark).toString()},
-      {'categoryName': "Other", 'categoryColor':Colors.grey[800].value.toString(), 'categoryIcon': FaIcon(FontAwesomeIcons.archive).toString()},
-    ];
-  }
-}
- */

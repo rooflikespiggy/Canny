@@ -1,12 +1,13 @@
 import 'package:Canny/Database/all_database.dart';
 import 'package:Canny/Screens/Home/homepage_screen.dart';
 import 'package:Canny/Screens/Sidebar/sidebar_menu.dart';
+import 'package:Canny/Services/Category/category_database.dart';
 import 'package:Canny/Shared/category_tiles.dart';
 import 'package:Canny/Shared/colors.dart';
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
-import 'package:Canny/Services/Category/category_database.dart';
+
 
 class CategoryScreen extends StatefulWidget {
 
@@ -16,7 +17,12 @@ class CategoryScreen extends StatefulWidget {
 
 class _CategoryScreenState extends State<CategoryScreen> {
   final String uid = FirebaseAuth.instance.currentUser.uid;
+<<<<<<< HEAD
   final CollectionReference categoryCollection = Database().categoryDatabase();
+=======
+  CategoryDatabaseService _authCategory = CategoryDatabaseService();
+  final CollectionReference dbRef = FirebaseFirestore.instance.collection("Users");
+>>>>>>> 93795b980f1bd123495f0e5a47338e93f254dfcb
 
   @override
   Widget build(BuildContext context) {
@@ -44,14 +50,21 @@ class _CategoryScreenState extends State<CategoryScreen> {
                 child: Column(
                   children: <Widget>[
                     StreamBuilder(
+<<<<<<< HEAD
                         stream: categoryCollection
+=======
+                        stream: dbRef
+                            .doc(uid)
+                            .collection("Categories")
+                            .orderBy("categoryName")
+>>>>>>> 93795b980f1bd123495f0e5a47338e93f254dfcb
                             .snapshots(),
                         builder: (BuildContext context, AsyncSnapshot<QuerySnapshot> snapshot) {
                           if (snapshot.hasData) {
                             return Align(
                                 alignment: Alignment.topCenter,
                                 child: ListView.builder(
-                                  padding: EdgeInsets.all(10),
+                                  padding: EdgeInsets.fromLTRB(7, 4, 7, 4),
                                   shrinkWrap: true,
                                   physics: const NeverScrollableScrollPhysics(),
                                   itemCount: snapshot.data.docs.length,
