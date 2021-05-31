@@ -80,6 +80,7 @@ class _CategoryScreenState extends State<CategoryScreen> {
                                           ScaffoldMessenger.of(context)
                                               .showSnackBar(SnackBar(content: Text(snapshotData['categoryName'] + ' deleted')));
                                         },
+                                        direction: DismissDirection.endToStart,
                                         background: Card(
                                           elevation: 3,
                                           shape: RoundedRectangleBorder(

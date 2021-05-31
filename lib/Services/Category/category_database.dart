@@ -1,3 +1,5 @@
+import 'dart:async';
+
 import 'package:Canny/Database/all_database.dart';
 import 'package:Canny/Models/category.dart';
 import 'package:Canny/Services/Category/default_categories.dart';
@@ -15,6 +17,10 @@ class CategoryDatabaseService {
 
   Category getCategory(String categoryId) {
     return categories[int.parse(categoryId)];
+  }
+
+  List<Category> getAllCategories() {
+    return categories;
   }
 
   Future initStartCategories() async {
@@ -41,7 +47,7 @@ class CategoryDatabaseService {
 
   Future removeCategory(String id) async {
     // if removeCategory all the expenses should go to Others category
-    categories.remove(id);
+    categories.removeAt(int.parse(id));
     await categoryCollection
         .doc(id)
         .delete();
@@ -49,7 +55,8 @@ class CategoryDatabaseService {
   }
 
   Future updateCategoryColor(String categoryId, Color newColor) async {
-    await categoryCollection.doc(categoryId) //how to get id of each category
+    await categoryCollection
+        .doc(categoryId) //how to get id of each category
         .update({"categoryColorValue": newColor.value});
     return true;
   }

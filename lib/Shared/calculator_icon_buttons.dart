@@ -23,7 +23,7 @@ class CalcIconButton extends StatelessWidget {
           onPressed: () {
           },
           child: IconTheme(
-              data: IconThemeData(color: categoryColor.withOpacity(1), size: 25),
+              data: IconThemeData(color: categoryColor.withOpacity(1), size: 38),
               child: icon,
           ),
           padding: EdgeInsets.all(16),

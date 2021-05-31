@@ -24,8 +24,9 @@ class Category {
 
   Category.fromMap(Map<String, dynamic> json) {
     categoryIcon = json['categoryIconCodePoint'];
-    categoryColor = Color(json['categoryColor']);
+    categoryColor = Color(json['categoryColorValue']);
     categoryName = json['categoryName'];
+    categoryId = json['categoryId'];
   }
 
   Map<String, dynamic> toMap() {

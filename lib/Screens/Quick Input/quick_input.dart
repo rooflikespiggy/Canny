@@ -98,17 +98,17 @@ class QuickInputState extends State<QuickInput> {
                     CalcIconButton(
                       icon: _authQuickInput.getSpecificCategory(0).categoryIcon,
                       categoryColor: _authQuickInput.getSpecificCategory(0).categoryColor,
-                      fillColor: Colors.deepOrangeAccent,
+                      fillColor: Colors.orange[200],
                     ),
                     CalcIconButton(
                       icon: _authQuickInput.getSpecificCategory(1).categoryIcon,
                       categoryColor: _authQuickInput.getSpecificCategory(1).categoryColor,
-                      fillColor: Colors.deepOrangeAccent,
+                      fillColor: Colors.orange[200],
                     ),
                     CalcIconButton(
                       icon: _authQuickInput.getSpecificCategory(2).categoryIcon,
                       categoryColor: _authQuickInput.getSpecificCategory(2).categoryColor,
-                      fillColor: Colors.deepOrangeAccent,
+                      fillColor: Colors.orange[200],
                     ),
                   ],
                 ),

@@ -23,7 +23,7 @@ class QuickInputDatabaseService {
   Future initStartQuickInputs() async {
     await addDefaultQuickInput(categories[0], 0);
     await addDefaultQuickInput(categories[1], 1);
-    await addDefaultQuickInput(categories[11], 11);
+    await addDefaultQuickInput(categories[2], 2);
     return true;
   }
 
@@ -33,4 +33,17 @@ class QuickInputDatabaseService {
         .set(category.toMap());
     return true;
   }
+
+  Future updateQuickInput(Category category, String categoryId, int categoryNo) async {
+    String previousCategoryId = int.parse(categories[categoryNo].categoryId).toString();
+    await quickInputCollection
+        .doc(previousCategoryId)
+        .delete();
+    await quickInputCollection
+        .doc(int.parse(categoryId).toString())
+        .set(category.toMap());
+    categories[categoryNo] = category;
+    return true;
+  }
+
 }

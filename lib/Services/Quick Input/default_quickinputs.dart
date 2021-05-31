@@ -4,7 +4,7 @@ import 'package:flutter/material.dart';
 List<Category> defaultQuickInputs = [
   foodDrinks,
   transportation,
-  others,
+  shopping,
 ];
 
 Category foodDrinks = Category(
@@ -21,9 +21,9 @@ Category transportation = Category(
   categoryId: '01',
 );
 
-Category others = Category(
-  categoryName: 'Others',
-  categoryIcon: Icon(Icons.scatter_plot),
-  categoryColor: Colors.grey[700],
-  categoryId: '11',
+Category shopping = Category(
+  categoryName: 'Shopping',
+  categoryIcon: Icon(Icons.shopping_bag_rounded),
+  categoryColor: Colors.pinkAccent,
+  categoryId: '02',
 );
