@@ -1,6 +1,7 @@
 import 'package:Canny/Database/all_database.dart';
 import 'package:Canny/Models/category.dart';
 import 'package:Canny/Screens/Home/homepage_screen.dart';
+import 'package:Canny/Screens/Quick%20Input/quick_input.dart';
 import 'package:Canny/Services/Category/category_database.dart';
 import 'package:Canny/Services/Quick%20Input/quickinput_database.dart';
 import 'package:Canny/Shared/colors.dart';
@@ -80,20 +81,31 @@ class _CustomiseQIState extends State<CustomiseQI> {
                                         TextStyle(fontFamily: 'Lato.Thin'),
                                       ),
                                       actions: <Widget>[
-                                        TextButton(
-                                          child: Text("Back to homepage"),
-                                          onPressed: () {
-                                            Navigator.push(context,
-                                                MaterialPageRoute(
-                                                    builder: (context) =>
-                                                        HomePageScreen()));
-                                          },
-                                        ),
-                                        TextButton(
-                                          child: Text("Reedit Discussion"),
-                                          onPressed: () {
-                                            Navigator.pop(context);
-                                          },
+                                        Column(
+                                          children: [
+                                            TextButton(
+                                              child: Text("Reedit Discussion"),
+                                              onPressed: () {
+                                                Navigator.pop(context);
+                                              },
+                                            ),
+                                            TextButton(
+                                              child: Text("Back to homepage"),
+                                              onPressed: () {
+                                                Navigator.push(context,
+                                                    MaterialPageRoute(
+                                                        builder: (context) => HomePageScreen()));
+                                              },
+                                            ),
+                                            TextButton(
+                                              child: Text("Check Quick Input"),
+                                              onPressed: () {
+                                                Navigator.push(context,
+                                                    MaterialPageRoute(
+                                                        builder: (context) => QuickInput()));
+                                              },
+                                            )
+                                          ],
                                         ),
                                       ],
                                     );
