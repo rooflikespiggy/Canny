@@ -20,6 +20,10 @@ class QuickInputDatabaseService {
     return categories[categoryNo];
   }
 
+  List<Category> getAllCategories() {
+    return categories;
+  }
+
   Future initStartQuickInputs() async {
     await addDefaultQuickInput(categories[0], 0);
     await addDefaultQuickInput(categories[1], 1);

@@ -10,6 +10,7 @@ import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:multi_select_flutter/chip_display/multi_select_chip_display.dart';
+import 'package:multi_select_flutter/chip_field/multi_select_chip_field.dart';
 import 'package:multi_select_flutter/dialog/multi_select_dialog_field.dart';
 import 'package:multi_select_flutter/util/multi_select_item.dart';
 
@@ -23,7 +24,6 @@ class _CustomiseQIState extends State<CustomiseQI> {
   final _formKey = GlobalKey<FormState>();
   final QuickInputDatabaseService _authQuickInput = QuickInputDatabaseService();
   final CollectionReference categoryCollection = Database().categoryDatabase();
-  final CategoryDatabaseService _authCategory = CategoryDatabaseService();
   final _allCategories = CategoryDatabaseService()
       .getAllCategories()
       .map(
@@ -55,8 +55,10 @@ class _CustomiseQIState extends State<CustomiseQI> {
                   ),
                 ),
                 SizedBox(height: 20.0),
-                getField(),
-                SizedBox(height: 100.0),
+                // getMultiSelectDialogField(),
+                // SizedBox(height: 20.0),
+                getMultiSelectChipField(),
+                SizedBox(height: 20.0),
                 Column(
                   crossAxisAlignment: CrossAxisAlignment.stretch,
                   children: <Widget>[
@@ -200,7 +202,7 @@ class _CustomiseQIState extends State<CustomiseQI> {
     });
   }
 
-  Widget getField() {
+  Widget getMultiSelectDialogField() {
     return Padding(
       padding: const EdgeInsets.all(20.0),
       child: Container(
@@ -239,7 +241,7 @@ class _CustomiseQIState extends State<CustomiseQI> {
             ),
           ),
           buttonIcon: Icon(
-            Icons.category,
+            Icons.arrow_downward_outlined,
             color: Colors.white,
           ),
           buttonText: Text(
@@ -263,5 +265,33 @@ class _CustomiseQIState extends State<CustomiseQI> {
       String categoryId = category.categoryId;
       _authQuickInput.updateQuickInput(category, categoryId, i);
     }
+  }
+
+  // TODO: see if this or DialogField is better
+  Widget getMultiSelectChipField() {
+    return Padding(
+      padding: const EdgeInsets.all(15.0),
+      child: MultiSelectChipField(
+        items: _allCategories,
+        scroll: false,
+        searchable: true,
+        title: Text("Select Your Categories",
+          style: TextStyle(
+            color: Colors.white,
+            fontSize: 16,
+          ),
+        ),
+        icon: Icon(Icons.check),
+        headerColor: Colors.blue.withOpacity(0.5),
+        decoration: BoxDecoration(
+          border: Border.all(color: Colors.blue[700], width: 1.8),
+        ),
+        selectedChipColor: Colors.blue.withOpacity(0.5),
+        selectedTextStyle: TextStyle(color: Colors.blue[800]),
+        onTap: (values) {
+          selectedCategories = values;
+        },
+      ),
+    );
   }
 }

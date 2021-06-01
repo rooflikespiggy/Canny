@@ -1,4 +1,3 @@
-import 'package:Canny/Screens/Home/function_screen.dart';
 import 'package:Canny/Screens/Sidebar/Quick%20Input/customise_quickinput.dart';
 import 'package:Canny/Services/Users/auth.dart';
 import 'package:firebase_auth/firebase_auth.dart';

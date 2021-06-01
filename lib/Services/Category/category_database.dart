@@ -45,11 +45,15 @@ class CategoryDatabaseService {
     return true;
   }
 
-  Future removeCategory(String id) async {
+  Future removeCategory(String categoryId) async {
     // if removeCategory all the expenses should go to Others category
-    categories.removeAt(int.parse(id));
+    for (Category category in categories) {
+      if (category.categoryId == categoryId) {
+        categories.remove(category);
+      }
+    }
     await categoryCollection
-        .doc(id)
+        .doc(categoryId)
         .delete();
     return true;
   }
