@@ -13,6 +13,7 @@ import 'package:multi_select_flutter/chip_display/multi_select_chip_display.dart
 import 'package:multi_select_flutter/chip_field/multi_select_chip_field.dart';
 import 'package:multi_select_flutter/dialog/multi_select_dialog_field.dart';
 import 'package:multi_select_flutter/util/multi_select_item.dart';
+import 'package:multi_select_flutter/util/multi_select_list_type.dart';
 
 class CustomiseQI extends StatefulWidget {
   @override
@@ -55,9 +56,9 @@ class _CustomiseQIState extends State<CustomiseQI> {
                   ),
                 ),
                 SizedBox(height: 20.0),
-                // getMultiSelectDialogField(),
+                getMultiSelectDialogField(),
                 // SizedBox(height: 20.0),
-                getMultiSelectChipField(),
+                // getMultiSelectChipField(),
                 SizedBox(height: 20.0),
                 Column(
                   crossAxisAlignment: CrossAxisAlignment.stretch,
@@ -225,7 +226,7 @@ class _CustomiseQIState extends State<CustomiseQI> {
               });
             }
           ),
-          backgroundColor: Colors.grey,
+          backgroundColor: Colors.white,
           searchable: true,
           items: _allCategories,
           title: Text("Categories"),
@@ -251,10 +252,12 @@ class _CustomiseQIState extends State<CustomiseQI> {
               fontSize: 16,
             ),
           ),
-          onConfirm: (categories) {
+          onSelectionChanged: (categories) {
             categories.length > 3
-                ? categories.removeAt(0)
-                : categories.sublist(0, 3);
+                ?  categories.removeAt(0)
+                :  categories.sublist(0, 3);
+          },
+          onConfirm: (categories) {
             selectedCategories = categories;
           }
         ),
