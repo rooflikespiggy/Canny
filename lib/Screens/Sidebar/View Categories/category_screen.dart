@@ -8,7 +8,6 @@ import 'package:Canny/Shared/colors.dart';
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
-import 'package:font_awesome_flutter/font_awesome_flutter.dart';
 
 
 class CategoryScreen extends StatefulWidget {
@@ -22,6 +21,7 @@ class _CategoryScreenState extends State<CategoryScreen> {
   final CollectionReference categoryCollection = Database().categoryDatabase();
   final CategoryDatabaseService _authCategory = CategoryDatabaseService();
   final int categoriesSize = defaultCategories.length;
+  bool isDefault = true;
 
   @override
   Widget build(BuildContext context) {
@@ -35,6 +35,15 @@ class _CategoryScreenState extends State<CategoryScreen> {
             style: TextStyle(fontFamily: 'Lato'),
           ),
           actions: <Widget> [
+            IconButton(
+              icon: Icon(
+                  isDefault ? Icons.visibility : Icons.visibility_off),
+              onPressed: () {
+                setState(() {
+                  isDefault = !isDefault;
+                });
+              },
+            ),
             IconButton(
               icon: Icon(Icons.home_rounded),
               onPressed: () {
@@ -63,47 +72,12 @@ class _CategoryScreenState extends State<CategoryScreen> {
                                   itemCount: snapshot.data.docs.length,
                                   itemBuilder: (BuildContext context, int index) {
                                     final snapshotData = snapshot.data.docs[index];
-                                    if (index >= categoriesSize) {
-                                      return Dismissible(
-                                        child: CategoryTile(
-                                          categoryName: snapshotData['categoryName'],
-                                          categoryColorValue: snapshotData['categoryColorValue'],
-                                          categoryIconCodePoint: snapshotData['categoryIconCodePoint'],
-                                          categoryId: snapshotData.id,
-                                        ),
-                                        key: ValueKey(snapshotData),
-                                        onDismissed: (DismissDirection direction) {
-                                          _authCategory.removeCategory(snapshotData.id);
-                                          setState(() {
-                                            snapshot.data.docs.removeAt(index);
-                                          });
-                                          ScaffoldMessenger.of(context)
-                                              .showSnackBar(SnackBar(content: Text(snapshotData['categoryName'] + ' deleted')));
-                                        },
-                                        direction: DismissDirection.endToStart,
-                                        background: Card(
-                                          elevation: 3,
-                                          shape: RoundedRectangleBorder(
-                                              borderRadius: BorderRadius.all(Radius.circular(12.0))),
-                                          color: Colors.red,
-                                          child: Align(
-                                            alignment: Alignment.centerRight,
-                                            child: Padding(
-                                              padding: const EdgeInsets.all(15.0),
-                                              child: Icon(
-                                                FontAwesomeIcons.trashAlt,
-                                                color: Colors.white,
-                                              ),
-                                            )
-                                          )
-                                        ),
-                                      );
-                                    }
                                     return CategoryTile(
-                                      categoryName: snapshotData['categoryName'],
-                                      categoryColorValue: snapshotData['categoryColorValue'],
-                                      categoryIconCodePoint: snapshotData['categoryIconCodePoint'],
-                                      categoryId: snapshotData.id,
+                                        categoryName: snapshotData['categoryName'],
+                                        categoryColorValue: snapshotData['categoryColorValue'],
+                                        categoryIconCodePoint: snapshotData['categoryIconCodePoint'],
+                                        categoryId: snapshotData.id,
+                                        index: index
                                     );
                                   },
                                 )

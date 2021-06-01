@@ -252,19 +252,14 @@ class _CustomiseQIState extends State<CustomiseQI> {
             ),
           ),
           onConfirm: (categories) {
+            categories.length > 3
+                ? categories.removeAt(0)
+                : categories.sublist(0, 3);
             selectedCategories = categories;
           }
         ),
       ),
     );
-  }
-
-  void editQuickInput() {
-    for (int i = 0; i < 3; i++) {
-      Category category = selectedCategories[i];
-      String categoryId = category.categoryId;
-      _authQuickInput.updateQuickInput(category, categoryId, i);
-    }
   }
 
   // TODO: see if this or DialogField is better
@@ -288,10 +283,21 @@ class _CustomiseQIState extends State<CustomiseQI> {
         ),
         selectedChipColor: Colors.blue.withOpacity(0.5),
         selectedTextStyle: TextStyle(color: Colors.blue[800]),
-        onTap: (values) {
-          selectedCategories = values;
+        onTap: (categories) {
+          categories.length > 3
+              ? categories.removeAt(0)
+              : categories.sublist(0, 3);
+          selectedCategories = categories;
         },
       ),
     );
+  }
+
+  void editQuickInput() {
+    for (int i = 0; i < 3; i++) {
+      Category category = selectedCategories[i];
+      String categoryId = category.categoryId;
+      _authQuickInput.updateQuickInput(category, categoryId, i);
+    }
   }
 }
