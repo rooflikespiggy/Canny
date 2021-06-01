@@ -1,9 +1,9 @@
 import 'dart:async';
-
 import 'package:Canny/Database/all_database.dart';
 import 'package:Canny/Models/category.dart';
 import 'package:Canny/Services/Category/default_categories.dart';
 import 'package:cloud_firestore/cloud_firestore.dart';
+import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
 
 class CategoryDatabaseService {
@@ -11,21 +11,28 @@ class CategoryDatabaseService {
 
   // collection reference
   final CollectionReference categoryCollection = Database().categoryDatabase();
-  List<Category> categories = defaultCategories;
+  final String userId = FirebaseAuth.instance.currentUser.uid;
+  var categories = {FirebaseAuth.instance.currentUser.uid: defaultCategories};
 
   CategoryDatabaseService({this.uid});
 
   Category getCategory(String categoryId) {
-    return categories[int.parse(categoryId)];
+    for (Category category in categories[userId]) {
+      if (category.categoryId == categoryId) {
+        return category;
+      }
+    }
+    return categories[userId].first;
   }
 
   List<Category> getAllCategories() {
-    return categories;
+    return categories[userId];
   }
 
+
   Future initStartCategories() async {
-    for (int i = 0; i < categories.length; i++) {
-      await addDefaultCategory(categories[i], i);
+    for (int i = 0; i < categories[userId].length; i++) {
+      await addDefaultCategory(categories[userId][i], i);
     }
     return true;
   }
@@ -38,7 +45,7 @@ class CategoryDatabaseService {
   }
 
   Future addNewCategory(Category category) async {
-    categories.add(category);
+    categories[userId].add(category);
     await categoryCollection
         .doc((categories.length - 1).toString())
         .set(category.toMap());
@@ -47,11 +54,6 @@ class CategoryDatabaseService {
 
   Future removeCategory(String categoryId) async {
     // if removeCategory all the expenses should go to Others category
-    for (Category category in categories) {
-      if (category.categoryId == categoryId) {
-        categories.remove(category);
-      }
-    }
     await categoryCollection
         .doc(categoryId)
         .delete();

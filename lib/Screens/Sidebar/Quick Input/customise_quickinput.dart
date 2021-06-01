@@ -86,7 +86,7 @@ class _CustomiseQIState extends State<CustomiseQI> {
                                         Column(
                                           children: [
                                             TextButton(
-                                              child: Text("Reedit Discussion"),
+                                              child: Text("Reedit Categories"),
                                               onPressed: () {
                                                 Navigator.pop(context);
                                               },

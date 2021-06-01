@@ -1,6 +1,4 @@
 import 'package:Canny/Services/Category/category_database.dart';
-import 'package:Canny/Services/Receipt/receipt_database.dart';
-import 'package:Canny/Shared/colors.dart';
 import 'package:flutter/material.dart';
 
 class ExpenseTile extends StatefulWidget {

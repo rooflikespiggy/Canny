@@ -1,3 +1,4 @@
+import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:flutter/material.dart';
 
 class Category {
@@ -22,11 +23,23 @@ class Category {
     );
   }
 
+  /*
   Category.fromMap(Map<String, dynamic> json) {
     categoryIcon = json['categoryIconCodePoint'];
     categoryColor = Color(json['categoryColorValue']);
     categoryName = json['categoryName'];
     categoryId = json['categoryId'];
+  }
+   */
+
+  factory Category.fromMap(DocumentSnapshot doc) {
+    Map json = doc.data();
+    return Category(
+      categoryIcon: Icon(IconData(json['categoryIconCodePoint'])),
+      categoryColor: Color(json['categoryColorValue']),
+      categoryName: json['categoryName'],
+      categoryId: json['categoryId'],
+    );
   }
 
   Map<String, dynamic> toMap() {
