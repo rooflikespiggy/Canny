@@ -1,5 +1,8 @@
 import 'package:Canny/Screens/Home/homepage_screen.dart';
 import 'package:Canny/Screens/Quick Input/quick_input.dart';
+import 'package:Canny/Services/Category/category_database.dart';
+import 'package:Canny/Services/Quick%20Input/quickinput_database.dart';
+import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
 import 'package:Canny/Services/Users/auth.dart';
 import 'package:Canny/Shared/colors.dart';
@@ -13,9 +16,14 @@ class FunctionScreen extends StatefulWidget {
 
 class _FunctionScreenState extends State<FunctionScreen> {
   final AuthService _auth = AuthService();
+  final String uid = FirebaseAuth.instance.currentUser.uid;
+  final QuickInputDatabaseService _authQuickInput = QuickInputDatabaseService();
+  final CategoryDatabaseService _authCategory = CategoryDatabaseService();
 
   @override
   Widget build(BuildContext context) {
+    _authQuickInput.initNewQuickInputs();
+    _authCategory.initNewCategories();
     return Scaffold(
       backgroundColor: kBackgroundColour,
       body: Padding(

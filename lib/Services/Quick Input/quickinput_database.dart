@@ -10,7 +10,8 @@ class QuickInputDatabaseService {
   // collection reference
   final CollectionReference quickInputCollection = Database().quickInputDatabase();
   final String userId = FirebaseAuth.instance.currentUser.uid;
-  // var quickInputs = {FirebaseAuth.instance.currentUser.uid: defaultQuickInputs};
+  List<Category> _quickInputs;
+  var quickInputs = {FirebaseAuth.instance.currentUser.uid: defaultQuickInputs};
 
   QuickInputDatabaseService({this.uid});
 
@@ -35,13 +36,15 @@ class QuickInputDatabaseService {
     return snapshots.map((doc) => Category.fromMap(doc)).toList();
   }
 
+  Future initNewQuickInputs() async {
+    _quickInputs = await getQuickInputs();
+  }
+
+  List<Category> get allQuickInputs {
+    return _quickInputs;
+  }
+
   Future updateQuickInput(Category category, String categoryId, int categoryNo) async {
-    /*
-    String previousCategoryId = int.parse(quickInputs[userId][categoryNo].categoryId).toString();
-    await quickInputCollection
-        .doc(previousCategoryId)
-        .delete();
-     */
     await quickInputCollection
         .get()
         .then((snapshot) =>
@@ -50,19 +53,12 @@ class QuickInputDatabaseService {
     await quickInputCollection
         .doc(int.parse(categoryId).toString())
         .set(category.toMap());
-    // quickInputs[userId][categoryNo] = category;
+    quickInputs[userId][categoryNo] = category;
     return true;
   }
 
-  /*
-  Category getQuickInput(String categoryId) {
-    for (Category category in quickInputs[userId]) {
-      if (category.categoryId == categoryId) {
-        return category;
-      }
-    }
-    return quickInputs[userId].first;
+  Category getQuickInput(int categoryNo) {
+    return quickInputs[userId][categoryNo];
   }
-   */
 
 }
