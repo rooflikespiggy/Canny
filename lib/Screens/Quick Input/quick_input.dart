@@ -90,7 +90,6 @@ class QuickInputState extends State<QuickInput> {
                       ),
                     ),
                   ),
-                Text(QuickInputButton().chosenCategory.categoryName ?? "hello"),
                 SizedBox(height: 12),
                 Row(
                   //this row of calculator buttons
