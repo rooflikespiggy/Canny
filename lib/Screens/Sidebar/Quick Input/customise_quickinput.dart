@@ -49,19 +49,19 @@ class _CustomiseQIState extends State<CustomiseQI> {
             child: Column(
               children: <Widget>[
                 Text(
-                  'Select Your Top 3 Categories!',
+                  'Select your top 3 categories \n for Quick Input!',
                   textAlign: TextAlign.center,
                   style: TextStyle(
-                    fontSize: 23.0,
+                    fontSize: 22.0,
                     fontFamily: 'Lato',
                     fontWeight: FontWeight.bold,
                     color: kDeepOrange,
                   ),
                 ),
-                SizedBox(height: 20.0),
+                SizedBox(height: 12.0),
                 getMultiSelectDialogField(),
                 // SizedBox(height: 20.0),
-                // getMultiSelectChipField(),
+                //getMultiSelectChipField(),
                 SizedBox(height: 20.0),
                 Column(
                   crossAxisAlignment: CrossAxisAlignment.stretch,
@@ -101,7 +101,7 @@ class _CustomiseQIState extends State<CustomiseQI> {
                                   builder: (BuildContext context) {
                                     return AlertDialog(
                                       title: Text(
-                                        "Succesfully Edited Your Categories!",
+                                        "You have successfully edited Your Categories!",
                                         style: TextStyle(fontFamily: 'Lato'),
                                       ),
                                       content: Text(
@@ -113,8 +113,7 @@ class _CustomiseQIState extends State<CustomiseQI> {
                                         Column(
                                           children: [
                                             TextButton(
-                                              child: Text(
-                                                  "Reedit Categories"),
+                                              child: Text("ReEdit Categories"),
                                               onPressed: () {
                                                 Navigator.pop(context);
                                               },
