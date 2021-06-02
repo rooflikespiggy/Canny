@@ -11,7 +11,6 @@ class CalcIconButton extends StatelessWidget {
     this.fillColor,
   });
 
-
   @override
   Widget build(BuildContext context) {
     return Container(

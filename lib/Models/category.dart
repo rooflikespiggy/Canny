@@ -34,8 +34,13 @@ class Category {
 
   factory Category.fromMap(DocumentSnapshot doc) {
     Map json = doc.data();
+
     return Category(
-      categoryIcon: Icon(IconData(json['categoryIconCodePoint'])),
+      categoryIcon: Icon(IconData(
+          json['categoryIconCodePoint'],
+          fontFamily: json['categoryFontFamily'],
+          fontPackage: json['categoryFontPackage'])
+      ),
       categoryColor: Color(json['categoryColorValue']),
       categoryName: json['categoryName'],
       categoryId: json['categoryId'],
@@ -46,6 +51,8 @@ class Category {
     return {
       'categoryName': categoryName,
       'categoryIconCodePoint': categoryIcon.icon.codePoint,
+      'categoryFontFamily': categoryIcon.icon.fontFamily,
+      'categoryFontPackage': categoryIcon.icon.fontPackage,
       'categoryColorValue': categoryColor.value,
       'categoryId': categoryId,
     };

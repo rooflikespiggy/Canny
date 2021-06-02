@@ -105,6 +105,33 @@ class _HomePageScreenState extends State<HomePageScreen> {
       ),
     ];
 
+    /*
+    var _addTESheet = showModalBottomSheet(
+      shape: RoundedRectangleBorder(
+        borderRadius: BorderRadius.only(
+          topLeft: Radius.circular(24),
+          topRight: Radius.circular(24),
+        ),
+      ),
+      isScrollControlled: true,
+      elevation: 5,
+      context: context,
+      builder: (context) =>
+          Column(
+            mainAxisSize: MainAxisSize.min,
+            children: <Widget> [
+              ListTile(
+                leading: Text('no idea what'),
+                trailing: Icon(Icons.clear),
+                onTap: () {
+                  Navigator.pop(context);
+                },
+              ),
+            ],
+          )
+    );
+     */
+
     return Scaffold(
       body: _pageOptions[_selectedTab],
       bottomNavigationBar: Padding(

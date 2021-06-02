@@ -1,3 +1,5 @@
+import 'package:cloud_firestore/cloud_firestore.dart';
+
 class Comment {
 
   String uid;
@@ -22,7 +24,7 @@ class Comment {
     did = json['did'];
     name = json['name'];
     description = json['description'];
-    datetime = json['timestamp'];
+    datetime = json['datetime'];
     likes = json['likes'];
     dislikes = json['dislikes'];
     liked_uid = json['liked_uid'];
@@ -35,7 +37,7 @@ class Comment {
       'did': did,
       'name': name,
       'description': description,
-      'timestamp': datetime,
+      'datetime': datetime,
       'likes': likes,
       'dislikes': dislikes,
       'liked_uid': liked_uid,

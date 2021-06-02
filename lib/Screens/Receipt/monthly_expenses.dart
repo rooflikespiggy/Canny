@@ -1,5 +1,5 @@
 import 'package:flutter/material.dart';
-import 'package:Canny/Shared/expense_tiles.dart';
+import 'package:Canny/Services/Receipt/expense_tiles.dart';
 
 class monthlyExpenses extends StatefulWidget {
 

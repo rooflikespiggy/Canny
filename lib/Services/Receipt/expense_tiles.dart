@@ -25,6 +25,7 @@ class _ExpenseTileState extends State<ExpenseTile> {
 
   @override
   Widget build(BuildContext context) {
+    _authCategory.initNewCategories();
     return Card(
       elevation: 3,
       shape: RoundedRectangleBorder(

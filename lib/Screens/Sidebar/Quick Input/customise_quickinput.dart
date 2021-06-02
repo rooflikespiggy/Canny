@@ -13,7 +13,7 @@ import 'package:multi_select_flutter/chip_display/multi_select_chip_display.dart
 import 'package:multi_select_flutter/chip_field/multi_select_chip_field.dart';
 import 'package:multi_select_flutter/dialog/multi_select_dialog_field.dart';
 import 'package:multi_select_flutter/util/multi_select_item.dart';
-import 'package:multi_select_flutter/util/multi_select_list_type.dart';
+
 
 class CustomiseQI extends StatefulWidget {
   @override
@@ -24,13 +24,16 @@ class _CustomiseQIState extends State<CustomiseQI> {
   final String uid = FirebaseAuth.instance.currentUser.uid;
   final _formKey = GlobalKey<FormState>();
   final QuickInputDatabaseService _authQuickInput = QuickInputDatabaseService();
+  final CategoryDatabaseService _authCategory = CategoryDatabaseService();
   final CollectionReference categoryCollection = Database().categoryDatabase();
-  final _allCategories = CategoryDatabaseService()
+  List<MultiSelectItem<Category>> _allCategories;
+
+  final _testCategories = CategoryDatabaseService()
       .getAllCategories()
-      .map(
-          (category) =>
+      .map((category) =>
           MultiSelectItem<Category>(category, category.categoryName))
       .toList();
+
   List<Category> selectedCategories;
   String firstSelectedCategory;
 
@@ -46,16 +49,16 @@ class _CustomiseQIState extends State<CustomiseQI> {
             child: Column(
               children: <Widget>[
                 Text(
-                  'Select Your Top 3 Categories!',
+                  'Select your top 3 categories \n for Quick Input!',
                   textAlign: TextAlign.center,
                   style: TextStyle(
-                    fontSize: 23.0,
+                    fontSize: 22.0,
                     fontFamily: 'Lato',
                     fontWeight: FontWeight.bold,
                     color: kDeepOrange,
                   ),
                 ),
-                SizedBox(height: 20.0),
+                SizedBox(height: 12.0),
                 getMultiSelectDialogField(),
                 // SizedBox(height: 20.0),
                 //getMultiSelectChipField(),
@@ -67,7 +70,30 @@ class _CustomiseQIState extends State<CustomiseQI> {
                       mainAxisAlignment: MainAxisAlignment.spaceEvenly,
                       children: <Widget>[
                         ElevatedButton(
-                            onPressed: () async {
+                          onPressed: () async {
+                            // if selected less than 3, ask them select 3
+                            if (selectedCategories.length < 3) {
+                              showDialog(
+                                context: context,
+                                builder: (BuildContext context) {
+                                  return AlertDialog(
+                                    content: Text(
+                                      "Please select 3 categories",
+                                      style:
+                                      TextStyle(fontFamily: 'Lato.Thin'),
+                                    ),
+                                    actions: <Widget> [
+                                      TextButton(
+                                        child: Text("OK"),
+                                        onPressed: () {
+                                          Navigator.pop(context);
+                                        },
+                                      ),
+                                    ],
+                                  );
+                                }
+                              );
+                            } else {
                               editQuickInput();
                               if (_formKey.currentState.validate()) {
                                 showDialog(
@@ -97,15 +123,18 @@ class _CustomiseQIState extends State<CustomiseQI> {
                                               onPressed: () {
                                                 Navigator.push(context,
                                                     MaterialPageRoute(
-                                                        builder: (context) => HomePageScreen()));
+                                                        builder: (context) =>
+                                                            HomePageScreen()));
                                               },
                                             ),
                                             TextButton(
-                                              child: Text("Check Quick Input"),
+                                              child: Text(
+                                                  "Check Quick Input"),
                                               onPressed: () {
                                                 Navigator.push(context,
                                                     MaterialPageRoute(
-                                                        builder: (context) => QuickInput()));
+                                                        builder: (context) =>
+                                                            QuickInput()));
                                               },
                                             )
                                           ],
@@ -115,12 +144,14 @@ class _CustomiseQIState extends State<CustomiseQI> {
                                   },
                                 );
                               }
-                            },
-                            child: Text('Submit'),
-                            style: ButtonStyle(
-                              backgroundColor:
-                              MaterialStateProperty.all(kDeepOrangeLight),
-                            )),
+                            }
+                          },
+                          child: Text('Submit'),
+                          style: ButtonStyle(
+                            backgroundColor:
+                            MaterialStateProperty.all(kDeepOrangeLight),
+                          )
+                        ),
                         ElevatedButton(
                             onPressed: () {
                               Navigator.push(context,
@@ -131,7 +162,8 @@ class _CustomiseQIState extends State<CustomiseQI> {
                             style: ButtonStyle(
                               backgroundColor:
                               MaterialStateProperty.all(Colors.grey),
-                            )),
+                            ),
+                        ),
                       ],
                     ),
                   ],
@@ -203,6 +235,124 @@ class _CustomiseQIState extends State<CustomiseQI> {
     });
   }
 
+  // TODO: see if this or DialogField is better
+  Widget getMultiSelectChipField() {
+    return FutureBuilder<List<Category>>(
+      future: _authCategory.getCategories(),
+      builder: (BuildContext context, AsyncSnapshot<List<Category>> snapshot) {
+        if (snapshot.hasData) {
+          List<Category> allCategories = snapshot.data;
+          allCategories.sort((a, b) => a.categoryId.compareTo(b.categoryId));
+          _allCategories = allCategories.map((category) =>
+              MultiSelectItem<Category>(category, category.categoryName)).toList();
+          return Padding(
+            padding: const EdgeInsets.all(15.0),
+            child: MultiSelectChipField(
+              items: _allCategories,
+              scroll: false,
+              searchable: true,
+              title: Text("Select Your Categories",
+                style: TextStyle(
+                  color: Colors.white,
+                  fontSize: 16,
+                ),
+              ),
+              icon: Icon(Icons.check),
+              headerColor: Colors.blue.withOpacity(0.5),
+              decoration: BoxDecoration(
+                border: Border.all(color: Colors.blue[700], width: 1.8),
+              ),
+              selectedChipColor: Colors.blue.withOpacity(0.5),
+              selectedTextStyle: TextStyle(color: Colors.blue[800]),
+              onTap: (categories) {
+                categories.length > 3
+                    ? categories.removeAt(0)
+                    : categories;
+                selectedCategories = categories;
+              },
+            ),
+          );
+        }
+        return CircularProgressIndicator();
+      }
+    );
+  }
+
+  Widget getMultiSelectDialogField() {
+    return FutureBuilder<List<Category>>(
+      future: _authCategory.getCategories(),
+      builder: (BuildContext context, AsyncSnapshot<List<Category>> snapshot) {
+        if (snapshot.hasData) {
+          List<Category> allCategories = snapshot.data;
+          allCategories.sort((a, b) => a.categoryId.compareTo(b.categoryId));
+          _allCategories = allCategories.map((category) =>
+              MultiSelectItem<Category>(category, category.categoryName)).toList();
+          return Padding(
+            padding: const EdgeInsets.all(20.0),
+            child: Container(
+              height: 200.0,
+              decoration: BoxDecoration(
+                color: Colors.blue.withOpacity(0.1),
+                borderRadius: BorderRadius.all(Radius.circular(10)),
+                border: Border.all(
+                  color: Colors.blue,
+                  width: 2,
+                ),
+              ),
+              child: MultiSelectDialogField(
+                backgroundColor: Colors.white,
+                searchable: true,
+                items: _allCategories,
+                title: Text("Categories"),
+                selectedColor: Colors.blue,
+                decoration: BoxDecoration(
+                  color: Colors.blue,
+                  borderRadius: BorderRadius.only(
+                      topLeft: Radius.circular(8),
+                      topRight: Radius.circular(8)),
+                  border: Border.all(
+                    color: Colors.blue,
+                    width: 2,
+                  ),
+                ),
+                buttonIcon: Icon(
+                  Icons.arrow_downward_outlined,
+                  color: Colors.white,
+                ),
+                buttonText: Text(
+                  "Select Your Categories",
+                  style: TextStyle(
+                    color: Colors.white,
+                    fontSize: 16,
+                  ),
+                ),
+                onSelectionChanged: (categories) {
+                  categories.length > 3
+                      ? categories.removeAt(0)
+                      : categories;
+                },
+                onConfirm: (categories) {
+                  selectedCategories = categories;
+                }
+              ),
+            ),
+          );
+        }
+        return CircularProgressIndicator();
+      }
+    );
+  }
+
+  void editQuickInput() {
+    for (int i = 0; i < 3; i++) {
+      Category category = selectedCategories[i];
+      String categoryId = category.categoryId;
+      _authQuickInput.updateQuickInput(category, categoryId, i);
+    }
+  }
+
+  // old codes to keep in case
+  /*
   Widget getMultiSelectDialogField() {
     return Padding(
       padding: const EdgeInsets.all(20.0),
@@ -217,55 +367,54 @@ class _CustomiseQIState extends State<CustomiseQI> {
           ),
         ),
         child: MultiSelectDialogField(
-          chipDisplay: MultiSelectChipDisplay(
-            icon: Icon(Icons.cancel),
+            chipDisplay: MultiSelectChipDisplay(
+                icon: Icon(Icons.cancel),
+                items: _allCategories,
+                onTap: (value) {
+                  setState(() {
+                    selectedCategories.remove(value);
+                  });
+                }
+            ),
+            backgroundColor: Colors.white,
+            searchable: true,
             items: _allCategories,
-            onTap: (value) {
-              setState(() {
-                selectedCategories.remove(value);
-              });
-            }
-          ),
-          backgroundColor: Colors.white,
-          searchable: true,
-          items: _allCategories,
-          title: Text("Categories"),
-          selectedColor: Colors.blue,
-          decoration: BoxDecoration(
-            color: Colors.blue,
-            borderRadius: BorderRadius.only(
-                topLeft: Radius.circular(8),
-                topRight: Radius.circular(8)),
-            border: Border.all(
+            title: Text("Categories"),
+            selectedColor: Colors.blue,
+            decoration: BoxDecoration(
               color: Colors.blue,
-              width: 2,
+              borderRadius: BorderRadius.only(
+                  topLeft: Radius.circular(8),
+                  topRight: Radius.circular(8)),
+              border: Border.all(
+                color: Colors.blue,
+                width: 2,
+              ),
             ),
-          ),
-          buttonIcon: Icon(
-            Icons.arrow_downward_outlined,
-            color: Colors.white,
-          ),
-          buttonText: Text(
-            "Select Your Categories",
-            style: TextStyle(
+            buttonIcon: Icon(
+              Icons.arrow_downward_outlined,
               color: Colors.white,
-              fontSize: 16,
             ),
-          ),
-          onSelectionChanged: (categories) {
-            categories.length > 3
-                ?  categories.removeAt(0)
-                :  categories.sublist(0, 3);
-          },
-          onConfirm: (categories) {
-            selectedCategories = categories;
-          }
+            buttonText: Text(
+              "Select Your Categories",
+              style: TextStyle(
+                color: Colors.white,
+                fontSize: 16,
+              ),
+            ),
+            onSelectionChanged: (categories) {
+              categories.length > 3
+                  ?  categories.removeAt(0)
+                  :  categories;
+            },
+            onConfirm: (categories) {
+              selectedCategories = categories;
+            }
         ),
       ),
     );
   }
 
-  // TODO: see if this or DialogField is better
   Widget getMultiSelectChipField() {
     return Padding(
       padding: const EdgeInsets.all(15.0),
@@ -289,18 +438,11 @@ class _CustomiseQIState extends State<CustomiseQI> {
         onTap: (categories) {
           categories.length > 3
               ? categories.removeAt(0)
-              : categories.sublist(0, 3);
+              : categories;
           selectedCategories = categories;
         },
       ),
     );
   }
-
-  void editQuickInput() {
-    for (int i = 0; i < 3; i++) {
-      Category category = selectedCategories[i];
-      String categoryId = category.categoryId;
-      _authQuickInput.updateQuickInput(category, categoryId, i);
-    }
-  }
+  */
 }

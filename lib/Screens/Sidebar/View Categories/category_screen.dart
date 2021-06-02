@@ -1,8 +1,9 @@
 import 'package:Canny/Database/all_database.dart';
 import 'package:Canny/Screens/Home/homepage_screen.dart';
 import 'package:Canny/Screens/Sidebar/sidebar_menu.dart';
+import 'package:Canny/Services/Category/category_database.dart';
 import 'package:Canny/Services/Category/default_categories.dart';
-import 'package:Canny/Shared/category_tiles.dart';
+import 'package:Canny/Services/Category/category_tiles.dart';
 import 'package:Canny/Shared/colors.dart';
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:firebase_auth/firebase_auth.dart';
@@ -74,6 +75,8 @@ class _CategoryScreenState extends State<CategoryScreen> {
                                         categoryName: snapshotData['categoryName'],
                                         categoryColorValue: snapshotData['categoryColorValue'],
                                         categoryIconCodePoint: snapshotData['categoryIconCodePoint'],
+                                        categoryFontFamily: snapshotData['categoryFontFamily'],
+                                        categoryFontPackage: snapshotData['categoryFontPackage'],
                                         categoryId: snapshotData.id,
                                         index: index
                                     );

@@ -1,7 +1,9 @@
-import 'package:Canny/Shared/calculator_icon_buttons.dart';
+import 'package:Canny/Models/category.dart';
+import 'package:Canny/Services/Quick%20Input/calculator_icon_buttons.dart';
+import 'package:Canny/Services/Quick%20Input/quickinput_buttons.dart';
 import 'package:flutter/material.dart';
 import 'package:math_expressions/math_expressions.dart';
-import 'package:Canny/Shared/calculator_buttons.dart';
+import 'package:Canny/Services/Quick%20Input/calculator_buttons.dart';
 import 'package:Canny/Shared/colors.dart';
 import 'package:Canny/Services/Quick Input/quickinput_database.dart';
 
@@ -94,6 +96,8 @@ class QuickInputState extends State<QuickInput> {
                       callback: allClear,
                       textSize: 22,
                     ),
+                    QuickInputButton(),
+                    /*
                     CalcIconButton(
                       icon: _authQuickInput.getSpecificQuickInput(0).categoryIcon,
                       categoryColor: _authQuickInput.getSpecificQuickInput(0).categoryColor,
@@ -109,6 +113,7 @@ class QuickInputState extends State<QuickInput> {
                       categoryColor: _authQuickInput.getSpecificQuickInput(2).categoryColor,
                       fillColor: Colors.orange[200],
                     ),
+                     */
                   ],
                 ),
                 Row(

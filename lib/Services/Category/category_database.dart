@@ -12,6 +12,7 @@ class CategoryDatabaseService {
   // collection reference
   final CollectionReference categoryCollection = Database().categoryDatabase();
   final String userId = FirebaseAuth.instance.currentUser.uid;
+  List<Category> _categories;
   var categories = {FirebaseAuth.instance.currentUser.uid: defaultCategories};
 
   CategoryDatabaseService({this.uid});
@@ -29,6 +30,20 @@ class CategoryDatabaseService {
     return categories[userId];
   }
 
+  Future<List<Category>> getCategories() async {
+    List<DocumentSnapshot> snapshots = await categoryCollection
+        .get()
+        .then((value) => value.docs);
+    return snapshots.map((doc) => Category.fromMap(doc)).toList();
+  }
+
+  Future initNewCategories() async {
+    _categories = await getCategories();
+  }
+
+  List<Category> get allCategories {
+    return _categories;
+  }
 
   Future initStartCategories() async {
     for (int i = 0; i < categories[userId].length; i++) {
@@ -54,6 +69,11 @@ class CategoryDatabaseService {
 
   Future removeCategory(String categoryId) async {
     // if removeCategory all the expenses should go to Others category
+    for (Category category in categories[userId]) {
+      if (category.categoryId == categoryId) {
+        categories[userId].remove(category);
+      }
+    }
     await categoryCollection
         .doc(categoryId)
         .delete();
