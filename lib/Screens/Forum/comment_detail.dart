@@ -21,7 +21,7 @@ class CommentDetail extends StatelessWidget {
       child: Column(
         children: <Widget>[
           StreamBuilder(
-            stream: FirebaseFirestore.instance.collection('ForumComment')
+            stream: forumCommentCollection
                 .doc(inputId)
                 .collection("Comment")
                 .snapshots(),
