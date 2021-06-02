@@ -70,8 +70,30 @@ class _CustomiseQIState extends State<CustomiseQI> {
                       mainAxisAlignment: MainAxisAlignment.spaceEvenly,
                       children: <Widget>[
                         ElevatedButton(
-                            onPressed: () async {
-                              // if selected less than 3, ask them select 3
+                          onPressed: () async {
+                            // if selected less than 3, ask them select 3
+                            if (selectedCategories.length < 3) {
+                              showDialog(
+                                context: context,
+                                builder: (BuildContext context) {
+                                  return AlertDialog(
+                                    content: Text(
+                                      "Please select 3 categories",
+                                      style:
+                                      TextStyle(fontFamily: 'Lato.Thin'),
+                                    ),
+                                    actions: <Widget> [
+                                      TextButton(
+                                        child: Text("OK"),
+                                        onPressed: () {
+                                          Navigator.pop(context);
+                                        },
+                                      ),
+                                    ],
+                                  );
+                                }
+                              );
+                            } else {
                               editQuickInput();
                               if (_formKey.currentState.validate()) {
                                 showDialog(
@@ -91,7 +113,8 @@ class _CustomiseQIState extends State<CustomiseQI> {
                                         Column(
                                           children: [
                                             TextButton(
-                                              child: Text("Reedit Categories"),
+                                              child: Text(
+                                                  "Reedit Categories"),
                                               onPressed: () {
                                                 Navigator.pop(context);
                                               },
@@ -101,15 +124,18 @@ class _CustomiseQIState extends State<CustomiseQI> {
                                               onPressed: () {
                                                 Navigator.push(context,
                                                     MaterialPageRoute(
-                                                        builder: (context) => HomePageScreen()));
+                                                        builder: (context) =>
+                                                            HomePageScreen()));
                                               },
                                             ),
                                             TextButton(
-                                              child: Text("Check Quick Input"),
+                                              child: Text(
+                                                  "Check Quick Input"),
                                               onPressed: () {
                                                 Navigator.push(context,
                                                     MaterialPageRoute(
-                                                        builder: (context) => QuickInput()));
+                                                        builder: (context) =>
+                                                            QuickInput()));
                                               },
                                             )
                                           ],
@@ -119,12 +145,14 @@ class _CustomiseQIState extends State<CustomiseQI> {
                                   },
                                 );
                               }
-                            },
-                            child: Text('Submit'),
-                            style: ButtonStyle(
-                              backgroundColor:
-                              MaterialStateProperty.all(kDeepOrangeLight),
-                            )),
+                            }
+                          },
+                          child: Text('Submit'),
+                          style: ButtonStyle(
+                            backgroundColor:
+                            MaterialStateProperty.all(kDeepOrangeLight),
+                          )
+                        ),
                         ElevatedButton(
                             onPressed: () {
                               Navigator.push(context,
@@ -273,15 +301,6 @@ class _CustomiseQIState extends State<CustomiseQI> {
                 ),
               ),
               child: MultiSelectDialogField(
-                chipDisplay: MultiSelectChipDisplay(
-                  icon: Icon(Icons.cancel),
-                  items: _allCategories,
-                  onTap: (value) {
-                    setState(() {
-                      selectedCategories.remove(value);
-                    });
-                  }
-                ),
                 backgroundColor: Colors.white,
                 searchable: true,
                 items: _allCategories,
@@ -311,7 +330,7 @@ class _CustomiseQIState extends State<CustomiseQI> {
                 onSelectionChanged: (categories) {
                   categories.length > 3
                       ? categories.removeAt(0)
-                      : categories.sublist(0, 3);
+                      : categories;
                 },
                 onConfirm: (categories) {
                   selectedCategories = categories;

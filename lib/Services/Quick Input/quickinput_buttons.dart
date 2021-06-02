@@ -25,13 +25,13 @@ class QuickInputButton extends StatelessWidget {
                   categoryColor: allQuickInputs[0].categoryColor,
                   fillColor: Colors.orange[200],
                 ),
-                SizedBox(width: 8.0),
+                SizedBox(width: 6.5),
                 CalcIconButton(
                   icon: allQuickInputs[1].categoryIcon,
                   categoryColor: allQuickInputs[1].categoryColor,
                   fillColor: Colors.orange[200],
                 ),
-                SizedBox(width: 8.0),
+                SizedBox(width: 6.5),
                 CalcIconButton(
                   icon: allQuickInputs[2].categoryIcon,
                   categoryColor: allQuickInputs[2].categoryColor,
