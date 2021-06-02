@@ -45,6 +45,12 @@ class QuickInputDatabaseService {
   }
 
   Future updateQuickInput(Category category, String categoryId, int categoryNo) async {
+    /*
+    String previousCategoryId = int.parse(quickInputs[userId][categoryNo].categoryId).toString();
+    await quickInputCollection
+        .doc(previousCategoryId)
+        .delete();
+     */
     await quickInputCollection
         .get()
         .then((snapshot) =>

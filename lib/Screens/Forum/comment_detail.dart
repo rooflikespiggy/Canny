@@ -28,7 +28,6 @@ class CommentDetail extends StatelessWidget {
                 .snapshots(),
             builder: (BuildContext context, AsyncSnapshot<QuerySnapshot> snapshot) {
               if (snapshot.hasData) {
-                print(snapshot);
                 return Align(
                   alignment: Alignment.topCenter,
                   child: ListView.builder(

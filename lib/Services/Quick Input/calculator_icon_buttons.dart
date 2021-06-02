@@ -3,7 +3,7 @@ import 'package:flutter/material.dart';
 import 'package:cloud_firestore/cloud_firestore.dart';
 
 class CalcIconButton extends StatelessWidget {
-  final QueryDocumentSnapshot<Object> category;
+  final Category category;
   final Color categoryColor;
   final Icon icon;
   final Color fillColor;
@@ -26,6 +26,7 @@ class CalcIconButton extends StatelessWidget {
         height: 70,
         child: MaterialButton(
           onPressed: () {
+            print(category);
             callback(category);
           },
           child: IconTheme(

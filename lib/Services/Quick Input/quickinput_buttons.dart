@@ -7,7 +7,6 @@ import 'package:flutter/material.dart';
 import 'calculator_icon_buttons.dart';
 
 class QuickInputButton extends StatefulWidget {
-  QueryDocumentSnapshot<Object> chosenCategory = null;
 
   @override
   _QuickInputButtonState createState() => _QuickInputButtonState();
@@ -16,9 +15,10 @@ class QuickInputButton extends StatefulWidget {
 class _QuickInputButtonState extends State<QuickInputButton> {
   final QuickInputDatabaseService _authQuickInput = QuickInputDatabaseService();
   final CollectionReference quickInputCollection = Database().categoryDatabase();
+  Category chosenCategory;
 
-  void catClick(QueryDocumentSnapshot<Object> category) {
-    setState(() {widget.chosenCategory = category;});
+  void catClick(Category category) {
+    setState(() {chosenCategory = category;});
   }
 
   @override
@@ -34,7 +34,17 @@ class _QuickInputButtonState extends State<QuickInputButton> {
                 mainAxisAlignment: MainAxisAlignment.spaceEvenly,
                 children: <Widget>[
                   CalcIconButton(
-                    category: snapshot.data.docs[0],
+                    category: Category(
+                        categoryName: snapshot.data.docs[0]['categoryName'],
+                        categoryAmount: snapshot.data.docs[0]['categoryAmount'],
+                        categoryId: snapshot.data.docs[0]['categoryId'],
+                        categoryIcon: Icon(
+                            IconData(snapshot.data.docs[0]['categoryIconCodePoint'],
+                                fontFamily: snapshot.data.docs[0]['categoryFontFamily'],
+                                fontPackage: snapshot.data.docs[0]['categoryFontPackage'])),
+                        categoryColor: Color(snapshot.data.docs[0]['categoryColorValue']),
+                        isIncome: snapshot.data.docs[0]['isIncome']
+                    ),
                     icon: Icon(
                         IconData(snapshot.data.docs[0]['categoryIconCodePoint'],
                             fontFamily: snapshot.data
@@ -48,7 +58,17 @@ class _QuickInputButtonState extends State<QuickInputButton> {
                   ),
                   SizedBox(width: 6.5),
                   CalcIconButton(
-                    category: snapshot.data.docs[1],
+                    category: Category(
+                        categoryName: snapshot.data.docs[1]['categoryName'],
+                        categoryAmount: snapshot.data.docs[1]['categoryAmount'],
+                        categoryId: snapshot.data.docs[1]['categoryId'],
+                        categoryIcon: Icon(
+                            IconData(snapshot.data.docs[1]['categoryIconCodePoint'],
+                                fontFamily: snapshot.data.docs[1]['categoryFontFamily'],
+                                fontPackage: snapshot.data.docs[1]['categoryFontPackage'])),
+                        categoryColor: Color(snapshot.data.docs[1]['categoryColorValue']),
+                        isIncome: snapshot.data.docs[2]['isIncome']
+                    ),
                     icon: Icon(
                         IconData(snapshot.data.docs[1]['categoryIconCodePoint'],
                             fontFamily: snapshot.data
@@ -62,15 +82,22 @@ class _QuickInputButtonState extends State<QuickInputButton> {
                   ),
                   SizedBox(width: 6.5),
                   CalcIconButton(
-                    category: snapshot.data.docs[2],
+                    category: Category(
+                      categoryName: snapshot.data.docs[2]['categoryName'],
+                      categoryAmount: snapshot.data.docs[2]['categoryAmount'],
+                      categoryId: snapshot.data.docs[2]['categoryId'],
+                      categoryIcon: Icon(
+                          IconData(snapshot.data.docs[2]['categoryIconCodePoint'],
+                              fontFamily: snapshot.data.docs[2]['categoryFontFamily'],
+                              fontPackage: snapshot.data.docs[2]['categoryFontPackage'])),
+                      categoryColor: Color(snapshot.data.docs[2]['categoryColorValue']),
+                      isIncome: snapshot.data.docs[2]['isIncome']
+                    ),
                     icon: Icon(
                         IconData(snapshot.data.docs[2]['categoryIconCodePoint'],
-                            fontFamily: snapshot.data
-                                .docs[2]['categoryFontFamily'],
-                            fontPackage: snapshot.data
-                                .docs[2]['categoryFontPackage'])),
-                    categoryColor: Color(
-                        snapshot.data.docs[2]['categoryColorValue']),
+                            fontFamily: snapshot.data.docs[2]['categoryFontFamily'],
+                            fontPackage: snapshot.data.docs[2]['categoryFontPackage'])),
+                    categoryColor: Color(snapshot.data.docs[2]['categoryColorValue']),
                     fillColor: Colors.deepOrange[100],
                     callback: catClick,
                   ),
@@ -78,11 +105,10 @@ class _QuickInputButtonState extends State<QuickInputButton> {
               ),
             );
           }
+          return CircularProgressIndicator();
         }
       ),
     );
   }
 }
-
-
   

@@ -1,8 +1,10 @@
+import 'package:Canny/Database/all_database.dart';
 import 'package:Canny/Models/category.dart';
 import 'package:Canny/Models/expense.dart';
 import 'package:Canny/Services/Quick%20Input/calculator_icon_buttons.dart';
 import 'package:Canny/Services/Quick%20Input/quickinput_buttons.dart';
 import 'package:Canny/Services/Receipt/receipt_database.dart';
+import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:flutter/material.dart';
 import 'package:math_expressions/math_expressions.dart';
 import 'package:Canny/Services/Quick%20Input/calculator_buttons.dart';
@@ -23,6 +25,8 @@ class QuickInputState extends State<QuickInput> {
   String _expression = '';
   final QuickInputDatabaseService _authQuickInput = QuickInputDatabaseService();
   final ReceiptDatabaseService _authReceipt = ReceiptDatabaseService();
+  final CollectionReference quickInputCollection = Database().categoryDatabase();
+  Category _chosenCategory;
 
   void numClick(String text) {
     setState(() => _expression += text);
@@ -32,6 +36,12 @@ class QuickInputState extends State<QuickInput> {
     setState(() {
       _history = '';
       _expression = '';
+    });
+  }
+
+  void catClick(Category category) {
+    setState(() {
+      _chosenCategory = category;
     });
   }
 
@@ -102,21 +112,26 @@ class QuickInputState extends State<QuickInput> {
                       textSize: 22,
                     ),
                     CalcIconButton(
+                      category: _authQuickInput.getQuickInput(0),
                       icon: _authQuickInput.getQuickInput(0).categoryIcon,
                       categoryColor: _authQuickInput.getQuickInput(0).categoryColor,
                       fillColor: Colors.orange[200],
+                      callback: catClick,
                     ),
                     CalcIconButton(
+                      category: _authQuickInput.getQuickInput(1),
                       icon: _authQuickInput.getQuickInput(1).categoryIcon,
                       categoryColor: _authQuickInput.getQuickInput(1).categoryColor,
                       fillColor: Colors.orange[200],
+                      callback: catClick,
                     ),
                     CalcIconButton(
+                      category: _authQuickInput.getQuickInput(2),
                       icon: _authQuickInput.getQuickInput(2).categoryIcon,
                       categoryColor: _authQuickInput.getQuickInput(2).categoryColor,
                       fillColor: Colors.orange[200],
+                      callback: catClick,
                     ),
-                    // QuickInputButton(),
                   ],
                 ),
                 Row(
@@ -232,46 +247,15 @@ class QuickInputState extends State<QuickInput> {
                   height: 50,
                   child: TextButton(
                       onPressed: () async {
+                        print(_chosenCategory);
                         final Expense expense = Expense(
-                          categoryId: QuickInputButton().chosenCategory['categoryId'],
+                          categoryId: _chosenCategory.categoryId,
+                          datetime: DateTime.now(),
                           cost: double.parse(_expression),
                           itemName: "",
                           uid: uid,
                         );
-                        await _authReceipt.addExpense(expense).then((_) {
-                          showDialog(
-                            context: context,
-                            builder: (BuildContext context) {
-                              return AlertDialog(
-                                title: Text(
-                                  "Successfully added an Expense",
-                                  style: TextStyle(fontFamily: 'Lato'),
-                                ),
-                                content: Text(
-                                  "Would you like to add another Expense?",
-                                  style: TextStyle(fontFamily: 'Lato.Thin'),
-                                ),
-                                actions: <Widget> [
-                                  TextButton(
-                                    child: Text("Back to Function Screen"),
-                                    onPressed: () {
-                                      int count = 0;
-                                      Navigator.popUntil(context, (route) {
-                                        return count++ == 2;
-                                      });
-                                    },
-                                  ),
-                                  TextButton(
-                                    child: Text("Add another Expense"),
-                                    onPressed: () {
-                                      Navigator.pop(context);
-                                    },
-                                  ),
-                                ],
-                              );
-                            },
-                          );
-                        });
+                        await _authReceipt.addExpense(expense);
                       },
                       child: Text(
                         "Enter",
