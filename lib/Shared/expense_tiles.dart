@@ -62,7 +62,7 @@ class _ExpenseTileState extends State<ExpenseTile> {
             ),
           ],
       ),
-    );
+    )
     );
   }
 }

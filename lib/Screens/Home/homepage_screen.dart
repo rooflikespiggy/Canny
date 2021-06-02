@@ -52,8 +52,16 @@ class _HomePageScreenState extends State<HomePageScreen> {
 
     List<SpeedDialChild> _speedDailItems = [
       SpeedDialChild(
-        child: Icon(Icons.monetization_on_outlined),
+        child: Icon(
+            Icons.attach_money_rounded,
+          color: Colors.white,
+        ),
         label: 'Add your Spendings',
+        labelStyle: TextStyle(
+            fontSize: 18,
+          fontFamily: "Lato",
+          color: Colors.red[400],
+        ),
         backgroundColor: Colors.red[400],
         onTap: () {
           Navigator.push(context,
@@ -62,8 +70,15 @@ class _HomePageScreenState extends State<HomePageScreen> {
         },
       ),
       SpeedDialChild(
-        child: Icon(Icons.star),
+        child: Icon(Icons.star,
+          color: Colors.white,
+        ),
         label: 'Enter your Target Expenditure',
+        labelStyle: TextStyle(
+          fontSize: 18,
+          fontFamily: "Lato",
+          color: Colors.lightBlue,
+        ),
         backgroundColor: Colors.lightBlue,
         onTap: () {
           Navigator.push(context,
@@ -72,8 +87,15 @@ class _HomePageScreenState extends State<HomePageScreen> {
         },
       ),
       SpeedDialChild(
-        child: Icon(Icons.category),
+        child: Icon(Icons.category,
+          color: Colors.white,
+        ),
         label: 'Add a new Category',
+        labelStyle: TextStyle(
+          fontSize: 18,
+          fontFamily: "Lato",
+          color: Colors.lightGreen,
+        ),
         backgroundColor: Colors.lightGreen,
         onTap: () {
           Navigator.push(context,
@@ -107,13 +129,14 @@ class _HomePageScreenState extends State<HomePageScreen> {
       floatingActionButton: SpeedDial(
         marginBottom: 30,
         icon: Icons.menu,
+        activeBackgroundColor: kDeepOrangeLight,
         activeIcon: Icons.clear,
         visible: true,
         closeManually: false,
         curve: Curves.bounceIn,
         backgroundColor: kDeepOrangePrimary,
         shape: CircleBorder(),
-        buttonSize: 50.0,
+        buttonSize: 70.0,
         childMarginTop: 15.0,
         childMarginBottom: 15.0,
         children: _speedDailItems,
