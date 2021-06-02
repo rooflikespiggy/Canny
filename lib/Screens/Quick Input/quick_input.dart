@@ -48,6 +48,7 @@ class QuickInputState extends State<QuickInput> {
 
   @override
   Widget build(BuildContext context) {
+    _authQuickInput.initNewQuickInputs();
     return Scaffold(
       appBar: AppBar(
         backgroundColor: Colors.brown[200],
@@ -101,24 +102,22 @@ class QuickInputState extends State<QuickInput> {
                       callback: allClear,
                       textSize: 22,
                     ),
-                    QuickInputButton(),
-                    /*
                     CalcIconButton(
-                      icon: _authQuickInput.getSpecificQuickInput(0).categoryIcon,
-                      categoryColor: _authQuickInput.getSpecificQuickInput(0).categoryColor,
+                      icon: _authQuickInput.getQuickInput(0).categoryIcon,
+                      categoryColor: _authQuickInput.getQuickInput(0).categoryColor,
                       fillColor: Colors.orange[200],
                     ),
                     CalcIconButton(
-                      icon: _authQuickInput.getSpecificQuickInput(1).categoryIcon,
-                      categoryColor: _authQuickInput.getSpecificQuickInput(1).categoryColor,
+                      icon: _authQuickInput.getQuickInput(1).categoryIcon,
+                      categoryColor: _authQuickInput.getQuickInput(1).categoryColor,
                       fillColor: Colors.orange[200],
                     ),
                     CalcIconButton(
-                      icon: _authQuickInput.getSpecificQuickInput(2).categoryIcon,
-                      categoryColor: _authQuickInput.getSpecificQuickInput(2).categoryColor,
+                      icon: _authQuickInput.getQuickInput(2).categoryIcon,
+                      categoryColor: _authQuickInput.getQuickInput(2).categoryColor,
                       fillColor: Colors.orange[200],
                     ),
-                     */
+                    // QuickInputButton(),
                   ],
                 ),
                 Row(

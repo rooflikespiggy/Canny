@@ -1,8 +1,9 @@
 import 'package:Canny/Models/category.dart';
 import 'package:flutter/material.dart';
+import 'package:cloud_firestore/cloud_firestore.dart';
 
 class CalcIconButton extends StatelessWidget {
-  final Category category;
+  final QueryDocumentSnapshot<Object> category;
   final Color categoryColor;
   final Icon icon;
   final Color fillColor;

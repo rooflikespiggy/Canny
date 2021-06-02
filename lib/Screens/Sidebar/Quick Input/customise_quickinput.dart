@@ -344,7 +344,7 @@ class _CustomiseQIState extends State<CustomiseQI> {
   }
 
   void editQuickInput() {
-    for (int i = 0; i < 3; i++) {
+    for (int i = 0; i < selectedCategories.length; i++) {
       Category category = selectedCategories[i];
       String categoryId = category.categoryId;
       _authQuickInput.updateQuickInput(category, categoryId, i);
