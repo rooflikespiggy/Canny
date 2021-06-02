@@ -7,7 +7,7 @@ import 'package:flutter/material.dart';
 import 'calculator_icon_buttons.dart';
 
 class QuickInputButton extends StatefulWidget {
-  Category chosenCategory = new Category();
+  QueryDocumentSnapshot<Object> chosenCategory = null;
 
   @override
   _QuickInputButtonState createState() => _QuickInputButtonState();
@@ -17,7 +17,7 @@ class _QuickInputButtonState extends State<QuickInputButton> {
   final QuickInputDatabaseService _authQuickInput = QuickInputDatabaseService();
   final CollectionReference quickInputCollection = Database().categoryDatabase();
 
-  void catClick(Category category) {
+  void catClick(QueryDocumentSnapshot<Object> category) {
     setState(() {widget.chosenCategory = category;});
   }
 
