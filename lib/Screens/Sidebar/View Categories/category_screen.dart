@@ -56,6 +56,24 @@ class _CategoryScreenState extends State<CategoryScreen> {
             child: Container(
                 child: Column(
                   children: <Widget>[
+                    SizedBox(height: 5.0),
+                    Visibility(
+                      visible: !isDefault,
+                      child: Container(
+                        padding: EdgeInsets.all(8),
+                        decoration: BoxDecoration(
+                          borderRadius: BorderRadius.circular(5.0),
+                          color: Colors.greenAccent.withOpacity(0.5),
+                        ),
+                        child: Text(
+                          "FILTER APPLIED",
+                          textAlign: TextAlign.center,
+                          style: TextStyle(
+                            fontWeight: FontWeight.bold,
+                          ),
+                        ),
+                      ),
+                    ),
                     StreamBuilder(
                         stream: categoryCollection
                             .orderBy("categoryId")

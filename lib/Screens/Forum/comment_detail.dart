@@ -21,13 +21,13 @@ class CommentDetail extends StatelessWidget {
       child: Column(
         children: <Widget>[
           StreamBuilder(
-            stream: forumCommentCollection
+            stream: FirebaseFirestore.instance.collection('ForumComment')
                 .doc(inputId)
                 .collection("Comment")
-                .orderBy("timestamp", descending: true)
                 .snapshots(),
             builder: (BuildContext context, AsyncSnapshot<QuerySnapshot> snapshot) {
               if (snapshot.hasData) {
+                print(snapshot);
                 return Align(
                   alignment: Alignment.topCenter,
                   child: ListView.builder(
@@ -39,6 +39,7 @@ class CommentDetail extends StatelessWidget {
                       final nameInputController = TextEditingController(text: snapshot.data.docs[index]["name"]);
                       final descriptionInputController = TextEditingController(text: snapshot.data.docs[index]["description"]);
                       int noOfLikes = snapshot.data.docs[index]["likes"];
+                      print(noOfLikes);
                       int noOfDislikes = snapshot.data.docs[index]["dislikes"];
                       final snapshotData = snapshot.data.docs[index];
                       return Padding(
@@ -79,161 +80,148 @@ class CommentDetail extends StatelessWidget {
                                         )
                                     ),
                                     Padding(
-                                      padding: EdgeInsets.fromLTRB(20.0, 5.0, 20.0, 10.0),
-                                      child: Row(
-                                        crossAxisAlignment: CrossAxisAlignment.center,
-                                        mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                                        children: <Widget>[
-                                          Text(DateFormat("EEEE, d MMMM y")
-                                              .format(DateTime.fromMillisecondsSinceEpoch(
-                                              snapshotData["timestamp"].seconds * 1000)),
-                                          ),
-                                        ],
-                                      ),
-                                    ),
-                                    Padding(
                                       padding: EdgeInsets.only(left: 8.0, right: 8.0, top: 5.0),
                                       child: Row(
                                         mainAxisAlignment: MainAxisAlignment.spaceBetween,
                                         children: <Widget>[
                                           Align(
-                                            alignment: Alignment.centerLeft,
-                                            child: Row(
-                                              children: <Widget> [
-                                                IconButton(
-                                                  icon: Icon(
-                                                      snapshotData["liked_uid"].contains(uid)
-                                                          ? Icons.thumb_up_alt
-                                                          : Icons.thumb_up_alt_outlined,
-                                                      color: Colors.black),
-                                                  onPressed: () async {
-                                                    await CommentDatabaseService(inputId).updateLikes(snapshotData["liked_uid"],
-                                                        snapshotData["disliked_uid"],
-                                                        snapshotData.id);
-                                                  }
-                                                ),
-                                                IconButton(
-                                                  icon: Icon(
-                                                      snapshotData["disliked_uid"].contains(uid)
-                                                          ? Icons.thumb_down_alt
-                                                          : Icons.thumb_down_alt_outlined,
-                                                      color: Colors.black),
-                                                  onPressed: () async {
-                                                    await CommentDatabaseService(inputId).updateDislikes(snapshotData["liked_uid"],
-                                                        snapshotData["disliked_uid"],
-                                                        snapshotData.id);
-                                                  }
-                                                ),
-                                              ],
-                                            )
+                                              alignment: Alignment.centerLeft,
+                                              child: Row(
+                                                children: <Widget> [
+                                                  IconButton(
+                                                      icon: Icon(
+                                                          snapshotData["liked_uid"].contains(uid)
+                                                              ? Icons.thumb_up_alt
+                                                              : Icons.thumb_up_alt_outlined,
+                                                          color: Colors.black),
+                                                      onPressed: () async {
+                                                        await CommentDatabaseService(inputId).updateLikes(snapshotData["liked_uid"],
+                                                            snapshotData["disliked_uid"],
+                                                            snapshotData.id);
+                                                      }
+                                                  ),
+                                                  IconButton(
+                                                      icon: Icon(
+                                                          snapshotData["disliked_uid"].contains(uid)
+                                                              ? Icons.thumb_down_alt
+                                                              : Icons.thumb_down_alt_outlined,
+                                                          color: Colors.black),
+                                                      onPressed: () async {
+                                                        await CommentDatabaseService(inputId).updateDislikes(snapshotData["liked_uid"],
+                                                            snapshotData["disliked_uid"],
+                                                            snapshotData.id);
+                                                      }
+                                                  ),
+                                                ],
+                                              )
                                           ),
                                           Align(
-                                            alignment: Alignment.centerRight,
-                                            child: Row(
-                                              children: <Widget> [
-                                                if (snapshotData["uid"] == uid)
-                                                  IconButton(
-                                                    icon:
-                                                    Icon(FontAwesomeIcons.edit),
-                                                    onPressed: () async {
-                                                      showDialog(
-                                                        context: context,
-                                                        builder: (BuildContext context) {
-                                                          return AlertDialog(
-                                                            contentPadding: EdgeInsets.all(20),
-                                                            content: Column(
-                                                              children: <Widget> [
-                                                                Text("Update discussion"),
-                                                                TextField(
-                                                                  decoration: InputDecoration(
-                                                                      labelText: "Edit Name"
-                                                                  ),
-                                                                  controller: nameInputController,
-                                                                ),
-                                                                SizedBox(height: 20),
-                                                                Expanded(
-                                                                  child: TextField(
-                                                                    keyboardType: TextInputType.multiline,
-                                                                    maxLines: null,
+                                              alignment: Alignment.centerRight,
+                                              child: Row(
+                                                children: <Widget> [
+                                                  if (snapshotData["uid"] == uid)
+                                                    IconButton(
+                                                      icon:
+                                                      Icon(FontAwesomeIcons.edit),
+                                                      onPressed: () async {
+                                                        showDialog(
+                                                          context: context,
+                                                          builder: (BuildContext context) {
+                                                            return AlertDialog(
+                                                              contentPadding: EdgeInsets.all(20),
+                                                              content: Column(
+                                                                children: <Widget> [
+                                                                  Text("Update discussion"),
+                                                                  TextField(
                                                                     decoration: InputDecoration(
-                                                                        labelText: "Edit Description"
+                                                                        labelText: "Edit Name"
                                                                     ),
-                                                                    controller: descriptionInputController,
+                                                                    controller: nameInputController,
                                                                   ),
+                                                                  SizedBox(height: 20),
+                                                                  Expanded(
+                                                                    child: TextField(
+                                                                      keyboardType: TextInputType.multiline,
+                                                                      maxLines: null,
+                                                                      decoration: InputDecoration(
+                                                                          labelText: "Edit Description"
+                                                                      ),
+                                                                      controller: descriptionInputController,
+                                                                    ),
+                                                                  ),
+                                                                ],
+                                                              ),
+                                                              actions: <Widget> [
+                                                                TextButton(
+                                                                    onPressed: () {
+                                                                      nameInputController.clear();
+                                                                      descriptionInputController.clear();
+                                                                      Navigator.pop(context);
+                                                                    },
+                                                                    child: Text("Cancel")
+                                                                ),
+                                                                TextButton(
+                                                                    onPressed: () async {
+                                                                      if (nameInputController.text.isNotEmpty &&
+                                                                          descriptionInputController.text.isNotEmpty) {
+                                                                        await CommentDatabaseService(inputId).updateComment(
+                                                                            snapshotData.id,
+                                                                            nameInputController.text,
+                                                                            descriptionInputController.text
+                                                                        ).then((_) {
+                                                                          nameInputController.clear();
+                                                                          descriptionInputController.clear();
+                                                                          Navigator.pop(context);
+                                                                        }).catchError((error) => print(error));
+                                                                      }
+                                                                    },
+                                                                    child: Text("Update")
                                                                 ),
                                                               ],
-                                                            ),
-                                                            actions: <Widget> [
-                                                              TextButton(
-                                                                  onPressed: () {
-                                                                    nameInputController.clear();
-                                                                    descriptionInputController.clear();
+                                                            );
+                                                          },
+                                                        );
+                                                      },
+                                                    ),
+                                                  SizedBox(width: 10.0),
+                                                  if (snapshotData["uid"] == uid)
+                                                    IconButton(
+                                                      icon: Icon(
+                                                          FontAwesomeIcons.trashAlt),
+                                                      onPressed: () {
+                                                        showDialog(
+                                                          context: context,
+                                                          builder:
+                                                              (BuildContext context) {
+                                                            return AlertDialog(
+                                                              title: Text("Are you sure you want to delete your discussion"),
+                                                              content: Text("Once your discussion is deleted, you will not be able to retrieve it back."),
+                                                              actions: <Widget>[
+                                                                // usually buttons at the bottom of the dialog
+                                                                TextButton(
+                                                                  child: Text("Yes"),
+                                                                  onPressed: () async {
+                                                                    await CommentDatabaseService(inputId).removeComment(
+                                                                      snapshotData.id,
+                                                                    );
+                                                                    snapshot.data.docs.removeAt(index);
                                                                     Navigator.pop(context);
                                                                   },
-                                                                  child: Text("Cancel")
-                                                              ),
-                                                              TextButton(
-                                                                  onPressed: () async {
-                                                                    if (nameInputController.text.isNotEmpty &&
-                                                                        descriptionInputController.text.isNotEmpty) {
-                                                                      await CommentDatabaseService(inputId).updateComment(
-                                                                        snapshotData.id,
-                                                                        nameInputController.text,
-                                                                        descriptionInputController.text
-                                                                      ).then((_) {
-                                                                        nameInputController.clear();
-                                                                        descriptionInputController.clear();
-                                                                        Navigator.pop(context);
-                                                                      }).catchError((error) => print(error));
-                                                                    }
+                                                                ),
+                                                                TextButton(
+                                                                  child: Text("No"),
+                                                                  onPressed: () {
+                                                                    Navigator.pop(context);
                                                                   },
-                                                                  child: Text("Update")
-                                                              ),
-                                                            ],
-                                                          );
-                                                        },
-                                                      );
-                                                    },
-                                                  ),
-                                                SizedBox(width: 10.0),
-                                                if (snapshotData["uid"] == uid)
-                                                  IconButton(
-                                                    icon: Icon(
-                                                        FontAwesomeIcons.trashAlt),
-                                                    onPressed: () {
-                                                      showDialog(
-                                                        context: context,
-                                                        builder:
-                                                            (BuildContext context) {
-                                                          return AlertDialog(
-                                                            title: Text("Are you sure you want to delete your discussion"),
-                                                            content: Text("Once your discussion is deleted, you will not be able to retrieve it back."),
-                                                            actions: <Widget>[
-                                                              // usually buttons at the bottom of the dialog
-                                                              TextButton(
-                                                                child: Text("Yes"),
-                                                                onPressed: () async {
-                                                                  await CommentDatabaseService(inputId).removeComment(
-                                                                    snapshotData.id,
-                                                                  );
-                                                                  snapshot.data.docs.removeAt(index);
-                                                                  Navigator.pop(context);
-                                                                },
-                                                              ),
-                                                              TextButton(
-                                                                child: Text("No"),
-                                                                onPressed: () {
-                                                                  Navigator.pop(context);
-                                                                },
-                                                              ),
-                                                            ],
-                                                          );
-                                                        },
-                                                      );
-                                                    },
-                                                  ),
-                                              ],
-                                            )
+                                                                ),
+                                                              ],
+                                                            );
+                                                          },
+                                                        );
+                                                      },
+                                                    ),
+                                                ],
+                                              )
                                           )
                                         ],
                                       ),

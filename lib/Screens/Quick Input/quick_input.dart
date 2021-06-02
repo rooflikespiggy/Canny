@@ -48,7 +48,6 @@ class QuickInputState extends State<QuickInput> {
         backgroundColor: Colors.brown[200],
         elevation: 0.0,
       ),
-    //idk where that arrow on the left is from LOL
       body: MaterialApp(
         debugShowCheckedModeBanner: false,
         title: 'Calculator',

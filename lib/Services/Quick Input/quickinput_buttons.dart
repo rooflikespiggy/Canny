@@ -10,39 +10,41 @@ class QuickInputButton extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return FutureBuilder<List<Category>>(
-      future: _authQuickInput.getQuickInputs(),
-      builder: (BuildContext context, AsyncSnapshot<List<Category>> snapshot) {
-        if (snapshot.hasData) {
-          List<Category> allQuickInputs = snapshot.data;
-          return Padding(
-            padding: const EdgeInsets.all(0),
-            child: Row(
-              mainAxisAlignment: MainAxisAlignment.spaceEvenly,
-              children: <Widget> [
-                CalcIconButton(
-                  icon: allQuickInputs[0].categoryIcon,
-                  categoryColor: allQuickInputs[0].categoryColor,
-                  fillColor: Colors.orange[200],
-                ),
-                SizedBox(width: 6.5),
-                CalcIconButton(
-                  icon: allQuickInputs[1].categoryIcon,
-                  categoryColor: allQuickInputs[1].categoryColor,
-                  fillColor: Colors.orange[200],
-                ),
-                SizedBox(width: 6.5),
-                CalcIconButton(
-                  icon: allQuickInputs[2].categoryIcon,
-                  categoryColor: allQuickInputs[2].categoryColor,
-                  fillColor: Colors.orange[200],
-                ),
-              ],
-            ),
-          );
+    return Container(
+      child: FutureBuilder<List<Category>>(
+        future: _authQuickInput.getQuickInputs(),
+        builder: (BuildContext context, AsyncSnapshot<List<Category>> snapshot) {
+          if (snapshot.hasData) {
+            List<Category> allQuickInputs = snapshot.data;
+            return Padding(
+              padding: const EdgeInsets.all(0),
+              child: Row(
+                mainAxisAlignment: MainAxisAlignment.spaceEvenly,
+                children: <Widget> [
+                  CalcIconButton(
+                    icon: allQuickInputs[0].categoryIcon,
+                    categoryColor: allQuickInputs[0].categoryColor,
+                    fillColor: Colors.orange[200],
+                  ),
+                  SizedBox(width: 6.5),
+                  CalcIconButton(
+                    icon: allQuickInputs[1].categoryIcon,
+                    categoryColor: allQuickInputs[1].categoryColor,
+                    fillColor: Colors.orange[200],
+                  ),
+                  SizedBox(width: 6.5),
+                  CalcIconButton(
+                    icon: allQuickInputs[2].categoryIcon,
+                    categoryColor: allQuickInputs[2].categoryColor,
+                    fillColor: Colors.orange[200],
+                  ),
+                ],
+              ),
+            );
+          }
+          return CircularProgressIndicator();
         }
-        return CircularProgressIndicator();
-      }
+      ),
     );
   }
 }

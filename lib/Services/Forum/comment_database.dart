@@ -14,9 +14,13 @@ class CommentDatabaseService {
 
 
   Future addComment(Comment comment) async {
-    await forumCommentCollection.doc(inputId)
+    await forumCommentCollection
+        .doc(inputId)
         .collection("Comment")
         .add(comment.toMap());
+    await forumCollection.doc(inputId).update({
+      "comments": FieldValue.increment(1),
+    });
     return true;
   }
 
@@ -45,10 +49,6 @@ class CommentDatabaseService {
       "description": newDescription,
       "timestamp": DateTime.now(),
     });
-    await forumCollection.doc(inputId).update({
-      "comments": FieldValue.increment(1),
-    });
-    return true;
   }
 
   Future updateLikes(List liked_uid,
