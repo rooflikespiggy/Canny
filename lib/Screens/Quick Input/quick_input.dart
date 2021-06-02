@@ -90,7 +90,6 @@ class QuickInputState extends State<QuickInput> {
                       ),
                     ),
                   ),
-                Text(QuickInputButton().chosenCategory.categoryName ?? "hello"),
                 SizedBox(height: 12),
                 Row(
                   //this row of calculator buttons
@@ -234,12 +233,45 @@ class QuickInputState extends State<QuickInput> {
                   child: TextButton(
                       onPressed: () async {
                         final Expense expense = Expense(
-                          categoryId: QuickInputButton().chosenCategory.categoryId,
+                          categoryId: QuickInputButton().chosenCategory['categoryId'],
                           cost: double.parse(_expression),
                           itemName: "",
                           uid: uid,
                         );
-                        await _authReceipt.addExpense(expense);
+                        await _authReceipt.addExpense(expense).then((_) {
+                          showDialog(
+                            context: context,
+                            builder: (BuildContext context) {
+                              return AlertDialog(
+                                title: Text(
+                                  "Successfully added an Expense",
+                                  style: TextStyle(fontFamily: 'Lato'),
+                                ),
+                                content: Text(
+                                  "Would you like to add another Expense?",
+                                  style: TextStyle(fontFamily: 'Lato.Thin'),
+                                ),
+                                actions: <Widget> [
+                                  TextButton(
+                                    child: Text("Back to Function Screen"),
+                                    onPressed: () {
+                                      int count = 0;
+                                      Navigator.popUntil(context, (route) {
+                                        return count++ == 2;
+                                      });
+                                    },
+                                  ),
+                                  TextButton(
+                                    child: Text("Add another Expense"),
+                                    onPressed: () {
+                                      Navigator.pop(context);
+                                    },
+                                  ),
+                                ],
+                              );
+                            },
+                          );
+                        });
                       },
                       child: Text(
                         "Enter",
