@@ -9,6 +9,8 @@ class CategoryTile extends StatefulWidget {
   final String categoryName;
   final int categoryColorValue;
   final int categoryIconCodePoint;
+  final String categoryFontFamily;
+  final String categoryFontPackage;
   final String categoryId;
   final int index;
 
@@ -16,6 +18,8 @@ class CategoryTile extends StatefulWidget {
     this.categoryName,
     this.categoryColorValue,
     this.categoryIconCodePoint,
+    this.categoryFontFamily,
+    this.categoryFontPackage,
     this.categoryId,
     this.index
   });
@@ -112,7 +116,9 @@ class _CategoryTileState extends State<CategoryTile> {
           radius: 30,
           child: IconTheme(
               data: IconThemeData(color: Color(widget.categoryColorValue).withOpacity(1), size: 25),
-              child: Icon(IconData(widget.categoryIconCodePoint, fontFamily: 'MaterialIcons'))
+              child: Icon(IconData(widget.categoryIconCodePoint,
+                  fontFamily: widget.categoryFontFamily,
+                  fontPackage: widget.categoryFontPackage))
           ),
         ),
         trailing: widget.index >= categoriesSize
