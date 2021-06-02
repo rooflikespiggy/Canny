@@ -29,4 +29,10 @@ class Database {
         .doc(uid)
         .collection('Receipt');
   }
+
+  CollectionReference quickInputDatabase() {
+    return userCollection
+        .doc(uid)
+        .collection('QuickInput');
+  }
 }

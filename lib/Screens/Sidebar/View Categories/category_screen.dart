@@ -1,7 +1,7 @@
 import 'package:Canny/Database/all_database.dart';
 import 'package:Canny/Screens/Home/homepage_screen.dart';
 import 'package:Canny/Screens/Sidebar/sidebar_menu.dart';
-import 'package:Canny/Services/Category/category_database.dart';
+import 'package:Canny/Services/Category/default_categories.dart';
 import 'package:Canny/Shared/category_tiles.dart';
 import 'package:Canny/Shared/colors.dart';
 import 'package:cloud_firestore/cloud_firestore.dart';
@@ -18,7 +18,8 @@ class CategoryScreen extends StatefulWidget {
 class _CategoryScreenState extends State<CategoryScreen> {
   final String uid = FirebaseAuth.instance.currentUser.uid;
   final CollectionReference categoryCollection = Database().categoryDatabase();
-  CategoryDatabaseService _authCategory = CategoryDatabaseService();
+  final int categoriesSize = defaultCategories.length;
+  bool isDefault = true;
 
   @override
   Widget build(BuildContext context) {
@@ -32,6 +33,15 @@ class _CategoryScreenState extends State<CategoryScreen> {
             style: TextStyle(fontFamily: 'Lato'),
           ),
           actions: <Widget> [
+            IconButton(
+              icon: Icon(
+                  isDefault ? Icons.visibility : Icons.visibility_off),
+              onPressed: () {
+                setState(() {
+                  isDefault = !isDefault;
+                });
+              },
+            ),
             IconButton(
               icon: Icon(Icons.home_rounded),
               onPressed: () {
@@ -47,7 +57,7 @@ class _CategoryScreenState extends State<CategoryScreen> {
                   children: <Widget>[
                     StreamBuilder(
                         stream: categoryCollection
-                            .orderBy("categoryName")
+                            .orderBy("categoryId")
                             .snapshots(),
                         builder: (BuildContext context, AsyncSnapshot<QuerySnapshot> snapshot) {
                           if (snapshot.hasData) {
@@ -61,10 +71,11 @@ class _CategoryScreenState extends State<CategoryScreen> {
                                   itemBuilder: (BuildContext context, int index) {
                                     final snapshotData = snapshot.data.docs[index];
                                     return CategoryTile(
-                                      categoryName: snapshotData['categoryName'],
-                                      categoryColorValue: snapshotData['categoryColorValue'],
-                                      categoryIconCodePoint: snapshotData['categoryIconCodePoint'],
-                                      categoryId: snapshotData.id,
+                                        categoryName: snapshotData['categoryName'],
+                                        categoryColorValue: snapshotData['categoryColorValue'],
+                                        categoryIconCodePoint: snapshotData['categoryIconCodePoint'],
+                                        categoryId: snapshotData.id,
+                                        index: index
                                     );
                                   },
                                 )

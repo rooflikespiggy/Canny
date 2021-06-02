@@ -1,5 +1,6 @@
 import 'package:Canny/Models/own_user.dart';
 import 'package:Canny/Services/Category/category_database.dart';
+import 'package:Canny/Services/Quick%20Input/quickinput_database.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 
 
@@ -35,6 +36,7 @@ class AuthService {
       UserCredential result = await _auth.createUserWithEmailAndPassword(email: email, password: password);
       User theUser = result.user;
       await CategoryDatabaseService(uid: theUser.uid).initStartCategories();
+      await QuickInputDatabaseService(uid: theUser.uid).initStartQuickInputs();
       return _userFromFirebaseUser(theUser);
     } catch (e) {
       print(e.toString());
