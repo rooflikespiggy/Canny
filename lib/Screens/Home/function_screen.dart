@@ -18,17 +18,13 @@ class _FunctionScreenState extends State<FunctionScreen> {
   Widget build(BuildContext context) {
     return Scaffold(
       backgroundColor: kBackgroundColour,
-      appBar: AppBar(
-        backgroundColor: kBackgroundColour,
-        elevation: 0.0,
-      ),
       body: Padding(
         padding: EdgeInsets.symmetric(horizontal: 30.0),
         child: Column(
           mainAxisAlignment: MainAxisAlignment.start,
           crossAxisAlignment: CrossAxisAlignment.stretch,
           children: <Widget>[
-            SizedBox(height: 30.0),
+            SizedBox(height: 110.0),
             Hero(
               tag: 'logo',
               child: Container(

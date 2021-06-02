@@ -1,7 +1,7 @@
 import 'package:flutter/material.dart';
 
 class CalcButton extends StatelessWidget {
-  String text;
+  final String text;
   final Color fillColor;
   final Color textColor;
   final double textSize;
@@ -19,6 +19,7 @@ class CalcButton extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
+    String newText = text;
     return Container(
       margin: EdgeInsets.all(7),
       child: SizedBox(
@@ -26,15 +27,15 @@ class CalcButton extends StatelessWidget {
         height: 70,
         child: TextButton(
           onPressed: () {
-            if (text == '÷') {
-              text = '/';
+            if (newText == '÷') {
+              newText = '/';
             } else if (text == 'x') {
-              text = '*';
+              newText = '*';
             }
-            callback(text);
+            callback(newText);
           },
           child: Text(
-            text,
+            newText,
             style: TextStyle(
                 color: textColor,
               fontSize: textSize,

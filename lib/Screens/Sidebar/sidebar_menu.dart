@@ -1,3 +1,4 @@
+import 'package:Canny/Screens/Sidebar/Quick%20Input/customise_quickinput.dart';
 import 'package:Canny/Services/Users/auth.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
@@ -49,7 +50,10 @@ class SideBarMenu extends StatelessWidget {
                   fontSize: 16,
                 )
               ),
-              onTap: () => {Navigator.pop(context)},
+              onTap: () => {
+                Navigator.push(context,
+                    MaterialPageRoute(builder: (context) => CustomiseQI()))
+              },
             ),
             Divider(thickness: 1.0),
             ListTile(
@@ -61,11 +65,13 @@ class SideBarMenu extends StatelessWidget {
                     fontSize: 16,
                   )
               ),
-              onTap: () => {Navigator.push(context,
-                MaterialPageRoute(builder: (context) => CategoryScreen()))
+              onTap: () => {
+                Navigator.push(context,
+                    MaterialPageRoute(builder: (context) => CategoryScreen()))
               },
             ),
             Divider(thickness: 1.0),
+            // SizedBox(height: 400.0),
             // SizedBox(height: 400.0),
             ListTile(
               leading: Icon(Icons.exit_to_app),

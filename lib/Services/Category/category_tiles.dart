@@ -1,19 +1,27 @@
 import 'package:Canny/Services/Category/category_database.dart';
+import 'package:Canny/Services/Category/default_categories.dart';
 import 'package:Canny/Shared/colors.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_colorpicker/flutter_colorpicker.dart';
+import 'package:font_awesome_flutter/font_awesome_flutter.dart';
 
 class CategoryTile extends StatefulWidget {
   final String categoryName;
   final int categoryColorValue;
   final int categoryIconCodePoint;
+  final String categoryFontFamily;
+  final String categoryFontPackage;
   final String categoryId;
+  final int index;
 
   CategoryTile({
     this.categoryName,
     this.categoryColorValue,
     this.categoryIconCodePoint,
-    this.categoryId
+    this.categoryFontFamily,
+    this.categoryFontPackage,
+    this.categoryId,
+    this.index
   });
 
   @override
@@ -23,7 +31,8 @@ class CategoryTile extends StatefulWidget {
 class _CategoryTileState extends State<CategoryTile> {
 
   final _formKey = GlobalKey<FormState>();
-  CategoryDatabaseService _authCategory = CategoryDatabaseService();
+  final CategoryDatabaseService _authCategory = CategoryDatabaseService();
+  final int categoriesSize = defaultCategories.length;
 
   // create some values
   Color pickerColor = Color(0xff443a49);
@@ -37,8 +46,7 @@ class _CategoryTileState extends State<CategoryTile> {
   @override
   Widget build(BuildContext context) {
     void _editCatPanel() {
-      showModalBottomSheet(context: context, builder: (context)
-      {
+      showModalBottomSheet(context: context, builder: (context) {
         return Container(
             padding: EdgeInsets.all(20),
             child: Form(
@@ -104,18 +112,76 @@ class _CategoryTileState extends State<CategoryTile> {
           ),
         ),
         leading: CircleAvatar(
-          backgroundColor: Colors.deepOrange[50],
+          backgroundColor: Color(widget.categoryColorValue).withOpacity(0.1),
           radius: 30,
           child: IconTheme(
               data: IconThemeData(color: Color(widget.categoryColorValue).withOpacity(1), size: 25),
-              child: Icon(IconData(widget.categoryIconCodePoint, fontFamily: 'MaterialIcons'))
+              child: Icon(IconData(widget.categoryIconCodePoint,
+                  fontFamily: widget.categoryFontFamily,
+                  fontPackage: widget.categoryFontPackage))
           ),
         ),
-        trailing: IconButton(
-          icon: Icon(Icons.more_vert),
-          onPressed: () {
-            _editCatPanel();
-          },
+        trailing: widget.index >= categoriesSize
+            ? Container(
+          width: 100,
+          child: Row(
+            mainAxisAlignment: MainAxisAlignment.end,
+            children: <Widget> [
+              IconButton(
+                icon: Icon(Icons.edit),
+                onPressed: () {
+                  _editCatPanel();
+                },
+              ),
+              IconButton(
+                icon: Icon(FontAwesomeIcons.trashAlt),
+                onPressed: () {
+                  showDialog(
+                    context: context,
+                    builder:
+                        (BuildContext context) {
+                      return AlertDialog(
+                        title: Text("Are you sure you want to delete " + widget.categoryName + "?"),
+                        content: Text("Once it is deleted, you will not be able "
+                            "to retrieve it back. Your expenses for " + widget.categoryName +
+                            " will be moved to Others."),
+                        actions: <Widget>[
+                          // usually buttons at the bottom of the dialog
+                          TextButton(
+                            child: Text("Yes"),
+                            onPressed: () async {
+                              await _authCategory.removeCategory(widget.categoryId);
+                              Navigator.pop(context);
+                            },
+                          ),
+                          TextButton(
+                            child: Text("No"),
+                            onPressed: () {
+                              Navigator.pop(context);
+                            },
+                          ),
+                        ],
+                      );
+                    },
+                  );
+                }
+              )
+            ],
+          ),
+        )
+            : Container(
+          width: 100,
+          child: Row(
+            mainAxisAlignment: MainAxisAlignment.end,
+            children: <Widget> [
+              IconButton(
+                icon: Icon(Icons.edit),
+                onPressed: () {
+                  _editCatPanel();
+                },
+              ),
+            ],
+          ),
         ),
       ),
     );

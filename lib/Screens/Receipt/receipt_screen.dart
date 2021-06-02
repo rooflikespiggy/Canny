@@ -1,6 +1,8 @@
 import 'package:Canny/Screens/Sidebar/sidebar_menu.dart';
 import 'package:flutter/material.dart';
 import 'package:Canny/Shared/colors.dart';
+import 'package:scrolling_page_indicator/scrolling_page_indicator.dart';
+import 'package:Canny/Screens/Receipt/monthly_expenses.dart';
 
 class ReceiptScreen extends StatefulWidget {
   static final String id = 'receipt_screen';
@@ -10,6 +12,14 @@ class ReceiptScreen extends StatefulWidget {
 }
 
 class _ReceiptScreenState extends State<ReceiptScreen> {
+
+  final List<Widget> monthlyExpensesList = [
+    new monthlyExpenses(month: "January"),
+    new monthlyExpenses(month: "February"),
+    new monthlyExpenses(month: "March"),
+  ];
+
+  PageController pageController = PageController();
 
   @override
   Widget build(BuildContext context) {
@@ -23,12 +33,17 @@ class _ReceiptScreenState extends State<ReceiptScreen> {
       ),
       drawer: SideBarMenu(),
       backgroundColor: kBackgroundColour,
-      body: Container(
-        decoration: BoxDecoration(
-          image: DecorationImage(
-            image: AssetImage("styles/images/receipt.png"),
-            fit: BoxFit.fill,
-          ),
+      body: Padding(
+        padding: EdgeInsets.all(8),
+        child: Column(
+          children: <Widget>[
+            Expanded(
+              child: PageView(
+                controller: pageController,
+                children: monthlyExpensesList,
+              ),
+            ),
+          ],
         ),
       ),
     );
