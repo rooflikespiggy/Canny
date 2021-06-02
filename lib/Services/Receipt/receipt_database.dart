@@ -10,7 +10,7 @@ class ReceiptDatabaseService {
   Future addExpense(Expense expense) async {
     await expensesCollection.add(expense.toMap());
     await categoryCollection
-        .doc(expense.categoryId)
+        .doc(int.parse(expense.categoryId).toString())
         .update({
       "categoryAmount": FieldValue.increment(expense.cost)
     });
