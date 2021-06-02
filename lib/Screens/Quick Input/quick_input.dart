@@ -1,11 +1,14 @@
 import 'package:Canny/Models/category.dart';
+import 'package:Canny/Models/expense.dart';
 import 'package:Canny/Services/Quick%20Input/calculator_icon_buttons.dart';
 import 'package:Canny/Services/Quick%20Input/quickinput_buttons.dart';
+import 'package:Canny/Services/Receipt/receipt_database.dart';
 import 'package:flutter/material.dart';
 import 'package:math_expressions/math_expressions.dart';
 import 'package:Canny/Services/Quick%20Input/calculator_buttons.dart';
 import 'package:Canny/Shared/colors.dart';
 import 'package:Canny/Services/Quick Input/quickinput_database.dart';
+import 'package:firebase_auth/firebase_auth.dart';
 
 class QuickInput extends StatefulWidget {
   static final String id = 'quickinput_screen';
@@ -15,9 +18,11 @@ class QuickInput extends StatefulWidget {
 }
 
 class QuickInputState extends State<QuickInput> {
+  String uid = FirebaseAuth.instance.currentUser.uid;
   String _history = '';
   String _expression = '';
   final QuickInputDatabaseService _authQuickInput = QuickInputDatabaseService();
+  final ReceiptDatabaseService _authReceipt = ReceiptDatabaseService();
 
   void numClick(String text) {
     setState(() => _expression += text);
@@ -84,6 +89,7 @@ class QuickInputState extends State<QuickInput> {
                       ),
                     ),
                   ),
+                Text(QuickInputButton().chosenCategory.categoryName ?? "hello"),
                 SizedBox(height: 12),
                 Row(
                   //this row of calculator buttons
@@ -227,7 +233,15 @@ class QuickInputState extends State<QuickInput> {
                   width: 360,
                   height: 50,
                   child: TextButton(
-                      onPressed: () {},
+                      onPressed: () async {
+                        final Expense expense = Expense(
+                          categoryId: QuickInputButton().chosenCategory.categoryId,
+                          cost: double.parse(_expression),
+                          itemName: "",
+                          uid: uid,
+                        );
+                        await _authReceipt.addExpense(expense);
+                      },
                       child: Text(
                         "Enter",
                         style: TextStyle(

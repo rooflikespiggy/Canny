@@ -1,7 +1,6 @@
 import 'package:Canny/Screens/Sidebar/sidebar_menu.dart';
 import 'package:flutter/material.dart';
 import 'package:Canny/Shared/colors.dart';
-import 'package:scrolling_page_indicator/scrolling_page_indicator.dart';
 import 'package:Canny/Screens/Receipt/monthly_expenses.dart';
 
 class ReceiptScreen extends StatefulWidget {
