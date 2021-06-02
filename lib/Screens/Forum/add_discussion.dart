@@ -3,6 +3,11 @@ import 'package:Canny/Services/Forum/forum_database.dart';
 import 'package:Canny/Shared/colors.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
+import 'package:Canny/Models/forum.dart';
+import 'package:Canny/Services/Forum/forum_database.dart';
+import 'package:Canny/Shared/colors.dart';
+import 'package:firebase_auth/firebase_auth.dart';
+import 'package:flutter/material.dart';
 
 class AddDiscussion extends StatefulWidget {
 

@@ -58,7 +58,7 @@ class _CustomiseQIState extends State<CustomiseQI> {
                 SizedBox(height: 20.0),
                 getMultiSelectDialogField(),
                 // SizedBox(height: 20.0),
-                // getMultiSelectChipField(),
+                //getMultiSelectChipField(),
                 SizedBox(height: 20.0),
                 Column(
                   crossAxisAlignment: CrossAxisAlignment.stretch,
@@ -75,7 +75,7 @@ class _CustomiseQIState extends State<CustomiseQI> {
                                   builder: (BuildContext context) {
                                     return AlertDialog(
                                       title: Text(
-                                        "Succesfully Edited Your Categories!",
+                                        "You have successfully edited Your Categories!",
                                         style: TextStyle(fontFamily: 'Lato'),
                                       ),
                                       content: Text(
@@ -87,7 +87,7 @@ class _CustomiseQIState extends State<CustomiseQI> {
                                         Column(
                                           children: [
                                             TextButton(
-                                              child: Text("Reedit Categories"),
+                                              child: Text("ReEdit Categories"),
                                               onPressed: () {
                                                 Navigator.pop(context);
                                               },
