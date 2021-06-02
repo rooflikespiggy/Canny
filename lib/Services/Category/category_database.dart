@@ -46,23 +46,23 @@ class CategoryDatabaseService {
   }
 
   Future initStartCategories() async {
-    for (int i = 0; i < categories[userId].length; i++) {
-      await addDefaultCategory(categories[userId][i], i);
+    for (int i = 0; i < defaultCategories.length; i++) {
+      await addDefaultCategory(defaultCategories[i], i.toString());
     }
     return true;
   }
 
-  Future addDefaultCategory(Category category, int categoryId) async {
+  Future addDefaultCategory(Category category, String categoryId) async {
     await categoryCollection
-        .doc(categoryId.toString())
+        .doc(categoryId)
         .set(category.toMap());
     return true;
   }
 
-  Future addNewCategory(Category category) async {
+  Future addNewCategory(Category category, String categoryId) async {
     categories[userId].add(category);
     await categoryCollection
-        .doc((categories.length - 1).toString())
+        .doc(categoryId)
         .set(category.toMap());
     return true;
   }

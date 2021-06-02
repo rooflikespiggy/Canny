@@ -2,16 +2,21 @@ import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:flutter/material.dart';
 
 class Category {
+  // should add isIncome and categoryAmount
   String categoryName;
   Color categoryColor;
   Icon categoryIcon;
   String categoryId;
+  double categoryAmount;
+  bool isIncome;
 
   Category({
     this.categoryName,
     this.categoryColor,
     this.categoryIcon,
-    this.categoryId
+    this.categoryId,
+    this.categoryAmount,
+    this.isIncome
   });
 
   factory Category.newBlankCategory() {
@@ -44,6 +49,8 @@ class Category {
       categoryColor: Color(json['categoryColorValue']),
       categoryName: json['categoryName'],
       categoryId: json['categoryId'],
+      categoryAmount: json['categoryAmount'],
+      isIncome: json['isIncome']
     );
   }
 
@@ -55,6 +62,8 @@ class Category {
       'categoryFontPackage': categoryIcon.icon.fontPackage,
       'categoryColorValue': categoryColor.value,
       'categoryId': categoryId,
+      'categoryAmount': categoryAmount,
+      'isIncome': isIncome,
     };
   }
 }

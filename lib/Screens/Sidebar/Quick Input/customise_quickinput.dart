@@ -72,7 +72,7 @@ class _CustomiseQIState extends State<CustomiseQI> {
                         ElevatedButton(
                           onPressed: () async {
                             // if selected less than 3, ask them select 3
-                            if (selectedCategories.length < 3) {
+                            if (selectedCategories == null || selectedCategories.length < 3) {
                               showDialog(
                                 context: context,
                                 builder: (BuildContext context) {

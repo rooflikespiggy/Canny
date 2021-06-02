@@ -71,6 +71,9 @@ class _CategoryScreenState extends State<CategoryScreen> {
                                   itemCount: snapshot.data.docs.length,
                                   itemBuilder: (BuildContext context, int index) {
                                     final snapshotData = snapshot.data.docs[index];
+                                    if (!isDefault && index < 12) {
+                                      return SizedBox();
+                                    }
                                     return CategoryTile(
                                         categoryName: snapshotData['categoryName'],
                                         categoryColorValue: snapshotData['categoryColorValue'],
