@@ -1,5 +1,9 @@
+import 'package:Canny/Services/Receipt/receipt_database.dart';
 import 'package:flutter/material.dart';
 import 'package:Canny/Services/Receipt/expense_tiles.dart';
+import 'package:firebase_auth/firebase_auth.dart';
+import 'package:Canny/Database/all_database.dart';
+import 'package:cloud_firestore/cloud_firestore.dart';
 
 class MonthlyExpenses extends StatefulWidget {
 
@@ -12,6 +16,10 @@ class MonthlyExpenses extends StatefulWidget {
 }
 
 class _MonthlyExpensesState extends State<MonthlyExpenses> {
+
+  final String uid = FirebaseAuth.instance.currentUser.uid;
+  final CollectionReference expensesCollection = Database().expensesDatabase();
+  final ReceiptDatabaseService _authReceipt = ReceiptDatabaseService();
 
   @override
   Widget build(BuildContext context) {
@@ -43,6 +51,38 @@ class _MonthlyExpensesState extends State<MonthlyExpenses> {
                       endIndent: 20,
                       color: Colors.blueGrey,
                     ),
+
+                    StreamBuilder(
+                        stream: expensesCollection
+                            //.doc("2021-06").collection("2021-06")
+                            .orderBy('datetime')
+                            .snapshots(),
+                        builder: (BuildContext context, AsyncSnapshot<QuerySnapshot> snapshot) {
+                          if (snapshot.hasData) {
+                            return Align(
+                                alignment: Alignment.topCenter,
+                                child: ListView.builder(
+                                  padding: EdgeInsets.all(4),
+                                  shrinkWrap: true,
+                                  physics: const NeverScrollableScrollPhysics(),
+                                  itemCount: snapshot.data.docs.length,
+                                  itemBuilder: (BuildContext context, int index) {
+                                    final snapshotData = snapshot.data.docs[index];
+                                    return ExpenseTile(
+                                      categoryId: snapshotData['categoryId'],
+                                      cost: snapshotData['cost'],
+                                      itemName: snapshotData['itemName'],
+                                      uid: uid,
+                                    );
+                                  },
+                                )
+                            );
+                          }
+                          return CircularProgressIndicator();
+                        }
+                    ),
+
+                    /*
                     ListView(
                       shrinkWrap: true,
                       physics: const NeverScrollableScrollPhysics(),
@@ -80,6 +120,8 @@ class _MonthlyExpensesState extends State<MonthlyExpenses> {
                         ),
                       ],
                     ),
+
+                     */
 
                   ],
                 ),

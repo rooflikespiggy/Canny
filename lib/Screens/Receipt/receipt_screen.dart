@@ -13,9 +13,8 @@ class ReceiptScreen extends StatefulWidget {
 class _ReceiptScreenState extends State<ReceiptScreen> {
 
   final List<Widget> monthlyExpensesList = [
-    new MonthlyExpenses(month: "January"),
-    new MonthlyExpenses(month: "February"),
-    new MonthlyExpenses(month: "March"),
+    new MonthlyExpenses(month: "June 2021"),
+    new MonthlyExpenses(month: "July 2021"),
   ];
 
   PageController pageController = PageController();

@@ -11,6 +11,7 @@ import 'package:Canny/Services/Quick%20Input/calculator_buttons.dart';
 import 'package:Canny/Shared/colors.dart';
 import 'package:Canny/Services/Quick Input/quickinput_database.dart';
 import 'package:firebase_auth/firebase_auth.dart';
+import 'dart:math';
 
 class QuickInput extends StatefulWidget {
   static final String id = 'quickinput_screen';
@@ -54,6 +55,11 @@ class QuickInputState extends State<QuickInput> {
       _history = _expression;
       _expression = exp.evaluate(EvaluationType.REAL, cm).toString();
     });
+  }
+
+  double roundDouble(double value, int places){
+    double mod = pow(10.0, places);
+    return ((value * mod).round().toDouble() / mod);
   }
 
   @override
@@ -251,7 +257,7 @@ class QuickInputState extends State<QuickInput> {
                         final Expense expense = Expense(
                           categoryId: _chosenCategory.categoryId,
                           datetime: DateTime.now(),
-                          cost: double.parse(_expression),
+                          cost: roundDouble(double.parse(_expression), 2),
                           itemName: "",
                           uid: uid,
                         );

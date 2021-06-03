@@ -43,6 +43,11 @@ dependencies:
   flutter_colorpicker: ^0.4.0
   shared_preferences: ^2.0.6
   multi_select_flutter: ^4.0.0
+  flutter_calculator:
+    git:
+      url: git://github.com/flytreeleft/flutter_calculator.git
+      ref: v0.1.0
+  input_calculator: ^2.0.0
 
 
 dev_dependencies:

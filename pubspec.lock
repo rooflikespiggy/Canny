@@ -14,7 +14,7 @@ packages:
       name: async
       url: "https://pub.dartlang.org"
     source: hosted
-    version: "2.6.1"
+    version: "2.5.0"
   boolean_selector:
     dependency: transitive
     description:
@@ -153,6 +153,15 @@ packages:
     description: flutter
     source: sdk
     version: "0.0.0"
+  flutter_calculator:
+    dependency: "direct main"
+    description:
+      path: "."
+      ref: "v0.1.0"
+      resolved-ref: ba80605b5af93095db77342ebb8da55a8b5f73f0
+      url: "git://github.com/flytreeleft/flutter_calculator.git"
+    source: git
+    version: "0.1.0"
   flutter_colorpicker:
     dependency: "direct main"
     description:
@@ -198,6 +207,13 @@ packages:
       url: "https://pub.dartlang.org"
     source: hosted
     version: "4.0.0"
+  input_calculator:
+    dependency: "direct main"
+    description:
+      name: input_calculator
+      url: "https://pub.dartlang.org"
+    source: hosted
+    version: "2.0.0"
   intl:
     dependency: "direct main"
     description:
@@ -363,7 +379,7 @@ packages:
       name: source_span
       url: "https://pub.dartlang.org"
     source: hosted
-    version: "1.8.1"
+    version: "1.8.0"
   stack_trace:
     dependency: transitive
     description:
@@ -398,7 +414,7 @@ packages:
       name: test_api
       url: "https://pub.dartlang.org"
     source: hosted
-    version: "0.3.0"
+    version: "0.2.19"
   typed_data:
     dependency: transitive
     description:
