@@ -79,7 +79,7 @@ class _ExpenseTileState extends State<ExpenseTile> {
                   fontSize: 18,
                   color: widget.cost < 0
                       ? Colors.redAccent
-                      : Colors.greenAccent,
+                      : Colors.green,
                 ),
               ),
               // maybe can change this to onTap for the whole ListTile

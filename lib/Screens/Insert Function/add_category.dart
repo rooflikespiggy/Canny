@@ -78,7 +78,6 @@ class _AddCategoryScreenState extends State<AddCategoryScreen> {
 
   @override
   Widget build(BuildContext context) {
-    categoryId;
     return Scaffold(
       appBar: AppBar(
         backgroundColor: kDeepOrangeLight,

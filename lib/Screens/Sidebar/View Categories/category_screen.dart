@@ -66,10 +66,10 @@ class _CategoryScreenState extends State<CategoryScreen> {
                         padding: EdgeInsets.all(8),
                         decoration: BoxDecoration(
                           borderRadius: BorderRadius.circular(5.0),
-                          color: Colors.greenAccent.withOpacity(0.5),
+                          color: Colors.green[200].withOpacity(0.8),
                         ),
                         child: Text(
-                          "FILTER APPLIED",
+                          "Only Non-Default Categories shown",
                           textAlign: TextAlign.center,
                           style: TextStyle(
                             fontWeight: FontWeight.bold,
