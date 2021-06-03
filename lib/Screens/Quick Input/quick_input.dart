@@ -257,7 +257,9 @@ class QuickInputState extends State<QuickInput> {
                         final Expense expense = Expense(
                           categoryId: _chosenCategory.categoryId,
                           datetime: DateTime.now(),
-                          cost: roundDouble(double.parse(_expression), 2),
+                          cost: _chosenCategory.isIncome
+                              ? roundDouble(double.parse(_expression), 2)
+                              : -(roundDouble(double.parse(_expression), 2)),
                           itemName: "",
                           uid: uid,
                         );

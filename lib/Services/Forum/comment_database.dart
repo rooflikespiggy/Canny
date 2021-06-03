@@ -23,6 +23,13 @@ class CommentDatabaseService {
     return true;
   }
 
+  Future<List<Comment>> getComments() async {
+    List<DocumentSnapshot> snapshots = await forumCommentCollection
+        .get()
+        .then((value) => value.docs);
+    return snapshots.map((doc) => Comment.fromMap(doc)).toList();
+  }
+
   Future removeComment(String commentId) async {
     await forumCommentCollection
         .doc(inputId)

@@ -1,3 +1,4 @@
+import 'package:Canny/Models/category.dart';
 import 'package:Canny/Services/Category/category_database.dart';
 import 'package:flutter/material.dart';
 import 'package:intl/intl.dart';
@@ -22,6 +23,7 @@ class ExpenseTile extends StatefulWidget {
 
 class _ExpenseTileState extends State<ExpenseTile> {
   final CategoryDatabaseService _authCategory = CategoryDatabaseService();
+  Category selectedCategory;
 
   @override
   Widget build(BuildContext context) {
@@ -34,7 +36,7 @@ class _ExpenseTileState extends State<ExpenseTile> {
       child: ListTile(
         contentPadding: EdgeInsets.all(10.0),
         title: Text(
-          widget.itemName + "  (" + widget.cost.toString() + ")",
+          widget.itemName,
           style: TextStyle(
             fontSize: 18,
             color: Colors.blueGrey[900],
@@ -43,7 +45,9 @@ class _ExpenseTileState extends State<ExpenseTile> {
         subtitle: Text(
           DateFormat.yMMMd().format(widget.dateTime),
         ),
-        leading: CircleAvatar(
+        leading: _getCircleAvatar(),
+        /*
+        CircleAvatar(
           backgroundColor: Colors.deepOrange[50],
           radius: 30,
           child: IconTheme(
@@ -55,22 +59,71 @@ class _ExpenseTileState extends State<ExpenseTile> {
                   .categoryIcon
           ),
         ),
-        trailing:
-        /*
-        Row(
-          children: <Widget>[
-            Text(
-              widget.cost.toString(),
-            ),
-
          */
-            IconButton(
-              icon: Icon(Icons.more_vert),
-              onPressed: () {
-              },
-            ),
-          //],
+        trailing: Container(
+          width: 80,
+          child: Column(
+            mainAxisAlignment: MainAxisAlignment.spaceEvenly,
+            children: <Widget> [
+              // see if want to put text here
+              Text(
+                'Amount',
+                style: TextStyle(
+                  fontSize: 15,
+                  color: Colors.blueGrey[900],
+                ),
+              ),
+              Text(
+                widget.cost.toString(),
+                style: TextStyle(
+                  fontSize: 18,
+                  color: widget.cost < 0
+                      ? Colors.redAccent
+                      : Colors.green,
+                ),
+              ),
+              // maybe can change this to onTap for the whole ListTile
+              // so that the text can be right at the back
+              /*
+              IconButton(
+                icon: Icon(Icons.more_vert),
+                onPressed: () {
+                },
+              ),
+               */
+            ],
+          ),
         ),
+        onTap: () {},
+      ),
+    );
+  }
+
+  Widget _getCircleAvatar() {
+    return FutureBuilder<List<Category>>(
+        future: _authCategory.getCategories(),
+        builder: (BuildContext context, AsyncSnapshot<List<Category>> snapshot) {
+          if (snapshot.hasData) {
+            List<Category> allCategories = snapshot.data;
+            allCategories.sort((a, b) => a.categoryId.compareTo(b.categoryId));
+            for (Category category in allCategories) {
+              if (category.categoryId == widget.categoryId) {
+                selectedCategory = category;
+              }
+            }
+            return CircleAvatar(
+              backgroundColor: Colors.deepOrange[50],
+              radius: 30,
+              child: IconTheme(
+                  data: IconThemeData(
+                      color: selectedCategory.categoryColor.withOpacity(1),
+                      size: 25),
+                  child: selectedCategory.categoryIcon
+              ),
+            );
+          }
+          return CircularProgressIndicator();
+        }
     );
   }
 }

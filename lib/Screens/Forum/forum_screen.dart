@@ -58,7 +58,7 @@ class _ForumScreenState extends State<ForumScreen> {
               children: <Widget>[
                 StreamBuilder(
                   stream: forumCollection
-                      .orderBy("timestamp", descending: true)
+                      .orderBy("datetime", descending: true)
                       .snapshots(),
                   builder: (BuildContext context, AsyncSnapshot<QuerySnapshot> snapshot) {
                     if (snapshot.hasData) {
@@ -131,7 +131,7 @@ class _ForumScreenState extends State<ForumScreen> {
                                                 ),
                                                 Text(DateFormat("EEEE, d MMMM y")
                                                     .format(DateTime.fromMillisecondsSinceEpoch(
-                                                    snapshotData["timestamp"].seconds * 1000)),
+                                                    snapshotData["datetime"].seconds * 1000)),
                                                     style: TextStyle(
                                                       fontSize: 16,
                                                       color: Colors.grey[850],

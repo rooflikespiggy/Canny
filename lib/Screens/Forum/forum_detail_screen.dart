@@ -87,7 +87,7 @@ class _ForumDetailScreenState extends State<ForumDetailScreen> {
                                       Text("By: ${snapshot.data["name"]}"),
                                       Text(DateFormat("EEEE, d MMMM y")
                                           .format(DateTime.fromMillisecondsSinceEpoch(
-                                          snapshot.data["timestamp"].seconds * 1000)),
+                                          snapshot.data["datetime"].seconds * 1000)),
                                       ),
                                       IconWithText(
                                         Icons.add_comment_outlined,

@@ -78,7 +78,9 @@ class _AddSpendingScreenState extends State<AddSpendingScreen> {
                           onPressed: () async {
                             final Expense expense = Expense(
                               categoryId: selectedCategory[0].categoryId,
-                              cost: double.parse(costController.text),
+                              cost: selectedCategory[0].isIncome
+                                  ? double.parse(costController.text)
+                                  : -(double.parse(costController.text)),
                               itemName: itemNameController.text,
                               uid: uid,
                             );
