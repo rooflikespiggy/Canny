@@ -25,6 +25,7 @@ class _AddCategoryScreenState extends State<AddCategoryScreen> {
   final CollectionReference categoryCollection = Database().categoryDatabase();
   final CategoryDatabaseService _authCategory = CategoryDatabaseService();
   Icon _icon;
+  int _categoryNo;
 
   Future<int> countDocuments() async {
     QuerySnapshot _myDoc = await categoryCollection.get();
@@ -32,6 +33,14 @@ class _AddCategoryScreenState extends State<AddCategoryScreen> {
     return _myDocCount.length;  // Count of Documents in Collection
   }
 
+  Future noOfDocuments() async {
+    _categoryNo = await countDocuments();
+  }
+
+  String get categoryId {
+    noOfDocuments();
+    return _categoryNo.toString();
+  }
 
   // create some values
   Color pickerColor = Color(0xff443a49);
@@ -44,12 +53,10 @@ class _AddCategoryScreenState extends State<AddCategoryScreen> {
 
   _pickIcon() async {
     IconData icon = await FlutterIconPicker.showIconPicker(context);
-
     _icon = Icon(icon,
       size: 40,
     );
     setState((){});
-
     debugPrint('Picked Icon:  $icon');
   }
 
@@ -186,7 +193,7 @@ class _AddCategoryScreenState extends State<AddCategoryScreen> {
                               categoryName: categoryNameController.text,
                               categoryColor: currentColor,
                               categoryIcon: _icon,
-                              categoryId: countDocuments().toString(),
+                              categoryId: categoryId,
                               categoryAmount: 0,
                             );
                             if (_formKey.currentState.validate()) {
