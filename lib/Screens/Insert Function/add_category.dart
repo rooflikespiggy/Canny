@@ -186,7 +186,7 @@ class _AddCategoryScreenState extends State<AddCategoryScreen> {
                               categoryName: categoryNameController.text,
                               categoryColor: currentColor,
                               categoryIcon: _icon,
-                              categoryId: countDocuments().toString(),
+                              categoryId: categoryCollection.snapshots().length.toString().padLeft(2,'0'),
                               categoryAmount: 0,
                             );
                             if (_formKey.currentState.validate()) {
