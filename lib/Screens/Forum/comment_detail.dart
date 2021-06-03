@@ -24,7 +24,7 @@ class CommentDetail extends StatelessWidget {
             stream: forumCommentCollection
                 .doc(inputId)
                 .collection("Comment")
-                .orderBy("timestamp", descending: true)
+                .orderBy("datetime", descending: true)
                 .snapshots(),
             builder: (BuildContext context, AsyncSnapshot<QuerySnapshot> snapshot) {
               if (snapshot.hasData) {

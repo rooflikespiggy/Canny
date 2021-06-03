@@ -17,6 +17,11 @@ class Comment {
     this.did,
     this.name,
     this.description,
+    this.datetime,
+    this.likes,
+    this.dislikes,
+    this.liked_uid,
+    this.disliked_uid
   });
 
   Comment.fromMap(Map<String, dynamic> json) {
@@ -37,11 +42,11 @@ class Comment {
       'did': did,
       'name': name,
       'description': description,
-      'datetime': datetime,
-      'likes': likes,
-      'dislikes': dislikes,
-      'liked_uid': liked_uid,
-      'disliked_uid': disliked_uid
+      'datetime': DateTime.now(),
+      'likes': 0,
+      'dislikes': 0,
+      'liked_uid': [],
+      'disliked_uid': []
     };
   }
 }

@@ -13,6 +13,10 @@ class Forum {
     this.name,
     this.title,
     this.description,
+    this.datetime,
+    this.likes,
+    this.liked_uid,
+    this.comments
   });
 
   Forum.fromMap(Map<String, dynamic> json) {
@@ -32,10 +36,10 @@ class Forum {
       'name': name,
       'title': title,
       'description': description,
-      'timestamp': datetime,
-      'likes': likes,
-      'liked_uid': liked_uid,
-      'comments': comments
+      'timestamp': DateTime.now(),
+      'likes': 0,
+      'liked_uid': [],
+      'comments': 0
     };
   }
 }

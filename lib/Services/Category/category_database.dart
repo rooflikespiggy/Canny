@@ -82,7 +82,7 @@ class CategoryDatabaseService {
 
   Future updateCategoryColor(String categoryId, Color newColor) async {
     await categoryCollection
-        .doc(categoryId) //how to get id of each category
+        .doc(int.parse(categoryId).toString()) //how to get id of each category
         .update({"categoryColorValue": newColor.value});
     return true;
   }
