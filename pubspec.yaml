@@ -47,7 +47,7 @@ dependencies:
     git:
       url: git://github.com/flytreeleft/flutter_calculator.git
       ref: v0.1.0
-  input_calculator: ^2.0.0
+  flutter_iconpicker: ^3.0.2
 
 
 dev_dependencies:

@@ -1,3 +1,4 @@
+import 'package:Canny/Screens/Home/homepage_screen.dart';
 import 'package:Canny/Shared/colors.dart';
 import 'package:flutter/material.dart';
 import 'package:firebase_auth/firebase_auth.dart';
@@ -6,6 +7,8 @@ import 'package:Canny/Database/all_database.dart';
 import 'package:Canny/Services/Category/category_database.dart';
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:flutter_colorpicker/flutter_colorpicker.dart';
+import 'package:flutter_iconpicker/Models/IconPack.dart';
+import 'package:flutter_iconpicker/flutter_iconpicker.dart';
 
 class AddCategoryScreen extends StatefulWidget {
   static final String id = 'add_category_screen';
@@ -21,6 +24,14 @@ class _AddCategoryScreenState extends State<AddCategoryScreen> {
   final TextEditingController categoryNameController = TextEditingController();
   final CollectionReference categoryCollection = Database().categoryDatabase();
   final CategoryDatabaseService _authCategory = CategoryDatabaseService();
+  Icon _icon;
+
+  Future<int> countDocuments() async {
+    QuerySnapshot _myDoc = await categoryCollection.get();
+    List<DocumentSnapshot> _myDocCount = _myDoc.docs;
+    return _myDocCount.length;  // Count of Documents in Collection
+  }
+
 
   // create some values
   Color pickerColor = Color(0xff443a49);
@@ -29,6 +40,17 @@ class _AddCategoryScreenState extends State<AddCategoryScreen> {
   // ValueChanged<Color> callback
   void changeColor(Color color) {
     setState(() => pickerColor = color);
+  }
+
+  _pickIcon() async {
+    IconData icon = await FlutterIconPicker.showIconPicker(context);
+
+    _icon = Icon(icon,
+      size: 40,
+    );
+    setState((){});
+
+    debugPrint('Picked Icon:  $icon');
   }
 
   @override
@@ -61,66 +83,166 @@ class _AddCategoryScreenState extends State<AddCategoryScreen> {
                   Icon(Icons.drive_file_rename_outline),
                 ),
                 SizedBox(height: 20),
-                TextButton(
-                  onPressed: () {
-                    showDialog(
-                      context: context,
-                      builder: (BuildContext context) {
-                        return AlertDialog(
-                          title: Text('Select a color'),
-                          content: SingleChildScrollView(
-                            child: Column(
-                              children: <Widget>[
-                                BlockPicker(
-                                  pickerColor: currentColor,
-                                  onColorChanged: changeColor,
-                                ),
-                                SizedBox(height: 10),
-                                TextButton(
-                                    style: TextButton.styleFrom(
-                                        backgroundColor: Colors.black
+                Row(
+                  mainAxisAlignment: MainAxisAlignment.center,
+                  children: <Widget>[
+                    SizedBox(
+                      height: 35,
+                      width: 40,
+                      child: DecoratedBox(
+                        decoration: BoxDecoration(
+                            color: currentColor,
+                            border: Border.all(color: Colors.black)
+                        ),
+                      ),
+                    ),
+                    SizedBox(width: 40),
+                    TextButton(
+                      onPressed: () {
+                        showDialog(
+                          context: context,
+                          builder: (BuildContext context) {
+                            return AlertDialog(
+                              title: Text('Select a color'),
+                              content: SingleChildScrollView(
+                                child: Column(
+                                  children: <Widget>[
+                                    BlockPicker(
+                                      pickerColor: currentColor,
+                                      onColorChanged: changeColor,
                                     ),
-                                    child: Text('Change colour',
-                                        style: TextStyle(
-                                          color: Colors.white
+                                    SizedBox(height: 10),
+                                    TextButton(
+                                        child: Text("Set as color",
+                                          style: TextStyle(
+                                            color: Colors.white,
+                                          ),
                                         ),
-                                    ),
-                                  onPressed: () {
-                                    setState(() => currentColor = pickerColor);
-                                    Navigator.of(context).pop();
-                                  }
+                                        style: TextButton.styleFrom(
+                                            backgroundColor: kDeepOrangeLight
+                                        ),
+                                      onPressed: () {
+                                        setState(() => currentColor = pickerColor);
+                                        Navigator.of(context).pop();
+                                      }
+                                    )
+                                  ]
                                 )
-                              ]
-                            )
-                          ),
+                              ),
+                            );
+                          },
                         );
                       },
-                    );
-                  },
-                  child: Text('Choose a colour for new Category ',
-                    style: TextStyle(
-                      color: useWhiteForeground(currentColor)
-                          ? const Color(0xffffffff)
-                          : const Color(0xff000000),
-                    ),
+                        child: Text("Choose a colour for new Category",
+                          style: TextStyle(
+                            color: Colors.white,
+                          ),
+                        ),
+                        style: TextButton.styleFrom(
+                            backgroundColor: kDeepOrangeLight
+                        ),
 
-                  ),
-                  style: TextButton.styleFrom(
-                    backgroundColor: currentColor
-                  )
+                      ),
+                  ]
                 ),
                 SizedBox(height: 10.0),
-                /*
-                SizedBox(
-                  width: 200,
-                  height: 200,
-                    child: BlockPicker(
-                      pickerColor: currentColor,
-                      onColorChanged: changeColor,
+                Row(
+                  mainAxisAlignment: MainAxisAlignment.center,
+                  children: <Widget>[
+                    AnimatedSwitcher(
+                        duration: Duration(milliseconds: 300),
+                        child: _icon != null
+                            ? _icon
+                            : Container(
+                          child: SizedBox(
+                            width: 40,
+                            height: 40,
+                          ),
+                        )
                     ),
+                    SizedBox(width: 40),
+                    TextButton(
+                        child: Text('Choose an icon for new Category  ',
+                          style: TextStyle(
+                            color: Colors.white,
+                          ),
+                        ),
+                        style: TextButton.styleFrom(
+                            backgroundColor: kDeepOrangeLight
+                        ),
+                      onPressed: _pickIcon,
+                    )
+                  ]
                 ),
+                SizedBox(height: 20),
+                Padding(
+                  padding: EdgeInsets.symmetric(horizontal: 20.0),
+                  child: Row(
+                    mainAxisAlignment: MainAxisAlignment.spaceEvenly,
+                    children: <Widget>[
+                      ElevatedButton(
+                          onPressed: () async {
+                            final Category category = Category(
+                              categoryName: categoryNameController.text,
+                              categoryColor: currentColor,
+                              categoryIcon: _icon,
+                              categoryId: countDocuments().toString(),
+                              categoryAmount: 0,
+                            );
+                            if (_formKey.currentState.validate()) {
+                              await _authCategory.addNewCategory(category, category.categoryId).then((_) {
+                                showDialog(
+                                  context: context,
+                                  builder: (BuildContext context) {
+                                    return AlertDialog(
+                                      title: Text(
+                                        "Successfully Added a new Category!",
+                                        style: TextStyle(fontFamily: 'Lato'),
+                                      ),
+                                      content: Text(
+                                        "Would you like to add another Category?",
+                                        style: TextStyle(fontFamily: 'Lato.Thin'),
+                                      ),
+                                      actions: <Widget> [
+                                        TextButton(
+                                          child: Text("Back to HomePage"),
+                                          onPressed: () {
+                                            Navigator.push(context,
+                                                MaterialPageRoute(builder: (context) => HomePageScreen()));
+                                          },
+                                        ),
+                                        TextButton(
+                                          child: Text("Add another Category"),
+                                          onPressed: () {
+                                            Navigator.pop(context);
+                                          },
+                                        ),
+                                      ],
+                                    );
+                                  },
+                                );
+                                categoryNameController.clear();
+                              });
+                            }
+                          },
+                          child: Text('Submit'),
+                          style: ButtonStyle(
+                            backgroundColor: MaterialStateProperty.all(kDeepOrangeLight),
+                          )
+                      ),
+                      ElevatedButton(
+                          onPressed: () {
+                            Navigator.pop(context);
+                          },
+                          child: Text('Return To Homepage'),
+                          style: ButtonStyle(
+                            backgroundColor: MaterialStateProperty.all(Colors.grey),
+                          )
+                      ),
 
-                 */
+                    ],
+                  ),
+                ),
 
               ]
             ),
