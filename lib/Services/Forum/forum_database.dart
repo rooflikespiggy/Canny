@@ -13,6 +13,13 @@ class ForumDatabaseService {
     return true;
   }
 
+  Future<List<Forum>> getComments() async {
+    List<DocumentSnapshot> snapshots = await forumCollection
+        .get()
+        .then((value) => value.docs);
+    return snapshots.map((doc) => Forum.fromMap(doc)).toList();
+  }
+
   Future removeDiscussion(String forumId) async {
     await forumCollection
         .doc(forumId)
