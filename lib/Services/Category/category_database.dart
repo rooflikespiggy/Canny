@@ -42,6 +42,7 @@ class CategoryDatabaseService {
   }
 
   List<Category> get allCategories {
+    initNewCategories();
     return _categories;
   }
 

@@ -26,7 +26,9 @@ class _AddCategoryScreenState extends State<AddCategoryScreen> {
   final CategoryDatabaseService _authCategory = CategoryDatabaseService();
   Icon _icon;
   int _categoryNo;
+  String categoryId = '00';
 
+  /*
   Future<int> countDocuments() async {
     QuerySnapshot _myDoc = await categoryCollection.get();
     List<DocumentSnapshot> _myDocCount = _myDoc.docs;
@@ -40,6 +42,20 @@ class _AddCategoryScreenState extends State<AddCategoryScreen> {
   String get categoryId {
     noOfDocuments();
     return _categoryNo.toString();
+  }
+   */
+
+  List<Category> categoriesList() {
+    return _authCategory.allCategories;
+  }
+
+  String getCategoryId() {
+    for (Category category in categoriesList()) {
+      if (int.parse(category.categoryId) > int.parse(categoryId)) {
+        categoryId = category.categoryId;
+      }
+    }
+    return (int.parse(categoryId) + 1).toString();
   }
 
   // create some values
@@ -62,6 +78,7 @@ class _AddCategoryScreenState extends State<AddCategoryScreen> {
 
   @override
   Widget build(BuildContext context) {
+    categoryId;
     return Scaffold(
       appBar: AppBar(
         backgroundColor: kDeepOrangeLight,
@@ -193,7 +210,7 @@ class _AddCategoryScreenState extends State<AddCategoryScreen> {
                               categoryName: categoryNameController.text,
                               categoryColor: currentColor,
                               categoryIcon: _icon,
-                              categoryId: categoryId,
+                              categoryId: getCategoryId(),
                               categoryAmount: 0,
                             );
                             if (_formKey.currentState.validate()) {
