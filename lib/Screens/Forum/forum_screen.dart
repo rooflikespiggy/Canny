@@ -62,7 +62,6 @@ class _ForumScreenState extends State<ForumScreen> {
                       .snapshots(),
                   builder: (BuildContext context, AsyncSnapshot<QuerySnapshot> snapshot) {
                     if (snapshot.hasData) {
-                      //print(snapshot);
                       return Align(
                         alignment: Alignment.topCenter,
                         child: ListView.builder(

@@ -60,6 +60,7 @@ class _ForumDetailScreenState extends State<ForumDetailScreen> {
                 stream: forumCollection.doc(inputId).snapshots(),
                 builder: (BuildContext context, AsyncSnapshot<DocumentSnapshot> snapshot) {
                   if (snapshot.hasData) {
+                    //print(snapshot.data);
                     //print(snapshot);
                     return Align(
                       alignment: Alignment.topCenter,

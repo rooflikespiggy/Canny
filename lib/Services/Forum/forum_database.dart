@@ -13,18 +13,18 @@ class ForumDatabaseService {
     return true;
   }
 
-  Future removeDiscussion(String id) async {
+  Future removeDiscussion(String forumId) async {
     await forumCollection
-        .doc(id)
+        .doc(forumId)
         .delete();
     return true;
   }
 
-  Future updateDiscussion(String id,
+  Future updateDiscussion(String forumId,
       String newName,
       String newTitle,
       String newDescription) async {
-    await forumCollection.doc(id).update({
+    await forumCollection.doc(forumId).update({
       "name": newName,
       "title": newTitle,
       "description": newDescription,
@@ -34,15 +34,15 @@ class ForumDatabaseService {
   }
 
   Future updateLikes(List liked_uid,
-      String id) async {
+      String forumId) async {
     if (liked_uid.contains(uid)) {
-      await forumCollection.doc(id)
+      await forumCollection.doc(forumId)
           .update({
         "likes": FieldValue.increment(-1),
         "liked_uid": FieldValue.arrayRemove([uid]),
       }).catchError((error) => print(error));
     } else {
-      await forumCollection.doc(id)
+      await forumCollection.doc(forumId)
           .update({
         "likes": FieldValue.increment(1),
         "liked_uid": FieldValue.arrayUnion([uid]),

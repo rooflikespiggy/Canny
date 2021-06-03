@@ -12,7 +12,6 @@ class CommentDatabaseService {
 
   CommentDatabaseService(this.inputId);
 
-
   Future addComment(Comment comment) async {
     await forumCommentCollection
         .doc(inputId)
