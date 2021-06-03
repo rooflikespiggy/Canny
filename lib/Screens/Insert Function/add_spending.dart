@@ -89,7 +89,7 @@ class _AddSpendingScreenState extends State<AddSpendingScreen> {
                                   builder: (BuildContext context) {
                                     return AlertDialog(
                                       title: Text(
-                                        "Successfully Submitted Your Spending Entry!",
+                                        "Successfully Added Your Spending Entry!",
                                         style: TextStyle(fontFamily: 'Lato'),
                                       ),
                                       content: Text(
