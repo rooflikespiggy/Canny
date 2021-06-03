@@ -1,11 +1,16 @@
+import 'package:Canny/Database/all_database.dart';
 import 'package:Canny/Models/category.dart';
+import 'package:Canny/Models/expense.dart';
 import 'package:Canny/Services/Quick%20Input/calculator_icon_buttons.dart';
 import 'package:Canny/Services/Quick%20Input/quickinput_buttons.dart';
+import 'package:Canny/Services/Receipt/receipt_database.dart';
+import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:flutter/material.dart';
 import 'package:math_expressions/math_expressions.dart';
 import 'package:Canny/Services/Quick%20Input/calculator_buttons.dart';
 import 'package:Canny/Shared/colors.dart';
 import 'package:Canny/Services/Quick Input/quickinput_database.dart';
+import 'package:firebase_auth/firebase_auth.dart';
 
 class QuickInput extends StatefulWidget {
   static final String id = 'quickinput_screen';
@@ -15,9 +20,13 @@ class QuickInput extends StatefulWidget {
 }
 
 class QuickInputState extends State<QuickInput> {
+  String uid = FirebaseAuth.instance.currentUser.uid;
   String _history = '';
   String _expression = '';
   final QuickInputDatabaseService _authQuickInput = QuickInputDatabaseService();
+  final ReceiptDatabaseService _authReceipt = ReceiptDatabaseService();
+  final CollectionReference quickInputCollection = Database().categoryDatabase();
+  Category _chosenCategory;
 
   void numClick(String text) {
     setState(() => _expression += text);
@@ -27,6 +36,12 @@ class QuickInputState extends State<QuickInput> {
     setState(() {
       _history = '';
       _expression = '';
+    });
+  }
+
+  void catClick(Category category) {
+    setState(() {
+      _chosenCategory = category;
     });
   }
 
@@ -43,12 +58,12 @@ class QuickInputState extends State<QuickInput> {
 
   @override
   Widget build(BuildContext context) {
+    _authQuickInput.initNewQuickInputs();
     return Scaffold(
       appBar: AppBar(
         backgroundColor: Colors.brown[200],
         elevation: 0.0,
       ),
-    //idk where that arrow on the left is from LOL
       body: MaterialApp(
         debugShowCheckedModeBanner: false,
         title: 'Calculator',
@@ -96,24 +111,27 @@ class QuickInputState extends State<QuickInput> {
                       callback: allClear,
                       textSize: 22,
                     ),
-                    QuickInputButton(),
-                    /*
                     CalcIconButton(
-                      icon: _authQuickInput.getSpecificQuickInput(0).categoryIcon,
-                      categoryColor: _authQuickInput.getSpecificQuickInput(0).categoryColor,
+                      category: _authQuickInput.getQuickInput(0),
+                      icon: _authQuickInput.getQuickInput(0).categoryIcon,
+                      categoryColor: _authQuickInput.getQuickInput(0).categoryColor,
                       fillColor: Colors.orange[200],
+                      callback: catClick,
                     ),
                     CalcIconButton(
-                      icon: _authQuickInput.getSpecificQuickInput(1).categoryIcon,
-                      categoryColor: _authQuickInput.getSpecificQuickInput(1).categoryColor,
+                      category: _authQuickInput.getQuickInput(1),
+                      icon: _authQuickInput.getQuickInput(1).categoryIcon,
+                      categoryColor: _authQuickInput.getQuickInput(1).categoryColor,
                       fillColor: Colors.orange[200],
+                      callback: catClick,
                     ),
                     CalcIconButton(
-                      icon: _authQuickInput.getSpecificQuickInput(2).categoryIcon,
-                      categoryColor: _authQuickInput.getSpecificQuickInput(2).categoryColor,
+                      category: _authQuickInput.getQuickInput(2),
+                      icon: _authQuickInput.getQuickInput(2).categoryIcon,
+                      categoryColor: _authQuickInput.getQuickInput(2).categoryColor,
                       fillColor: Colors.orange[200],
+                      callback: catClick,
                     ),
-                     */
                   ],
                 ),
                 Row(
@@ -228,7 +246,17 @@ class QuickInputState extends State<QuickInput> {
                   width: 360,
                   height: 50,
                   child: TextButton(
-                      onPressed: () {},
+                      onPressed: () async {
+                        print(_chosenCategory);
+                        final Expense expense = Expense(
+                          categoryId: _chosenCategory.categoryId,
+                          datetime: DateTime.now(),
+                          cost: double.parse(_expression),
+                          itemName: "",
+                          uid: uid,
+                        );
+                        await _authReceipt.addExpense(expense);
+                      },
                       child: Text(
                         "Enter",
                         style: TextStyle(

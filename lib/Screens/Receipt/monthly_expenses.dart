@@ -1,17 +1,17 @@
 import 'package:flutter/material.dart';
 import 'package:Canny/Services/Receipt/expense_tiles.dart';
 
-class monthlyExpenses extends StatefulWidget {
+class MonthlyExpenses extends StatefulWidget {
 
   String month;
 
-  monthlyExpenses({ this.month });
+  MonthlyExpenses({this.month});
 
   @override
-  _monthlyExpensesState createState() => _monthlyExpensesState();
+  _MonthlyExpensesState createState() => _MonthlyExpensesState();
 }
 
-class _monthlyExpensesState extends State<monthlyExpenses> {
+class _MonthlyExpensesState extends State<MonthlyExpenses> {
 
   @override
   Widget build(BuildContext context) {

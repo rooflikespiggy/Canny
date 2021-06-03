@@ -62,6 +62,7 @@ class _ForumScreenState extends State<ForumScreen> {
                       .snapshots(),
                   builder: (BuildContext context, AsyncSnapshot<QuerySnapshot> snapshot) {
                     if (snapshot.hasData) {
+                      //print(snapshot);
                       return Align(
                         alignment: Alignment.topCenter,
                         child: ListView.builder(
@@ -177,88 +178,89 @@ class _ForumScreenState extends State<ForumScreen> {
                                                 Align(
                                                   alignment: Alignment.centerRight,
                                                   child: Row(
-                                                      children: <Widget> [
-                                                        if (snapshotData["uid"] == uid)
-                                                          IconButton(
-                                                            icon:
-                                                            Icon(FontAwesomeIcons.edit),
-                                                            onPressed: () async {
-                                                              await showDialog(
-                                                                context: context,
-                                                                builder: (BuildContext context) {
-                                                                  return AlertDialog(
-                                                                    contentPadding: EdgeInsets.all(20),
-                                                                    content: Column(
-                                                                      children: <Widget> [
-                                                                        Text("Update discussion"),
-                                                                        TextField(
-                                                                          decoration: InputDecoration(
-                                                                              labelText: "Edit Name"
-                                                                          ),
-                                                                          controller: nameInputController,
+                                                    children: <Widget> [
+                                                      Visibility(
+                                                        visible: snapshotData["uid"] == uid,
+                                                        child: IconButton(
+                                                          icon:
+                                                          Icon(FontAwesomeIcons.edit),
+                                                          onPressed: () async {
+                                                            await showDialog(
+                                                              context: context,
+                                                              builder: (BuildContext context) {
+                                                                return AlertDialog(
+                                                                  contentPadding: EdgeInsets.all(20),
+                                                                  content: Column(
+                                                                    children: <Widget> [
+                                                                      Text("Update discussion"),
+                                                                      TextField(
+                                                                        decoration: InputDecoration(
+                                                                            labelText: "Edit Name"
                                                                         ),
-                                                                        SizedBox(height: 15),
-                                                                        TextField(
-                                                                          decoration: InputDecoration(
-                                                                              labelText: "Edit Title"
-                                                                          ),
-                                                                          controller: titleInputController,
-                                                                        ),
-                                                                        SizedBox(height: 15),
-                                                                        Expanded(
-                                                                          child: TextField(
-                                                                            keyboardType: TextInputType.multiline,
-                                                                            maxLines: null,
-                                                                            decoration: InputDecoration(
-                                                                                labelText: "Edit Description"
-                                                                            ),
-                                                                            controller: descriptionInputController,
-                                                                          ),
-                                                                        ),
-                                                                      ],
-                                                                    ),
-                                                                    actions: <Widget> [
-                                                                      TextButton(
-                                                                          onPressed: () {
-                                                                            Navigator.pop(context);
-                                                                          },
-                                                                          child: Text("Cancel")
+                                                                        controller: nameInputController,
                                                                       ),
-                                                                      TextButton(
-                                                                          onPressed: () {
-                                                                            if (nameInputController.text.isNotEmpty &&
-                                                                                titleInputController.text.isNotEmpty &&
-                                                                                descriptionInputController.text.isNotEmpty) {
-                                                                              _authForum.updateDiscussion(snapshotData.id,
-                                                                                  nameInputController.text,
-                                                                                  titleInputController.text,
-                                                                                  descriptionInputController.text)
-                                                                                  .then((_) {
-                                                                                nameInputController.clear();
-                                                                                titleInputController.clear();
-                                                                                descriptionInputController.clear();
-                                                                                Navigator.pop(context);
-                                                                              }).catchError((error) => print(error));
-                                                                            }
-                                                                          },
-                                                                          child: Text("Update")
+                                                                      SizedBox(height: 15),
+                                                                      TextField(
+                                                                        decoration: InputDecoration(
+                                                                            labelText: "Edit Title"
+                                                                        ),
+                                                                        controller: titleInputController,
+                                                                      ),
+                                                                      SizedBox(height: 15),
+                                                                      Expanded(
+                                                                        child: TextField(
+                                                                          keyboardType: TextInputType.multiline,
+                                                                          maxLines: null,
+                                                                          decoration: InputDecoration(
+                                                                              labelText: "Edit Description"
+                                                                          ),
+                                                                          controller: descriptionInputController,
+                                                                        ),
                                                                       ),
                                                                     ],
-                                                                  );
-                                                                },
-                                                              );
-                                                            },
-                                                          ),
-                                                        SizedBox(width: 8.0),
-                                                        if (snapshotData["uid"] == uid)
-                                                          IconButton(
-                                                            icon: Icon(
-                                                                FontAwesomeIcons.trashAlt),
+                                                                  ),
+                                                                  actions: <Widget> [
+                                                                    TextButton(
+                                                                        onPressed: () {
+                                                                          Navigator.pop(context);
+                                                                          },
+                                                                        child: Text("Cancel")
+                                                                    ),
+                                                                    TextButton(
+                                                                        onPressed: () {
+                                                                          if (nameInputController.text.isNotEmpty &&
+                                                                              titleInputController.text.isNotEmpty &&
+                                                                              descriptionInputController.text.isNotEmpty) {
+                                                                            _authForum.updateDiscussion(snapshotData.id,
+                                                                                nameInputController.text,
+                                                                                titleInputController.text,
+                                                                                descriptionInputController.text).then((_) {
+                                                                                  nameInputController.clear();
+                                                                                  titleInputController.clear();
+                                                                                  descriptionInputController.clear();
+                                                                                  Navigator.pop(context);
+                                                                                }).catchError((error) => print(error));
+                                                                          }
+                                                                          },
+                                                                        child: Text("Update")
+                                                                    ),
+                                                                  ],
+                                                                );
+                                                              },
+                                                            );
+                                                          },
+                                                        ),
+                                                      ),
+                                                      SizedBox(width: 8.0),
+                                                      Visibility(
+                                                        visible: snapshotData["uid"] == uid,
+                                                        child: IconButton(
+                                                          icon: Icon(
+                                                            FontAwesomeIcons.trashAlt),
                                                             onPressed: () {
                                                               showDialog(
                                                                 context: context,
-                                                                builder:
-                                                                    (BuildContext context) {
+                                                                builder: (BuildContext context) {
                                                                   return AlertDialog(
                                                                     title: Text("Are you sure you want to delete your discussion"),
                                                                     content: Text("Once your discussion is deleted, you will not be able to retrieve it back."),
@@ -287,8 +289,9 @@ class _ForumScreenState extends State<ForumScreen> {
                                                                 },
                                                               );
                                                             },
-                                                          ),
-                                                      ]
+                                                        ),
+                                                      ),
+                                                    ],
                                                   ),
                                                 ),
                                               ],

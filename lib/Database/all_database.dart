@@ -3,19 +3,17 @@ import 'package:firebase_auth/firebase_auth.dart';
 
 class Database {
   final CollectionReference userCollection = FirebaseFirestore.instance.collection('Users');
+  final CollectionReference forumCollection = FirebaseFirestore.instance.collection('Forum');
+  final CollectionReference forumCommentCollection = FirebaseFirestore.instance.collection('ForumComment');
   final String uid = FirebaseAuth.instance.currentUser.uid;
 
 
   CollectionReference forumDatabase() {
-    return userCollection
-        .doc(uid)
-        .collection('Forum');
+    return forumCollection;
   }
 
   CollectionReference forumCommentDatabase() {
-    return userCollection
-        .doc(uid)
-        .collection('ForumComment');
+    return forumCommentCollection;
   }
 
   CollectionReference categoryDatabase() {

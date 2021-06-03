@@ -2,6 +2,7 @@ import 'package:Canny/Database/all_database.dart';
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:flutter/material.dart';
 import 'package:Canny/Database/get_forum_database.dart';
+import 'package:Canny/Screens/Forum/forum_detail_screen.dart';
 
 class ForumSearch extends SearchDelegate {
   CollectionReference forumCollection = Database().forumDatabase();
@@ -42,42 +43,49 @@ class ForumSearch extends SearchDelegate {
     print('hi');
     // List<String> descriptionList = ForumSearchData().getDescriptionData(query);
 
-    return ListView.builder(
-      padding: EdgeInsets.all(10),
-      shrinkWrap: true,
-      physics: const NeverScrollableScrollPhysics(),
-      itemCount: titleList.length,
-      itemBuilder: (BuildContext context, int index) {
-        return Column(
-          mainAxisAlignment: MainAxisAlignment.center,
-          crossAxisAlignment: CrossAxisAlignment.start,
-          children: <Widget>[
-            Container(
-              child: Column(
+    return StreamBuilder(
+      stream: forumCollection.snapshots(),
+      builder: (BuildContext context, AsyncSnapshot<QuerySnapshot> snapshot) {
+        if (snapshot.hasData) {
+          return ListView.builder(
+            padding: EdgeInsets.all(10),
+            shrinkWrap: true,
+            physics: const NeverScrollableScrollPhysics(),
+            itemCount: snapshot.data.docs.length,
+            itemBuilder: (BuildContext context, int index) {
+              final snapshotData = snapshot.data.docs[index];
+              return Column(
+                mainAxisAlignment: MainAxisAlignment.center,
+                crossAxisAlignment: CrossAxisAlignment.start,
                 children: <Widget>[
-                  ListTile(
-                    contentPadding: EdgeInsets.all(5.0),
-                    title: Text(
-                      titleList[index],
-                      style: TextStyle(
-                        fontSize: 20,
-                      ),
+                  Container(
+                    child: Column(
+                      children: <Widget>[
+                        ListTile(
+                          contentPadding: EdgeInsets.all(5.0),
+                          title: Text(
+                            snapshotData['title'],
+                            style: TextStyle(
+                              fontSize: 20,
+                            ),
+                          ),
+                          onTap: () {
+                            Navigator.push(context,
+                                MaterialPageRoute(builder: (context) =>
+                                    ForumDetailScreen(inputId: snapshotData.id)));
+                          },
+                        ),
+                        Divider(),
+                      ],
                     ),
-                    onTap: () {
-                      /*
-                      Navigator.push(context,
-                          MaterialPageRoute(builder: (context) =>
-                              ForumDetailScreen(inputId: snapshotData.id)));
-                       */
-                    },
                   ),
-                  Divider(),
                 ],
-              ),
-            ),
-          ],
-        );
-      },
+              );
+            },
+          );
+        }
+        return CircularProgressIndicator();
+      }
     );
   }
 }

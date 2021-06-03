@@ -4,6 +4,7 @@ import 'package:Canny/Screens/Sidebar/sidebar_menu.dart';
 import 'package:Canny/Services/Category/category_database.dart';
 import 'package:Canny/Services/Category/default_categories.dart';
 import 'package:Canny/Services/Category/category_tiles.dart';
+import 'package:Canny/Services/Quick%20Input/quickinput_database.dart';
 import 'package:Canny/Shared/colors.dart';
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:firebase_auth/firebase_auth.dart';
@@ -19,6 +20,7 @@ class CategoryScreen extends StatefulWidget {
 class _CategoryScreenState extends State<CategoryScreen> {
   final String uid = FirebaseAuth.instance.currentUser.uid;
   final CollectionReference categoryCollection = Database().categoryDatabase();
+  final QuickInputDatabaseService _authQuickInput = QuickInputDatabaseService();
   final int categoriesSize = defaultCategories.length;
   bool isDefault = true;
 
@@ -38,6 +40,7 @@ class _CategoryScreenState extends State<CategoryScreen> {
               icon: Icon(
                   isDefault ? Icons.visibility : Icons.visibility_off),
               onPressed: () {
+                print(_authQuickInput.allQuickInputs);
                 setState(() {
                   isDefault = !isDefault;
                 });
@@ -56,6 +59,24 @@ class _CategoryScreenState extends State<CategoryScreen> {
             child: Container(
                 child: Column(
                   children: <Widget>[
+                    SizedBox(height: 5.0),
+                    Visibility(
+                      visible: !isDefault,
+                      child: Container(
+                        padding: EdgeInsets.all(8),
+                        decoration: BoxDecoration(
+                          borderRadius: BorderRadius.circular(5.0),
+                          color: Colors.greenAccent.withOpacity(0.5),
+                        ),
+                        child: Text(
+                          "FILTER APPLIED",
+                          textAlign: TextAlign.center,
+                          style: TextStyle(
+                            fontWeight: FontWeight.bold,
+                          ),
+                        ),
+                      ),
+                    ),
                     StreamBuilder(
                         stream: categoryCollection
                             .orderBy("categoryId")
@@ -71,6 +92,9 @@ class _CategoryScreenState extends State<CategoryScreen> {
                                   itemCount: snapshot.data.docs.length,
                                   itemBuilder: (BuildContext context, int index) {
                                     final snapshotData = snapshot.data.docs[index];
+                                    if (!isDefault && index < 12) {
+                                      return SizedBox();
+                                    }
                                     return CategoryTile(
                                         categoryName: snapshotData['categoryName'],
                                         categoryColorValue: snapshotData['categoryColorValue'],

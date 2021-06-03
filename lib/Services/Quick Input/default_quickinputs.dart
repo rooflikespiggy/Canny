@@ -8,22 +8,28 @@ List<Category> defaultQuickInputs = [
 ];
 
 Category foodDrinks = Category(
-  categoryName: 'Food & Drinks',
-  categoryIcon: Icon(Icons.fastfood_rounded),
-  categoryColor: Colors.green[800],
-  categoryId: '00',
+    categoryName: 'Food & Drinks',
+    categoryIcon: Icon(Icons.fastfood_rounded),
+    categoryColor: Colors.green[800],
+    categoryId: '00',
+    categoryAmount: 0,
+    isIncome: false
 );
 
 Category transportation = Category(
-  categoryName: 'Transportation',
-  categoryIcon: Icon(Icons.directions_bus),
-  categoryColor: Colors.red[800],
-  categoryId: '01',
+    categoryName: 'Transportation',
+    categoryIcon: Icon(Icons.directions_bus),
+    categoryColor: Colors.red[800],
+    categoryId: '01',
+    categoryAmount: 0,
+    isIncome: false
 );
 
 Category shopping = Category(
-  categoryName: 'Shopping',
-  categoryIcon: Icon(Icons.shopping_bag_rounded),
-  categoryColor: Colors.pinkAccent,
-  categoryId: '02',
+    categoryName: 'Shopping',
+    categoryIcon: Icon(Icons.shopping_bag_rounded),
+    categoryColor: Colors.pinkAccent,
+    categoryId: '02',
+    categoryAmount: 0,
+    isIncome: false
 );

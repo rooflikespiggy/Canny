@@ -72,7 +72,7 @@ class _CustomiseQIState extends State<CustomiseQI> {
                         ElevatedButton(
                           onPressed: () async {
                             // if selected less than 3, ask them select 3
-                            if (selectedCategories.length < 3) {
+                            if (selectedCategories == null || selectedCategories.length < 3) {
                               showDialog(
                                 context: context,
                                 builder: (BuildContext context) {
@@ -344,7 +344,7 @@ class _CustomiseQIState extends State<CustomiseQI> {
   }
 
   void editQuickInput() {
-    for (int i = 0; i < 3; i++) {
+    for (int i = 0; i < selectedCategories.length; i++) {
       Category category = selectedCategories[i];
       String categoryId = category.categoryId;
       _authQuickInput.updateQuickInput(category, categoryId, i);
