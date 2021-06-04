@@ -263,7 +263,7 @@ class QuickInputState extends State<QuickInput> {
                           cost: _chosenCategory.isIncome
                               ? roundDouble(double.parse(_expression), 2)
                               : -(roundDouble(double.parse(_expression), 2)),
-                          itemName: "",
+                          itemName: _chosenCategory.categoryName,
                           uid: uid,
                         );
                         await _authReceipt.addExpense(expense);

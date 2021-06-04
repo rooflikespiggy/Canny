@@ -132,7 +132,6 @@ class _AddSpendingScreenState extends State<AddSpendingScreen> {
                             backgroundColor: MaterialStateProperty.all(Colors.grey),
                           )
                       ),
-
                     ],
                   ),
                 ),
@@ -280,7 +279,7 @@ class _AddSpendingScreenState extends State<AddSpendingScreen> {
                 headerColor: Colors.blue.withOpacity(0.5),
                 decoration: BoxDecoration(
                   border: Border.all(color: Colors.blue[700], width: 1.8),
-                  borderRadius: BorderRadius.all(Radius.circular(10)),
+                  borderRadius: BorderRadius.all(Radius.circular(7.5)),
                 ),
                 selectedChipColor: Colors.blue.withOpacity(0.5),
                 selectedTextStyle: TextStyle(color: Colors.blue[800]),
