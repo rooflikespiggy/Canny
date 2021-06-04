@@ -9,6 +9,7 @@ import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:flutter_colorpicker/flutter_colorpicker.dart';
 import 'package:flutter_iconpicker/Models/IconPack.dart';
 import 'package:flutter_iconpicker/flutter_iconpicker.dart';
+import 'package:font_awesome_flutter/font_awesome_flutter.dart';
 
 class AddCategoryScreen extends StatefulWidget {
   static final String id = 'add_category_screen';
@@ -26,7 +27,9 @@ class _AddCategoryScreenState extends State<AddCategoryScreen> {
   final CategoryDatabaseService _authCategory = CategoryDatabaseService();
   Icon _icon;
   int _categoryNo;
+  String categoryId = '00';
 
+  /*
   Future<int> countDocuments() async {
     QuerySnapshot _myDoc = await categoryCollection.get();
     List<DocumentSnapshot> _myDocCount = _myDoc.docs;
@@ -41,6 +44,20 @@ class _AddCategoryScreenState extends State<AddCategoryScreen> {
     noOfDocuments();
     return _categoryNo.toString();
   }
+   */
+
+  List<Category> categoriesList() {
+    return _authCategory.allCategories;
+  }
+
+  String getCategoryId() {
+    for (Category category in categoriesList()) {
+      if (int.parse(category.categoryId) > int.parse(categoryId)) {
+        categoryId = category.categoryId;
+      }
+    }
+    return (int.parse(categoryId) + 1).toString();
+  }
 
   // create some values
   Color pickerColor = Color(0xff443a49);
@@ -54,6 +71,7 @@ class _AddCategoryScreenState extends State<AddCategoryScreen> {
   _pickIcon() async {
     IconData icon = await FlutterIconPicker.showIconPicker(context);
     _icon = Icon(icon,
+      color: pickerColor,
       size: 40,
     );
     setState((){});
@@ -62,15 +80,8 @@ class _AddCategoryScreenState extends State<AddCategoryScreen> {
 
   @override
   Widget build(BuildContext context) {
-
-    categoryId;
-
+    _authCategory.allCategories;
     return Scaffold(
-      appBar: AppBar(
-        backgroundColor: kDeepOrangeLight,
-        title: Text("Add Category"),
-        titleTextStyle: TextStyle(fontFamily: 'Lato'),
-      ),
       backgroundColor: kBackgroundColour,
       resizeToAvoidBottomInset: false,
       body: Center(
@@ -89,7 +100,7 @@ class _AddCategoryScreenState extends State<AddCategoryScreen> {
                 ),
                 SizedBox(height: 20),
                 _showTextFormFields(categoryNameController,
-                  "Enter the name of new category",
+                  "Category Name",
                   Icon(Icons.drive_file_rename_outline),
                 ),
                 SizedBox(height: 20),
@@ -143,7 +154,7 @@ class _AddCategoryScreenState extends State<AddCategoryScreen> {
                           },
                         );
                       },
-                        child: Text("Choose a colour for new Category",
+                        child: Text("Category Colour",
                           style: TextStyle(
                             color: Colors.white,
                           ),
@@ -162,23 +173,12 @@ class _AddCategoryScreenState extends State<AddCategoryScreen> {
                     AnimatedSwitcher(
                         duration: Duration(milliseconds: 300),
                         child: _icon != null
-                            ? Container(
-                              child: SizedBox(
-                                width: 40,
-                                height: 40,
-                                child: _icon,
-                              )
-                            )
-                            : Container(
-                          child: SizedBox(
-                            width: 40,
-                            height: 40,
-                          ),
-                        )
+                            ? _icon
+                            : Icon(FontAwesomeIcons.question)
                     ),
                     SizedBox(width: 40),
                     TextButton(
-                        child: Text('Choose an icon for new Category  ',
+                        child: Text('Category Icon',
                           style: TextStyle(
                             color: Colors.white,
                           ),
@@ -202,7 +202,7 @@ class _AddCategoryScreenState extends State<AddCategoryScreen> {
                               categoryName: categoryNameController.text,
                               categoryColor: currentColor,
                               categoryIcon: _icon,
-                              categoryId: categoryId,
+                              categoryId: getCategoryId(),
                               categoryAmount: 0,
                             );
                             if (_formKey.currentState.validate()) {

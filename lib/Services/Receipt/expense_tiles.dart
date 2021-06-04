@@ -1,5 +1,6 @@
 import 'package:Canny/Models/category.dart';
 import 'package:Canny/Services/Category/category_database.dart';
+import 'package:Canny/Shared/colors.dart';
 import 'package:flutter/material.dart';
 import 'package:intl/intl.dart';
 
@@ -94,7 +95,12 @@ class _ExpenseTileState extends State<ExpenseTile> {
             ],
           ),
         ),
-        onTap: () {},
+        onTap: () {
+          // TODO: edit everything
+        },
+        onLongPress: () {
+          // TODO: delete the expenses
+        },
       ),
     );
   }

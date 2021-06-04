@@ -1,4 +1,5 @@
 import 'package:Canny/Services/Receipt/receipt_database.dart';
+import 'package:Canny/Shared/colors.dart';
 import 'package:flutter/material.dart';
 import 'package:Canny/Services/Receipt/expense_tiles.dart';
 import 'package:firebase_auth/firebase_auth.dart';
@@ -47,6 +48,7 @@ class _MonthlyExpensesState extends State<MonthlyExpenses> {
         child: SingleChildScrollView(
           child: Container(
             child: Card(
+              //color: kBackgroundColour,
               elevation: 3,
               shape: RoundedRectangleBorder(
                   borderRadius: BorderRadius.all(Radius.circular(12.0))),

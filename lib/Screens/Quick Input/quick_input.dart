@@ -26,7 +26,7 @@ class QuickInputState extends State<QuickInput> {
   String _expression = '';
   final QuickInputDatabaseService _authQuickInput = QuickInputDatabaseService();
   final ReceiptDatabaseService _authReceipt = ReceiptDatabaseService();
-  final CollectionReference quickInputCollection = Database().categoryDatabase();
+  final CollectionReference quickInputCollection = Database().quickInputDatabase();
   Category _chosenCategory;
 
   void numClick(String text) {
@@ -117,6 +117,8 @@ class QuickInputState extends State<QuickInput> {
                       callback: allClear,
                       textSize: 22,
                     ),
+                    quickInputButtons(),
+                    /*
                     CalcIconButton(
                       category: _authQuickInput.getQuickInput(0),
                       icon: _authQuickInput.getQuickInput(0).categoryIcon,
@@ -138,6 +140,7 @@ class QuickInputState extends State<QuickInput> {
                       fillColor: Colors.orange[200],
                       callback: catClick,
                     ),
+                     */
                   ],
                 ),
                 Row(
@@ -260,7 +263,7 @@ class QuickInputState extends State<QuickInput> {
                           cost: _chosenCategory.isIncome
                               ? roundDouble(double.parse(_expression), 2)
                               : -(roundDouble(double.parse(_expression), 2)),
-                          itemName: "",
+                          itemName: _chosenCategory.categoryName,
                           uid: uid,
                         );
                         await _authReceipt.addExpense(expense);
@@ -285,6 +288,96 @@ class QuickInputState extends State<QuickInput> {
             ),
           ),
         ),
+      ),
+    );
+  }
+
+  Widget quickInputButtons() {
+    return Container(
+      child: StreamBuilder(
+          stream: quickInputCollection.snapshots(),
+          builder: (BuildContext context, AsyncSnapshot<QuerySnapshot> snapshot) {
+            if (snapshot.hasData) {
+              //print(snapshot.data.docs[0]['categoryName']);
+              return Padding(
+                padding: const EdgeInsets.all(0),
+                child: Row(
+                  mainAxisAlignment: MainAxisAlignment.spaceEvenly,
+                  children: <Widget>[
+                    CalcIconButton(
+                      category: Category(
+                          categoryName: snapshot.data.docs[0]['categoryName'],
+                          categoryAmount: snapshot.data.docs[0]['categoryAmount'],
+                          categoryId: snapshot.data.docs[0]['categoryId'],
+                          categoryIcon: Icon(
+                              IconData(snapshot.data.docs[0]['categoryIconCodePoint'],
+                                  fontFamily: snapshot.data.docs[0]['categoryFontFamily'],
+                                  fontPackage: snapshot.data.docs[0]['categoryFontPackage'])),
+                          categoryColor: Color(snapshot.data.docs[0]['categoryColorValue']),
+                          isIncome: snapshot.data.docs[0]['isIncome']
+                      ),
+                      icon: Icon(
+                          IconData(snapshot.data.docs[0]['categoryIconCodePoint'],
+                              fontFamily: snapshot.data
+                                  .docs[0]['categoryFontFamily'],
+                              fontPackage: snapshot.data
+                                  .docs[0]['categoryFontPackage'])),
+                      categoryColor: Color(
+                          snapshot.data.docs[0]['categoryColorValue']),
+                      fillColor: Colors.deepOrange[100],
+                      callback: catClick,
+                    ),
+                    SizedBox(width: 6.5),
+                    CalcIconButton(
+                      category: Category(
+                          categoryName: snapshot.data.docs[1]['categoryName'],
+                          categoryAmount: snapshot.data.docs[1]['categoryAmount'],
+                          categoryId: snapshot.data.docs[1]['categoryId'],
+                          categoryIcon: Icon(
+                              IconData(snapshot.data.docs[1]['categoryIconCodePoint'],
+                                  fontFamily: snapshot.data.docs[1]['categoryFontFamily'],
+                                  fontPackage: snapshot.data.docs[1]['categoryFontPackage'])),
+                          categoryColor: Color(snapshot.data.docs[1]['categoryColorValue']),
+                          isIncome: snapshot.data.docs[2]['isIncome']
+                      ),
+                      icon: Icon(
+                          IconData(snapshot.data.docs[1]['categoryIconCodePoint'],
+                              fontFamily: snapshot.data
+                                  .docs[1]['categoryFontFamily'],
+                              fontPackage: snapshot.data
+                                  .docs[1]['categoryFontPackage'])),
+                      categoryColor: Color(
+                          snapshot.data.docs[1]['categoryColorValue']),
+                      fillColor: Colors.deepOrange[100],
+                      callback: catClick,
+                    ),
+                    SizedBox(width: 6.5),
+                    CalcIconButton(
+                      category: Category(
+                          categoryName: snapshot.data.docs[2]['categoryName'],
+                          categoryAmount: snapshot.data.docs[2]['categoryAmount'],
+                          categoryId: snapshot.data.docs[2]['categoryId'],
+                          categoryIcon: Icon(
+                              IconData(snapshot.data.docs[2]['categoryIconCodePoint'],
+                                  fontFamily: snapshot.data.docs[2]['categoryFontFamily'],
+                                  fontPackage: snapshot.data.docs[2]['categoryFontPackage'])),
+                          categoryColor: Color(snapshot.data.docs[2]['categoryColorValue']),
+                          isIncome: snapshot.data.docs[2]['isIncome']
+                      ),
+                      icon: Icon(
+                          IconData(snapshot.data.docs[2]['categoryIconCodePoint'],
+                              fontFamily: snapshot.data.docs[2]['categoryFontFamily'],
+                              fontPackage: snapshot.data.docs[2]['categoryFontPackage'])),
+                      categoryColor: Color(snapshot.data.docs[2]['categoryColorValue']),
+                      fillColor: Colors.deepOrange[100],
+                      callback: catClick,
+                    ),
+                  ],
+                ),
+              );
+            }
+            return CircularProgressIndicator();
+          }
       ),
     );
   }
