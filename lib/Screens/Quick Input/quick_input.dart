@@ -67,14 +67,14 @@ class QuickInputState extends State<QuickInput> {
     _authQuickInput.initNewQuickInputs();
     return Scaffold(
       appBar: AppBar(
-        backgroundColor: Colors.brown[200],
+        backgroundColor: kDarkBlue,
         elevation: 0.0,
       ),
       body: MaterialApp(
         debugShowCheckedModeBanner: false,
         title: 'Calculator',
         home: Scaffold(
-          backgroundColor: kBackgroundColour,
+          backgroundColor: kLightBlue,
           body: Container(
             padding: EdgeInsets.fromLTRB(10, 12, 10, 12),
             child: Column(
@@ -113,7 +113,7 @@ class QuickInputState extends State<QuickInput> {
                   children: <Widget>[
                     CalcButton(
                       text: 'AC',
-                      fillColor: kDeepOrangePrimary,
+                      fillColor: kDarkBlue,
                       callback: allClear,
                       textSize: 22,
                     ),
@@ -148,22 +148,22 @@ class QuickInputState extends State<QuickInput> {
                   children: <Widget>[
                     CalcButton(
                       text: '7',
-                      fillColor: kDarkGrey,
+                      fillColor: kPalePurple,
                       callback: numClick,
                     ),
                     CalcButton(
                       text: '8',
-                      fillColor: kDarkGrey,
+                      fillColor: kPalePurple,
                       callback: numClick,
                     ),
                     CalcButton(
                       text: '9',
-                      fillColor: kDarkGrey,
+                      fillColor: kPalePurple,
                       callback: numClick,
                     ),
                     CalcButton(
                       text: '÷',
-                      fillColor: kDeepOrangePrimary,
+                      fillColor: kDarkBlue,
                       textSize: 28,
                       callback: numClick,
                     ),
@@ -174,22 +174,22 @@ class QuickInputState extends State<QuickInput> {
                   children: <Widget>[
                     CalcButton(
                       text: '4',
-                      fillColor: kDarkGrey,
+                      fillColor: kPalePurple,
                       callback: numClick,
                     ),
                     CalcButton(
                       text: '5',
-                      fillColor: kDarkGrey,
+                      fillColor: kPalePurple,
                       callback: numClick,
                     ),
                     CalcButton(
                       text: '6',
-                      fillColor: kDarkGrey,
+                      fillColor: kPalePurple,
                       callback: numClick,
                     ),
                     CalcButton(
                       text: 'x',
-                      fillColor: kDeepOrangePrimary,
+                      fillColor: kDarkBlue,
                       textSize: 26,
                       callback: numClick,
                     ),
@@ -200,22 +200,22 @@ class QuickInputState extends State<QuickInput> {
                   children: <Widget>[
                     CalcButton(
                       text: '1',
-                      fillColor: kDarkGrey,
+                      fillColor: kPalePurple,
                       callback: numClick,
                     ),
                     CalcButton(
                       text: '2',
-                      fillColor: kDarkGrey,
+                      fillColor: kPalePurple,
                       callback: numClick,
                     ),
                     CalcButton(
                       text: '3',
-                      fillColor: kDarkGrey,
+                      fillColor: kPalePurple,
                       callback: numClick,
                     ),
                     CalcButton(
                       text: '-',
-                      fillColor: kDeepOrangePrimary,
+                      fillColor: kDarkBlue,
                       textSize: 36,
                       callback: numClick,
                     ),
@@ -226,22 +226,22 @@ class QuickInputState extends State<QuickInput> {
                   children: <Widget>[
                     CalcButton(
                       text: '.',
-                      fillColor: kDarkGrey,
+                      fillColor: kPalePurple,
                       callback: numClick,
                     ),
                     CalcButton(
                       text: '0',
-                      fillColor: kDarkGrey,
+                      fillColor: kPalePurple,
                       callback: numClick,
                     ),
                     CalcButton(
                       text: '=',
-                      fillColor: kDeepOrangePrimary,
+                      fillColor: kDarkBlue,
                       callback: evaluate,
                     ),
                     CalcButton(
                       text: '+',
-                      fillColor: kDeepOrangePrimary,
+                      fillColor: kDarkBlue,
                       textSize: 30,
                       callback: numClick,
                     ),
@@ -277,7 +277,7 @@ class QuickInputState extends State<QuickInput> {
                       ),
                     style: TextButton.styleFrom(
                       primary: Colors.white,
-                      backgroundColor: kDeepOrangePrimary,
+                      backgroundColor: kDarkBlue,
                       shape: RoundedRectangleBorder(
                         borderRadius: BorderRadius.all(Radius.circular(15.0)),
                       ),

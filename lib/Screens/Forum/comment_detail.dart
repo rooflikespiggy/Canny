@@ -17,7 +17,7 @@ class CommentDetail extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Container(
-      color: kBackgroundColour,
+      color: Colors.transparent,
       child: Column(
         children: <Widget>[
           StreamBuilder(
@@ -50,7 +50,8 @@ class CommentDetail extends StatelessWidget {
                           children: <Widget>[
                             Container(
                               child: Card(
-                                elevation: 9,
+                                color: Colors.white.withOpacity(0.9),
+                                elevation: 1,
                                 shape: RoundedRectangleBorder(
                                     borderRadius: BorderRadius.all(Radius.circular(15.0))),
                                 child: Column(
@@ -68,7 +69,7 @@ class CommentDetail extends StatelessWidget {
                                           snapshotData["description"],
                                         ),
                                         leading: CircleAvatar(
-                                          backgroundColor: kDeepOrangePrimary,
+                                          backgroundColor: kPalePurple,
                                           radius: 30,
                                           child: Text(
                                             snapshotData["name"][0],
@@ -128,6 +129,7 @@ class CommentDetail extends StatelessWidget {
                                                           context: context,
                                                           builder: (BuildContext context) {
                                                             return AlertDialog(
+                                                              backgroundColor: Colors.white.withOpacity(0.85),
                                                               contentPadding: EdgeInsets.all(20),
                                                               content: Column(
                                                                 children: <Widget> [

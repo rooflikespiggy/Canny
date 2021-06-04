@@ -98,7 +98,8 @@ class _CategoryTileState extends State<CategoryTile> {
       });
     }
     return Card(
-      elevation: 3,
+      color: Colors.white.withOpacity(0.9),
+      elevation: 1,
       shape: RoundedRectangleBorder(
           borderRadius: BorderRadius.all(Radius.circular(12.0))),
       child: ListTile(

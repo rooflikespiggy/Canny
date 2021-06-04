@@ -14,25 +14,25 @@ class SideBarMenu extends StatelessWidget {
   Widget build(BuildContext context) {
     return Drawer(
       child: Container(
-        color: kBackgroundColour,
+        color: kLightBlue,
         child: ListView(
           padding: EdgeInsets.zero,
           children: <Widget>[
             DrawerHeader(
               decoration: BoxDecoration(
-                color: kDeepOrangePrimary,
+                color: kDarkBlue,
                 image: DecorationImage(
-                  image: AssetImage('styles/images/smaller-logo-3.png'),
+                  image: AssetImage('styles/images/logo-8.png'),
                   alignment: Alignment.bottomCenter,
                 ),
               ),
               child: Padding(
-                padding: EdgeInsets.only(bottom: 1.0),
+                padding: EdgeInsets.only(bottom: 3.0),
                 child: Container(
-                  child: Text("Account Email: \n" +  email,
+                  child: Text(email,
                     style: TextStyle(
-                      fontSize: 16,
-                      color: Colors.deepOrange[50],
+                      fontSize: 17,
+                      color: Colors.white,
                     ),
                     textAlign: TextAlign.center,
                   ),

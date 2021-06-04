@@ -82,9 +82,9 @@ class _HomePageScreenState extends State<HomePageScreen> {
         labelStyle: TextStyle(
             fontSize: 18,
           fontFamily: "Lato",
-          color: Colors.red[400],
+          color: kDarkBlue,
         ),
-        backgroundColor: Colors.red[400],
+        backgroundColor: kDarkBlue,
         onTap: () {
           Navigator.push(context,
               MaterialPageRoute(builder: (context) => AddSpendingScreen()));
@@ -118,9 +118,9 @@ class _HomePageScreenState extends State<HomePageScreen> {
         labelStyle: TextStyle(
           fontSize: 18,
           fontFamily: "Lato",
-          color: Colors.lightBlue,
+          color: kBlue,
         ),
-        backgroundColor: Colors.lightBlue,
+        backgroundColor: kBlue,
         onTap: () {
           Navigator.push(context,
               MaterialPageRoute(builder: (context) => AddTEScreen()));
@@ -135,9 +135,9 @@ class _HomePageScreenState extends State<HomePageScreen> {
         labelStyle: TextStyle(
           fontSize: 18,
           fontFamily: "Lato",
-          color: Colors.lightGreen,
+          color: kPalePurple,
         ),
-        backgroundColor: Colors.lightGreen,
+        backgroundColor: kPalePurple,
         onTap: () {
           Navigator.push(context,
               MaterialPageRoute(builder: (context) => AddCategoryScreen()));
@@ -149,34 +149,39 @@ class _HomePageScreenState extends State<HomePageScreen> {
     return Scaffold(
       resizeToAvoidBottomInset: false,
       body: _pageOptions[_selectedTab],
-      bottomNavigationBar: Padding(
-        padding: EdgeInsets.only(right: 80),
-        child: BottomNavigationBar(
-          elevation: 0.0,
-          currentIndex: _selectedTab,
-          type: BottomNavigationBarType.fixed,
-          unselectedItemColor: kDeepOrangeLight,
-          selectedItemColor: kDeepOrange,
-          selectedLabelStyle: TextStyle(fontFamily: 'Lato'),
-          unselectedLabelStyle: TextStyle(fontFamily: 'Lato'),
-          onTap: (int index) {
-            setState(() {
-              _selectedTab = index;
-            });
-          },
-          items: _items,
+      bottomNavigationBar: Container(
+        color: kDarkBlue,
+        child: Padding(
+          padding: EdgeInsets.only(right: 80),
+          child: BottomNavigationBar(
+            backgroundColor: kDarkBlue,
+            elevation: 0,
+            currentIndex: _selectedTab,
+            type: BottomNavigationBarType.fixed,
+            unselectedItemColor: kBlue,
+            selectedItemColor: kLightBlue,
+            selectedLabelStyle: TextStyle(fontFamily: 'Lato'),
+            unselectedLabelStyle: TextStyle(fontFamily: 'Lato'),
+            onTap: (int index) {
+              setState(() {
+                _selectedTab = index;
+              });
+            },
+            items: _items,
+          ),
         ),
       ),
       floatingActionButtonLocation: FloatingActionButtonLocation.endDocked,
       floatingActionButton: SpeedDial(
+        elevation: 7,
         marginBottom: 30,
         icon: Icons.menu,
-        activeBackgroundColor: kDeepOrangeLight,
+        activeBackgroundColor: kLightBlueDark,
         activeIcon: Icons.clear,
         visible: true,
         closeManually: false,
         curve: Curves.bounceIn,
-        backgroundColor: kDeepOrangePrimary,
+        backgroundColor: kBlue,
         shape: CircleBorder(),
         buttonSize: 70.0,
         childMarginTop: 15.0,

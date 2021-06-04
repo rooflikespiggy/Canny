@@ -27,10 +27,10 @@ class _CategoryScreenState extends State<CategoryScreen> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-        backgroundColor: kBackgroundColour,
         drawer: SideBarMenu(),
         appBar: AppBar(
-          backgroundColor: kDeepOrangePrimary,
+          elevation: 0,
+          backgroundColor: kDarkBlue,
           title: Text(
             "CATEGORIES",
             style: TextStyle(fontFamily: 'Lato'),
@@ -55,65 +55,75 @@ class _CategoryScreenState extends State<CategoryScreen> {
             )
           ],
         ),
-        body: SingleChildScrollView(
-            child: Container(
-                child: Column(
-                  children: <Widget>[
-                    SizedBox(height: 5.0),
-                    Visibility(
-                      visible: !isDefault,
-                      child: Container(
-                        padding: EdgeInsets.all(8),
-                        decoration: BoxDecoration(
-                          borderRadius: BorderRadius.circular(5.0),
-                          color: Colors.green[200].withOpacity(0.8),
-                        ),
-                        child: Text(
-                          "Only Non-Default Categories shown",
-                          textAlign: TextAlign.center,
-                          style: TextStyle(
-                            fontWeight: FontWeight.bold,
+        body: Container(
+          width: double.infinity,
+          height: double.infinity,
+          decoration: BoxDecoration(
+            image: DecorationImage(
+              image: AssetImage("styles/images/background-2.png"),
+              fit: BoxFit.cover,
+            ),
+          ),
+          child: SingleChildScrollView(
+              child: Container(
+                  child: Column(
+                    children: <Widget>[
+                      SizedBox(height: 5.0),
+                      Visibility(
+                        visible: !isDefault,
+                        child: Container(
+                          padding: EdgeInsets.all(8),
+                          decoration: BoxDecoration(
+                            borderRadius: BorderRadius.circular(5.0),
+                            color: Colors.green[200].withOpacity(0.8),
+                          ),
+                          child: Text(
+                            "Only Non-Default Categories shown",
+                            textAlign: TextAlign.center,
+                            style: TextStyle(
+                              fontWeight: FontWeight.bold,
+                            ),
                           ),
                         ),
                       ),
-                    ),
-                    StreamBuilder(
-                        stream: categoryCollection
-                            .orderBy("categoryId")
-                            .snapshots(),
-                        builder: (BuildContext context, AsyncSnapshot<QuerySnapshot> snapshot) {
-                          if (snapshot.hasData) {
-                            return Align(
-                                alignment: Alignment.topCenter,
-                                child: ListView.builder(
-                                  padding: EdgeInsets.fromLTRB(7, 4, 7, 4),
-                                  shrinkWrap: true,
-                                  physics: const NeverScrollableScrollPhysics(),
-                                  itemCount: snapshot.data.docs.length,
-                                  itemBuilder: (BuildContext context, int index) {
-                                    final snapshotData = snapshot.data.docs[index];
-                                    if (!isDefault && index < 12) {
-                                      return SizedBox();
-                                    }
-                                    return CategoryTile(
-                                        categoryName: snapshotData['categoryName'],
-                                        categoryColorValue: snapshotData['categoryColorValue'],
-                                        categoryIconCodePoint: snapshotData['categoryIconCodePoint'],
-                                        categoryFontFamily: snapshotData['categoryFontFamily'],
-                                        categoryFontPackage: snapshotData['categoryFontPackage'],
-                                        categoryId: snapshotData.id,
-                                        index: index
-                                    );
-                                  },
-                                )
-                            );
+                      StreamBuilder(
+                          stream: categoryCollection
+                              .orderBy("categoryId")
+                              .snapshots(),
+                          builder: (BuildContext context, AsyncSnapshot<QuerySnapshot> snapshot) {
+                            if (snapshot.hasData) {
+                              return Align(
+                                  alignment: Alignment.topCenter,
+                                  child: ListView.builder(
+                                    padding: EdgeInsets.fromLTRB(7, 4, 7, 4),
+                                    shrinkWrap: true,
+                                    physics: const NeverScrollableScrollPhysics(),
+                                    itemCount: snapshot.data.docs.length,
+                                    itemBuilder: (BuildContext context, int index) {
+                                      final snapshotData = snapshot.data.docs[index];
+                                      if (!isDefault && index < 12) {
+                                        return SizedBox();
+                                      }
+                                      return CategoryTile(
+                                          categoryName: snapshotData['categoryName'],
+                                          categoryColorValue: snapshotData['categoryColorValue'],
+                                          categoryIconCodePoint: snapshotData['categoryIconCodePoint'],
+                                          categoryFontFamily: snapshotData['categoryFontFamily'],
+                                          categoryFontPackage: snapshotData['categoryFontPackage'],
+                                          categoryId: snapshotData.id,
+                                          index: index
+                                      );
+                                    },
+                                  )
+                              );
+                            }
+                            return CircularProgressIndicator();
                           }
-                          return CircularProgressIndicator();
-                        }
-                    ),
-                  ],
-                ),
-            )
+                      ),
+                    ],
+                  ),
+              )
+          ),
         ),
     );
   }
