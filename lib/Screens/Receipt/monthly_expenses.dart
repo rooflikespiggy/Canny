@@ -65,7 +65,7 @@ class _MonthlyExpensesState extends State<MonthlyExpenses> {
                         fontSize: 25,
                         fontWeight: FontWeight.bold,
                         fontFamily: "Lato",
-                        color: kLightBlue
+                        color: kBlue
                       ),
                     ),
                     const Divider(
@@ -73,7 +73,7 @@ class _MonthlyExpensesState extends State<MonthlyExpenses> {
                       thickness: 2,
                       indent: 20,
                       endIndent: 20,
-                      color: kLightBlue,
+                      color: kBlue,
                     ),
                     StreamBuilder(
                         stream: expensesCollection

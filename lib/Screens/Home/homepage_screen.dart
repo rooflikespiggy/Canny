@@ -44,6 +44,7 @@ class _HomePageScreenState extends State<HomePageScreen> {
   List<Category> selectedCategory = [];
   String categoryId = '00';
   Icon _icon;
+  bool isIncome = false;
   // String _title = 'CANNY';
 
   // create some values
@@ -53,6 +54,10 @@ class _HomePageScreenState extends State<HomePageScreen> {
   // ValueChanged<Color> callback
   void changeColor(Color color) {
     setState(() => pickerColor = color);
+  }
+
+  void changeIsIncome() {
+    setState(() => isIncome = !isIncome);
   }
 
   _pickIcon() async {
@@ -393,7 +398,7 @@ class _HomePageScreenState extends State<HomePageScreen> {
                                     ),
                                   ],
                                 ),
-                                SizedBox(height: 30),
+                                SizedBox(height: 20),
                                 Container(
                                   alignment: Alignment.topCenter,
                                   child: Form(
@@ -419,71 +424,103 @@ class _HomePageScreenState extends State<HomePageScreen> {
                                                   _showTextFormFields(categoryNameController,
                                                       "Category Name",
                                                       Icon(Icons.drive_file_rename_outline),
-                                                      285.0
+                                                      250.0
                                                   ),
                                                 ],
                                               ),
                                             ),
-                                            SizedBox(height: 20),
-                                            TextButton(
-                                              onPressed: () {
-                                                showDialog(
-                                                  context: context,
-                                                  builder: (BuildContext context) {
-                                                    return AlertDialog(
-                                                      title: Text('Select a color'),
-                                                      content: SingleChildScrollView(
-                                                          child: Column(
-                                                              children: <Widget>[
-                                                                BlockPicker(
-                                                                  pickerColor: currentColor,
-                                                                  onColorChanged: changeColor,
-                                                                ),
-                                                                SizedBox(height: 10),
-                                                                TextButton(
-                                                                    child: Text("Set as color",
-                                                                      style: TextStyle(
-                                                                        color: Colors.white,
-                                                                      ),
+                                            SizedBox(height: 10),
+                                            Row(
+                                              mainAxisAlignment: MainAxisAlignment.spaceEvenly,
+                                              children: <Widget> [
+                                                TextButton(
+                                                  onPressed: () {
+                                                    showDialog(
+                                                      context: context,
+                                                      builder: (BuildContext context) {
+                                                        return AlertDialog(
+                                                          title: Text('Select a color'),
+                                                          content: SingleChildScrollView(
+                                                              child: Column(
+                                                                  children: <Widget>[
+                                                                    BlockPicker(
+                                                                      pickerColor: currentColor,
+                                                                      onColorChanged: changeColor,
                                                                     ),
-                                                                    style: TextButton.styleFrom(
-                                                                        backgroundColor: kDeepOrangeLight
-                                                                    ),
-                                                                    onPressed: () {
-                                                                      setState(() => currentColor = pickerColor);
-                                                                      Navigator.of(context).pop();
-                                                                    }
-                                                                )
-                                                              ]
-                                                          )
-                                                      ),
+                                                                    SizedBox(height: 10),
+                                                                    TextButton(
+                                                                        child: Text("Set as color",
+                                                                          style: TextStyle(
+                                                                            color: Colors.white,
+                                                                          ),
+                                                                        ),
+                                                                        style: TextButton.styleFrom(
+                                                                            backgroundColor: kDeepOrangeLight
+                                                                        ),
+                                                                        onPressed: () {
+                                                                          setState(() => currentColor = pickerColor);
+                                                                          Navigator.of(context).pop();
+                                                                        }
+                                                                    )
+                                                                  ]
+                                                              )
+                                                          ),
+                                                        );
+                                                      },
                                                     );
                                                   },
-                                                );
-                                              },
-                                              child: Text("Category Colour",
-                                                style: TextStyle(
-                                                  color: Colors.white,
+                                                  child: Text("Category Colour",
+                                                    style: TextStyle(
+                                                      color: Colors.white,
+                                                    ),
+                                                  ),
+                                                  style: TextButton.styleFrom(
+                                                      backgroundColor: kDeepOrangeLight
+                                                  ),
                                                 ),
-                                              ),
-                                              style: TextButton.styleFrom(
-                                                  backgroundColor: kDeepOrangeLight
-                                              ),
+                                                SizedBox(height: 10.0),
+                                                TextButton(
+                                                  child: Text('Category Icon',
+                                                    style: TextStyle(
+                                                      color: Colors.white,
+                                                    ),
+                                                  ),
+                                                  style: TextButton.styleFrom(
+                                                      backgroundColor: kDeepOrangeLight
+                                                  ),
+                                                  onPressed: _pickIcon,
+                                                ),
+                                                SizedBox(height: 10.0),
+                                                // figure out why this wont work else change to dropdownmenu
+                                                TextButton(
+                                                  child: Row(
+                                                    mainAxisAlignment: MainAxisAlignment.center,
+                                                    children: <Widget>[
+                                                      Icon(Icons.touch_app, size: 18),
+                                                      SizedBox(width: 12),
+                                                      Text(isIncome ? 'INCOME' : 'EXPENSE',
+                                                          style: TextStyle(
+                                                            color: isIncome
+                                                                ? Colors.teal
+                                                                : Colors.redAccent
+                                                          ),
+                                                      ),
+                                                    ],
+                                                  ),
+                                                  style: TextButton.styleFrom(
+                                                      backgroundColor: isIncome
+                                                          ? Colors.teal.withOpacity(0.2)
+                                                          : Colors.redAccent.withOpacity(0.2),
+                                                  ),
+                                                  onPressed: () {
+                                                    changeIsIncome();
+                                                  },
+                                                )
+                                              ]
                                             ),
                                             SizedBox(height: 10.0),
-                                            TextButton(
-                                              child: Text('Category Icon',
-                                                style: TextStyle(
-                                                  color: Colors.white,
-                                                ),
-                                              ),
-                                              style: TextButton.styleFrom(
-                                                  backgroundColor: kDeepOrangeLight
-                                              ),
-                                              onPressed: _pickIcon,
-                                            )
                                           ]
-                                      )
+                                      ),
                                   )
                                 ),
                               ]
