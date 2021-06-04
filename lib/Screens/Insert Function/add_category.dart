@@ -162,7 +162,13 @@ class _AddCategoryScreenState extends State<AddCategoryScreen> {
                     AnimatedSwitcher(
                         duration: Duration(milliseconds: 300),
                         child: _icon != null
-                            ? _icon
+                            ? Container(
+                              child: SizedBox(
+                                width: 40,
+                                height: 40,
+                                child: _icon,
+                              )
+                            )
                             : Container(
                           child: SizedBox(
                             width: 40,
