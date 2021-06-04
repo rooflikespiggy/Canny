@@ -9,6 +9,7 @@ import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:flutter_colorpicker/flutter_colorpicker.dart';
 import 'package:flutter_iconpicker/Models/IconPack.dart';
 import 'package:flutter_iconpicker/flutter_iconpicker.dart';
+import 'package:font_awesome_flutter/font_awesome_flutter.dart';
 
 class AddCategoryScreen extends StatefulWidget {
   static final String id = 'add_category_screen';
@@ -70,6 +71,7 @@ class _AddCategoryScreenState extends State<AddCategoryScreen> {
   _pickIcon() async {
     IconData icon = await FlutterIconPicker.showIconPicker(context);
     _icon = Icon(icon,
+      color: pickerColor,
       size: 40,
     );
     setState((){});
@@ -78,12 +80,8 @@ class _AddCategoryScreenState extends State<AddCategoryScreen> {
 
   @override
   Widget build(BuildContext context) {
+    _authCategory.allCategories;
     return Scaffold(
-      appBar: AppBar(
-        backgroundColor: kDeepOrangeLight,
-        title: Text("Add Category"),
-        titleTextStyle: TextStyle(fontFamily: 'Lato'),
-      ),
       backgroundColor: kBackgroundColour,
       resizeToAvoidBottomInset: false,
       body: Center(
@@ -102,7 +100,7 @@ class _AddCategoryScreenState extends State<AddCategoryScreen> {
                 ),
                 SizedBox(height: 20),
                 _showTextFormFields(categoryNameController,
-                  "Enter the name of new category",
+                  "Category Name",
                   Icon(Icons.drive_file_rename_outline),
                 ),
                 SizedBox(height: 20),
@@ -156,7 +154,7 @@ class _AddCategoryScreenState extends State<AddCategoryScreen> {
                           },
                         );
                       },
-                        child: Text("Choose a colour for new Category",
+                        child: Text("Category Colour",
                           style: TextStyle(
                             color: Colors.white,
                           ),
@@ -176,16 +174,11 @@ class _AddCategoryScreenState extends State<AddCategoryScreen> {
                         duration: Duration(milliseconds: 300),
                         child: _icon != null
                             ? _icon
-                            : Container(
-                          child: SizedBox(
-                            width: 40,
-                            height: 40,
-                          ),
-                        )
+                            : Icon(FontAwesomeIcons.question)
                     ),
                     SizedBox(width: 40),
                     TextButton(
-                        child: Text('Choose an icon for new Category  ',
+                        child: Text('Category Icon',
                           style: TextStyle(
                             color: Colors.white,
                           ),

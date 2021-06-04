@@ -6,9 +6,11 @@ import 'package:firebase_auth/firebase_auth.dart';
 import 'package:Canny/Models/expense.dart';
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:Canny/Database/all_database.dart';
+import 'package:multi_select_flutter/chip_field/multi_select_chip_field.dart';
 import 'package:multi_select_flutter/dialog/multi_select_dialog_field.dart';
 import 'package:Canny/Services/Category/category_database.dart';
 import 'package:Canny/Models/category.dart';
+import 'package:multi_select_flutter/multi_select_flutter.dart';
 import 'package:multi_select_flutter/util/multi_select_item.dart';
 import 'package:flutter_calculator/flutter_calculator.dart';
 
@@ -36,13 +38,8 @@ class _AddSpendingScreenState extends State<AddSpendingScreen> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      appBar: AppBar(
-        backgroundColor: kDeepOrangeLight,
-        title: Text("Add Spending"),
-        titleTextStyle: TextStyle(fontFamily: 'Lato'),
-      ),
       backgroundColor: kBackgroundColour,
-      resizeToAvoidBottomInset: false,
+      //resizeToAvoidBottomInset: false,
       body: Center(
         child: Form(
           key: _formKey,
@@ -68,7 +65,7 @@ class _AddSpendingScreenState extends State<AddSpendingScreen> {
                    Icon(Icons.attach_money_rounded),
                 ),
                 SizedBox(height: 5),
-                getMultiSelectDialogField(),
+                getMultiSelectChipField(),
                 Padding(
                   padding: EdgeInsets.symmetric(horizontal: 20.0),
                   child: Row(
@@ -255,6 +252,50 @@ class _AddSpendingScreenState extends State<AddSpendingScreen> {
           }
           return CircularProgressIndicator();
         });
+  }
+
+  Widget getMultiSelectChipField() {
+    return FutureBuilder<List<Category>>(
+        future: _authCategory.getCategories(),
+        builder: (BuildContext context, AsyncSnapshot<List<Category>> snapshot) {
+          if (snapshot.hasData) {
+            List<Category> allCategories = snapshot.data;
+            allCategories.sort((a, b) => a.categoryId.compareTo(b.categoryId));
+            _allCategories = allCategories.map((category) =>
+                MultiSelectItem<Category>(category, category.categoryName)).toList();
+            return Padding(
+              padding: const EdgeInsets.all(20.0),
+              child: MultiSelectChipField(
+                items: _allCategories,
+                //scroll: false,
+                scrollBar: HorizontalScrollBar(),
+                searchable: true,
+                title: Text("Select Your Categories",
+                  style: TextStyle(
+                    color: Colors.blueGrey,
+                    fontSize: 16,
+                  ),
+                ),
+                icon: Icon(Icons.check),
+                headerColor: Colors.blue.withOpacity(0.5),
+                decoration: BoxDecoration(
+                  border: Border.all(color: Colors.blue[700], width: 1.8),
+                  borderRadius: BorderRadius.all(Radius.circular(10)),
+                ),
+                selectedChipColor: Colors.blue.withOpacity(0.5),
+                selectedTextStyle: TextStyle(color: Colors.blue[800]),
+                onTap: (categories) {
+                  categories.length > 1
+                      ? categories.removeAt(0)
+                      : categories;
+                  selectedCategory = categories;
+                },
+              ),
+            );
+          }
+          return CircularProgressIndicator();
+        }
+    );
   }
 
   Widget getMultiSelectDialogField() {

@@ -116,19 +116,7 @@ class _HomePageScreenState extends State<HomePageScreen> {
       isScrollControlled: true,
       elevation: 5,
       context: context,
-      builder: (context) =>
-          Column(
-            mainAxisSize: MainAxisSize.min,
-            children: <Widget> [
-              ListTile(
-                leading: Text('no idea what'),
-                trailing: Icon(Icons.clear),
-                onTap: () {
-                  Navigator.pop(context);
-                },
-              ),
-            ],
-          )
+      builder: (context) => AddTEScreen()
     );
      */
 

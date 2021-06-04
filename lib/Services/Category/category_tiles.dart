@@ -133,7 +133,7 @@ class _CategoryTileState extends State<CategoryTile> {
                 },
               ),
               Visibility(
-                visible: widget.index >= categoriesSize,
+                visible: int.parse(widget.categoryId) >= categoriesSize,
                 child: IconButton(
                     icon: Icon(FontAwesomeIcons.trashAlt),
                     onPressed: () {
