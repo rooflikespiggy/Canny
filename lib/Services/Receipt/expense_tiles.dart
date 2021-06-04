@@ -118,7 +118,7 @@ class _ExpenseTileState extends State<ExpenseTile> {
               }
             }
             return CircleAvatar(
-              backgroundColor: Colors.deepOrange[50],
+              backgroundColor: selectedCategory.categoryColor.withOpacity(0.1),
               radius: 30,
               child: IconTheme(
                   data: IconThemeData(
@@ -128,7 +128,7 @@ class _ExpenseTileState extends State<ExpenseTile> {
               ),
             );
           }
-          return CircularProgressIndicator();
+          return CircleAvatar();
         }
     );
   }

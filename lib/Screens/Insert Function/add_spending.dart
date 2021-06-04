@@ -357,7 +357,7 @@ class _AddSpendingScreenState extends State<AddSpendingScreen> {
               ),
             );
           }
-          return CircularProgressIndicator();
+          return Padding();
         }
     );
   }
