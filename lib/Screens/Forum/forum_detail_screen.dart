@@ -32,7 +32,7 @@ class _ForumDetailScreenState extends State<ForumDetailScreen> {
     return Scaffold(
       backgroundColor: kBackgroundColour,
       appBar: AppBar(
-        backgroundColor: kDeepOrangePrimary,
+        backgroundColor: kDarkBlue,
         elevation: 0.0,
         leading: IconButton(
           icon: Icon(Icons.arrow_back),
@@ -51,64 +51,78 @@ class _ForumDetailScreenState extends State<ForumDetailScreen> {
           )
         ],
       ),
-      body: SingleChildScrollView(
-        child: Container(
-          color: kBackgroundColour,
-          child: Column(
-            children: <Widget> [
-              StreamBuilder<DocumentSnapshot>(
-                stream: forumCollection.doc(inputId).snapshots(),
-                builder: (BuildContext context, AsyncSnapshot<DocumentSnapshot> snapshot) {
-                  if (snapshot.hasData) {
-                    //print(snapshot.data);
-                    //print(snapshot);
-                    return Align(
-                      alignment: Alignment.topCenter,
-                      child: Column(
-                        children: <Widget> [
-                          Padding(
-                            padding: EdgeInsets.all(8.0),
-                            child: Column(
-                              children: <Widget> [
-                                ListTile(
-                                  contentPadding: EdgeInsets.all(8.0),
-                                  title: Text(
-                                    snapshot.data["title"],
-                                    textScaleFactor: 1.5,
+      body: Container(
+        width: double.infinity,
+        height: double.infinity,
+        decoration: BoxDecoration(
+          image: DecorationImage(
+            image: AssetImage("styles/images/background-2.png"),
+            fit: BoxFit.cover,
+          ),
+        ),
+        child: SingleChildScrollView(
+          child: Container(
+            child: Column(
+              children: <Widget> [
+                StreamBuilder<DocumentSnapshot>(
+                  stream: forumCollection.doc(inputId).snapshots(),
+                  builder: (BuildContext context, AsyncSnapshot<DocumentSnapshot> snapshot) {
+                    if (snapshot.hasData) {
+                      //print(snapshot.data);
+                      //print(snapshot);
+                      return Align(
+                        alignment: Alignment.topCenter,
+                        child: Column(
+                          children: <Widget> [
+                            Padding(
+                              padding: EdgeInsets.all(8.0),
+                              child: Column(
+                                children: <Widget> [
+                                  ListTile(
+                                    contentPadding: EdgeInsets.all(8.0),
+                                    title: Text(
+                                      snapshot.data["title"],
+                                      textScaleFactor: 1.5,
+                                    ),
+                                    subtitle: Text(snapshot.data["description"]),
                                   ),
-                                  subtitle: Text(snapshot.data["description"]),
-                                ),
-                                Padding(
-                                  padding: EdgeInsets.fromLTRB(20.0, 5.0, 20.0, 10.0),
-                                  child: Row(
-                                    crossAxisAlignment: CrossAxisAlignment.center,
-                                    mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                                    children: <Widget>[
-                                      Text("By: ${snapshot.data["name"]}"),
-                                      Text(DateFormat("EEEE, d MMMM y")
-                                          .format(DateTime.fromMillisecondsSinceEpoch(
-                                          snapshot.data["datetime"].seconds * 1000)),
-                                      ),
-                                      IconWithText(
-                                        Icons.add_comment_outlined,
-                                        snapshot.data['comments'].toString(),
-                                      ),
-                                    ],
+                                  Padding(
+                                    padding: EdgeInsets.fromLTRB(20.0, 5.0, 20.0, 10.0),
+                                    child: Row(
+                                      crossAxisAlignment: CrossAxisAlignment.center,
+                                      mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                                      children: <Widget>[
+                                        Text("By: ${snapshot.data["name"]}"),
+                                        Text(DateFormat("EEEE, d MMMM y")
+                                            .format(DateTime.fromMillisecondsSinceEpoch(
+                                            snapshot.data["datetime"].seconds * 1000)),
+                                        ),
+                                        IconWithText(
+                                          Icons.add_comment_outlined,
+                                          snapshot.data['comments'].toString(),
+                                        ),
+                                      ],
+                                    ),
                                   ),
-                                ),
-                              ]
+                                ]
+                              )
                             )
-                          )
-                        ]
-                      )
-                    );
-                  }
-                  return CircularProgressIndicator();
-                },
-              ),
-              Divider(thickness: 2.0),
-              CommentDetail(inputId),
-            ],
+                          ]
+                        )
+                      );
+                    }
+                    return CircularProgressIndicator();
+                  },
+                ),
+                Divider(
+                    thickness: 2.0,
+                  color: Colors.black.withOpacity(0.4),
+                  indent: 20,
+                  endIndent: 20,
+                ),
+                CommentDetail(inputId),
+              ],
+            ),
           ),
         ),
       ),

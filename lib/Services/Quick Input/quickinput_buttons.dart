@@ -1,6 +1,7 @@
 import 'package:Canny/Database/all_database.dart';
 import 'package:Canny/Models/category.dart';
 import 'package:Canny/Services/Quick%20Input/quickinput_database.dart';
+import 'package:Canny/Shared/colors.dart';
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
@@ -53,7 +54,7 @@ class _QuickInputButtonState extends State<QuickInputButton> {
                                 .docs[0]['categoryFontPackage'])),
                     categoryColor: Color(
                         snapshot.data.docs[0]['categoryColorValue']),
-                    fillColor: Colors.deepOrange[100],
+                    fillColor: kPalePurple,
                     callback: catClick,
                   ),
                   SizedBox(width: 6.5),
@@ -77,7 +78,7 @@ class _QuickInputButtonState extends State<QuickInputButton> {
                                 .docs[1]['categoryFontPackage'])),
                     categoryColor: Color(
                         snapshot.data.docs[1]['categoryColorValue']),
-                    fillColor: Colors.deepOrange[100],
+                    fillColor: kPalePurple,
                     callback: catClick,
                   ),
                   SizedBox(width: 6.5),
@@ -98,7 +99,7 @@ class _QuickInputButtonState extends State<QuickInputButton> {
                             fontFamily: snapshot.data.docs[2]['categoryFontFamily'],
                             fontPackage: snapshot.data.docs[2]['categoryFontPackage'])),
                     categoryColor: Color(snapshot.data.docs[2]['categoryColorValue']),
-                    fillColor: Colors.deepOrange[100],
+                    fillColor: kPalePurple,
                     callback: catClick,
                   ),
                 ],

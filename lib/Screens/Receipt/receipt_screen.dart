@@ -24,25 +24,35 @@ class _ReceiptScreenState extends State<ReceiptScreen> {
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
-        backgroundColor: kDeepOrangePrimary,
+        elevation: 0,
+        backgroundColor: kDarkBlue,
         title: Text(
           "RECEIPT",
           style: TextStyle(fontFamily: 'Lato'),
         ),
       ),
       drawer: SideBarMenu(),
-      backgroundColor: kBackgroundColour,
-      body: Padding(
-        padding: EdgeInsets.all(8),
-        child: Column(
-          children: <Widget>[
-            Expanded(
-              child: PageView(
-                controller: pageController,
-                children: monthlyExpensesList,
+      body: Container(
+        width: double.infinity,
+        height: double.infinity,
+        decoration: BoxDecoration(
+          image: DecorationImage(
+            image: AssetImage("styles/images/background-2.png"),
+            fit: BoxFit.cover,
+          ),
+        ),
+        child: Padding(
+          padding: EdgeInsets.all(8),
+          child: Column(
+            children: <Widget>[
+              Expanded(
+                child: PageView(
+                  controller: pageController,
+                  children: monthlyExpensesList,
+                ),
               ),
-            ),
-          ],
+            ],
+          ),
         ),
       ),
     );

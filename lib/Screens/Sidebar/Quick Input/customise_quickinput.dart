@@ -42,60 +42,69 @@ class _CustomiseQIState extends State<CustomiseQI> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      backgroundColor: kBackgroundColour,
       resizeToAvoidBottomInset: false,
-      body: Center(
-        child: Form(
-          key: _formKey,
-          child: SingleChildScrollView(
-            child: Column(
-              children: <Widget>[
-                Text(
-                  'Select your top 3 categories \n for Quick Input!',
-                  textAlign: TextAlign.center,
-                  style: TextStyle(
-                    fontSize: 22.0,
-                    fontFamily: 'Lato',
-                    fontWeight: FontWeight.bold,
-                    color: kDeepOrange,
-                  ),
-                ),
-                SizedBox(height: 12.0),
-                getMultiSelectDialogField(),
-                // SizedBox(height: 20.0),
-                //getMultiSelectChipField(),
-                SizedBox(height: 20.0),
-                Column(
-                  crossAxisAlignment: CrossAxisAlignment.stretch,
-                  children: <Widget>[
-                    Row(
-                      mainAxisAlignment: MainAxisAlignment.spaceEvenly,
-                      children: <Widget>[
-                        submitButton(),
-                        ElevatedButton(
-                            onPressed: () {
-                              Navigator.push(context,
-                                  MaterialPageRoute(
-                                      builder: (context) => HomePageScreen()));
-                            },
-                            child: Text('Return To Homepage'),
-                            style: ButtonStyle(
-                              backgroundColor:
-                              MaterialStateProperty.all(Colors.grey),
-                            ),
-                        ),
-                      ],
+      body: Container(
+        width: double.infinity,
+        height: double.infinity,
+        decoration: BoxDecoration(
+          image: DecorationImage(
+            image: AssetImage("styles/images/background.png"),
+            fit: BoxFit.cover,
+          ),
+        ),
+        child: Center(
+          child: Form(
+            key: _formKey,
+            child: SingleChildScrollView(
+              child: Column(
+                children: <Widget>[
+                  Text(
+                    'Select 3 categories for Quick Input',
+                    textAlign: TextAlign.center,
+                    style: TextStyle(
+                      fontSize: 22.0,
+                      fontFamily: 'Lato',
+                      fontWeight: FontWeight.bold,
+                      color: kDarkBlue,
                     ),
-                  ],
-                ),
-              ],
+                  ),
+                  SizedBox(height: 12.0),
+                  getMultiSelectDialogField(),
+                  // SizedBox(height: 20.0),
+                  //getMultiSelectChipField(),
+                  SizedBox(height: 20.0),
+                  Column(
+                    crossAxisAlignment: CrossAxisAlignment.stretch,
+                    children: <Widget>[
+                      Row(
+                        mainAxisAlignment: MainAxisAlignment.spaceEvenly,
+                        children: <Widget>[
+                          submitButton(),
+                          ElevatedButton(
+                              onPressed: () {
+                                Navigator.push(context,
+                                    MaterialPageRoute(
+                                        builder: (context) => HomePageScreen()));
+                              },
+                              child: Text('Return To Homepage'),
+                              style: ButtonStyle(
+                                backgroundColor:
+                                MaterialStateProperty.all(kPalePurple),
+                              ),
+                          ),
+                        ],
+                      ),
+                    ],
+                  ),
+                ],
+              ),
             ),
           ),
         ),
       ),
     );
   }
-
+/*
   // TODO: see if this or DialogField is better
   Widget getMultiSelectChipField() {
     return FutureBuilder<List<Category>>(
@@ -138,6 +147,7 @@ class _CustomiseQIState extends State<CustomiseQI> {
       }
     );
   }
+  */
 
   Widget getMultiSelectDialogField() {
     return FutureBuilder<List<Category>>(
@@ -155,25 +165,25 @@ class _CustomiseQIState extends State<CustomiseQI> {
                 color: Colors.blue.withOpacity(0.1),
                 borderRadius: BorderRadius.all(Radius.circular(10)),
                 border: Border.all(
-                  color: Colors.blue,
+                  color: kBlue,
                   width: 2,
                 ),
               ),
               child: Column(
                 children: <Widget> [
                   MultiSelectDialogField(
-                      backgroundColor: Colors.white,
+                      backgroundColor: kLightBlue,
                       searchable: true,
                       items: _allCategories,
                       title: Text("Categories"),
-                      selectedColor: Colors.blue,
+                      selectedColor: kBlue,
                       decoration: BoxDecoration(
-                        color: Colors.blue,
+                        color: kBlue,
                         borderRadius: BorderRadius.only(
                             topLeft: Radius.circular(8),
                             topRight: Radius.circular(8)),
                         border: Border.all(
-                          color: Colors.blue,
+                          color: kBlue,
                           width: 2,
                         ),
                       ),
@@ -304,7 +314,7 @@ class _CustomiseQIState extends State<CustomiseQI> {
               child: Text('Submit'),
               style: ButtonStyle(
                 backgroundColor:
-                MaterialStateProperty.all(kDeepOrangeLight),
+                MaterialStateProperty.all(kDarkBlue),
               )
           );
         } return CircularProgressIndicator();

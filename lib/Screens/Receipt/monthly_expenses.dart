@@ -48,8 +48,9 @@ class _MonthlyExpensesState extends State<MonthlyExpenses> {
         child: SingleChildScrollView(
           child: Container(
             child: Card(
+              color: Colors.transparent,
+              elevation: 0,
               //color: kBackgroundColour,
-              elevation: 3,
               shape: RoundedRectangleBorder(
                   borderRadius: BorderRadius.all(Radius.circular(12.0))),
               child: Padding(
@@ -61,8 +62,10 @@ class _MonthlyExpensesState extends State<MonthlyExpenses> {
                     Text(
                         widget.month + " " + widget.year.toString(),
                       style: TextStyle(
-                        fontSize: 18,
+                        fontSize: 25,
                         fontWeight: FontWeight.bold,
+                        fontFamily: "Lato",
+                        color: kLightBlue
                       ),
                     ),
                     const Divider(
@@ -70,7 +73,7 @@ class _MonthlyExpensesState extends State<MonthlyExpenses> {
                       thickness: 2,
                       indent: 20,
                       endIndent: 20,
-                      color: Colors.blueGrey,
+                      color: kLightBlue,
                     ),
                     StreamBuilder(
                         stream: expensesCollection
