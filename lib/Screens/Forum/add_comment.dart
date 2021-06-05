@@ -137,13 +137,12 @@ class _AddCommentState extends State<AddComment> {
                   Hero(
                     tag: 'picture',
                     child: Container(
-                      width: 500.0,
-                      height: 205.0,
+                      height: 210.0,
                       alignment: Alignment.center,
                       decoration: BoxDecoration(
                         image: DecorationImage(
                             image: AssetImage(
-                                'styles/images/add-comment-illustration.png'),
+                                'styles/images/Picture3.png'),
                             fit: BoxFit.fill),
                       ),
                     ),
