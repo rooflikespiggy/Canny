@@ -40,7 +40,7 @@ class _FunctionScreenState extends State<FunctionScreen> {
             mainAxisAlignment: MainAxisAlignment.start,
             crossAxisAlignment: CrossAxisAlignment.stretch,
             children: <Widget>[
-              SizedBox(height: 250.0),
+              SizedBox(height: 200.0),
               /*
               Hero(
                 tag: 'logo',
@@ -61,7 +61,7 @@ class _FunctionScreenState extends State<FunctionScreen> {
                 shape: RoundedRectangleBorder(
                   borderRadius: BorderRadius.all(Radius.circular(15.0)),
                 ),
-                elevation: 1.0,
+                elevation: 3.0,
                 color: kDarkBlue,
                 minWidth: 200.0,
                 height: 44.0,
@@ -84,7 +84,7 @@ class _FunctionScreenState extends State<FunctionScreen> {
                   ],
                 ),
               ),
-              SizedBox(height: 22.0),
+              SizedBox(height: 20.0),
               MaterialButton(
                 onPressed: () {
                   Navigator.push(context,
@@ -92,7 +92,7 @@ class _FunctionScreenState extends State<FunctionScreen> {
                 },
                 shape: RoundedRectangleBorder(
                     borderRadius: BorderRadius.all(Radius.circular(15.0))),
-                elevation: 1.0,
+                elevation: 3.0,
                 color: kBlue,
                 minWidth: 200.0,
                 height: 44.0,
@@ -115,17 +115,17 @@ class _FunctionScreenState extends State<FunctionScreen> {
                   ],
                 ),
               ),
-              SizedBox(height: 27.0),
+              SizedBox(height: 10),
               Hero(
                 tag: 'picture',
                 child: Container(
-                  width: 220.0,
-                  height: 200.0,
+                  width: 200.0,
+                  height: 270.0,
                   alignment: Alignment.center,
                   decoration: BoxDecoration(
                     image: DecorationImage(
                         image: AssetImage(
-                            'styles/images/Function-Screen-illustration.png'),
+                            'styles/images/Picture1.png'),
                         fit: BoxFit.fill),
                   ),
                 ),

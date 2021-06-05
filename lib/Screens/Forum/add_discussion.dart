@@ -140,13 +140,12 @@ class _AddDiscussionState extends State<AddDiscussion> {
                   Hero(
                     tag: 'picture',
                     child: Container(
-                      width: 500.0,
-                      height: 205.0,
+                      height: 220.0,
                       alignment: Alignment.center,
                       decoration: BoxDecoration(
                         image: DecorationImage(
                             image: AssetImage(
-                                'styles/images/add-discussion-illustration.png'),
+                                'styles/images/Picture2.png'),
                             fit: BoxFit.fill),
                       ),
                     ),
