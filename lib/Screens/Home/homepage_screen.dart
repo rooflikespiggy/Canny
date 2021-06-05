@@ -15,7 +15,10 @@ import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_calculator/flutter_calculator.dart';
+import 'package:flutter_colorpicker/flutter_colorpicker.dart';
+import 'package:flutter_iconpicker/flutter_iconpicker.dart';
 import 'package:flutter_speed_dial/flutter_speed_dial.dart';
+import 'package:font_awesome_flutter/font_awesome_flutter.dart';
 import 'package:multi_select_flutter/chip_field/multi_select_chip_field.dart';
 import 'package:multi_select_flutter/util/horizontal_scrollbar.dart';
 import 'package:multi_select_flutter/util/multi_select_item.dart';
@@ -31,15 +34,41 @@ class _HomePageScreenState extends State<HomePageScreen> {
   int _selectedTab = 0;
   String uid = FirebaseAuth.instance.currentUser.uid;
   final _formKey = GlobalKey<FormState>();
-  final TextEditingController itemNameController = TextEditingController();
-  final TextEditingController costController = TextEditingController();
   final ReceiptDatabaseService _authReceipt = ReceiptDatabaseService();
   final CollectionReference categoryCollection = Database().categoryDatabase();
   final CategoryDatabaseService _authCategory = CategoryDatabaseService();
+  final TextEditingController itemNameController = TextEditingController();
+  final TextEditingController costController = TextEditingController();
+  final TextEditingController categoryNameController = TextEditingController();
   List<MultiSelectItem<Category>> _allCategories = [];
   List<Category> selectedCategory = [];
+  String categoryId = '00';
+  Icon _icon;
+  bool isIncome = false;
   // String _title = 'CANNY';
 
+  // create some values
+  Color pickerColor = Color(0xff443a49);
+  Color currentColor = Color(0xff443a49);
+
+  // ValueChanged<Color> callback
+  void changeColor(Color color) {
+    setState(() => pickerColor = color);
+  }
+
+  void changeIsIncome() {
+    setState(() => isIncome = !isIncome);
+  }
+
+  _pickIcon() async {
+    IconData icon = await FlutterIconPicker.showIconPicker(context);
+    _icon = Icon(icon,
+      color: currentColor,
+      size: 35,
+    );
+    setState((){});
+    debugPrint('Picked Icon:  $icon');
+  }
 
   @override
   Widget build(BuildContext context) {
@@ -71,7 +100,6 @@ class _HomePageScreenState extends State<HomePageScreen> {
      */
     ];
 
-
     List<SpeedDialChild> _speedDailItems = [
       SpeedDialChild(
         child: Icon(
@@ -86,9 +114,10 @@ class _HomePageScreenState extends State<HomePageScreen> {
         ),
         backgroundColor: kDarkBlue,
         onTap: () {
+          /*
           Navigator.push(context,
               MaterialPageRoute(builder: (context) => AddSpendingScreen()));
-          /*
+          */
           showModalBottomSheet(
               shape: RoundedRectangleBorder(
                 borderRadius: BorderRadius.only(
@@ -101,13 +130,10 @@ class _HomePageScreenState extends State<HomePageScreen> {
               elevation: 5,
               context: context,
               builder: (BuildContext context) {
-                return SingleChildScrollView(
-                  padding: EdgeInsets.all(8.0),
-                  child: addSpendingSheet(context)
-                );
+                return addSpendingSheet(context);
               }
           );
-           */
+
         },
       ),
       SpeedDialChild(
@@ -125,6 +151,7 @@ class _HomePageScreenState extends State<HomePageScreen> {
           Navigator.push(context,
               MaterialPageRoute(builder: (context) => AddTEScreen()));
           // print('Add Target Expenditure');
+
         },
       ),
       SpeedDialChild(
@@ -139,9 +166,26 @@ class _HomePageScreenState extends State<HomePageScreen> {
         ),
         backgroundColor: kPalePurple,
         onTap: () {
+          /*
           Navigator.push(context,
               MaterialPageRoute(builder: (context) => AddCategoryScreen()));
           // print('Add Target Category');
+           */
+          showModalBottomSheet(
+              shape: RoundedRectangleBorder(
+                borderRadius: BorderRadius.only(
+                  topLeft: Radius.circular(24),
+                  topRight: Radius.circular(24),
+                ),
+              ),
+              enableDrag: true,
+              isScrollControlled: true,
+              elevation: 5,
+              context: context,
+              builder: (BuildContext context) {
+                return addCategorySheet(context);
+              }
+          );
         },
       ),
     ];
@@ -191,142 +235,336 @@ class _HomePageScreenState extends State<HomePageScreen> {
     );
   }
 
-  /*
   Widget addSpendingSheet(BuildContext context) {
-    return Center(
-      child: Form(
-        key: _formKey,
-        child: SingleChildScrollView(
-          child: Column(
-              children: <Widget> [
-                ListTile(
-                  leading: Text('Enter your Expenses'),
-                  trailing: Icon(Icons.clear),
-                  onTap: () {
-                    Navigator.pop(context);
-                  },
-                ),
-                _showTextFormFields(itemNameController,
-                  "Enter the name of expense",
-                  Icon(Icons.drive_file_rename_outline),
-                ),
-                SizedBox(height: 15),
-                _showCalcFormFields(
-                  "Enter the cost",
-                  Icon(Icons.attach_money_rounded),
-                ),
-                SizedBox(height: 10),
-                getMultiSelectChipField(),
-                Padding(
-                  padding: EdgeInsets.symmetric(horizontal: 20.0),
-                  child: Column(
-                    mainAxisAlignment: MainAxisAlignment.spaceEvenly,
-                    children: <Widget>[
-                      SizedBox(height: 20),
-                      Hero(
-                        tag: 'picture',
-                        child: Container(
-                          width: 500.0,
-                          height: 205.0,
-                          alignment: Alignment.center,
-                          decoration: BoxDecoration(
-                            image: DecorationImage(
-                                image: AssetImage(
-                                    'styles/images/add-comment-illustration.png'),
-                                fit: BoxFit.fill),
-                          ),
+    return SingleChildScrollView(
+      child: Container(
+        padding: EdgeInsets.only(bottom: MediaQuery.of(context).viewInsets.bottom),
+        child: Column(
+          mainAxisSize: MainAxisSize.max,
+          mainAxisAlignment: MainAxisAlignment.start,
+          children: <Widget> [
+            Container(
+              decoration: BoxDecoration(
+                color: Colors.white,
+                borderRadius:
+                BorderRadius.all(Radius.circular(15)),
+              ),
+              child: Column(
+                  children: <Widget> [
+                    Row(
+                      mainAxisAlignment: MainAxisAlignment.center,
+                      children: <Widget> [
+                        Column(
+                            children: <Widget> [
+                              TextButton(
+                                onPressed: () {
+                                  itemNameController.clear();
+                                  costController.clear();
+                                  Navigator.pop(context);
+                                },
+                                child: Icon(Icons.clear),
+                              ),
+                              Text('Cancel'),
+                            ]
+                        ),
+                        Spacer(),
+                        Text('Add Your Expenses'),
+                        Spacer(),
+                        Column(
+                            children: <Widget> [
+                              TextButton(
+                                onPressed: () async {
+                                  final Expense expense = Expense(
+                                    categoryId: selectedCategory[0].categoryId,
+                                    cost: selectedCategory[0].isIncome
+                                        ? double.parse(costController.text)
+                                        : -(double.parse(costController.text)),
+                                    itemName: itemNameController.text,
+                                    uid: uid,
+                                  );
+                                  if (_formKey.currentState.validate()) {
+                                    await _authReceipt.addExpense(expense);
+                                    itemNameController.clear();
+                                    costController.clear();
+                                    Navigator.pop(context);
+                                  }
+                                },
+                                child: Icon(Icons.check),
+                              ),
+                              Text('Add'),
+                            ]
+                        ),
+                      ],
+                    ),
+                    SizedBox(height: 30),
+                    Container(
+                      alignment: Alignment.topCenter,
+                      child: Form(
+                        key: _formKey,
+                        child: Column(
+                            children: <Widget> [
+                              _showTextFormFields(itemNameController,
+                                "Enter the name of expense",
+                                Icon(Icons.drive_file_rename_outline),
+                                390.0,
+                              ),
+                              SizedBox(height: 15),
+                              _showCalcFormFields(
+                                "Enter the cost",
+                                Icon(Icons.attach_money_rounded),
+                              ),
+                              getMultiSelectChipField(),
+                            ]
                         ),
                       ),
-                      SizedBox(height: 20),
-                      ElevatedButton(
-                          onPressed: () async {
-                            final Expense expense = Expense(
-                              categoryId: selectedCategory[0].categoryId,
-                              cost: selectedCategory[0].isIncome
-                                  ? double.parse(costController.text)
-                                  : -(double.parse(costController.text)),
-                              itemName: itemNameController.text,
-                              uid: uid,
-                            );
-                            if (_formKey.currentState.validate()) {
-                              await _authReceipt.addExpense(expense).then((_) {
-                                showDialog(
-                                  context: context,
-                                  builder: (BuildContext context) {
-                                    return AlertDialog(
-                                      title: Text(
-                                        "Successfully Added Your Spending Entry!",
-                                        style: TextStyle(fontFamily: 'Lato'),
-                                      ),
-                                      content: Text(
-                                        "Would you like to add another Spending Entry?",
-                                        style: TextStyle(fontFamily: 'Lato.Thin'),
-                                      ),
-                                      actions: <Widget> [
-                                        TextButton(
-                                          child: Text("Back to HomePage"),
-                                          onPressed: () {
-                                            Navigator.push(context,
-                                                MaterialPageRoute(builder: (context) => HomePageScreen()));
-                                          },
-                                        ),
-                                        TextButton(
-                                          child: Text("Add another Spending Entry"),
-                                          onPressed: () {
-                                            Navigator.pop(context);
-                                          },
-                                        ),
-                                      ],
-                                    );
-                                  },
-                                );
-                                itemNameController.clear();
-                                costController.clear();
-                              });
-                            }
-                          },
-                          child: Text('Submit'),
-                          style: ButtonStyle(
-                            backgroundColor: MaterialStateProperty.all(kDeepOrangeLight),
-                          )
-                      ),
-                      SizedBox(height: 20)
-                    ],
-                  ),
-                ),
-              ]
-          ),
-        ),
-      ),
+                    ),
+                  ]
+              ),
+            )
+          ]
+        )
+      )
     );
   }
 
-  Widget _showTextFormFields(TextEditingController text, String label, Icon icon) {
+  Widget addCategorySheet(BuildContext context) {
+    return FutureBuilder<List<Category>>(
+      future: _authCategory.getCategories(),
+      builder: (BuildContext context, AsyncSnapshot<List<Category>> snapshot) {
+        if (snapshot.hasData) {
+          List<Category> allCategories = snapshot.data;
+          allCategories.sort((a, b) => a.categoryId.compareTo(b.categoryId));
+          categoryId = (int.parse(allCategories.last.categoryId) + 1).toString();
+          return SingleChildScrollView(
+              child: Container(
+                  padding: EdgeInsets.only(bottom: MediaQuery.of(context).viewInsets.bottom),
+                  child: Column(
+                      mainAxisSize: MainAxisSize.max,
+                      mainAxisAlignment: MainAxisAlignment.start,
+                      children: <Widget> [
+                        Container(
+                          decoration: BoxDecoration(
+                            color: Colors.white,
+                            borderRadius:
+                            BorderRadius.all(Radius.circular(15)),
+                          ),
+                          child: Column(
+                              children: <Widget> [
+                                Row(
+                                  mainAxisAlignment: MainAxisAlignment.center,
+                                  children: <Widget> [
+                                    Column(
+                                        children: <Widget> [
+                                          TextButton(
+                                            onPressed: () {
+                                              _icon = null;
+                                              pickerColor = Color(0xff443a49);
+                                              currentColor = Color(0xff443a49);
+                                              categoryNameController.clear();
+                                              Navigator.pop(context);
+                                            },
+                                            child: Icon(Icons.clear),
+                                          ),
+                                          Text('Cancel'),
+                                        ]
+                                    ),
+                                    Spacer(),
+                                    Text('Add A New Category'),
+                                    Spacer(),
+                                    Column(
+                                        children: <Widget> [
+                                          TextButton(
+                                            onPressed: () async {
+                                              final Category category = Category(
+                                                categoryName: categoryNameController.text,
+                                                categoryColor: currentColor,
+                                                categoryIcon: _icon,
+                                                categoryId: categoryId,
+                                                categoryAmount: 0,
+                                              );
+                                              if (_formKey.currentState.validate()) {
+                                                await _authCategory.addNewCategory(category, category.categoryId);
+                                                categoryNameController.clear();
+                                                pickerColor = Color(0xff443a49);
+                                                currentColor = Color(0xff443a49);
+                                                _icon = null;
+                                                Navigator.pop(context);
+                                              }
+                                            },
+                                            child: Icon(Icons.check),
+                                          ),
+                                          Text('Add'),
+                                        ]
+                                    ),
+                                  ],
+                                ),
+                                SizedBox(height: 20),
+                                Container(
+                                  alignment: Alignment.topCenter,
+                                  child: Form(
+                                      key: _formKey,
+                                      child: Column(
+                                          children: <Widget> [
+                                            Padding(
+                                              padding: const EdgeInsets.all(8.0),
+                                              child: Row(
+                                                mainAxisAlignment: MainAxisAlignment.center,
+                                                children: <Widget> [
+                                                  SizedBox(width: 10.0),
+                                                  CircleAvatar(
+                                                    backgroundColor: pickerColor.withOpacity(0.1),
+                                                    radius: 30,
+                                                    child: AnimatedSwitcher(
+                                                        duration: Duration(milliseconds: 300),
+                                                        child: _icon != null
+                                                            ? _icon
+                                                            : Icon(FontAwesomeIcons.question, color: Colors.black)
+                                                    ),
+                                                  ),
+                                                  _showTextFormFields(categoryNameController,
+                                                      "Category Name",
+                                                      Icon(Icons.drive_file_rename_outline),
+                                                      250.0
+                                                  ),
+                                                ],
+                                              ),
+                                            ),
+                                            SizedBox(height: 10),
+                                            Row(
+                                              mainAxisAlignment: MainAxisAlignment.spaceEvenly,
+                                              children: <Widget> [
+                                                TextButton(
+                                                  onPressed: () {
+                                                    showDialog(
+                                                      context: context,
+                                                      builder: (BuildContext context) {
+                                                        return AlertDialog(
+                                                          title: Text('Select a color'),
+                                                          content: SingleChildScrollView(
+                                                              child: Column(
+                                                                  children: <Widget>[
+                                                                    BlockPicker(
+                                                                      pickerColor: currentColor,
+                                                                      onColorChanged: changeColor,
+                                                                    ),
+                                                                    SizedBox(height: 10),
+                                                                    TextButton(
+                                                                        child: Text("Set as color",
+                                                                          style: TextStyle(
+                                                                            color: Colors.white,
+                                                                          ),
+                                                                        ),
+                                                                        style: TextButton.styleFrom(
+                                                                            backgroundColor: kDeepOrangeLight
+                                                                        ),
+                                                                        onPressed: () {
+                                                                          setState(() => currentColor = pickerColor);
+                                                                          Navigator.of(context).pop();
+                                                                        }
+                                                                    )
+                                                                  ]
+                                                              )
+                                                          ),
+                                                        );
+                                                      },
+                                                    );
+                                                  },
+                                                  child: Text("Category Colour",
+                                                    style: TextStyle(
+                                                      color: Colors.white,
+                                                    ),
+                                                  ),
+                                                  style: TextButton.styleFrom(
+                                                      backgroundColor: kDeepOrangeLight
+                                                  ),
+                                                ),
+                                                SizedBox(height: 10.0),
+                                                TextButton(
+                                                  child: Text('Category Icon',
+                                                    style: TextStyle(
+                                                      color: Colors.white,
+                                                    ),
+                                                  ),
+                                                  style: TextButton.styleFrom(
+                                                      backgroundColor: kDeepOrangeLight
+                                                  ),
+                                                  onPressed: _pickIcon,
+                                                ),
+                                                SizedBox(height: 10.0),
+                                                // figure out why this wont work else change to dropdownmenu
+                                                TextButton(
+                                                  child: Row(
+                                                    mainAxisAlignment: MainAxisAlignment.center,
+                                                    children: <Widget>[
+                                                      Icon(Icons.touch_app, size: 18),
+                                                      SizedBox(width: 12),
+                                                      Text(isIncome ? 'INCOME' : 'EXPENSE',
+                                                          style: TextStyle(
+                                                            color: isIncome
+                                                                ? Colors.teal
+                                                                : Colors.redAccent
+                                                          ),
+                                                      ),
+                                                    ],
+                                                  ),
+                                                  style: TextButton.styleFrom(
+                                                      backgroundColor: isIncome
+                                                          ? Colors.teal.withOpacity(0.2)
+                                                          : Colors.redAccent.withOpacity(0.2),
+                                                  ),
+                                                  onPressed: () {
+                                                    changeIsIncome();
+                                                  },
+                                                )
+                                              ]
+                                            ),
+                                            SizedBox(height: 10.0),
+                                          ]
+                                      ),
+                                  )
+                                ),
+                              ]
+                          ),
+                        )
+                      ]
+                  )
+              )
+          );
+        }
+        return SizedBox();
+      }
+    );
+  }
+
+  Widget _showTextFormFields(TextEditingController text, String label, Icon icon, double size) {
     return Padding(
       padding: EdgeInsets.symmetric(horizontal: 20.0),
-      child: TextFormField(
-        controller: text,
-        decoration: InputDecoration(
-          labelText: label,
-          prefixIcon: icon,
-          filled: true,
-          fillColor: Colors.white,
-          enabledBorder: OutlineInputBorder(
-            borderRadius: BorderRadius.circular(10.0),
-            borderSide: BorderSide(color: Colors.grey),
+      child: SizedBox(
+        width: size,
+        child: TextFormField(
+          controller: text,
+          decoration: InputDecoration(
+            labelText: label,
+            prefixIcon: icon,
+            filled: true,
+            fillColor: Colors.white,
+            enabledBorder: OutlineInputBorder(
+              borderRadius: BorderRadius.circular(10.0),
+              borderSide: BorderSide(color: Colors.grey),
+            ),
+            focusedBorder: OutlineInputBorder(
+              borderRadius: BorderRadius.circular(10.0),
+              borderSide: BorderSide(color: Colors.blue),
+            ),
           ),
-          focusedBorder: OutlineInputBorder(
-            borderRadius: BorderRadius.circular(10.0),
-            borderSide: BorderSide(color: Colors.blue),
-          ),
+          // The validator receives the text that the user has entered.
+          validator: (value) {
+            if (value.isEmpty) {
+              return label;
+            }
+            return null;
+          },
         ),
-        // The validator receives the text that the user has entered.
-        validator: (value) {
-          if (value.isEmpty) {
-            return label;
-          }
-          return null;
-        },
       ),
     );
   }
@@ -417,5 +655,4 @@ class _HomePageScreenState extends State<HomePageScreen> {
       text: result.toStringAsFixed(2),
     );
   }
-   */
 }

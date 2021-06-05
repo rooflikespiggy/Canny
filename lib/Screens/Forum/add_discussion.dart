@@ -33,6 +33,7 @@ class _AddDiscussionState extends State<AddDiscussion> {
         decoration: BoxDecoration(
           image: DecorationImage(
             image: AssetImage("styles/images/background.png"),
+            colorFilter: ColorFilter.mode(Colors.black.withOpacity(0.4), BlendMode.dstATop),
             fit: BoxFit.cover,
           ),
         ),

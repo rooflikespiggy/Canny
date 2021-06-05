@@ -65,7 +65,7 @@ class _MonthlyExpensesState extends State<MonthlyExpenses> {
                         fontSize: 25,
                         fontWeight: FontWeight.bold,
                         fontFamily: "Lato",
-                        color: kLightBlue
+                        color: kBlue
                       ),
                     ),
                     const Divider(
@@ -73,7 +73,7 @@ class _MonthlyExpensesState extends State<MonthlyExpenses> {
                       thickness: 2,
                       indent: 20,
                       endIndent: 20,
-                      color: kLightBlue,
+                      color: kBlue,
                     ),
                     StreamBuilder(
                         stream: expensesCollection
@@ -108,48 +108,6 @@ class _MonthlyExpensesState extends State<MonthlyExpenses> {
                           return CircularProgressIndicator();
                         }
                     ),
-
-                    /*
-                    ListView(
-                      shrinkWrap: true,
-                      physics: const NeverScrollableScrollPhysics(),
-                      padding: EdgeInsets.all(8),
-                      children: [
-                        ExpenseTile(
-                          categoryId: "00",
-                          cost: -10,
-                          itemName: "pepper lunch",
-                          uid: "UID",
-                        ),
-                        ExpenseTile(
-                          categoryId: "01",
-                          cost: -1.65,
-                          itemName: "",
-                          uid: "UID",
-                        ),
-                        ExpenseTile(
-                          categoryId: "02",
-                          cost: -19.90,
-                          itemName: "UNIQLO t-shirt",
-                          uid: "UID",
-                        ),
-                        ExpenseTile(
-                          categoryId: "00",
-                          cost: -3.00,
-                          itemName: "chicken rice",
-                          uid: "UID",
-                        ),
-                        ExpenseTile(
-                          categoryId: "02",
-                          cost: -40,
-                          itemName: "new wallet",
-                          uid: "UID",
-                        ),
-                      ],
-                    ),
-
-                     */
-
                   ],
                 ),
               ),

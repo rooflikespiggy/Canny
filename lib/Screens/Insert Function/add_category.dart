@@ -26,7 +26,6 @@ class _AddCategoryScreenState extends State<AddCategoryScreen> {
   final CollectionReference categoryCollection = Database().categoryDatabase();
   final CategoryDatabaseService _authCategory = CategoryDatabaseService();
   Icon _icon;
-  int _categoryNo;
   String categoryId = '00';
 
   /*
