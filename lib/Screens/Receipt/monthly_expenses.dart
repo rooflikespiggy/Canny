@@ -81,6 +81,7 @@ class _MonthlyExpensesState extends State<MonthlyExpenses> {
                             .where('datetime', isLessThan: DateTime(
                             monthsInYear[widget.month] == 12 ? widget.year + 1 : widget.year,
                             monthsInYear[widget.month] == 12 ? 1 : monthsInYear[widget.month] + 1))
+                            .where('')
                             //.doc("2021-06").collection("2021-06")
                             .orderBy('datetime')
                             .snapshots(),
@@ -99,6 +100,7 @@ class _MonthlyExpensesState extends State<MonthlyExpenses> {
                                       categoryId: snapshotData['categoryId'],
                                       cost: snapshotData['cost'],
                                       itemName: snapshotData['itemName'],
+                                      datetime: snapshotData['datetime'],
                                       uid: uid,
                                     );
                                   },

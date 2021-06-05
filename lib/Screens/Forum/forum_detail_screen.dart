@@ -57,6 +57,7 @@ class _ForumDetailScreenState extends State<ForumDetailScreen> {
         decoration: BoxDecoration(
           image: DecorationImage(
             image: AssetImage("styles/images/background-2.png"),
+            colorFilter: ColorFilter.mode(Colors.black.withOpacity(0.4), BlendMode.dstATop),
             fit: BoxFit.cover,
           ),
         ),

@@ -28,7 +28,7 @@ class _CustomiseQIState extends State<CustomiseQI> {
   final CollectionReference categoryCollection = Database().categoryDatabase();
   final CollectionReference quickInputCollection = Database().quickInputDatabase();
   List<MultiSelectItem<Category>> _allCategories;
-  bool selected = false;
+  bool isSelected = false;
 
   final _testCategories = CategoryDatabaseService()
       .getAllCategories()
@@ -105,8 +105,8 @@ class _CustomiseQIState extends State<CustomiseQI> {
       ),
     );
   }
-/*
-  // TODO: see if this or DialogField is better
+
+  /*
   Widget getMultiSelectChipField() {
     return FutureBuilder<List<Category>>(
       future: _authCategory.getCategories(),
@@ -206,27 +206,26 @@ class _CustomiseQIState extends State<CustomiseQI> {
                       },
                       onConfirm: (categories) {
                         selectedCategories = categories;
-                        selected = true;
+                        isSelected = true;
                       }
                   ),
                   // need figure out why this dont work
-                  Visibility(
-                    visible: selected == false,
-                    child: Container(
-                        padding: EdgeInsets.all(10),
-                        alignment: Alignment.centerLeft,
-                        child: Text(
-                          "None selected",
-                          style: TextStyle(color: Colors.black54),
-                        ),
+                  !isSelected
+                      ? Container(
+                    padding: EdgeInsets.all(10),
+                    alignment: Alignment.centerLeft,
+                    child: Text(
+                      "None selected",
+                      style: TextStyle(color: Colors.black54),
                     ),
-                  ),
+                  )
+                      : Container(),
                 ],
               )
             ),
           );
         }
-        return CircularProgressIndicator();
+        return SizedBox();
       }
     );
   }

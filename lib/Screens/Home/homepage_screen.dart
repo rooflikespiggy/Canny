@@ -43,10 +43,11 @@ class _HomePageScreenState extends State<HomePageScreen> {
   List<MultiSelectItem<Category>> _allCategories = [];
   List<Category> selectedCategory = [];
   String categoryId = '00';
-  Icon _icon;
-  bool isIncome = false;
+  // Icon _icon;
+  // bool isIncome = false;
   // String _title = 'CANNY';
 
+  /*
   // create some values
   Color pickerColor = Color(0xff443a49);
   Color currentColor = Color(0xff443a49);
@@ -69,6 +70,8 @@ class _HomePageScreenState extends State<HomePageScreen> {
     setState((){});
     debugPrint('Picked Icon:  $icon');
   }
+
+   */
 
   @override
   Widget build(BuildContext context) {
@@ -130,7 +133,7 @@ class _HomePageScreenState extends State<HomePageScreen> {
               elevation: 5,
               context: context,
               builder: (BuildContext context) {
-                return addSpendingSheet(context);
+                return AddSpendingScreen();
               }
           );
 
@@ -183,7 +186,7 @@ class _HomePageScreenState extends State<HomePageScreen> {
               elevation: 5,
               context: context,
               builder: (BuildContext context) {
-                return addCategorySheet(context);
+                return AddCategoryScreen();
               }
           );
         },
@@ -235,6 +238,7 @@ class _HomePageScreenState extends State<HomePageScreen> {
     );
   }
 
+  /*
   Widget addSpendingSheet(BuildContext context) {
     return SingleChildScrollView(
       child: Container(
@@ -381,6 +385,7 @@ class _HomePageScreenState extends State<HomePageScreen> {
                                                 categoryIcon: _icon,
                                                 categoryId: categoryId,
                                                 categoryAmount: 0,
+                                                isIncome: isIncome,
                                               );
                                               if (_formKey.currentState.validate()) {
                                                 await _authCategory.addNewCategory(category, category.categoryId);
@@ -514,6 +519,10 @@ class _HomePageScreenState extends State<HomePageScreen> {
                                                   ),
                                                   onPressed: () {
                                                     changeIsIncome();
+                                                    ScaffoldMessenger.of(context).showSnackBar(SnackBar(
+                                                      content: Text(isIncome ? 'income' : 'expenses' + ' chosen'),
+                                                      duration: Duration(seconds: 1),
+                                                    ));
                                                   },
                                                 )
                                               ]
@@ -655,4 +664,5 @@ class _HomePageScreenState extends State<HomePageScreen> {
       text: result.toStringAsFixed(2),
     );
   }
+   */
 }

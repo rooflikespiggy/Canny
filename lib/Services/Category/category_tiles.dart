@@ -12,7 +12,8 @@ class CategoryTile extends StatefulWidget {
   final String categoryFontFamily;
   final String categoryFontPackage;
   final String categoryId;
-  final int index;
+  final bool isIncome;
+  final bool tappable;
 
   CategoryTile({
     this.categoryName,
@@ -21,7 +22,8 @@ class CategoryTile extends StatefulWidget {
     this.categoryFontFamily,
     this.categoryFontPackage,
     this.categoryId,
-    this.index
+    this.isIncome,
+    this.tappable
   });
 
   @override
@@ -112,6 +114,14 @@ class _CategoryTileState extends State<CategoryTile> {
             color: Colors.blueGrey[900],
           ),
         ),
+        onTap: widget.tappable
+            ? () => Navigator.pop(context,
+            {'categoryId': int.parse(widget.categoryId) < 10
+                ? '0' + widget.categoryId
+                : widget.categoryId,
+              'categoryName': widget.categoryName,
+              'isIncome': widget.isIncome})
+            : null,
         leading: CircleAvatar(
           backgroundColor: Color(widget.categoryColorValue).withOpacity(0.1),
           radius: 30,

@@ -1,20 +1,22 @@
 import 'package:Canny/Models/category.dart';
 import 'package:Canny/Services/Category/category_database.dart';
 import 'package:Canny/Shared/colors.dart';
+import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:flutter/material.dart';
 import 'package:intl/intl.dart';
 
 class ExpenseTile extends StatefulWidget {
-  String categoryId;
-  double cost;
-  DateTime dateTime = DateTime.now();
-  String itemName;
-  String uid;
+  final String categoryId;
+  final double cost;
+  final String itemName;
+  final Timestamp datetime;
+  final String uid;
 
   ExpenseTile({
     this.categoryId,
     this.cost,
     this.itemName,
+    this.datetime,
     this.uid,
   });
 
@@ -28,7 +30,6 @@ class _ExpenseTileState extends State<ExpenseTile> {
 
   @override
   Widget build(BuildContext context) {
-    _authCategory.initNewCategories();
 
     return Card(
       color: Colors.white.withOpacity(0.9),
@@ -44,10 +45,16 @@ class _ExpenseTileState extends State<ExpenseTile> {
             color: Colors.blueGrey[900],
           ),
         ),
-        subtitle: Text(
-          DateFormat.yMMMd().format(widget.dateTime),
+        subtitle: Text(DateFormat("d MMMM y")
+            .format(DateTime.fromMillisecondsSinceEpoch(
+            widget.datetime.seconds * 1000)),
+            style: TextStyle(
+              fontSize: 14,
+              color: Colors.grey,
+            )
         ),
-        leading: _getCircleAvatar(),
+        leading:
+        _getCircleAvatar(),
         /*
         CircleAvatar(
           backgroundColor: Colors.deepOrange[50],
@@ -76,7 +83,7 @@ class _ExpenseTileState extends State<ExpenseTile> {
                 ),
               ),
               Text(
-                widget.cost.toString(),
+                widget.cost.toStringAsFixed(2),
                 style: TextStyle(
                   fontSize: 18,
                   color: widget.cost < 0

@@ -27,6 +27,7 @@ class _AddCategoryScreenState extends State<AddCategoryScreen> {
   final CategoryDatabaseService _authCategory = CategoryDatabaseService();
   Icon _icon;
   String categoryId = '00';
+  bool isIncome = false;
 
   /*
   Future<int> countDocuments() async {
@@ -44,19 +45,6 @@ class _AddCategoryScreenState extends State<AddCategoryScreen> {
     return _categoryNo.toString();
   }
    */
-
-  List<Category> categoriesList() {
-    return _authCategory.allCategories;
-  }
-
-  String getCategoryId() {
-    for (Category category in categoriesList()) {
-      if (int.parse(category.categoryId) > int.parse(categoryId)) {
-        categoryId = category.categoryId;
-      }
-    }
-    return (int.parse(categoryId) + 1).toString();
-  }
 
   // create some values
   Color pickerColor = Color(0xff443a49);
@@ -77,224 +65,255 @@ class _AddCategoryScreenState extends State<AddCategoryScreen> {
     debugPrint('Picked Icon:  $icon');
   }
 
+  void changeIsIncome() {
+    setState(() => isIncome = !isIncome);
+  }
+
   @override
   Widget build(BuildContext context) {
-    _authCategory.allCategories;
-    return Scaffold(
-      backgroundColor: kBackgroundColour,
-      resizeToAvoidBottomInset: false,
-      body: Center(
-      child: Form(
-        key: _formKey,
-        child: SingleChildScrollView(
-          child: Column(
-              children: <Widget> [
-                Text(
-                'Add a new Category',
-                  style: TextStyle(fontSize: 23.0,
-                    fontFamily: 'Lato',
-                    fontWeight: FontWeight.bold,
-                    color: kDeepOrange,
-                  )
-                ),
-                SizedBox(height: 20),
-                _showTextFormFields(categoryNameController,
-                  "Category Name",
-                  Icon(Icons.drive_file_rename_outline),
-                ),
-                SizedBox(height: 20),
-                Row(
-                  mainAxisAlignment: MainAxisAlignment.center,
-                  children: <Widget>[
-                    SizedBox(
-                      height: 35,
-                      width: 40,
-                      child: DecoratedBox(
-                        decoration: BoxDecoration(
-                            color: currentColor,
-                            border: Border.all(color: Colors.black)
-                        ),
-                      ),
-                    ),
-                    SizedBox(width: 40),
-                    TextButton(
-                      onPressed: () {
-                        showDialog(
-                          context: context,
-                          builder: (BuildContext context) {
-                            return AlertDialog(
-                              title: Text('Select a color'),
-                              content: SingleChildScrollView(
-                                child: Column(
-                                  children: <Widget>[
-                                    BlockPicker(
-                                      pickerColor: currentColor,
-                                      onColorChanged: changeColor,
-                                    ),
-                                    SizedBox(height: 10),
-                                    TextButton(
-                                        child: Text("Set as color",
-                                          style: TextStyle(
-                                            color: Colors.white,
-                                          ),
+    return FutureBuilder<List<Category>>(
+        future: _authCategory.getCategories(),
+        builder: (BuildContext context, AsyncSnapshot<List<Category>> snapshot) {
+          if (snapshot.hasData) {
+            List<Category> allCategories = snapshot.data;
+            allCategories.sort((a, b) => a.categoryId.compareTo(b.categoryId));
+            categoryId = (int.parse(allCategories.last.categoryId) + 1).toString();
+            return SingleChildScrollView(
+                child: Container(
+                    padding: EdgeInsets.only(bottom: MediaQuery.of(context).viewInsets.bottom),
+                    child: Column(
+                        mainAxisSize: MainAxisSize.max,
+                        mainAxisAlignment: MainAxisAlignment.start,
+                        children: <Widget> [
+                          Container(
+                            decoration: BoxDecoration(
+                              color: Colors.white,
+                              borderRadius:
+                              BorderRadius.all(Radius.circular(15)),
+                            ),
+                            child: Column(
+                                children: <Widget> [
+                                  Row(
+                                    mainAxisAlignment: MainAxisAlignment.center,
+                                    children: <Widget> [
+                                      Column(
+                                          children: <Widget> [
+                                            TextButton(
+                                              onPressed: () {
+                                                _icon = null;
+                                                pickerColor = Color(0xff443a49);
+                                                currentColor = Color(0xff443a49);
+                                                categoryNameController.clear();
+                                                Navigator.pop(context);
+                                              },
+                                              child: Icon(Icons.clear),
+                                            ),
+                                            Text('Cancel'),
+                                          ]
+                                      ),
+                                      Spacer(),
+                                      Text('Add A New Category'),
+                                      Spacer(),
+                                      Column(
+                                          children: <Widget> [
+                                            TextButton(
+                                              onPressed: () async {
+                                                final Category category = Category(
+                                                  categoryName: categoryNameController.text,
+                                                  categoryColor: currentColor,
+                                                  categoryIcon: _icon,
+                                                  categoryId: categoryId,
+                                                  categoryAmount: 0,
+                                                  isIncome: isIncome,
+                                                );
+                                                if (_formKey.currentState.validate()) {
+                                                  await _authCategory.addNewCategory(category, category.categoryId);
+                                                  categoryNameController.clear();
+                                                  pickerColor = Color(0xff443a49);
+                                                  currentColor = Color(0xff443a49);
+                                                  _icon = null;
+                                                  Navigator.pop(context);
+                                                }
+                                              },
+                                              child: Icon(Icons.check),
+                                            ),
+                                            Text('Add'),
+                                          ]
+                                      ),
+                                    ],
+                                  ),
+                                  SizedBox(height: 20),
+                                  // TODO: think about how to arrange the 3 buttons
+                                  Container(
+                                      alignment: Alignment.topCenter,
+                                      child: Form(
+                                        key: _formKey,
+                                        child: Column(
+                                            children: <Widget> [
+                                              Padding(
+                                                padding: const EdgeInsets.all(8.0),
+                                                child: Row(
+                                                  mainAxisAlignment: MainAxisAlignment.center,
+                                                  children: <Widget> [
+                                                    SizedBox(width: 10.0),
+                                                    CircleAvatar(
+                                                      backgroundColor: pickerColor.withOpacity(0.1),
+                                                      radius: 30,
+                                                      child: AnimatedSwitcher(
+                                                          duration: Duration(milliseconds: 300),
+                                                          child: _icon != null
+                                                              ? _icon
+                                                              : Icon(FontAwesomeIcons.question, color: Colors.black)
+                                                      ),
+                                                    ),
+                                                    _showTextFormFields(categoryNameController,
+                                                        "Category Name",
+                                                        Icon(Icons.drive_file_rename_outline),
+                                                        250.0
+                                                    ),
+                                                  ],
+                                                ),
+                                              ),
+                                              SizedBox(height: 10),
+                                              Row(
+                                                  mainAxisAlignment: MainAxisAlignment.spaceEvenly,
+                                                  children: <Widget> [
+                                                    TextButton(
+                                                      onPressed: () {
+                                                        showDialog(
+                                                          context: context,
+                                                          builder: (BuildContext context) {
+                                                            return AlertDialog(
+                                                              title: Text('Select a color'),
+                                                              content: SingleChildScrollView(
+                                                                  child: Column(
+                                                                      children: <Widget>[
+                                                                        BlockPicker(
+                                                                          pickerColor: currentColor,
+                                                                          onColorChanged: changeColor,
+                                                                        ),
+                                                                        SizedBox(height: 10),
+                                                                        TextButton(
+                                                                            child: Text("Set as color",
+                                                                              style: TextStyle(
+                                                                                color: Colors.white,
+                                                                              ),
+                                                                            ),
+                                                                            style: TextButton.styleFrom(
+                                                                                backgroundColor: kDeepOrangeLight
+                                                                            ),
+                                                                            onPressed: () {
+                                                                              setState(() => currentColor = pickerColor);
+                                                                              Navigator.of(context).pop();
+                                                                            }
+                                                                        )
+                                                                      ]
+                                                                  )
+                                                              ),
+                                                            );
+                                                          },
+                                                        );
+                                                      },
+                                                      child: Text("Category Colour",
+                                                        style: TextStyle(
+                                                          color: Colors.white,
+                                                        ),
+                                                      ),
+                                                      style: TextButton.styleFrom(
+                                                          backgroundColor: kDeepOrangeLight
+                                                      ),
+                                                    ),
+                                                    SizedBox(height: 10.0),
+                                                    TextButton(
+                                                      child: Text('Category Icon',
+                                                        style: TextStyle(
+                                                          color: Colors.white,
+                                                        ),
+                                                      ),
+                                                      style: TextButton.styleFrom(
+                                                          backgroundColor: kDeepOrangeLight
+                                                      ),
+                                                      onPressed: _pickIcon,
+                                                    ),
+                                                    SizedBox(height: 10.0),
+                                                    // figure out why this wont work else change to dropdownmenu
+                                                    TextButton(
+                                                      child: Row(
+                                                        mainAxisAlignment: MainAxisAlignment.center,
+                                                        children: <Widget>[
+                                                          Icon(Icons.touch_app, size: 18),
+                                                          SizedBox(width: 12),
+                                                          Text(isIncome ? 'INCOME' : 'EXPENSE',
+                                                            style: TextStyle(
+                                                                color: isIncome
+                                                                    ? Colors.teal
+                                                                    : Colors.redAccent
+                                                            ),
+                                                          ),
+                                                        ],
+                                                      ),
+                                                      style: TextButton.styleFrom(
+                                                        backgroundColor: isIncome
+                                                            ? Colors.teal.withOpacity(0.2)
+                                                            : Colors.redAccent.withOpacity(0.2),
+                                                      ),
+                                                      onPressed: () {
+                                                        changeIsIncome();
+                                                        ScaffoldMessenger.of(context).showSnackBar(SnackBar(
+                                                          content: Text(isIncome ? 'income' : 'expenses' + ' chosen'),
+                                                          duration: Duration(seconds: 1),
+                                                        ));
+                                                      },
+                                                    )
+                                                  ]
+                                              ),
+                                              SizedBox(height: 10.0),
+                                            ]
                                         ),
-                                        style: TextButton.styleFrom(
-                                            backgroundColor: kDeepOrangeLight
-                                        ),
-                                      onPressed: () {
-                                        setState(() => currentColor = pickerColor);
-                                        Navigator.of(context).pop();
-                                      }
-                                    )
-                                  ]
-                                )
-                              ),
-                            );
-                          },
-                        );
-                      },
-                        child: Text("Category Colour",
-                          style: TextStyle(
-                            color: Colors.white,
-                          ),
-                        ),
-                        style: TextButton.styleFrom(
-                            backgroundColor: kDeepOrangeLight
-                        ),
-
-                      ),
-                  ]
-                ),
-                SizedBox(height: 10.0),
-                Row(
-                  mainAxisAlignment: MainAxisAlignment.center,
-                  children: <Widget>[
-                    AnimatedSwitcher(
-                        duration: Duration(milliseconds: 300),
-                        child: _icon != null
-                            ? _icon
-                            : Icon(FontAwesomeIcons.question)
-                    ),
-                    SizedBox(width: 40),
-                    TextButton(
-                        child: Text('Category Icon',
-                          style: TextStyle(
-                            color: Colors.white,
-                          ),
-                        ),
-                        style: TextButton.styleFrom(
-                            backgroundColor: kDeepOrangeLight
-                        ),
-                      onPressed: _pickIcon,
+                                      )
+                                  ),
+                                ]
+                            ),
+                          )
+                        ]
                     )
-                  ]
-                ),
-                SizedBox(height: 20),
-                Padding(
-                  padding: EdgeInsets.symmetric(horizontal: 20.0),
-                  child: Row(
-                    mainAxisAlignment: MainAxisAlignment.spaceEvenly,
-                    children: <Widget>[
-                      ElevatedButton(
-                          onPressed: () async {
-                            final Category category = Category(
-                              categoryName: categoryNameController.text,
-                              categoryColor: currentColor,
-                              categoryIcon: _icon,
-                              categoryId: getCategoryId(),
-                              categoryAmount: 0,
-                            );
-                            if (_formKey.currentState.validate()) {
-                              await _authCategory.addNewCategory(category, category.categoryId).then((_) {
-                                showDialog(
-                                  context: context,
-                                  builder: (BuildContext context) {
-                                    return AlertDialog(
-                                      title: Text(
-                                        "Successfully Added a new Category!",
-                                        style: TextStyle(fontFamily: 'Lato'),
-                                      ),
-                                      content: Text(
-                                        "Would you like to add another Category?",
-                                        style: TextStyle(fontFamily: 'Lato.Thin'),
-                                      ),
-                                      actions: <Widget> [
-                                        TextButton(
-                                          child: Text("Back to HomePage"),
-                                          onPressed: () {
-                                            Navigator.push(context,
-                                                MaterialPageRoute(builder: (context) => HomePageScreen()));
-                                          },
-                                        ),
-                                        TextButton(
-                                          child: Text("Add another Category"),
-                                          onPressed: () {
-                                            Navigator.pop(context);
-                                          },
-                                        ),
-                                      ],
-                                    );
-                                  },
-                                );
-                                categoryNameController.clear();
-                              });
-                            }
-                          },
-                          child: Text('Submit'),
-                          style: ButtonStyle(
-                            backgroundColor: MaterialStateProperty.all(kDeepOrangeLight),
-                          )
-                      ),
-                      ElevatedButton(
-                          onPressed: () {
-                            Navigator.pop(context);
-                          },
-                          child: Text('Return To Homepage'),
-                          style: ButtonStyle(
-                            backgroundColor: MaterialStateProperty.all(Colors.grey),
-                          )
-                      ),
-
-                    ],
-                  ),
-                ),
-
-              ]
-            ),
-          )
-        )
-      )
+                )
+            );
+          }
+          return SizedBox();
+        }
     );
   }
 
-  Widget _showTextFormFields(TextEditingController text, String label, Icon icon) {
+  Widget _showTextFormFields(TextEditingController text, String label, Icon icon, double size) {
     return Padding(
       padding: EdgeInsets.symmetric(horizontal: 20.0),
-      child: TextFormField(
-        controller: text,
-        keyboardType: TextInputType.multiline,
-        maxLines: null,
-        decoration: InputDecoration(
-          labelText: label,
-          prefixIcon: icon,
-          filled: true,
-          fillColor: Colors.white,
-          enabledBorder: OutlineInputBorder(
-            borderRadius: BorderRadius.circular(10.0),
-            borderSide: BorderSide(color: Colors.grey),
+      child: SizedBox(
+        width: size,
+        child: TextFormField(
+          controller: text,
+          decoration: InputDecoration(
+            labelText: label,
+            prefixIcon: icon,
+            filled: true,
+            fillColor: Colors.white,
+            enabledBorder: OutlineInputBorder(
+              borderRadius: BorderRadius.circular(10.0),
+              borderSide: BorderSide(color: Colors.grey),
+            ),
+            focusedBorder: OutlineInputBorder(
+              borderRadius: BorderRadius.circular(10.0),
+              borderSide: BorderSide(color: Colors.blue),
+            ),
           ),
-          focusedBorder: OutlineInputBorder(
-            borderRadius: BorderRadius.circular(10.0),
-            borderSide: BorderSide(color: Colors.blue),
-          ),
+          // The validator receives the text that the user has entered.
+          validator: (value) {
+            if (value.isEmpty) {
+              return label;
+            }
+            return null;
+          },
         ),
-        // The validator receives the text that the user has entered.
-        validator: (value) {
-          if (value.isEmpty) {
-            return label;
-          }
-          return null;
-        },
       ),
     );
   }

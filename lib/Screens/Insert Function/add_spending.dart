@@ -1,4 +1,6 @@
 import 'package:Canny/Screens/Home/homepage_screen.dart';
+import 'package:Canny/Screens/Insert%20Function/select_category_screen.dart';
+import 'package:Canny/Screens/Sidebar/View%20Categories/category_screen.dart';
 import 'package:Canny/Services/Receipt/receipt_database.dart';
 import 'package:Canny/Shared/colors.dart';
 import 'package:flutter/material.dart';
@@ -33,144 +35,166 @@ class _AddSpendingScreenState extends State<AddSpendingScreen> {
   List<MultiSelectItem<Category>> _allCategories = [];
   List<Category> selectedCategory = [];
   String firstSelectedCategory;
-
+  String categoryName = 'Food & Drinks';
+  String categoryId = '00';
+  bool isIncome = false;
 
   @override
   Widget build(BuildContext context) {
-    return Scaffold(
-      backgroundColor: kBackgroundColour,
-      //resizeToAvoidBottomInset: false,
-      body: Center(
-        child: Form(
-          key: _formKey,
-          child: SingleChildScrollView(
+    return SingleChildScrollView(
+        child: Container(
+            padding: EdgeInsets.only(bottom: MediaQuery.of(context).viewInsets.bottom),
             child: Column(
-              children: <Widget> [
-                Text(
-                  'Add an entry for spending',
-                  style: TextStyle(fontSize: 23.0,
-                  fontFamily: 'Lato',
-                  fontWeight: FontWeight.bold,
-                  color: kDeepOrange,
+                mainAxisSize: MainAxisSize.max,
+                mainAxisAlignment: MainAxisAlignment.start,
+                children: <Widget> [
+                  Container(
+                    decoration: BoxDecoration(
+                      color: Colors.white,
+                      borderRadius:
+                      BorderRadius.all(Radius.circular(15)),
+                    ),
+                    child: Column(
+                        children: <Widget> [
+                          Row(
+                            mainAxisAlignment: MainAxisAlignment.center,
+                            children: <Widget> [
+                              Column(
+                                  children: <Widget> [
+                                    TextButton(
+                                      onPressed: () {
+                                        itemNameController.clear();
+                                        costController.clear();
+                                        Navigator.pop(context);
+                                      },
+                                      child: Icon(Icons.clear),
+                                    ),
+                                    Text('Cancel'),
+                                  ]
+                              ),
+                              Spacer(),
+                              Text('Add Your Expenses'),
+                              Spacer(),
+                              Column(
+                                  children: <Widget> [
+                                    TextButton(
+                                      onPressed: () async {
+                                        final Expense expense = Expense(
+                                          categoryId: categoryId, //selectedCategory[0].categoryId,
+                                          cost: isIncome //selectedCategory[0].isIncome
+                                              ? double.parse(costController.text)
+                                              : -(double.parse(costController.text)),
+                                          itemName: itemNameController.text,
+                                          uid: uid,
+                                        );
+                                        if (_formKey.currentState.validate()) {
+                                          await _authReceipt.addExpense(expense);
+                                          itemNameController.clear();
+                                          costController.clear();
+                                          Navigator.pop(context);
+                                        }
+                                      },
+                                      child: Icon(Icons.check),
+                                    ),
+                                    Text('Add'),
+                                  ]
+                              ),
+                            ],
+                          ),
+                          SizedBox(height: 30),
+                          Container(
+                            alignment: Alignment.topCenter,
+                            child: Form(
+                              key: _formKey,
+                              child: Column(
+                                  children: <Widget> [
+                                    _showTextFormFields(itemNameController,
+                                      "Enter the name of expense",
+                                      Icon(Icons.drive_file_rename_outline),
+                                      390.0,
+                                    ),
+                                    SizedBox(height: 15),
+                                    _showCalcFormFields(
+                                      "Enter the cost",
+                                      Icon(Icons.attach_money_rounded),
+                                    ),
+                                    getMultiSelectChipField(),
+                                    GestureDetector(
+                                      onTap: () async {
+                                        final Map<String, dynamic> result = await Navigator.push(context,
+                                            MaterialPageRoute(builder: (context) => SelectCategoryScreen()));
+                                        //print(result);
+                                        setState(() {
+                                          categoryId = result['categoryId'];
+                                          categoryName = result['categoryName'];
+                                          isIncome = result['isIncome'];
+                                        });
+                                        print(categoryId);
+                                      },
+                                      child: Column(
+                                        mainAxisAlignment: MainAxisAlignment.center,
+                                        children: <Widget>[
+                                          Text(
+                                            'Category',
+                                            style: TextStyle(
+                                              color: Colors.blueGrey[200],
+                                              fontSize: 18.0,
+                                              fontStyle: FontStyle.italic,
+                                            ),
+                                          ),
+                                          Text(
+                                            categoryName,
+                                            style: TextStyle(
+                                              color: Colors.black,
+                                              fontSize: 18.0,
+                                              fontWeight: FontWeight.w400,
+                                            ),
+                                          ),
+                                        ],
+                                      ),
+                                    ),
+                                  ]
+                              ),
+                            ),
+                          ),
+                        ]
+                    ),
                   )
-                ),
-                SizedBox(height: 20.0),
-                _showTextFormFields(itemNameController,
-                  "Enter the name of expense",
-                  Icon(Icons.drive_file_rename_outline),
-                ),
-                SizedBox(height: 15),
-                _showCalcFormFields(
-                  "Enter the cost",
-                   Icon(Icons.attach_money_rounded),
-                ),
-                SizedBox(height: 5),
-                getMultiSelectChipField(),
-                Padding(
-                  padding: EdgeInsets.symmetric(horizontal: 20.0),
-                  child: Row(
-                    mainAxisAlignment: MainAxisAlignment.spaceEvenly,
-                    children: <Widget>[
-                      ElevatedButton(
-                          onPressed: () async {
-                            final Expense expense = Expense(
-                              categoryId: selectedCategory[0].categoryId,
-                              cost: selectedCategory[0].isIncome
-                                  ? double.parse(costController.text)
-                                  : -(double.parse(costController.text)),
-                              itemName: itemNameController.text,
-                              uid: uid,
-                            );
-                            if (_formKey.currentState.validate()) {
-                              await _authReceipt.addExpense(expense).then((_) {
-                                showDialog(
-                                  context: context,
-                                  builder: (BuildContext context) {
-                                    return AlertDialog(
-                                      title: Text(
-                                        "Successfully Added Your Spending Entry!",
-                                        style: TextStyle(fontFamily: 'Lato'),
-                                      ),
-                                      content: Text(
-                                        "Would you like to add another Spending Entry?",
-                                        style: TextStyle(fontFamily: 'Lato.Thin'),
-                                      ),
-                                      actions: <Widget> [
-                                        TextButton(
-                                          child: Text("Back to HomePage"),
-                                          onPressed: () {
-                                            Navigator.push(context,
-                                                MaterialPageRoute(builder: (context) => HomePageScreen()));
-                                          },
-                                        ),
-                                        TextButton(
-                                          child: Text("Add another Spending Entry"),
-                                          onPressed: () {
-                                            Navigator.pop(context);
-                                          },
-                                        ),
-                                      ],
-                                    );
-                                  },
-                                );
-                                itemNameController.clear();
-                                costController.clear();
-                              });
-                            }
-                          },
-                          child: Text('Submit'),
-                          style: ButtonStyle(
-                            backgroundColor: MaterialStateProperty.all(kDeepOrangeLight),
-                          )
-                      ),
-                      ElevatedButton(
-                          onPressed: () {
-                            Navigator.pop(context);
-                          },
-                          child: Text('Return To Homepage'),
-                          style: ButtonStyle(
-                            backgroundColor: MaterialStateProperty.all(Colors.grey),
-                          )
-                      ),
-                    ],
-                  ),
-                ),
-              ]
-            ),
-          ),
+                ]
+            )
         )
-      )
     );
   }
 
-  Widget _showTextFormFields(TextEditingController text, String label, Icon icon) {
+  Widget _showTextFormFields(TextEditingController text, String label, Icon icon, double size) {
     return Padding(
       padding: EdgeInsets.symmetric(horizontal: 20.0),
-      child: TextFormField(
-        controller: text,
-        keyboardType: TextInputType.multiline,
-        maxLines: null,
-        decoration: InputDecoration(
-          labelText: label,
-          prefixIcon: icon,
-          filled: true,
-          fillColor: Colors.white,
-          enabledBorder: OutlineInputBorder(
-            borderRadius: BorderRadius.circular(10.0),
-            borderSide: BorderSide(color: Colors.grey),
+      child: SizedBox(
+        width: size,
+        child: TextFormField(
+          controller: text,
+          decoration: InputDecoration(
+            labelText: label,
+            prefixIcon: icon,
+            filled: true,
+            fillColor: Colors.white,
+            enabledBorder: OutlineInputBorder(
+              borderRadius: BorderRadius.circular(10.0),
+              borderSide: BorderSide(color: Colors.grey),
+            ),
+            focusedBorder: OutlineInputBorder(
+              borderRadius: BorderRadius.circular(10.0),
+              borderSide: BorderSide(color: Colors.blue),
+            ),
           ),
-          focusedBorder: OutlineInputBorder(
-            borderRadius: BorderRadius.circular(10.0),
-            borderSide: BorderSide(color: Colors.blue),
-          ),
+          // The validator receives the text that the user has entered.
+          validator: (value) {
+            if (value.isEmpty) {
+              return label;
+            }
+            return null;
+          },
         ),
-        // The validator receives the text that the user has entered.
-        validator: (value) {
-          if (value.isEmpty) {
-            return label;
-          }
-          return null;
-        },
       ),
     );
   }
@@ -357,7 +381,9 @@ class _AddSpendingScreenState extends State<AddSpendingScreen> {
               ),
             );
           }
-          return Padding();
+          return Padding(
+            padding: EdgeInsets.all(8.0),
+          );
         }
     );
   }
@@ -369,5 +395,5 @@ class _AddSpendingScreenState extends State<AddSpendingScreen> {
       text: result.toStringAsFixed(2),
     );
   }
-
 }
+

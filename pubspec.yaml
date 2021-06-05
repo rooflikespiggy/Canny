@@ -49,6 +49,8 @@ dependencies:
       ref: v0.1.0
   flutter_iconpicker: ^3.0.2
   draggable_bottom_sheet: ^0.1.2
+  flushbar: ^1.10.4
+  datetime_picker_formfield: ^1.0.0
 
 
 dev_dependencies:
