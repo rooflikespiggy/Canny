@@ -7,7 +7,6 @@ import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
 import 'package:Canny/Shared/colors.dart';
-import 'package:Canny/Screens/Receipt/monthly_expenses.dart';
 import 'package:font_awesome_flutter/font_awesome_flutter.dart';
 
 import 'filter_screen.dart';
@@ -21,20 +20,16 @@ class ReceiptScreen extends StatefulWidget {
 
 class _ReceiptScreenState extends State<ReceiptScreen> {
 
-  final List<Widget> monthlyExpensesList = [
-    new MonthlyExpenses(year: 2021, month: 'June'),
-    new MonthlyExpenses(year: 2021, month: 'July'),
-    new MonthlyExpenses(year: 2021, month: 'August'),
-  ];
-
   PageController pageController = PageController();
 
   final String uid = FirebaseAuth.instance.currentUser.uid;
   bool isActive = false;
+  bool reload = false;
   DateTime earliest = DateTime(DateTime.now().year - 1);
-  DateTime latest = DateTime.now();
+  DateTime latest;
   List<Category> filteredCategories = [];
   final CollectionReference expensesCollection = Database().expensesDatabase();
+  var data;
 
   @override
   Widget build(BuildContext context) {
@@ -56,7 +51,6 @@ class _ReceiptScreenState extends State<ReceiptScreen> {
               onPressed: () {
                 setState(() {
                   earliest = DateTime(DateTime.now().year - 2);
-                  latest = DateTime.now();
                   filteredCategories = <Category>[];
                   isActive = false;
                 });
@@ -84,7 +78,7 @@ class _ReceiptScreenState extends State<ReceiptScreen> {
                     ? DateTime(DateTime.now().year - 2)
                     : result['earliest'];
                 latest = result['latest'] == null
-                    ? DateTime.now()
+                    ? null
                     : result['latest'];
               });
               // print(filteredCategories);
@@ -127,32 +121,24 @@ class _ReceiptScreenState extends State<ReceiptScreen> {
                   ),
                 ),
                 StreamBuilder(
-                    stream: FilteredData(earliest: earliest,
-                        latest: latest,
-                        filteredCategories: filteredCategories)
-                        .byDateAndCategory()
-                        .orderBy('datetime', descending: true)
-                        .snapshots(),
+                    stream: getData(),
                     builder: (BuildContext context, AsyncSnapshot<QuerySnapshot> snapshot) {
                       if (snapshot.hasData) {
-                        return Align(
-                            alignment: Alignment.topCenter,
-                            child: ListView.builder(
-                              padding: EdgeInsets.all(4),
-                              shrinkWrap: true,
-                              physics: const NeverScrollableScrollPhysics(),
-                              itemCount: snapshot.data.docs.length,
-                              itemBuilder: (BuildContext context, int index) {
-                                final snapshotData = snapshot.data.docs[index];
-                                return ExpenseTile(
-                                  categoryId: snapshotData['categoryId'],
-                                  cost: snapshotData['cost'],
-                                  itemName: snapshotData['itemName'],
-                                  datetime: snapshotData['datetime'],
-                                  uid: uid,
-                                );
-                              },
-                            )
+                        return ListView.builder(
+                          padding: EdgeInsets.all(4),
+                          shrinkWrap: true,
+                          physics: const NeverScrollableScrollPhysics(),
+                          itemCount: snapshot.data.docs.length,
+                          itemBuilder: (BuildContext context, int index) {
+                            final snapshotData = snapshot.data.docs[index];
+                            return ExpenseTile(
+                              categoryId: snapshotData['categoryId'],
+                              cost: snapshotData['cost'],
+                              itemName: snapshotData['itemName'],
+                              datetime: snapshotData['datetime'],
+                              uid: uid,
+                            );
+                          },
                         );
                       }
                       return CircularProgressIndicator();
@@ -166,12 +152,22 @@ class _ReceiptScreenState extends State<ReceiptScreen> {
                   ),
                 ),
                  */
+                SizedBox(height: 50.0),
               ],
             ),
           ),
         ),
       ),
     );
+  }
+
+  Stream<QuerySnapshot> getData() async* {
+    yield* FilteredData(earliest: earliest,
+        latest: latest,
+        filteredCategories: filteredCategories)
+        .byDateAndCategory()
+        .orderBy('datetime', descending: true)
+        .snapshots();
   }
 }
 
@@ -188,6 +184,10 @@ class FilteredData {
   });
 
   Query byDate() {
+    if (latest ==  null) {
+      return expensesCollection
+          .where('datetime', isGreaterThanOrEqualTo: earliest);
+    }
     return expensesCollection
         .where('datetime', isGreaterThanOrEqualTo: earliest)
         .where('datetime', isLessThanOrEqualTo: latest);

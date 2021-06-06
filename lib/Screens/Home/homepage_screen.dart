@@ -5,6 +5,7 @@ import 'package:Canny/Screens/Dashboard/dashboard_screen.dart';
 import 'package:Canny/Screens/Forum/forum_screen.dart';
 import 'package:Canny/Screens/Insert Function/add_category.dart';
 import 'package:Canny/Screens/Insert%20Function/add_spending.dart';
+import 'package:Canny/Screens/Category/category_screen.dart';
 import 'package:draggable_bottom_sheet/draggable_bottom_sheet.dart';
 import 'package:Canny/Screens/Insert Function/add_targeted_expenditure.dart';
 import 'package:Canny/Screens/Receipt/receipt_screen.dart';
@@ -79,6 +80,7 @@ class _HomePageScreenState extends State<HomePageScreen> {
     List<Widget> _pageOptions = [
       DashboardScreen(),
       ReceiptScreen(),
+      CategoryScreen(),
       ForumScreen(),
     ];
 
@@ -92,15 +94,13 @@ class _HomePageScreenState extends State<HomePageScreen> {
         label: 'Receipt',
       ),
       BottomNavigationBarItem(
+        icon: Icon(Icons.category),
+        label: 'Categories',
+      ),
+      BottomNavigationBarItem(
         icon: Icon(Icons.forum),
         label: 'Forum',
       ),
-      /*
-    BottomNavigationBarItem(
-      icon: Icon(Icons.leaderboard),
-      label: 'Leaderboard',
-    ),
-     */
     ];
 
     List<SpeedDialChild> _speedDailItems = [
@@ -198,30 +198,27 @@ class _HomePageScreenState extends State<HomePageScreen> {
       body: _pageOptions[_selectedTab],
       bottomNavigationBar: Container(
         color: kDarkBlue,
-        child: Padding(
-          padding: EdgeInsets.only(right: 80),
-          child: BottomNavigationBar(
-            backgroundColor: kDarkBlue,
-            elevation: 0,
-            currentIndex: _selectedTab,
-            type: BottomNavigationBarType.fixed,
-            unselectedItemColor: kBlue,
-            selectedItemColor: kLightBlue,
-            selectedLabelStyle: TextStyle(fontFamily: 'Lato'),
-            unselectedLabelStyle: TextStyle(fontFamily: 'Lato'),
-            onTap: (int index) {
-              setState(() {
-                _selectedTab = index;
-              });
-            },
-            items: _items,
-          ),
+        child: BottomNavigationBar(
+          backgroundColor: kDarkBlue,
+          elevation: 0,
+          currentIndex: _selectedTab,
+          type: BottomNavigationBarType.fixed,
+          unselectedItemColor: kBlue,
+          selectedItemColor: kLightBlue,
+          selectedLabelStyle: TextStyle(fontFamily: 'Lato'),
+          unselectedLabelStyle: TextStyle(fontFamily: 'Lato'),
+          onTap: (int index) {
+            setState(() {
+              _selectedTab = index;
+            });
+          },
+          items: _items,
         ),
       ),
-      floatingActionButtonLocation: FloatingActionButtonLocation.endDocked,
+      floatingActionButtonLocation: FloatingActionButtonLocation.endFloat,
       floatingActionButton: SpeedDial(
         elevation: 7,
-        marginBottom: 30,
+        marginBottom: 10,
         icon: Icons.menu,
         activeBackgroundColor: kLightBlueDark,
         activeIcon: Icons.clear,

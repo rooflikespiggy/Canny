@@ -29,7 +29,7 @@ class CalcIconButton extends StatelessWidget {
             print(category);
             callback(category);
             ScaffoldMessenger.of(context).showSnackBar(SnackBar(
-              content: Text(category.categoryName + ' Category chosen'),
+              content: Text(category.categoryName + ' chosen'),
               duration: Duration(seconds: 1),
             ));
           },

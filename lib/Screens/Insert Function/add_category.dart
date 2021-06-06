@@ -25,26 +25,11 @@ class _AddCategoryScreenState extends State<AddCategoryScreen> {
   final TextEditingController categoryNameController = TextEditingController();
   final CollectionReference categoryCollection = Database().categoryDatabase();
   final CategoryDatabaseService _authCategory = CategoryDatabaseService();
-  Icon _icon;
+  IconTheme _icon = IconTheme(
+      data: IconThemeData(color: Color(0xff443a49)),
+      child: Icon(FontAwesomeIcons.question));
   String categoryId = '00';
   bool isIncome = false;
-
-  /*
-  Future<int> countDocuments() async {
-    QuerySnapshot _myDoc = await categoryCollection.get();
-    List<DocumentSnapshot> _myDocCount = _myDoc.docs;
-    return _myDocCount.length;  // Count of Documents in Collection
-  }
-
-  Future noOfDocuments() async {
-    _categoryNo = await countDocuments();
-  }
-
-  String get categoryId {
-    noOfDocuments();
-    return _categoryNo.toString();
-  }
-   */
 
   // create some values
   Color pickerColor = Color(0xff443a49);
@@ -53,13 +38,20 @@ class _AddCategoryScreenState extends State<AddCategoryScreen> {
   // ValueChanged<Color> callback
   void changeColor(Color color) {
     setState(() => pickerColor = color);
+    _icon = IconTheme(
+        data: IconThemeData(color: pickerColor),
+        child: _icon.child);
   }
 
   _pickIcon() async {
-    IconData icon = await FlutterIconPicker.showIconPicker(context);
-    _icon = Icon(icon,
-      color: pickerColor,
-      size: 40,
+    IconData icon = await FlutterIconPicker.showIconPicker(
+        context,
+      adaptiveDialog: true,
+      iconPickerShape:
+      RoundedRectangleBorder(borderRadius: BorderRadius.circular(20)));
+    _icon = IconTheme(
+        data: IconThemeData(color: pickerColor),
+        child: Icon(icon, size: 40)
     );
     setState((){});
     debugPrint('Picked Icon:  $icon');
@@ -131,15 +123,13 @@ class _AddCategoryScreenState extends State<AddCategoryScreen> {
                                                       radius: 35,
                                                       child: AnimatedSwitcher(
                                                           duration: Duration(milliseconds: 300),
-                                                          child: _icon != null
-                                                              ? _icon
-                                                              : Icon(FontAwesomeIcons.question, color: Colors.black)
+                                                          child: _icon,
                                                       ),
                                                     ),
                                                     _showTextFormFields(categoryNameController,
                                                         "Category Name",
                                                         Icon(Icons.drive_file_rename_outline),
-                                                        245.0,
+                                                        240.0,
                                                     ),
                                                   ],
                                                 ),
@@ -151,15 +141,17 @@ class _AddCategoryScreenState extends State<AddCategoryScreen> {
                                                     mainAxisAlignment: MainAxisAlignment.spaceEvenly,
                                                     children: <Widget> [
                                                       Container(
-                                                        color: pickerColor.withOpacity(0.5),
+                                                        color: pickerColor,
                                                         child: IconButton(
-                                                          icon: Icon(Icons.edit),
+                                                          icon: Icon(
+                                                              Icons.edit,
+                                                              color: Colors.white),
                                                           onPressed: () {
                                                             showDialog(
                                                               context: context,
                                                               builder: (BuildContext context) {
                                                                 return AlertDialog(
-                                                                  title: Text('Select a color'),
+                                                                  title: Text('Color your category'),
                                                                   content: SingleChildScrollView(
                                                                       child: Column(
                                                                           children: <Widget>[
@@ -239,7 +231,7 @@ class _AddCategoryScreenState extends State<AddCategoryScreen> {
                                                   final Category category = Category(
                                                     categoryName: categoryNameController.text,
                                                     categoryColor: currentColor,
-                                                    categoryIcon: _icon,
+                                                    categoryIcon: _icon.child,
                                                     categoryId: categoryId,
                                                     categoryAmount: 0,
                                                     isIncome: isIncome,

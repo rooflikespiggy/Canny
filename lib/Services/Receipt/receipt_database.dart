@@ -21,7 +21,7 @@ class ReceiptDatabaseService {
     return true;
   }
 
-  Future<List<Expense>> getComments() async {
+  Future<List<Expense>> getReceipt() async {
     List<DocumentSnapshot> snapshots = await expensesCollection
         .get()
         .then((value) => value.docs);

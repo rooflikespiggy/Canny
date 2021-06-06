@@ -45,13 +45,6 @@ class _CategoryScreenState extends State<CategoryScreen> {
                 });
               },
             ),
-            IconButton(
-              icon: Icon(Icons.home_rounded),
-              onPressed: () {
-                Navigator.push(context,
-                    MaterialPageRoute(builder: (context) => HomePageScreen()));
-              },
-            )
           ],
         ),
         body: Container(
@@ -122,6 +115,7 @@ class _CategoryScreenState extends State<CategoryScreen> {
                             return CircularProgressIndicator();
                           }
                       ),
+                      SizedBox(height: 50.0),
                     ],
                   ),
               )

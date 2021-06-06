@@ -5,7 +5,7 @@ import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
 import 'package:Canny/Shared/colors.dart';
 import 'package:Canny/Screens/wrapper.dart';
-import 'package:Canny/Screens/Sidebar/View Categories/category_screen.dart';
+import 'package:Canny/Screens/Category/category_screen.dart';
 
 class SideBarMenu extends StatelessWidget {
   final AuthService _auth = AuthService();
@@ -57,6 +57,7 @@ class SideBarMenu extends StatelessWidget {
               },
             ),
             Divider(thickness: 1.0),
+            /*
             ListTile(
               leading: Icon(Icons.category),
               trailing: Icon(Icons.arrow_right),
@@ -71,7 +72,7 @@ class SideBarMenu extends StatelessWidget {
                     NoAnimationMaterialPageRoute(builder: (context) => CategoryScreen()))
               },
             ),
-            Divider(thickness: 1.0),
+             */
             // SizedBox(height: 400.0),
             // SizedBox(height: 400.0),
             ListTile(

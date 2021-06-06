@@ -202,7 +202,6 @@ class _FilterScreenState extends State<FilterScreen> {
               'isActive': false,
               'filteredCategories': <Category>[],
               'earliest': DateTime(DateTime.now().year - 2),
-              'latest': DateTime.now(),
             });
           },
         ),
@@ -229,7 +228,6 @@ class _FilterScreenState extends State<FilterScreen> {
                   'isActive': false,
                   'filteredCategories': <Category>[],
                   'earliest': DateTime(DateTime.now().year - 2),
-                  'latest': DateTime.now(),
                 });
                 Flushbar(
                   message: "No filter was set.",

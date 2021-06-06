@@ -1,6 +1,6 @@
 import 'package:Canny/Screens/Home/homepage_screen.dart';
 import 'package:Canny/Screens/Insert%20Function/select_category_screen.dart';
-import 'package:Canny/Screens/Sidebar/View%20Categories/category_screen.dart';
+import 'package:Canny/Screens/Category/category_screen.dart';
 import 'package:Canny/Services/Receipt/receipt_database.dart';
 import 'package:Canny/Shared/colors.dart';
 import 'package:flutter/material.dart';
@@ -164,11 +164,13 @@ class _AddSpendingScreenState extends State<AddSpendingScreen> {
                                           uid: uid,
                                         );
                                         if (_formKey.currentState.validate()) {
+                                          // TODO: need error if amount added is 0
                                           await _authReceipt.addExpense(expense);
                                           itemNameController.clear();
                                           costController.clear();
                                           Navigator.pop(context);
                                         }
+                                        setState(() {});
                                       },
                                       child: Text('Submit',
                                         style: TextStyle(
