@@ -3,6 +3,7 @@ import 'package:Canny/Screens/Forum/forum_detail_screen.dart';
 import 'package:Canny/Screens/Sidebar/sidebar_menu.dart';
 import 'package:Canny/Services/Forum/forum_database.dart';
 import 'package:Canny/Shared/colors.dart';
+import 'package:Canny/Shared/custom_route.dart';
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
@@ -45,7 +46,7 @@ class _ForumScreenState extends State<ForumScreen> {
             icon: Icon(Icons.add_circle_outline_sharp),
             onPressed: () {
               Navigator.push(context,
-                  MaterialPageRoute(builder: (context) => AddDiscussion()));
+                  NoAnimationMaterialPageRoute(builder: (context) => AddDiscussion()));
             },
           ),
         ],
@@ -179,7 +180,7 @@ class _ForumScreenState extends State<ForumScreen> {
                                                           icon: Icon(Icons.add_comment_outlined),
                                                           onPressed: () {
                                                             Navigator.push(context,
-                                                                MaterialPageRoute(builder: (context) =>
+                                                                NoAnimationMaterialPageRoute(builder: (context) =>
                                                                     ForumDetailScreen(inputId: snapshotData.id)));
                                                           },
                                                         ),

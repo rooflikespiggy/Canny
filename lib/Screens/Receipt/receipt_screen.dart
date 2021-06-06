@@ -2,6 +2,7 @@ import 'package:Canny/Database/all_database.dart';
 import 'package:Canny/Models/category.dart';
 import 'package:Canny/Screens/Sidebar/sidebar_menu.dart';
 import 'package:Canny/Services/Receipt/expense_tiles.dart';
+import 'package:Canny/Shared/custom_route.dart';
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
@@ -72,21 +73,21 @@ class _ReceiptScreenState extends State<ReceiptScreen> {
             ),
             onPressed: () async {
               final Map<String, dynamic> result = await Navigator.push(context,
-                  MaterialPageRoute(builder: (context) => FilterScreen()));
+                  NoAnimationMaterialPageRoute(builder: (context) => FilterScreen()));
               //print(result);
               setState(() {
                 isActive = result['isActive'];
                 filteredCategories = result['filteredCategories'].isNotEmpty
                     ? result['filteredCategories']
                     : <Category>[];
-                earliest = result['filteredDatetime'] == null
+                earliest = result['earliest'] == null
                     ? DateTime(DateTime.now().year - 2)
-                    : result['filteredDatetime'];
+                    : result['earliest'];
                 latest = result['latest'] == null
                     ? DateTime.now()
                     : result['latest'];
               });
-              print(filteredCategories);
+              // print(filteredCategories);
             },
           ),
         ],
@@ -107,12 +108,30 @@ class _ReceiptScreenState extends State<ReceiptScreen> {
             padding: EdgeInsets.all(8),
             child: Column(
               children: <Widget>[
+                Visibility(
+                  visible: isActive,
+                  child: Container(
+                    padding: EdgeInsets.all(8),
+                    margin: EdgeInsets.symmetric(horizontal: 15.0),
+                    decoration: BoxDecoration(
+                      borderRadius: BorderRadius.circular(5.0),
+                      color: Colors.green[200].withOpacity(0.8),
+                    ),
+                    child: Text(
+                      "FILTER APPLIED",
+                      textAlign: TextAlign.center,
+                      style: TextStyle(
+                        fontWeight: FontWeight.bold,
+                      ),
+                    ),
+                  ),
+                ),
                 StreamBuilder(
                     stream: FilteredData(earliest: earliest,
                         latest: latest,
                         filteredCategories: filteredCategories)
                         .byDateAndCategory()
-                        .orderBy('datetime')
+                        .orderBy('datetime', descending: true)
                         .snapshots(),
                     builder: (BuildContext context, AsyncSnapshot<QuerySnapshot> snapshot) {
                       if (snapshot.hasData) {
@@ -183,6 +202,4 @@ class FilteredData {
     }
     return byDate();
   }
-
-
 }

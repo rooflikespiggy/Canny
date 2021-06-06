@@ -30,12 +30,6 @@ class _CustomiseQIState extends State<CustomiseQI> {
   List<MultiSelectItem<Category>> _allCategories;
   bool isSelected = false;
 
-  final _testCategories = CategoryDatabaseService()
-      .getAllCategories()
-      .map((category) =>
-          MultiSelectItem<Category>(category, category.categoryName))
-      .toList();
-
   List<Category> selectedCategories;
   String firstSelectedCategory;
 

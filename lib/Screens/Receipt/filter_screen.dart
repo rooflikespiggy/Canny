@@ -17,8 +17,6 @@ class _FilterScreenState extends State<FilterScreen> {
   CategoryDatabaseService _authCategory = CategoryDatabaseService();
   List<Category> filteredCategories = [];
   List<MultiSelectItem<Category>> _allCategories;
-  double minValue = double.negativeInfinity;
-  double maxValue = double.infinity;
   final format = DateFormat('d/M/y');
   DateTime earliest;
   DateTime latest;
@@ -43,7 +41,7 @@ class _FilterScreenState extends State<FilterScreen> {
           .map(
             (ctg) => InputChip(
           label: Text(ctg.categoryName),
-          backgroundColor: ctg.categoryColor,
+          backgroundColor: ctg.categoryColor.withOpacity(0.6),
           onDeleted: () {
             setState(() {
               filteredCategories.remove(ctg);
@@ -111,7 +109,7 @@ class _FilterScreenState extends State<FilterScreen> {
                                       (ctg) => InputChip(
                                       label: Text(ctg.categoryName),
                                       backgroundColor: tempCtgs.contains(ctg)
-                                          ? ctg.categoryColor
+                                          ? ctg.categoryColor.withOpacity(0.6)
                                           : Colors.grey,
                                       onSelected: (value) {
                                         setState(() {
@@ -135,6 +133,7 @@ class _FilterScreenState extends State<FilterScreen> {
         }
     );
   }
+
 
   Widget _datesSelection() {
     return Container(
@@ -216,19 +215,13 @@ class _FilterScreenState extends State<FilterScreen> {
                 Navigator.pop(context, {
                   'isActive': true,
                   'filteredCategories': filteredCategories,
-                  'earliest': DateTime(
-                    earliest != null ? earliest.year : DateTime.now().year - 2,
-                    earliest != null ? earliest.month : DateTime.now().month,
-                    earliest != null ? earliest.day : DateTime.now().day,
-                    DateTime.now().hour,
-                    DateTime.now().minute,
-                  ),
+                  'earliest': earliest,
                   'latest': DateTime(
                     latest != null ? latest.year : DateTime.now().year,
                     latest != null ? latest.month : DateTime.now().month,
                     latest != null ? latest.day : DateTime.now().day,
-                    DateTime.now().hour,
-                    DateTime.now().minute,
+                    23,
+                    59,
                   ),
                 });
               } else {

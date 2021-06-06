@@ -8,6 +8,7 @@ import 'package:firebase_auth/firebase_auth.dart';
 import 'package:Canny/Models/expense.dart';
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:Canny/Database/all_database.dart';
+import 'package:font_awesome_flutter/font_awesome_flutter.dart';
 import 'package:multi_select_flutter/chip_field/multi_select_chip_field.dart';
 import 'package:multi_select_flutter/dialog/multi_select_dialog_field.dart';
 import 'package:Canny/Services/Category/category_database.dart';
@@ -37,6 +38,11 @@ class _AddSpendingScreenState extends State<AddSpendingScreen> {
   String firstSelectedCategory;
   String categoryName = 'Food & Drinks';
   String categoryId = '00';
+  Icon icon;
+  int categoryColorValue;
+  int categoryIconCodePoint;
+  String categoryFontFamily;
+  //String categoryFontPackage;
   bool isIncome = false;
 
   @override
@@ -56,27 +62,97 @@ class _AddSpendingScreenState extends State<AddSpendingScreen> {
                     ),
                     child: Column(
                         children: <Widget> [
+                          SizedBox(width: 20.0),
                           Row(
                             mainAxisAlignment: MainAxisAlignment.center,
                             children: <Widget> [
-                              Column(
-                                  children: <Widget> [
-                                    TextButton(
-                                      onPressed: () {
-                                        itemNameController.clear();
-                                        costController.clear();
-                                        Navigator.pop(context);
-                                      },
-                                      child: Icon(Icons.clear),
-                                    ),
-                                    Text('Cancel'),
-                                  ]
-                              ),
-                              Spacer(),
+                              SizedBox(width: 30.0),
+                              // TODO: make this Text nicer
                               Text('Add Your Expenses'),
                               Spacer(),
-                              Column(
+                              TextButton(
+                                onPressed: () {
+                                  itemNameController.clear();
+                                  costController.clear();
+                                  Navigator.pop(context);
+                                },
+                                child: Icon(Icons.clear),
+                              ),
+                            ],
+                          ),
+                          SizedBox(height: 20),
+                          Container(
+                            alignment: Alignment.topCenter,
+                            child: Form(
+                              key: _formKey,
+                              child: Column(
                                   children: <Widget> [
+                                    _showTextFormFields(itemNameController,
+                                      "Enter the name of expense",
+                                      Icon(Icons.drive_file_rename_outline),
+                                      390.0,
+                                    ),
+                                    SizedBox(height: 15),
+                                    _showCalcFormFields(
+                                      "Enter the cost",
+                                      Icon(Icons.attach_money_rounded),
+                                    ),
+                                    // getMultiSelectChipField(),
+                                    Row(
+                                      mainAxisAlignment: MainAxisAlignment.spaceEvenly,
+                                      children: <Widget> [
+                                        CircleAvatar(
+                                          backgroundColor: categoryColorValue != null
+                                              ? Color(categoryColorValue).withOpacity(0.1)
+                                              : Colors.black.withOpacity(0.1),
+                                          radius: 30,
+                                          child: categoryColorValue != null
+                                              ?  IconTheme(
+                                              data: IconThemeData(color: Color(categoryColorValue).withOpacity(1), size: 25),
+                                              child: Icon(IconData(categoryIconCodePoint,
+                                                  fontFamily: categoryFontFamily)
+                                              ))
+                                              : Icon(FontAwesomeIcons.question, color: Colors.black),
+                                        ),
+                                        GestureDetector(
+                                          onTap: () async {
+                                            final Map<String, dynamic> result = await Navigator.push(context,
+                                                MaterialPageRoute(builder: (context) => SelectCategoryScreen()));
+                                            //print(result);
+                                            setState(() {
+                                              categoryId = result['categoryId'];
+                                              categoryName = result['categoryName'];
+                                              isIncome = result['isIncome'];
+                                              categoryIconCodePoint = result['categoryIconCodePoint'];
+                                              categoryFontFamily = result['categoryFontFamily'];
+                                              //categoryFontPackage = result['categoryFontPackage'];
+                                              categoryColorValue = result['categoryColorValue'];
+                                            });
+                                          },
+                                          child: Column(
+                                            mainAxisAlignment: MainAxisAlignment.center,
+                                            children: <Widget>[
+                                              Text(
+                                                'Category',
+                                                style: TextStyle(
+                                                  color: Colors.blueGrey[200],
+                                                  fontSize: 18.0,
+                                                  fontStyle: FontStyle.italic,
+                                                ),
+                                              ),
+                                              Text(
+                                                categoryName,
+                                                style: TextStyle(
+                                                  color: Colors.black,
+                                                  fontSize: 18.0,
+                                                  fontWeight: FontWeight.w400,
+                                                ),
+                                              ),
+                                            ],
+                                          ),
+                                        ),
+                                      ],
+                                    ),
                                     TextButton(
                                       onPressed: () async {
                                         final Expense expense = Expense(
@@ -94,65 +170,17 @@ class _AddSpendingScreenState extends State<AddSpendingScreen> {
                                           Navigator.pop(context);
                                         }
                                       },
-                                      child: Icon(Icons.check),
-                                    ),
-                                    Text('Add'),
-                                  ]
-                              ),
-                            ],
-                          ),
-                          SizedBox(height: 30),
-                          Container(
-                            alignment: Alignment.topCenter,
-                            child: Form(
-                              key: _formKey,
-                              child: Column(
-                                  children: <Widget> [
-                                    _showTextFormFields(itemNameController,
-                                      "Enter the name of expense",
-                                      Icon(Icons.drive_file_rename_outline),
-                                      390.0,
-                                    ),
-                                    SizedBox(height: 15),
-                                    _showCalcFormFields(
-                                      "Enter the cost",
-                                      Icon(Icons.attach_money_rounded),
-                                    ),
-                                    getMultiSelectChipField(),
-                                    GestureDetector(
-                                      onTap: () async {
-                                        final Map<String, dynamic> result = await Navigator.push(context,
-                                            MaterialPageRoute(builder: (context) => SelectCategoryScreen()));
-                                        //print(result);
-                                        setState(() {
-                                          categoryId = result['categoryId'];
-                                          categoryName = result['categoryName'];
-                                          isIncome = result['isIncome'];
-                                        });
-                                        print(categoryId);
-                                      },
-                                      child: Column(
-                                        mainAxisAlignment: MainAxisAlignment.center,
-                                        children: <Widget>[
-                                          Text(
-                                            'Category',
-                                            style: TextStyle(
-                                              color: Colors.blueGrey[200],
-                                              fontSize: 18.0,
-                                              fontStyle: FontStyle.italic,
-                                            ),
-                                          ),
-                                          Text(
-                                            categoryName,
-                                            style: TextStyle(
-                                              color: Colors.black,
-                                              fontSize: 18.0,
-                                              fontWeight: FontWeight.w400,
-                                            ),
-                                          ),
-                                        ],
+                                      child: Text('Submit',
+                                        style: TextStyle(
+                                          color: Colors.white,
+                                        ),
+                                      ),
+                                      style: TextButton.styleFrom(
+                                        backgroundColor: kDarkBlue,
+                                        minimumSize: Size(350, 40),
                                       ),
                                     ),
+                                    SizedBox(height: 20.0),
                                   ]
                               ),
                             ),
