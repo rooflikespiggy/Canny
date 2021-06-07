@@ -6,6 +6,7 @@ import 'package:Canny/Screens/Forum/forum_screen.dart';
 import 'package:Canny/Screens/Insert Function/add_category.dart';
 import 'package:Canny/Screens/Insert%20Function/add_spending.dart';
 import 'package:Canny/Screens/Category/category_screen.dart';
+import 'package:Canny/Services/Receipt/expense_calculator.dart';
 import 'package:draggable_bottom_sheet/draggable_bottom_sheet.dart';
 import 'package:Canny/Screens/Insert Function/add_targeted_expenditure.dart';
 import 'package:Canny/Screens/Receipt/receipt_screen.dart';
@@ -149,10 +150,11 @@ class _HomePageScreenState extends State<HomePageScreen> {
         ),
         backgroundColor: kDarkBlue,
         onTap: () {
-          /*
+          // Another method i thought of instead of using modal bottom sheet
+          // you see which one better
           Navigator.push(context,
-              MaterialPageRoute(builder: (context) => AddSpendingScreen()));
-          */
+              MaterialPageRoute(builder: (context) => ExpenseCalculator()));
+          /*
           showModalBottomSheet(
               shape: RoundedRectangleBorder(
                 borderRadius: BorderRadius.only(
@@ -168,6 +170,7 @@ class _HomePageScreenState extends State<HomePageScreen> {
                 return AddSpendingScreen();
               }
           );
+           */
 
         },
       ),

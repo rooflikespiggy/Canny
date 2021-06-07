@@ -23,25 +23,12 @@ class QuickInputState extends State<QuickInput> {
   String uid = FirebaseAuth.instance.currentUser.uid;
   String _history = '';
   String _expression = '';
+  String _evaluate = '';
   final QuickInputDatabaseService _authQuickInput = QuickInputDatabaseService();
   final ReceiptDatabaseService _authReceipt = ReceiptDatabaseService();
   final CollectionReference quickInputCollection = Database().quickInputDatabase();
   Category _chosenCategory;
-
-  void numClick(String text) {
-    if (_expression.contains('.') && text == '.') {
-      setState(() => _expression += '');
-    } else {
-      setState(() => _expression += text);
-    }
-  }
-
-  void allClear(String text) {
-    setState(() {
-      _history = '';
-      _expression = '';
-    });
-  }
+  bool evaluated = false;
 
   void catClick(Category category) {
     setState(() {
@@ -49,14 +36,43 @@ class QuickInputState extends State<QuickInput> {
     });
   }
 
+  void numClick(String text) {
+    if (_expression.contains('.') && text == '.') {
+      setState(() => _expression += '');
+    } else if (text == '*') {
+      setState(() => _expression += 'x');
+    } else if (text == '/') {
+      setState(() => _expression += '÷');
+    } else {
+      setState(() => _expression += text);
+    }
+  }
+
+  void allClear(String text) {
+    setState(() {
+      evaluated = false;
+      _history = '';
+      _expression = '';
+      _evaluate = '';
+    });
+  }
+
+  void clear(String text) {
+    setState(() {
+      _evaluate = _evaluate.substring(0, _evaluate.length - 1);
+      _expression = _expression.substring(0, _expression.length - 1);
+    });
+  }
+
   void evaluate(String text) {
     Parser p = Parser();
-    Expression exp = p.parse(_expression);
+    Expression exp = p.parse(_evaluate);
     ContextModel cm = ContextModel();
 
     setState(() {
+      evaluated = true;
       _history = _expression;
-      _expression = exp.evaluate(EvaluationType.REAL, cm).toString();
+      _evaluate = exp.evaluate(EvaluationType.REAL, cm).toString();
     });
   }
 
@@ -101,7 +117,7 @@ class QuickInputState extends State<QuickInput> {
                   child: Padding(
                     padding: const EdgeInsets.only(right: 16),
                     child: Text(
-                      _expression,
+                      !evaluated ? _expression : _evaluate,
                       style: TextStyle(
                         fontSize: 40,
                         color: Colors.blueGrey[900],

@@ -80,9 +80,7 @@ class _CategoryScreenState extends State<CategoryScreen> {
                         ),
                       ),
                       StreamBuilder(
-                          stream: categoryCollection
-                              .orderBy("categoryId")
-                              .snapshots(),
+                          stream: getData(),
                           builder: (BuildContext context, AsyncSnapshot<QuerySnapshot> snapshot) {
                             if (snapshot.hasData) {
                               return Align(
@@ -122,5 +120,12 @@ class _CategoryScreenState extends State<CategoryScreen> {
           ),
         ),
     );
+  }
+
+  Stream<QuerySnapshot> getData() async* {
+    await Future.delayed(const Duration(milliseconds: 300));
+    yield* categoryCollection
+        .orderBy("categoryId")
+        .snapshots();
   }
 }
