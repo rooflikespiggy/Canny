@@ -57,6 +57,26 @@ class CommentDatabaseService {
     });
   }
 
+  Future updateName(String commentId, String newName) async {
+    await forumCommentCollection.doc(inputId)
+        .collection("Comment")
+        .doc(commentId)
+        .update({
+      "name": newName,
+      "timestamp": DateTime.now(),
+    });
+  }
+
+  Future updateDescription(String commentId, String newDescription) async {
+    await forumCommentCollection.doc(inputId)
+        .collection("Comment")
+        .doc(commentId)
+        .update({
+      "description": newDescription,
+      "timestamp": DateTime.now(),
+    });
+  }
+
   Future updateLikes(List liked_uid,
       List disliked_uid,
       String commentId) async {

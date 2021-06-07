@@ -162,6 +162,7 @@ class _ReceiptScreenState extends State<ReceiptScreen> {
   }
 
   Stream<QuerySnapshot> getData() async* {
+    await Future.delayed(const Duration(milliseconds: 300));
     yield* FilteredData(earliest: earliest,
         latest: latest,
         filteredCategories: filteredCategories)

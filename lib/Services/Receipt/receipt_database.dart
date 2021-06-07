@@ -43,20 +43,85 @@ class ReceiptDatabaseService {
   }
 
   Future updateExpenses(String receiptId,
+      String oldCategoryId,
       String newCategoryId,
       String newItemName,
+      DateTime newDate,
       int newCost) async {
     await expensesCollection
         .doc(receiptId)
         .update({
       'categoryId': newCategoryId,
       'itemName': newItemName,
+      'datetime': newDate,
       'cost': newCost,
     });
     await categoryCollection
         .doc(int.parse(newCategoryId).toString())
         .update({
       "categoryAmount": FieldValue.increment(newCost)
+    });
+    await categoryCollection
+        .doc(int.parse(oldCategoryId).toString())
+        .update({
+      "categoryAmount": FieldValue.increment(-newCost)
+    });
+    return true;
+  }
+
+  Future updateCategory(String receiptId,
+      String oldCategoryId,
+      String newCategoryId,
+      int cost) async {
+    await expensesCollection
+        .doc(receiptId)
+        .update({
+      'categoryId': newCategoryId,
+    });
+    await categoryCollection
+        .doc(int.parse(newCategoryId).toString())
+        .update({
+      "categoryAmount": FieldValue.increment(cost)
+    });
+    await categoryCollection
+        .doc(int.parse(oldCategoryId).toString())
+        .update({
+      "categoryAmount": FieldValue.increment(-cost)
+    });
+    return true;
+  }
+
+  Future updateItemName(String receiptId, String newItemName) async {
+    await expensesCollection
+        .doc(receiptId)
+        .update({
+      'itemName': newItemName,
+    });
+    return true;
+  }
+
+  Future updateCost(String receiptId,
+      String categoryId,
+      int newCost) async {
+    await expensesCollection
+        .doc(receiptId)
+        .update({
+      'cost': newCost,
+    });
+    await categoryCollection
+        .doc(int.parse(categoryId).toString())
+        .update({
+      "categoryAmount": FieldValue.increment(newCost)
+    });
+    return true;
+  }
+
+  Future updateDate(String receiptId,
+      DateTime newDate) async {
+    await expensesCollection
+        .doc(receiptId)
+        .update({
+      'datetime': newDate,
     });
     return true;
   }

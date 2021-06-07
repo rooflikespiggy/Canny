@@ -40,8 +40,32 @@ class ForumDatabaseService {
     return true;
   }
 
-  Future updateLikes(List liked_uid,
-      String forumId) async {
+  Future updateName(String forumId, String newName) async {
+    await forumCollection.doc(forumId).update({
+      "name": newName,
+      "timestamp": DateTime.now(),
+    });
+    return true;
+  }
+
+  Future updateTitle(String forumId, String newTitle) async {
+    await forumCollection.doc(forumId).update({
+      "title": newTitle,
+      "timestamp": DateTime.now(),
+    });
+    return true;
+  }
+
+  Future updateDescription(String forumId, String newDescription) async {
+    await forumCollection.doc(forumId).update({
+      "description": newDescription,
+      "timestamp": DateTime.now(),
+    });
+    return true;
+  }
+
+
+  Future updateLikes(List liked_uid, String forumId) async {
     if (liked_uid.contains(uid)) {
       await forumCollection.doc(forumId)
           .update({
