@@ -57,7 +57,7 @@ class CategoryDatabaseService {
     return true;
   }
 
-  Future removeCategory(String catId, double categoryAmount) async {
+  Future removeCategory(String categoryId, double categoryAmount) async {
     // if removeCategory all the expenses should go to Others category
     /*
     for (Category category in categories[userId]) {
@@ -65,15 +65,14 @@ class CategoryDatabaseService {
         categories[userId].remove(category);
       }
     }
-    */
     await receiptCollection
-        .where('categoryId', isEqualTo: catId)
+        .where('categoryId', isEqualTo: categoryId)
         .get()
         .then((value) => null);
     //how to update the categoryid value to 11 for each expense
-    
+     */
     await categoryCollection
-        .doc(catId)
+        .doc(categoryId)
         .delete();
     await categoryCollection
         .doc('11')

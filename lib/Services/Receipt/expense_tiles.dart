@@ -1,4 +1,5 @@
 import 'package:Canny/Models/category.dart';
+import 'package:Canny/Screens/Receipt/edit_receipt.dart';
 import 'package:Canny/Services/Category/category_database.dart';
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:flutter/material.dart';
@@ -107,6 +108,28 @@ class _ExpenseTileState extends State<ExpenseTile> {
         ),
         onTap: () {
           // TODO: edit everything
+          showModalBottomSheet(
+              shape: RoundedRectangleBorder(
+                borderRadius: BorderRadius.only(
+                  topLeft: Radius.circular(24),
+                  topRight: Radius.circular(24),
+                ),
+              ),
+              enableDrag: true,
+              isScrollControlled: true,
+              elevation: 5,
+              context: context,
+              builder: (BuildContext context) {
+                // TODO: have edit receipt class to handle bottom modal sheet
+                return EditReceipt(
+                  categoryId: widget.categoryId,
+                  cost: widget.cost,
+                  itemName: widget.itemName,
+                  datetime: widget.datetime,
+                  receiptId: widget.receiptId,
+                );
+              }
+          );
         },
         onLongPress: () {
           // TODO: delete the expenses

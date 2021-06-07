@@ -7,8 +7,10 @@ import 'package:Canny/Shared/custom_route.dart';
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter_autolink_text/flutter_autolink_text.dart';
 import 'package:font_awesome_flutter/font_awesome_flutter.dart';
 import 'package:intl/intl.dart';
+import 'package:url_launcher/url_launcher.dart';
 import 'add_discussion.dart';
 import 'forum_search.dart';
 
@@ -110,7 +112,23 @@ class _ForumScreenState extends State<ForumScreen> {
                                                     fontSize: 20,
                                                   ),
                                                 ),
-                                                subtitle: Text(
+                                                subtitle: AutolinkText(
+                                                  text: snapshotData["description"].length > 500
+                                                      ? snapshotData["description"].substring(0, 500) + "..."
+                                                      : snapshotData["description"],
+                                                  textStyle: TextStyle(
+                                                    color: Colors.black,
+                                                    fontSize: 16,
+                                                  ),
+                                                  linkStyle: TextStyle(
+                                                    color: Colors.blue,
+                                                    fontSize: 16),
+                                                  humanize: false,
+                                                  onWebLinkTap: (link) => _launchInWebViewOrVC(link),
+                                                  onEmailTap: (link) => _launchEmail(link),
+                                                ),
+                                                /*
+                                                Text(
                                                     snapshotData["description"].length > 200
                                                         ? snapshotData["description"].substring(0, 200) + "..."
                                                         : snapshotData["description"],
@@ -118,6 +136,7 @@ class _ForumScreenState extends State<ForumScreen> {
                                                       fontSize: 16,
                                                     )
                                                 ),
+                                                 */
                                                 leading: CircleAvatar(
                                                   backgroundColor: kPalePurple,
                                                   radius: 30,
@@ -353,5 +372,31 @@ class _ForumScreenState extends State<ForumScreen> {
         ),
       ),
     );
+  }
+
+  Future<void> _launchInWebViewOrVC(String url) async {
+    if (await canLaunch(url)) {
+      await launch(
+        url,
+        forceSafariVC: false,
+        forceWebView: false,
+        headers: <String, String>{'my_header_key': 'my_header_value'},
+      );
+    } else {
+      throw 'Could not launch $url';
+    }
+  }
+
+  Future<void> _launchEmail(String url) async {
+    final Uri params = Uri(
+      scheme: 'mailto',
+      path: url,
+    );
+    String newUrl = params.toString();
+    if (await canLaunch(newUrl)) {
+      await launch(newUrl);
+    } else {
+      throw 'Could not launch $newUrl';
+    }
   }
 }
