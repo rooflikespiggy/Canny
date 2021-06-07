@@ -13,7 +13,8 @@ class CategoryDatabaseService {
   final CollectionReference categoryCollection = Database().categoryDatabase();
   final String userId = FirebaseAuth.instance.currentUser.uid;
   List<Category> _categories;
-  // var categories = {FirebaseAuth.instance.currentUser.uid: defaultCategories};
+  //var categories = {FirebaseAuth.instance.currentUser.uid: defaultCategories};
+  final CollectionReference receiptCollection = Database().expensesDatabase();
 
   CategoryDatabaseService({this.uid});
 
@@ -56,7 +57,7 @@ class CategoryDatabaseService {
     return true;
   }
 
-  Future removeCategory(String categoryId, double categoryAmount) async {
+  Future removeCategory(String catId, double categoryAmount) async {
     // if removeCategory all the expenses should go to Others category
     /*
     for (Category category in categories[userId]) {
@@ -64,9 +65,15 @@ class CategoryDatabaseService {
         categories[userId].remove(category);
       }
     }
-     */
+    */
+    await receiptCollection
+        .where('categoryId', isEqualTo: catId)
+        .get()
+        .then((value) => null);
+    //how to update the categoryid value to 11 for each expense
+    
     await categoryCollection
-        .doc(categoryId)
+        .doc(catId)
         .delete();
     await categoryCollection
         .doc('11')

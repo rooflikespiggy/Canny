@@ -38,17 +38,15 @@ class QuickInputState extends State<QuickInput> {
   }
 
   void numClick(String text) {
-    setState(() {
-      if (text == '*') {
-        _expression += 'x';
-      }
-      else if (text == '/') {
-        _expression += '÷';
-      } else {
-        _expression += text;
-      }
-    });
-    setState(() => _evaluate += text);
+    if (_expression.contains('.') && text == '.') {
+      setState(() => _expression += '');
+    } else if (text == '*') {
+      setState(() => _expression += 'x');
+    } else if (text == '/') {
+      setState(() => _expression += '÷');
+    } else {
+      setState(() => _expression += text);
+    }
   }
 
   void allClear(String text) {

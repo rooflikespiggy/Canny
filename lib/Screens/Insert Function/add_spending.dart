@@ -56,7 +56,7 @@ class _AddSpendingScreenState extends State<AddSpendingScreen> {
                 children: <Widget> [
                   Container(
                     decoration: BoxDecoration(
-                      color: Colors.white,
+                      color: kLightBlue,
                       borderRadius:
                       BorderRadius.all(Radius.circular(15)),
                     ),
@@ -68,7 +68,13 @@ class _AddSpendingScreenState extends State<AddSpendingScreen> {
                             children: <Widget> [
                               SizedBox(width: 30.0),
                               // TODO: make this Text nicer
-                              Text('Add Your Expenses'),
+                              Text('Add Your Expenses',
+                                style: TextStyle(
+                                    fontSize: 18,
+                                    fontFamily: "Lato",
+                                    color: kDarkBlue
+                                ),
+                              ),
                               Spacer(),
                               TextButton(
                                 onPressed: () {
@@ -80,7 +86,7 @@ class _AddSpendingScreenState extends State<AddSpendingScreen> {
                               ),
                             ],
                           ),
-                          SizedBox(height: 20),
+                          SizedBox(height: 10),
                           Container(
                             alignment: Alignment.topCenter,
                             child: Form(
@@ -97,15 +103,16 @@ class _AddSpendingScreenState extends State<AddSpendingScreen> {
                                       "Enter the cost",
                                       Icon(Icons.attach_money_rounded),
                                     ),
+                                    SizedBox(height: 15,),
                                     // getMultiSelectChipField(),
                                     Row(
-                                      mainAxisAlignment: MainAxisAlignment.spaceEvenly,
                                       children: <Widget> [
+                                        SizedBox(width: 50),
                                         CircleAvatar(
                                           backgroundColor: categoryColorValue != null
                                               ? Color(categoryColorValue).withOpacity(0.1)
                                               : Colors.black.withOpacity(0.1),
-                                          radius: 30,
+                                          radius: 33,
                                           child: categoryColorValue != null
                                               ?  IconTheme(
                                               data: IconThemeData(color: Color(categoryColorValue).withOpacity(1), size: 25),
@@ -114,6 +121,7 @@ class _AddSpendingScreenState extends State<AddSpendingScreen> {
                                               ))
                                               : Icon(FontAwesomeIcons.question, color: Colors.black),
                                         ),
+                                        SizedBox(width: 25,),
                                         GestureDetector(
                                           onTap: () async {
                                             final Map<String, dynamic> result = await Navigator.push(context,
@@ -131,21 +139,23 @@ class _AddSpendingScreenState extends State<AddSpendingScreen> {
                                           },
                                           child: Column(
                                             mainAxisAlignment: MainAxisAlignment.center,
+                                            crossAxisAlignment: CrossAxisAlignment.start,
                                             children: <Widget>[
                                               Text(
-                                                'Category',
+                                                'Pick a category for this Expense',
                                                 style: TextStyle(
-                                                  color: Colors.blueGrey[200],
-                                                  fontSize: 18.0,
+                                                  color: Colors.blueGrey[300],
+                                                  fontSize: 16.0,
                                                   fontStyle: FontStyle.italic,
                                                 ),
                                               ),
+                                              SizedBox(height: 3,),
                                               Text(
                                                 categoryName,
                                                 style: TextStyle(
                                                   color: Colors.black,
-                                                  fontSize: 18.0,
-                                                  fontWeight: FontWeight.w400,
+                                                  fontSize: 20.0,
+                                                  fontWeight: FontWeight.w600,
                                                 ),
                                               ),
                                             ],
@@ -153,6 +163,7 @@ class _AddSpendingScreenState extends State<AddSpendingScreen> {
                                         ),
                                       ],
                                     ),
+                                    SizedBox(height: 10,),
                                     TextButton(
                                       onPressed: () async {
                                         final Expense expense = Expense(
