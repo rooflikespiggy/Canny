@@ -42,17 +42,24 @@ class ExpenseCalculatorState extends State<ExpenseCalculator> {
   bool evaluated = false;
 
   void numClick(String text) {
-    setState(() {
-      if (text == '*') {
-        _expression += 'x';
-      }
-      else if (text == '/') {
-        _expression += '÷';
-      } else {
-        _expression += text;
-      }
-    });
-    setState(() => _evaluate += text);
+    if (_expression.contains('.') &&
+        text == '.' &&
+        _expression.substring(_expression.length - 1, _expression.length) == ".") {
+      setState(() => _expression += '');
+    } else if (text == '*') {
+      setState(() => _expression += 'x');
+    } else if (text == '/') {
+      setState(() => _expression += '÷');
+    } else {
+      setState(() => _expression += text);
+    }
+    if (_expression.contains('.') &&
+        text == '.' &&
+        _evaluate.substring(_evaluate.length - 1, _evaluate.length) == ".") {
+      setState(() => _evaluate += '');
+    } else {
+      setState(() => _evaluate += text);
+    }
   }
 
   void allClear(String text) {

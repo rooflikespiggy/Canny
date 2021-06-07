@@ -1,10 +1,8 @@
 import 'package:Canny/Models/category.dart';
 import 'package:Canny/Services/Category/category_database.dart';
-import 'package:Canny/Shared/colors.dart';
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_slidable/flutter_slidable.dart';
-import 'package:font_awesome_flutter/font_awesome_flutter.dart';
 import 'package:intl/intl.dart';
 
 class ExpenseTile extends StatefulWidget {
@@ -12,6 +10,7 @@ class ExpenseTile extends StatefulWidget {
   final double cost;
   final String itemName;
   final Timestamp datetime;
+  final String receiptId;
   final String uid;
 
   ExpenseTile({
@@ -19,6 +18,7 @@ class ExpenseTile extends StatefulWidget {
     this.cost,
     this.itemName,
     this.datetime,
+    this.receiptId,
     this.uid,
   });
 

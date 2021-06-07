@@ -142,6 +142,7 @@ class _ReceiptScreenState extends State<ReceiptScreen> {
                               cost: snapshotData['cost'],
                               itemName: snapshotData['itemName'],
                               datetime: snapshotData['datetime'],
+                              receiptId: snapshotData.id,
                               uid: uid,
                             );
                           },

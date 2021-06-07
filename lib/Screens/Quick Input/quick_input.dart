@@ -38,7 +38,9 @@ class QuickInputState extends State<QuickInput> {
   }
 
   void numClick(String text) {
-    if (_expression.contains('.') && text == '.') {
+    if (_expression.contains('.') &&
+        text == '.' &&
+        _expression.substring(_expression.length - 1, _expression.length) == ".") {
       setState(() => _expression += '');
     } else if (text == '*') {
       setState(() => _expression += 'x');
@@ -46,6 +48,13 @@ class QuickInputState extends State<QuickInput> {
       setState(() => _expression += '÷');
     } else {
       setState(() => _expression += text);
+    }
+    if (_expression.contains('.') &&
+        text == '.' &&
+        _evaluate.substring(_evaluate.length - 1, _evaluate.length) == ".") {
+      setState(() => _evaluate += '');
+    } else {
+      setState(() => _evaluate += text);
     }
   }
 

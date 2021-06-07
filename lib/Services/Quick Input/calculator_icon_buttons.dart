@@ -26,7 +26,7 @@ class CalcIconButton extends StatelessWidget {
         height: 70,
         child: MaterialButton(
           onPressed: () {
-            print(category);
+            // print(category);
             callback(category);
             ScaffoldMessenger.of(context).showSnackBar(SnackBar(
               content: Text(category.categoryName + ' chosen'),
