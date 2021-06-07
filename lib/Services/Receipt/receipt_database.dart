@@ -16,7 +16,7 @@ class ReceiptDatabaseService {
     await categoryCollection
         .doc(int.parse(expense.categoryId).toString())
         .update({
-      "categoryAmount": FieldValue.increment(expense.cost)
+      "categoryAmount": FieldValue.increment(-expense.cost)
     });
     return true;
   }
@@ -30,7 +30,7 @@ class ReceiptDatabaseService {
 
   Future removeReceipt(String receiptId,
       String categoryId,
-      int cost) async {
+      double cost) async {
     await expensesCollection
         .doc(receiptId)
         .delete();
@@ -42,29 +42,11 @@ class ReceiptDatabaseService {
     return true;
   }
 
-  Future updateReceipt(String receiptId,
-      String oldCategoryId,
-      String newCategoryId,
-      String newItemName,
-      DateTime newDate,
-      int newCost) async {
+  Future updateItemName(String receiptId, String newItemName) async {
     await expensesCollection
         .doc(receiptId)
         .update({
-      'categoryId': newCategoryId,
       'itemName': newItemName,
-      'datetime': newDate,
-      'cost': newCost,
-    });
-    await categoryCollection
-        .doc(int.parse(newCategoryId).toString())
-        .update({
-      "categoryAmount": FieldValue.increment(newCost)
-    });
-    await categoryCollection
-        .doc(int.parse(oldCategoryId).toString())
-        .update({
-      "categoryAmount": FieldValue.increment(-newCost)
     });
     return true;
   }
@@ -72,7 +54,7 @@ class ReceiptDatabaseService {
   Future updateCategory(String receiptId,
       String oldCategoryId,
       String newCategoryId,
-      int cost) async {
+      double cost) async {
     await expensesCollection
         .doc(receiptId)
         .update({
@@ -91,18 +73,9 @@ class ReceiptDatabaseService {
     return true;
   }
 
-  Future updateItemName(String receiptId, String newItemName) async {
-    await expensesCollection
-        .doc(receiptId)
-        .update({
-      'itemName': newItemName,
-    });
-    return true;
-  }
-
   Future updateCost(String receiptId,
       String categoryId,
-      int newCost) async {
+      double newCost) async {
     await expensesCollection
         .doc(receiptId)
         .update({
@@ -111,7 +84,37 @@ class ReceiptDatabaseService {
     await categoryCollection
         .doc(int.parse(categoryId).toString())
         .update({
-      "categoryAmount": FieldValue.increment(newCost)
+      "categoryAmount": newCost < 0
+          ? FieldValue.increment(-newCost)
+          : FieldValue.increment(newCost)
+    });
+    return true;
+  }
+
+  Future updateCostAndCategory(String receiptId,
+      String oldCategoryId,
+      String newCategoryId,
+      double oldCost,
+      double newCost) async {
+    await expensesCollection
+        .doc(receiptId)
+        .update({
+      'cost': newCost,
+      'categoryId': newCategoryId,
+    });
+    await categoryCollection
+        .doc(int.parse(newCategoryId).toString())
+        .update({
+      "categoryAmount": newCost < 0
+          ? FieldValue.increment(-newCost)
+          : FieldValue.increment(newCost)
+    });
+    await categoryCollection
+        .doc(int.parse(oldCategoryId).toString())
+        .update({
+      "categoryAmount": oldCost > 0
+          ? FieldValue.increment(-oldCost)
+          : FieldValue.increment(oldCost)
     });
     return true;
   }
@@ -130,6 +133,33 @@ class ReceiptDatabaseService {
         .doc(receiptId)
         .update({
       'categoryId': '11',
+    });
+    return true;
+  }
+
+  Future updateReceipt(String receiptId,
+      String oldCategoryId,
+      String newCategoryId,
+      String newItemName,
+      DateTime newDate,
+      double newCost) async {
+    await expensesCollection
+        .doc(receiptId)
+        .update({
+      'categoryId': newCategoryId,
+      'itemName': newItemName,
+      'datetime': newDate,
+      'cost': newCost,
+    });
+    await categoryCollection
+        .doc(int.parse(newCategoryId).toString())
+        .update({
+      "categoryAmount": FieldValue.increment(newCost)
+    });
+    await categoryCollection
+        .doc(int.parse(oldCategoryId).toString())
+        .update({
+      "categoryAmount": FieldValue.increment(-newCost)
     });
     return true;
   }

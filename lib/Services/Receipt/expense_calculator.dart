@@ -168,7 +168,6 @@ class ExpenseCalculatorState extends State<ExpenseCalculator> {
                       callback: clear,
                       textSize: 22,
                     ),
-                    /// add the gesture thing here
                     Container(
                       width: 180,
                       height: 60,
