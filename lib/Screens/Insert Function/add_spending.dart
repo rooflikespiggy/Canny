@@ -1,6 +1,4 @@
-import 'package:Canny/Screens/Home/homepage_screen.dart';
 import 'package:Canny/Screens/Insert%20Function/select_category_screen.dart';
-import 'package:Canny/Screens/Category/category_screen.dart';
 import 'package:Canny/Services/Receipt/receipt_database.dart';
 import 'package:Canny/Shared/colors.dart';
 import 'package:flutter/material.dart';
