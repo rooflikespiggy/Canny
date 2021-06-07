@@ -4,6 +4,7 @@ import 'package:Canny/Models/expense.dart';
 import 'package:Canny/Services/Quick%20Input/calculator_icon_buttons.dart';
 import 'package:Canny/Services/Receipt/receipt_database.dart';
 import 'package:cloud_firestore/cloud_firestore.dart';
+import 'package:flushbar/flushbar.dart';
 import 'package:flutter/material.dart';
 import 'package:math_expressions/math_expressions.dart';
 import 'package:Canny/Services/Quick%20Input/calculator_buttons.dart';
@@ -282,12 +283,23 @@ class QuickInputState extends State<QuickInput> {
                           categoryId: _chosenCategory.categoryId,
                           datetime: DateTime.now(),
                           cost: _chosenCategory.isIncome
-                              ? roundDouble(double.parse(_expression), 2)
-                              : -(roundDouble(double.parse(_expression), 2)),
+                              ? roundDouble(double.parse(_evaluate), 2)
+                              : -(roundDouble(double.parse(_evaluate), 2)),
                           itemName: _chosenCategory.categoryName,
                           uid: uid,
                         );
-                        await _authReceipt.addExpense(expense);
+                        await _authReceipt.addReceipt(expense);
+                        Flushbar(
+                          message: "Expense successfully added.",
+                          icon: Icon(
+                            Icons.info_outline,
+                            size: 28.0,
+                            color: Theme.of(context).colorScheme.secondary,
+                          ),
+                          duration: Duration(seconds: 3),
+                          leftBarIndicatorColor:
+                          Theme.of(context).colorScheme.secondary,
+                        )..show(context);
                       },
                       child: Text(
                         "Enter",

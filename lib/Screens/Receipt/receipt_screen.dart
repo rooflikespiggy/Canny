@@ -121,7 +121,12 @@ class _ReceiptScreenState extends State<ReceiptScreen> {
                   ),
                 ),
                 StreamBuilder(
-                    stream: getData(),
+                    stream: FilteredData(earliest: earliest,
+                        latest: latest,
+                        filteredCategories: filteredCategories)
+                        .byDateAndCategory()
+                        .orderBy('datetime', descending: true)
+                        .snapshots(),
                     builder: (BuildContext context, AsyncSnapshot<QuerySnapshot> snapshot) {
                       if (snapshot.hasData) {
                         return ListView.builder(
@@ -162,7 +167,7 @@ class _ReceiptScreenState extends State<ReceiptScreen> {
   }
 
   Stream<QuerySnapshot> getData() async* {
-    await Future.delayed(const Duration(milliseconds: 300));
+    //await Future.delayed(const Duration(milliseconds: 300));
     yield* FilteredData(earliest: earliest,
         latest: latest,
         filteredCategories: filteredCategories)

@@ -1,6 +1,10 @@
+import 'package:Canny/Database/all_database.dart';
+import 'package:Canny/Models/expense.dart';
 import 'package:Canny/Services/Category/category_database.dart';
 import 'package:Canny/Services/Category/default_categories.dart';
+import 'package:Canny/Services/Receipt/receipt_database.dart';
 import 'package:Canny/Shared/colors.dart';
+import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_colorpicker/flutter_colorpicker.dart';
 import 'package:font_awesome_flutter/font_awesome_flutter.dart';
@@ -25,7 +29,7 @@ class CategoryTile extends StatefulWidget {
     this.categoryId,
     this.categoryAmount,
     this.isIncome,
-    this.tappable
+    this.tappable,
   });
 
   @override
@@ -36,6 +40,8 @@ class _CategoryTileState extends State<CategoryTile> {
 
   final _formKey = GlobalKey<FormState>();
   final CategoryDatabaseService _authCategory = CategoryDatabaseService();
+  final CollectionReference expenseCollection = Database().expensesDatabase();
+  final ReceiptDatabaseService _authReceipt = ReceiptDatabaseService();
   final int categoriesSize = defaultCategories.length;
 
   // create some values
@@ -155,38 +161,51 @@ class _CategoryTileState extends State<CategoryTile> {
                 ),
                 Visibility(
                   visible: int.parse(widget.categoryId) >= categoriesSize,
-                  child: IconButton(
-                      icon: Icon(FontAwesomeIcons.trashAlt),
-                      onPressed: () {
-                        showDialog(
-                          context: context,
-                          builder:
-                              (BuildContext context) {
-                            return AlertDialog(
-                              title: Text("Are you sure you want to delete " + widget.categoryName + "?"),
-                              content: Text("Once it is deleted, you will not be able "
-                                  "to retrieve it back. Your expenses for " + widget.categoryName +
-                                  " will be moved to Others."),
-                              actions: <Widget>[
-                                // usually buttons at the bottom of the dialog
-                                TextButton(
-                                  child: Text("Yes"),
-                                  onPressed: () async {
-                                    await _authCategory.removeCategory(widget.categoryId, widget.categoryAmount);
-                                    Navigator.pop(context);
-                                  },
-                                ),
-                                TextButton(
-                                  child: Text("No"),
-                                  onPressed: () {
-                                    Navigator.pop(context);
-                                  },
-                                ),
-                              ],
-                            );
-                          },
+                  child: StreamBuilder(
+                    stream: expenseCollection.snapshots(),
+                    builder: (BuildContext context, AsyncSnapshot<QuerySnapshot> snapshot) {
+                      if (snapshot.hasData) {
+                        return IconButton(
+                            icon: Icon(FontAwesomeIcons.trashAlt),
+                            onPressed: () {
+                              showDialog(
+                                context: context,
+                                builder:
+                                    (BuildContext context) {
+                                  return AlertDialog(
+                                    title: Text("Are you sure you want to delete " + widget.categoryName + "?"),
+                                    content: Text("Once it is deleted, you will not be able "
+                                        "to retrieve it back. Your expenses for " + widget.categoryName +
+                                        " will be moved to Others."),
+                                    actions: <Widget>[
+                                      // usually buttons at the bottom of the dialog
+                                      TextButton(
+                                        child: Text("Yes"),
+                                        onPressed: () async {
+                                          await _authCategory.removeCategory(widget.categoryId, widget.categoryAmount);
+                                          for (int i = 0; i < snapshot.data.docs.length; i++) {
+                                            if (snapshot.data.docs[i]['categoryId'] == widget.categoryId) {
+                                              await _authReceipt.changeCategoryToOthers(snapshot.data.docs[i].id);
+                                            }
+                                          }
+                                          Navigator.pop(context);
+                                        },
+                                      ),
+                                      TextButton(
+                                        child: Text("No"),
+                                        onPressed: () {
+                                          Navigator.pop(context);
+                                        },
+                                      ),
+                                    ],
+                                  );
+                                },
+                              );
+                            }
                         );
                       }
+                      return Icon(FontAwesomeIcons.trashAlt);
+                    }
                   ),
                 ),
               ],

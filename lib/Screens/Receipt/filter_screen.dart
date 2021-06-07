@@ -239,7 +239,7 @@ class _FilterScreenState extends State<FilterScreen> {
                   duration: Duration(seconds: 3),
                   leftBarIndicatorColor:
                   Theme.of(context).colorScheme.secondary,
-                ).show(context);
+                )..show(context);
               }
             },
           ),

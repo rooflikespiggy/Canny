@@ -19,7 +19,6 @@ class CategoryScreen extends StatefulWidget {
 class _CategoryScreenState extends State<CategoryScreen> {
   final String uid = FirebaseAuth.instance.currentUser.uid;
   final CollectionReference categoryCollection = Database().categoryDatabase();
-  final QuickInputDatabaseService _authQuickInput = QuickInputDatabaseService();
   final int categoriesSize = defaultCategories.length;
   bool isDefault = true;
 
@@ -39,7 +38,6 @@ class _CategoryScreenState extends State<CategoryScreen> {
               icon: Icon(
                   isDefault ? Icons.visibility : Icons.visibility_off),
               onPressed: () {
-                print(_authQuickInput.allQuickInputs);
                 setState(() {
                   isDefault = !isDefault;
                 });
@@ -80,7 +78,9 @@ class _CategoryScreenState extends State<CategoryScreen> {
                         ),
                       ),
                       StreamBuilder(
-                          stream: getData(),
+                          stream: categoryCollection
+                              .orderBy("categoryId")
+                              .snapshots(),
                           builder: (BuildContext context, AsyncSnapshot<QuerySnapshot> snapshot) {
                             if (snapshot.hasData) {
                               return Align(
@@ -123,7 +123,7 @@ class _CategoryScreenState extends State<CategoryScreen> {
   }
 
   Stream<QuerySnapshot> getData() async* {
-    await Future.delayed(const Duration(milliseconds: 300));
+    //await Future.delayed(const Duration(milliseconds: 300));
     yield* categoryCollection
         .orderBy("categoryId")
         .snapshots();

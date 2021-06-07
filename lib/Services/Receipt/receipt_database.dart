@@ -8,7 +8,7 @@ class ReceiptDatabaseService {
   final CollectionReference expensesCollection = Database().expensesDatabase();
   final CollectionReference categoryCollection = Database().categoryDatabase();
 
-  Future addExpense(Expense expense) async {
+  Future addReceipt(Expense expense) async {
     await expensesCollection
         //.doc(DateFormat('yyyy-MM').format(expense.datetime))
         //.collection(DateFormat('yyyy-MM').format(expense.datetime))
@@ -28,7 +28,7 @@ class ReceiptDatabaseService {
     return snapshots.map((doc) => Expense.fromMap(doc)).toList();
   }
 
-  Future removeExpenses(String receiptId,
+  Future removeReceipt(String receiptId,
       String categoryId,
       int cost) async {
     await expensesCollection
@@ -42,7 +42,7 @@ class ReceiptDatabaseService {
     return true;
   }
 
-  Future updateExpenses(String receiptId,
+  Future updateReceipt(String receiptId,
       String oldCategoryId,
       String newCategoryId,
       String newItemName,
@@ -116,12 +116,20 @@ class ReceiptDatabaseService {
     return true;
   }
 
-  Future updateDate(String receiptId,
-      DateTime newDate) async {
+  Future updateDate(String receiptId, DateTime newDate) async {
     await expensesCollection
         .doc(receiptId)
         .update({
       'datetime': newDate,
+    });
+    return true;
+  }
+
+  Future changeCategoryToOthers(String receiptId) async {
+    await expensesCollection
+        .doc(receiptId)
+        .update({
+      'categoryId': '11',
     });
     return true;
   }

@@ -3,6 +3,8 @@ import 'package:Canny/Services/Category/category_database.dart';
 import 'package:Canny/Shared/colors.dart';
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter_slidable/flutter_slidable.dart';
+import 'package:font_awesome_flutter/font_awesome_flutter.dart';
 import 'package:intl/intl.dart';
 
 class ExpenseTile extends StatefulWidget {
@@ -27,10 +29,10 @@ class ExpenseTile extends StatefulWidget {
 class _ExpenseTileState extends State<ExpenseTile> {
   final CategoryDatabaseService _authCategory = CategoryDatabaseService();
   Category selectedCategory;
+  final SlidableController slidableController = SlidableController();
 
   @override
   Widget build(BuildContext context) {
-
     return Card(
       color: Colors.white.withOpacity(0.9),
       elevation: 1,
