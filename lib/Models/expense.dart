@@ -31,7 +31,7 @@ class Expense {
     return {
       'categoryId': categoryId,
       'cost': cost,
-      'datetime': datetime,
+      'datetime': DateTime.now(),
       'itemName': itemName,
       'uid': uid,
     };

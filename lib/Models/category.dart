@@ -1,5 +1,6 @@
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:flutter/material.dart';
+import 'package:font_awesome_flutter/font_awesome_flutter.dart';
 
 class Category {
   // should add isIncome and categoryAmount
@@ -22,9 +23,12 @@ class Category {
   factory Category.newBlankCategory() {
     return Category(
       categoryName: '',
-      categoryIcon: Icon(Icons.check_box_outline_blank_rounded),
+      categoryIcon: Icon(FontAwesomeIcons.question),
       categoryColor: Colors.white,
-      categoryId: ''
+      categoryId: '',
+      categoryAmount: 0,
+      isIncome: false
+
     );
   }
 

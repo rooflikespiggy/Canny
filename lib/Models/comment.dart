@@ -17,18 +17,27 @@ class Comment {
     this.did,
     this.name,
     this.description,
+    this.datetime,
+    this.likes,
+    this.dislikes,
+    this.liked_uid,
+    this.disliked_uid
   });
 
-  Comment.fromMap(Map<String, dynamic> json) {
-    uid = json['uid'];
-    did = json['did'];
-    name = json['name'];
-    description = json['description'];
-    datetime = json['datetime'];
-    likes = json['likes'];
-    dislikes = json['dislikes'];
-    liked_uid = json['liked_uid'];
-    disliked_uid = json['disliked_uid'];
+  factory Comment.fromMap(DocumentSnapshot doc) {
+    Map json = doc.data();
+
+    return Comment(
+        uid: json['uid'],
+        did: json['did'],
+        name: json['name'],
+        description: json['description'],
+        datetime: json['datetime'],
+        likes: json['likes'],
+        dislikes: json['dislikes'],
+        liked_uid: json['liked_uid'],
+        disliked_uid: json['disliked_uid']
+    );
   }
 
   Map<String, dynamic> toMap() {
@@ -37,11 +46,11 @@ class Comment {
       'did': did,
       'name': name,
       'description': description,
-      'datetime': datetime,
-      'likes': likes,
-      'dislikes': dislikes,
-      'liked_uid': liked_uid,
-      'disliked_uid': disliked_uid
+      'datetime': DateTime.now(),
+      'likes': 0,
+      'dislikes': 0,
+      'liked_uid': [],
+      'disliked_uid': []
     };
   }
 }

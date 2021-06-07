@@ -30,116 +30,125 @@ class _AddCommentState extends State<AddComment> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      backgroundColor: kBackgroundColour,
       resizeToAvoidBottomInset: false,
-      body: Center(
-        child: Form(
-          key: _formKey,
-          child: SingleChildScrollView(
-            child: Column(
-              children: <Widget> [
-                Text(
-                  'Answer the Question \n or Provide Feedback!',
-                  textAlign: TextAlign.center,
-                  style: TextStyle(fontSize: 23.0,
-                    fontFamily: 'Lato',
-                    fontWeight: FontWeight.bold,
-                    color: kDeepOrange,
-                  ),
-                ),
-                SizedBox(height: 20.0),
-                _showTextFormFields(nameController,
-                  "Enter your Name",
-                  Icon(Icons.person),
-                ),
-                SizedBox(height: 15),
-                _showTextFormFields(descriptionController,
-                  "Enter your Comment Description",
-                  Icon(Icons.description_outlined),
-                ),
-                SizedBox(height: 20),
-                Padding(
-                  padding: EdgeInsets.symmetric(horizontal: 20.0),
-                  child: Row(
-                    mainAxisAlignment: MainAxisAlignment.spaceEvenly,
-                    children: <Widget>[
-                      ElevatedButton(
-                          onPressed: () async {
-                            final Comment comment = Comment(uid: uid,
-                                did: inputId,
-                                name: nameController.text,
-                                description: descriptionController.text);
-                            if (_formKey.currentState.validate()) {
-                              await CommentDatabaseService(inputId)
-                                  .addComment(comment).then((_) {
-                                showDialog(
-                                  context: context,
-                                  builder: (BuildContext context) {
-                                    return AlertDialog(
-                                      title: Text(
-                                        "Succesfully Submitted Your Comment!",
-                                        style: TextStyle(fontFamily: 'Lato'),
-                                      ),
-                                      content: Text(
-                                        "Would you like to add another comment?",
-                                        style: TextStyle(fontFamily: 'Lato.Thin'),
-                                      ),
-                                      actions: <Widget> [
-                                        TextButton(
-                                          child: Text("Back to discussion"),
-                                          onPressed: () {
-                                            Navigator.push(context,
-                                                MaterialPageRoute(builder: (context) => ForumDetailScreen(inputId: inputId)));
-                                          },
-                                        ),
-                                        TextButton(
-                                          child: Text("Add another comment"),
-                                          onPressed: () {
-                                            Navigator.pop(context);
-                                          },
-                                        ),
-                                      ],
-                                    );
-                                  },
-                                );
-                                nameController.clear();
-                                descriptionController.clear();
-                              });
-                            }
-                          },
-                          child: Text('Submit'),
-                          style: ButtonStyle(
-                            backgroundColor: MaterialStateProperty.all(kDeepOrangeLight),
-                          )
-                      ),
-                      ElevatedButton(
-                          onPressed: () {
-                            Navigator.pop(context);
-                          },
-                          child: Text('Back'),
-                          style: ButtonStyle(
-                            backgroundColor: MaterialStateProperty.all(Colors.grey),
-                          )
-                      ),
-                    ],
-                  ),
-                ),
-                SizedBox(height: 15),
-                Hero(
-                  tag: 'picture',
-                  child: Container(
-                    width: 500.0,
-                    height: 205.0,
-                    alignment: Alignment.center,
-                    decoration: BoxDecoration(
-                      image: DecorationImage(
-                          image: AssetImage(
-                              'styles/images/add-comment-illustration.png'),
-                          fit: BoxFit.fill),
+      body: Container(
+        width: double.infinity,
+        height: double.infinity,
+        decoration: BoxDecoration(
+          image: DecorationImage(
+            image: AssetImage("styles/images/background.png"),
+            colorFilter: ColorFilter.mode(Colors.black.withOpacity(0.4), BlendMode.dstATop),
+            fit: BoxFit.cover,
+          ),
+        ),
+        child: Center(
+          child: Form(
+            key: _formKey,
+            child: SingleChildScrollView(
+              child: Column(
+                children: <Widget> [
+                  Text(
+                    'Answer the Question \n or Provide Feedback!',
+                    textAlign: TextAlign.center,
+                    style: TextStyle(fontSize: 23.0,
+                      fontFamily: 'Lato',
+                      fontWeight: FontWeight.bold,
+                      color: kDarkBlue,
                     ),
                   ),
-                ),
-              ],
+                  SizedBox(height: 20.0),
+                  _showTextFormFields(nameController,
+                    "Enter your Name",
+                    Icon(Icons.person),
+                  ),
+                  SizedBox(height: 15),
+                  _showTextFormFields(descriptionController,
+                    "Enter your Comment Description",
+                    Icon(Icons.description_outlined),
+                  ),
+                  SizedBox(height: 20),
+                  Padding(
+                    padding: EdgeInsets.symmetric(horizontal: 20.0),
+                    child: Row(
+                      mainAxisAlignment: MainAxisAlignment.spaceEvenly,
+                      children: <Widget>[
+                        ElevatedButton(
+                            onPressed: () async {
+                              final Comment comment = Comment(uid: uid,
+                                  did: inputId,
+                                  name: nameController.text,
+                                  description: descriptionController.text);
+                              if (_formKey.currentState.validate()) {
+                                await CommentDatabaseService(inputId)
+                                    .addComment(comment).then((_) {
+                                  showDialog(
+                                    context: context,
+                                    builder: (BuildContext context) {
+                                      return AlertDialog(
+                                        title: Text(
+                                          "Succesfully Submitted Your Comment!",
+                                          style: TextStyle(fontFamily: 'Lato'),
+                                        ),
+                                        content: Text(
+                                          "Would you like to add another comment?",
+                                          style: TextStyle(fontFamily: 'Lato.Thin'),
+                                        ),
+                                        actions: <Widget> [
+                                          TextButton(
+                                            child: Text("Back to discussion"),
+                                            onPressed: () {
+                                              Navigator.push(context,
+                                                  MaterialPageRoute(builder: (context) => ForumDetailScreen(inputId: inputId)));
+                                            },
+                                          ),
+                                          TextButton(
+                                            child: Text("Add another comment"),
+                                            onPressed: () {
+                                              Navigator.pop(context);
+                                            },
+                                          ),
+                                        ],
+                                      );
+                                    },
+                                  );
+                                  nameController.clear();
+                                  descriptionController.clear();
+                                });
+                              }
+                            },
+                            child: Text('Submit'),
+                            style: ButtonStyle(
+                              backgroundColor: MaterialStateProperty.all(kDarkBlue),
+                            )
+                        ),
+                        ElevatedButton(
+                            onPressed: () {
+                              Navigator.pop(context);
+                            },
+                            child: Text('Back'),
+                            style: ButtonStyle(
+                              backgroundColor: MaterialStateProperty.all(kPalePurple),
+                            )
+                        ),
+                      ],
+                    ),
+                  ),
+                  SizedBox(height: 15),
+                  Hero(
+                    tag: 'picture',
+                    child: Container(
+                      height: 210.0,
+                      alignment: Alignment.center,
+                      decoration: BoxDecoration(
+                        image: DecorationImage(
+                            image: AssetImage(
+                                'styles/images/Picture3.png'),
+                            fit: BoxFit.fill),
+                      ),
+                    ),
+                  ),
+                ],
+              ),
             ),
           ),
         ),

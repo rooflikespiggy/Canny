@@ -13,18 +13,25 @@ class ForumDatabaseService {
     return true;
   }
 
-  Future removeDiscussion(String id) async {
+  Future<List<Forum>> getComments() async {
+    List<DocumentSnapshot> snapshots = await forumCollection
+        .get()
+        .then((value) => value.docs);
+    return snapshots.map((doc) => Forum.fromMap(doc)).toList();
+  }
+
+  Future removeDiscussion(String forumId) async {
     await forumCollection
-        .doc(id)
+        .doc(forumId)
         .delete();
     return true;
   }
 
-  Future updateDiscussion(String id,
+  Future updateDiscussion(String forumId,
       String newName,
       String newTitle,
       String newDescription) async {
-    await forumCollection.doc(id).update({
+    await forumCollection.doc(forumId).update({
       "name": newName,
       "title": newTitle,
       "description": newDescription,
@@ -33,16 +40,40 @@ class ForumDatabaseService {
     return true;
   }
 
-  Future updateLikes(List liked_uid,
-      String id) async {
+  Future updateName(String forumId, String newName) async {
+    await forumCollection.doc(forumId).update({
+      "name": newName,
+      "timestamp": DateTime.now(),
+    });
+    return true;
+  }
+
+  Future updateTitle(String forumId, String newTitle) async {
+    await forumCollection.doc(forumId).update({
+      "title": newTitle,
+      "timestamp": DateTime.now(),
+    });
+    return true;
+  }
+
+  Future updateDescription(String forumId, String newDescription) async {
+    await forumCollection.doc(forumId).update({
+      "description": newDescription,
+      "timestamp": DateTime.now(),
+    });
+    return true;
+  }
+
+
+  Future updateLikes(List liked_uid, String forumId) async {
     if (liked_uid.contains(uid)) {
-      await forumCollection.doc(id)
+      await forumCollection.doc(forumId)
           .update({
         "likes": FieldValue.increment(-1),
         "liked_uid": FieldValue.arrayRemove([uid]),
       }).catchError((error) => print(error));
     } else {
-      await forumCollection.doc(id)
+      await forumCollection.doc(forumId)
           .update({
         "likes": FieldValue.increment(1),
         "liked_uid": FieldValue.arrayUnion([uid]),

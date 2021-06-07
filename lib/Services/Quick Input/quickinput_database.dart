@@ -11,21 +11,20 @@ class QuickInputDatabaseService {
   final CollectionReference quickInputCollection = Database().quickInputDatabase();
   final String userId = FirebaseAuth.instance.currentUser.uid;
   List<Category> _quickInputs;
-  var quickInputs = {FirebaseAuth.instance.currentUser.uid: defaultQuickInputs};
+  //var quickInputs = {FirebaseAuth.instance.currentUser.uid: defaultQuickInputs};
 
   QuickInputDatabaseService({this.uid});
 
   Future initStartQuickInputs() async {
-    await addDefaultQuickInput(defaultQuickInputs[0], 0);
-    await addDefaultQuickInput(defaultQuickInputs[1], 1);
-    await addDefaultQuickInput(defaultQuickInputs[2], 2);
+    await addDefaultQuickInput(defaultQuickInputs[0]);
+    await addDefaultQuickInput(defaultQuickInputs[1]);
+    await addDefaultQuickInput(defaultQuickInputs[2]);
     return true;
   }
 
-  Future addDefaultQuickInput(Category category, int categoryId) async {
+  Future addDefaultQuickInput(Category category) async {
     await quickInputCollection
-        .doc(categoryId.toString())
-        .set(category.toMap());
+        .add(category.toMap());
     return true;
   }
 
@@ -42,6 +41,31 @@ class QuickInputDatabaseService {
 
   List<Category> get allQuickInputs {
     return _quickInputs;
+  }
+
+  Future updateQuickInput(Category category, String quickInputId) async {
+    /*
+    String previousCategoryId = int.parse(quickInputs[userId][categoryNo].categoryId).toString();
+    await quickInputCollection
+        .doc(previousCategoryId)
+        .delete();
+     */
+    await quickInputCollection
+        .doc(quickInputId)
+        .update(category.toMap());
+    return true;
+  }
+
+  /*
+  Category getQuickInput(int categoryNo) {
+    return quickInputs[userId][categoryNo];
+  }
+
+  Future addDefaultQuickInput(Category category, int categoryId) async {
+    await quickInputCollection
+        .doc(categoryId.toString())
+        .set(category.toMap());
+    return true;
   }
 
   Future updateQuickInput(Category category, String categoryId, int categoryNo) async {
@@ -62,9 +86,5 @@ class QuickInputDatabaseService {
     quickInputs[userId][categoryNo] = category;
     return true;
   }
-
-  Category getQuickInput(int categoryNo) {
-    return quickInputs[userId][categoryNo];
-  }
-
+   */
 }

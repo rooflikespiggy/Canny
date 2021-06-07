@@ -28,6 +28,12 @@ class Database {
         .collection('Receipt');
   }
 
+  CollectionReference targetedExpenditureDatabase() {
+    return userCollection
+        .doc(uid)
+        .collection('TargetedExpenditure');
+  }
+
   CollectionReference quickInputDatabase() {
     return userCollection
         .doc(uid)

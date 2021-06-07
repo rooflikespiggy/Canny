@@ -1,10 +1,11 @@
 import 'package:Canny/Screens/Sidebar/Quick%20Input/customise_quickinput.dart';
 import 'package:Canny/Services/Users/auth.dart';
+import 'package:Canny/Shared/custom_route.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
 import 'package:Canny/Shared/colors.dart';
 import 'package:Canny/Screens/wrapper.dart';
-import 'package:Canny/Screens/Sidebar/View Categories/category_screen.dart';
+import 'package:Canny/Screens/Category/category_screen.dart';
 
 class SideBarMenu extends StatelessWidget {
   final AuthService _auth = AuthService();
@@ -14,25 +15,25 @@ class SideBarMenu extends StatelessWidget {
   Widget build(BuildContext context) {
     return Drawer(
       child: Container(
-        color: kBackgroundColour,
+        color: kLightBlue,
         child: ListView(
           padding: EdgeInsets.zero,
           children: <Widget>[
             DrawerHeader(
               decoration: BoxDecoration(
-                color: kDeepOrangePrimary,
+                color: kDarkBlue,
                 image: DecorationImage(
-                  image: AssetImage('styles/images/smaller-logo-3.png'),
+                  image: AssetImage('styles/images/logo-8.png'),
                   alignment: Alignment.bottomCenter,
                 ),
               ),
               child: Padding(
-                padding: EdgeInsets.only(bottom: 1.0),
+                padding: EdgeInsets.only(bottom: 3.0),
                 child: Container(
-                  child: Text("Account Email: \n" +  email,
+                  child: Text(email,
                     style: TextStyle(
-                      fontSize: 16,
-                      color: Colors.deepOrange[50],
+                      fontSize: 17,
+                      color: Colors.white,
                     ),
                     textAlign: TextAlign.center,
                   ),
@@ -52,10 +53,11 @@ class SideBarMenu extends StatelessWidget {
               ),
               onTap: () => {
                 Navigator.push(context,
-                    MaterialPageRoute(builder: (context) => CustomiseQI()))
+                    NoAnimationMaterialPageRoute(builder: (context) => CustomiseQI()))
               },
             ),
             Divider(thickness: 1.0),
+            /*
             ListTile(
               leading: Icon(Icons.category),
               trailing: Icon(Icons.arrow_right),
@@ -67,10 +69,10 @@ class SideBarMenu extends StatelessWidget {
               ),
               onTap: () => {
                 Navigator.push(context,
-                    MaterialPageRoute(builder: (context) => CategoryScreen()))
+                    NoAnimationMaterialPageRoute(builder: (context) => CategoryScreen()))
               },
             ),
-            Divider(thickness: 1.0),
+             */
             // SizedBox(height: 400.0),
             // SizedBox(height: 400.0),
             ListTile(

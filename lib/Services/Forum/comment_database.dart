@@ -12,7 +12,6 @@ class CommentDatabaseService {
 
   CommentDatabaseService(this.inputId);
 
-
   Future addComment(Comment comment) async {
     await forumCommentCollection
         .doc(inputId)
@@ -22,6 +21,13 @@ class CommentDatabaseService {
       "comments": FieldValue.increment(1),
     });
     return true;
+  }
+
+  Future<List<Comment>> getComments() async {
+    List<DocumentSnapshot> snapshots = await forumCommentCollection
+        .get()
+        .then((value) => value.docs);
+    return snapshots.map((doc) => Comment.fromMap(doc)).toList();
   }
 
   Future removeComment(String commentId) async {
@@ -46,6 +52,26 @@ class CommentDatabaseService {
         .doc(commentId)
         .update({
       "name": newName,
+      "description": newDescription,
+      "timestamp": DateTime.now(),
+    });
+  }
+
+  Future updateName(String commentId, String newName) async {
+    await forumCommentCollection.doc(inputId)
+        .collection("Comment")
+        .doc(commentId)
+        .update({
+      "name": newName,
+      "timestamp": DateTime.now(),
+    });
+  }
+
+  Future updateDescription(String commentId, String newDescription) async {
+    await forumCommentCollection.doc(inputId)
+        .collection("Comment")
+        .doc(commentId)
+        .update({
       "description": newDescription,
       "timestamp": DateTime.now(),
     });

@@ -30,8 +30,15 @@ class _RegisterState extends State<Register> {
   @override
   Widget build(BuildContext context) {
     return loading ? Loading() : Scaffold(
-        backgroundColor: kBackgroundColour,
         body: Container(
+            width: double.infinity,
+            height: double.infinity,
+            decoration: BoxDecoration(
+              image: DecorationImage(
+                image: AssetImage("styles/images/background.png"),
+                fit: BoxFit.cover,
+              ),
+            ),
             padding: EdgeInsets.symmetric(horizontal: 40.0),
             child: SingleChildScrollView(
               child: Column(
@@ -45,7 +52,7 @@ class _RegisterState extends State<Register> {
                     alignment: Alignment.center,
                     decoration: BoxDecoration(
                       image: DecorationImage(
-                          image: AssetImage('styles/images/logo-2.png'),
+                          image: AssetImage('styles/images/logo-7.png'),
                           fit: BoxFit.fill
                       ),
                     ),
@@ -56,7 +63,7 @@ class _RegisterState extends State<Register> {
                         fontSize: 23.0,
                         fontFamily: 'Lato',
                         fontWeight: FontWeight.bold,
-                        color: kDeepOrange,
+                        color: kDarkBlue,
                       )
                   ),
                   SizedBox(height: 12.0),
@@ -65,7 +72,7 @@ class _RegisterState extends State<Register> {
                     style: TextStyle(
                       fontSize: 14.0,
                       fontFamily: 'Lato',
-                      color: Colors.blueGrey[600],
+                      color: Colors.blueGrey[400],
                     ),
                     textAlign: TextAlign.center,
                   ),
@@ -73,7 +80,7 @@ class _RegisterState extends State<Register> {
                     key: _formKey,
                     child: Column(
                       children: <Widget>[
-                        SizedBox(height: 20.0),
+                        SizedBox(height: 15.0),
                         TextFormField(
                           decoration: InputDecoration(
                             hintStyle: TextStyle(color: Colors.grey),
@@ -171,7 +178,7 @@ class _RegisterState extends State<Register> {
                   SizedBox(height: 12.0),
                   TextButton.icon(
                       style: TextButton.styleFrom(
-                        backgroundColor: kDeepOrangePrimary, // background
+                        backgroundColor: kDarkBlue, // background
                       ),
                       label: Text(
                         "Register a new account with Canny",
@@ -202,12 +209,12 @@ class _RegisterState extends State<Register> {
                         }
                       }
                   ),
-                  SizedBox(height: 10.0),
+                  SizedBox(height: 5.0),
                   Row(
                     mainAxisAlignment: MainAxisAlignment.center,
                     children: <Widget>[
                       Text(
-                        "Already have an account?",
+                        "    Already have an account?",
                         style: TextStyle(fontSize: 13),
                       ),
                       GestureDetector(
