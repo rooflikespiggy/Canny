@@ -6,6 +6,7 @@ import 'package:Canny/Services/Quick%20Input/calculator_icon_buttons.dart';
 import 'package:Canny/Services/Receipt/receipt_database.dart';
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:flushbar/flushbar.dart';
+import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:math_expressions/math_expressions.dart';
 import 'package:Canny/Services/Quick%20Input/calculator_buttons.dart';
@@ -106,18 +107,21 @@ class ExpenseCalculatorState extends State<ExpenseCalculator> {
         elevation: 0.0,
       ),
       body: Container(
-        padding: EdgeInsets.fromLTRB(10, 12, 10, 12),
+        padding: EdgeInsets.fromLTRB(10, 12, 10, 0),
         child: Form(
           key: _formKey,
           child: Column(
-            mainAxisAlignment: MainAxisAlignment.end,
+            mainAxisAlignment: MainAxisAlignment.start,
             children: <Widget>[
+              SizedBox(height: 5,),
               // how to put this right at the top
               _showTextFormFields(itemNameController,
                 "Enter the name of expense",
                 Icon(Icons.drive_file_rename_outline),
                 390.0,
               ),
+              SizedBox(height: 15),
+
               Container(
                 alignment: Alignment(1.0, 1.0),
                 child: Padding(
@@ -131,6 +135,7 @@ class ExpenseCalculatorState extends State<ExpenseCalculator> {
                   ),
                 ),
               ),
+              SizedBox(height: 10,),
               Container(
                 alignment: Alignment(1.0, 1.0),
                 child: Padding(
@@ -138,176 +143,196 @@ class ExpenseCalculatorState extends State<ExpenseCalculator> {
                   child: Text(
                     !evaluated ? _expression : _evaluate,
                     style: TextStyle(
-                      fontSize: 40,
+                      fontSize: 38,
                       color: Colors.blueGrey[900],
                     ),
                   ),
                 ),
               ),
-              SizedBox(height: 12),
-              Row(
-                //this row of calculator buttons
-                mainAxisAlignment: MainAxisAlignment.spaceEvenly,
-                children: <Widget>[
-                  CalcButton(
-                    text: 'AC',
-                    fillColor: kDarkBlue,
-                    callback: allClear,
-                    textSize: 22,
-                  ),
-                  CalcButton(
-                    text: 'C',
-                    fillColor: kDarkBlue,
-                    callback: clear,
-                    textSize: 22,
-                  ),
-                  /// add the gesture thing here
-                  Container(
-                    width: 180,
-                    color: Colors.white,
-                    child: GestureDetector(
-                      onTap: () async {
-                        final Map<String, dynamic> result = await Navigator.push(context,
-                            MaterialPageRoute(builder: (context) => SelectCategoryScreen()));
-                        //print(result);
-                        setState(() {
-                          categoryId = result['categoryId'];
-                          categoryName = result['categoryName'];
-                          isIncome = result['isIncome'];
-                          categoryIconCodePoint = result['categoryIconCodePoint'];
-                          categoryFontFamily = result['categoryFontFamily'];
-                          //categoryFontPackage = result['categoryFontPackage'];
-                          categoryColorValue = result['categoryColorValue'];
-                        });
-                      },
-                      child: Column(
-                        mainAxisAlignment: MainAxisAlignment.center,
-                        children: <Widget>[
-                          Text(
-                            'Category',
-                            style: TextStyle(
-                              color: Colors.blueGrey[200],
-                              fontSize: 18.0,
-                              fontStyle: FontStyle.italic,
+              SizedBox(height: 5),
+              SizedBox(
+                height: 70,
+                child: Row(
+                  //this row of calculator buttons
+                  mainAxisAlignment: MainAxisAlignment.spaceEvenly,
+                  children: <Widget>[
+                    CalcButton(
+                      text: 'AC',
+                      fillColor: kDarkBlue,
+                      callback: allClear,
+                      textSize: 22,
+                    ),
+                    CalcButton(
+                      text: 'C',
+                      fillColor: kDarkBlue,
+                      callback: clear,
+                      textSize: 22,
+                    ),
+                    /// add the gesture thing here
+                    Container(
+                      width: 180,
+                      height: 60,
+                      decoration: BoxDecoration(
+                          borderRadius: BorderRadius.all(Radius.circular(18.0)),
+                        color: kBlue
+                      ),
+                      child: GestureDetector(
+                        onTap: () async {
+                          final Map<String, dynamic> result = await Navigator.push(context,
+                              MaterialPageRoute(builder: (context) => SelectCategoryScreen()));
+                          //print(result);
+                          setState(() {
+                            categoryId = result['categoryId'];
+                            categoryName = result['categoryName'];
+                            isIncome = result['isIncome'];
+                            categoryIconCodePoint = result['categoryIconCodePoint'];
+                            categoryFontFamily = result['categoryFontFamily'];
+                            //categoryFontPackage = result['categoryFontPackage'];
+                            categoryColorValue = result['categoryColorValue'];
+                          });
+                        },
+                        child: Column(
+                          mainAxisAlignment: MainAxisAlignment.center,
+                          children: <Widget>[
+                            Text(
+                              'Category',
+                              style: TextStyle(
+                                color: Colors.blueGrey[200],
+                                fontSize: 16.0,
+                                fontStyle: FontStyle.italic,
+                              ),
                             ),
-                          ),
-                          Text(
-                            categoryName,
-                            style: TextStyle(
-                              color: Colors.black,
-                              fontSize: 18.0,
-                              fontWeight: FontWeight.w400,
+                            Text(
+                              categoryName,
+                              style: TextStyle(
+                                color: Colors.black,
+                                fontSize: 18.0,
+                                //fontWeight: FontWeight.w100,
+                                fontFamily: "Lato"
+                              ),
                             ),
-                          ),
-                        ],
+                          ],
+                        ),
                       ),
                     ),
-                  ),
-                ],
+                  ],
+                ),
               ),
-              Row(
-                mainAxisAlignment: MainAxisAlignment.spaceEvenly,
-                children: <Widget>[
-                  CalcButton(
-                    text: '7',
-                    fillColor: kPalePurple,
-                    callback: numClick,
-                  ),
-                  CalcButton(
-                    text: '8',
-                    fillColor: kPalePurple,
-                    callback: numClick,
-                  ),
-                  CalcButton(
-                    text: '9',
-                    fillColor: kPalePurple,
-                    callback: numClick,
-                  ),
-                  CalcButton(
-                    text: '÷',
-                    fillColor: kDarkBlue,
-                    textSize: 28,
-                    callback: numClick,
-                  ),
-                ],
+              SizedBox(
+                height: 70,
+                child: Row(
+                  mainAxisAlignment: MainAxisAlignment.spaceEvenly,
+                  children: <Widget>[
+                    CalcButton(
+                      text: '7',
+                      fillColor: kPalePurple,
+                      callback: numClick,
+                    ),
+                    CalcButton(
+                      text: '8',
+                      fillColor: kPalePurple,
+                      callback: numClick,
+                    ),
+                    CalcButton(
+                      text: '9',
+                      fillColor: kPalePurple,
+                      callback: numClick,
+                    ),
+                    CalcButton(
+                      text: '÷',
+                      fillColor: kDarkBlue,
+                      textSize: 28,
+                      callback: numClick,
+                    ),
+                  ],
+                ),
               ),
-              Row(
-                mainAxisAlignment: MainAxisAlignment.spaceEvenly,
-                children: <Widget>[
-                  CalcButton(
-                    text: '4',
-                    fillColor: kPalePurple,
-                    callback: numClick,
-                  ),
-                  CalcButton(
-                    text: '5',
-                    fillColor: kPalePurple,
-                    callback: numClick,
-                  ),
-                  CalcButton(
-                    text: '6',
-                    fillColor: kPalePurple,
-                    callback: numClick,
-                  ),
-                  CalcButton(
-                    text: 'x',
-                    fillColor: kDarkBlue,
-                    textSize: 26,
-                    callback: numClick,
-                  ),
-                ],
+              SizedBox(
+                height: 70,
+                child: Row(
+                  mainAxisAlignment: MainAxisAlignment.spaceEvenly,
+                  children: <Widget>[
+                    CalcButton(
+                      text: '4',
+                      fillColor: kPalePurple,
+                      callback: numClick,
+                    ),
+                    CalcButton(
+                      text: '5',
+                      fillColor: kPalePurple,
+                      callback: numClick,
+                    ),
+                    CalcButton(
+                      text: '6',
+                      fillColor: kPalePurple,
+                      callback: numClick,
+                    ),
+                    CalcButton(
+                      text: 'x',
+                      fillColor: kDarkBlue,
+                      textSize: 26,
+                      callback: numClick,
+                    ),
+                  ],
+                ),
               ),
-              Row(
-                mainAxisAlignment: MainAxisAlignment.spaceEvenly,
-                children: <Widget>[
-                  CalcButton(
-                    text: '1',
-                    fillColor: kPalePurple,
-                    callback: numClick,
-                  ),
-                  CalcButton(
-                    text: '2',
-                    fillColor: kPalePurple,
-                    callback: numClick,
-                  ),
-                  CalcButton(
-                    text: '3',
-                    fillColor: kPalePurple,
-                    callback: numClick,
-                  ),
-                  CalcButton(
-                    text: '-',
-                    fillColor: kDarkBlue,
-                    textSize: 36,
-                    callback: numClick,
-                  ),
-                ],
+              SizedBox(
+                height: 70,
+                child: Row(
+                  mainAxisAlignment: MainAxisAlignment.spaceEvenly,
+                  children: <Widget>[
+                    CalcButton(
+                      text: '1',
+                      fillColor: kPalePurple,
+                      callback: numClick,
+                    ),
+                    CalcButton(
+                      text: '2',
+                      fillColor: kPalePurple,
+                      callback: numClick,
+                    ),
+                    CalcButton(
+                      text: '3',
+                      fillColor: kPalePurple,
+                      callback: numClick,
+                    ),
+                    CalcButton(
+                      text: '-',
+                      fillColor: kDarkBlue,
+                      textSize: 36,
+                      callback: numClick,
+                    ),
+                  ],
+                ),
               ),
-              Row(
-                mainAxisAlignment: MainAxisAlignment.spaceEvenly,
-                children: <Widget>[
-                  CalcButton(
-                    text: '.',
-                    fillColor: kPalePurple,
-                    callback: numClick,
-                  ),
-                  CalcButton(
-                    text: '0',
-                    fillColor: kPalePurple,
-                    callback: numClick,
-                  ),
-                  CalcButton(
-                    text: '=',
-                    fillColor: kDarkBlue,
-                    callback: evaluate,
-                  ),
-                  CalcButton(
-                    text: '+',
-                    fillColor: kDarkBlue,
-                    textSize: 30,
-                    callback: numClick,
-                  ),
-                ],
+              SizedBox(
+                height: 70,
+                child: Row(
+                  mainAxisAlignment: MainAxisAlignment.spaceEvenly,
+                  children: <Widget>[
+                    CalcButton(
+                      text: '.',
+                      fillColor: kPalePurple,
+                      callback: numClick,
+                    ),
+                    CalcButton(
+                      text: '0',
+                      fillColor: kPalePurple,
+                      callback: numClick,
+                    ),
+                    CalcButton(
+                      text: '=',
+                      fillColor: kDarkBlue,
+                      callback: evaluate,
+                    ),
+                    CalcButton(
+                      text: '+',
+                      fillColor: kDarkBlue,
+                      textSize: 30,
+                      callback: numClick,
+                    ),
+                  ],
+                ),
               ),
               SizedBox(
                 width: 300,
@@ -315,7 +340,7 @@ class ExpenseCalculatorState extends State<ExpenseCalculator> {
               ),
               SizedBox(
                 width: 360,
-                height: 50,
+                height: 45,
                 child: TextButton(
                   onPressed: () async {
                     final Expense expense = Expense(
@@ -348,7 +373,7 @@ class ExpenseCalculatorState extends State<ExpenseCalculator> {
                     "Submit",
                     style: TextStyle(
                       color: Colors.white,
-                      fontSize: 25,
+                      fontSize: 21,
                     ),
                   ),
                   style: TextButton.styleFrom(

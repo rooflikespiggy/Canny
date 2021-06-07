@@ -129,7 +129,7 @@ class QuickInputState extends State<QuickInput> {
                     child: Text(
                       !evaluated ? _expression : _evaluate,
                       style: TextStyle(
-                        fontSize: 40,
+                        fontSize: 38,
                         color: Colors.blueGrey[900],
                       ),
                       ),
