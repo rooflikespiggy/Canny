@@ -29,7 +29,11 @@ class QuickInputState extends State<QuickInput> {
   Category _chosenCategory;
 
   void numClick(String text) {
-    setState(() => _expression += text);
+    if (_expression.contains('.') && text == '.') {
+      setState(() => _expression += '');
+    } else {
+      setState(() => _expression += text);
+    }
   }
 
   void allClear(String text) {

@@ -51,6 +51,8 @@ dependencies:
   draggable_bottom_sheet: ^0.1.2
   flushbar: ^1.10.4
   datetime_picker_formfield: ^1.0.0
+  bottom_navy_bar: ^6.0.0
+
 
 
 dev_dependencies:

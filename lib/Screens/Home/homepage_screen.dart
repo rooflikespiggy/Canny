@@ -23,6 +23,7 @@ import 'package:font_awesome_flutter/font_awesome_flutter.dart';
 import 'package:multi_select_flutter/chip_field/multi_select_chip_field.dart';
 import 'package:multi_select_flutter/util/horizontal_scrollbar.dart';
 import 'package:multi_select_flutter/util/multi_select_item.dart';
+import 'package:bottom_navy_bar/bottom_navy_bar.dart';
 
 class HomePageScreen extends StatefulWidget {
   static final String id = 'homepage_screen';
@@ -103,13 +104,44 @@ class _HomePageScreenState extends State<HomePageScreen> {
       ),
     ];
 
+    List<BottomNavyBarItem> _theItems = [
+      BottomNavyBarItem(
+        icon: Icon(Icons.dashboard),
+        title: Text('Dashboard', style: TextStyle(fontSize: 16),),
+        activeColor: kLightBlue,
+        inactiveColor: kBlue,
+        textAlign: TextAlign.center,
+      ),
+      BottomNavyBarItem(
+        icon: Icon(Icons.view_list),
+        title: Text('Receipt', style: TextStyle(fontSize: 18),),
+        activeColor: kLightBlue,
+        inactiveColor: kBlue,
+        textAlign: TextAlign.center,
+      ),
+      BottomNavyBarItem(
+        icon: Icon(Icons.category),
+        title: Text('Categories', style: TextStyle(fontSize: 16),),
+        activeColor: kLightBlue,
+        inactiveColor: kBlue,
+        textAlign: TextAlign.center,
+      ),
+      BottomNavyBarItem(
+        icon: Icon(Icons.forum),
+        title: Text('Forum', style: TextStyle(fontSize: 18),),
+        activeColor: kLightBlue,
+        inactiveColor: kBlue,
+        textAlign: TextAlign.center,
+      ),
+    ];
+
     List<SpeedDialChild> _speedDailItems = [
       SpeedDialChild(
         child: Icon(
             Icons.attach_money_rounded,
           color: Colors.white,
         ),
-        label: 'Add your Spendings',
+        label: 'Add Your Expenses',
         labelStyle: TextStyle(
             fontSize: 18,
           fontFamily: "Lato",
@@ -143,7 +175,7 @@ class _HomePageScreenState extends State<HomePageScreen> {
         child: Icon(Icons.star,
           color: Colors.white,
         ),
-        label: 'Enter your Target Expenditure',
+        label: 'Enter A Target Expenditure',
         labelStyle: TextStyle(
           fontSize: 18,
           fontFamily: "Lato",
@@ -161,7 +193,7 @@ class _HomePageScreenState extends State<HomePageScreen> {
         child: Icon(Icons.category,
           color: Colors.white,
         ),
-        label: 'Add a new Category',
+        label: 'Add A New Category',
         labelStyle: TextStyle(
           fontSize: 18,
           fontFamily: "Lato",
@@ -198,8 +230,9 @@ class _HomePageScreenState extends State<HomePageScreen> {
       body: _pageOptions[_selectedTab],
       bottomNavigationBar: Container(
         color: kDarkBlue,
+        /*
         child: BottomNavigationBar(
-          backgroundColor: kDarkBlue,
+          backgroundColor: kBlue,
           elevation: 0,
           currentIndex: _selectedTab,
           type: BottomNavigationBarType.fixed,
@@ -213,7 +246,21 @@ class _HomePageScreenState extends State<HomePageScreen> {
             });
           },
           items: _items,
+        */
+
+        child: BottomNavyBar(
+          items: _theItems,
+          onItemSelected: (int index) {
+            setState(() {
+              _selectedTab = index;
+            });
+          },
+          selectedIndex: _selectedTab,
+          backgroundColor: kDarkBlue,
+          containerHeight: 55,
+          curve: Curves.easeInOut,
         ),
+
       ),
       floatingActionButtonLocation: FloatingActionButtonLocation.endFloat,
       floatingActionButton: SpeedDial(

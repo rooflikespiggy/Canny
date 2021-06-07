@@ -63,13 +63,16 @@ class _FilterScreenState extends State<FilterScreen> {
               child: Container(
                 padding: EdgeInsets.all(10.0),
                 child: Column(
-                  crossAxisAlignment: CrossAxisAlignment.stretch,
+                  crossAxisAlignment: CrossAxisAlignment.center,
                   children: <Widget>[
                     Padding(
                       padding: EdgeInsets.only(bottom: 5.0),
                       child: Text(
                         "Filter by categories:",
-                        style: TextStyle(fontSize: 14),
+                        style: TextStyle(fontSize: 18,
+                          color: kDarkBlue,
+                          fontFamily: "Lato"
+                        ),
                       ),
                     ),
                     _getCategoriesChips(),
@@ -82,6 +85,7 @@ class _FilterScreenState extends State<FilterScreen> {
                     builder: (context) {
                       List<Category> tempCtgs = filteredCategories;
                       return AlertDialog(
+                        backgroundColor: kLightBlue,
                         actions: <Widget>[
                           TextButton(
                             child: Text("CANCEL"),
@@ -99,7 +103,12 @@ class _FilterScreenState extends State<FilterScreen> {
                             },
                           ),
                         ],
-                        title: Text("Select categories"),
+                        title: Text("Select Categories to Filter by",
+                          style: TextStyle(
+                            color: kDarkBlue,
+                            fontFamily: "Lato"
+                        ),
+                        ),
                         content: StatefulBuilder(
                           builder: (context, setState) {
                             return Wrap(
@@ -110,7 +119,7 @@ class _FilterScreenState extends State<FilterScreen> {
                                       label: Text(ctg.categoryName),
                                       backgroundColor: tempCtgs.contains(ctg)
                                           ? ctg.categoryColor.withOpacity(0.6)
-                                          : Colors.grey,
+                                          : Colors.grey[300],
                                       onSelected: (value) {
                                         setState(() {
                                           if (!tempCtgs.contains(ctg)) {
@@ -138,52 +147,62 @@ class _FilterScreenState extends State<FilterScreen> {
   Widget _datesSelection() {
     return Container(
       padding: EdgeInsets.all(10.0),
-      child: Row(
-        children: <Widget>[
-          Expanded(
-            child: DateTimeField(
-              format: format,
-              decoration: InputDecoration(
-                labelText: "Date from:",
-                suffixIcon: Icon(Icons.calendar_today),
-              ),
-              onShowPicker: (context, currentValue) async {
-                var date = await showDatePicker(
-                  context: context,
-                  firstDate: DateTime(DateTime.now().year - 5),
-                  initialDate: currentValue ?? DateTime.now(),
-                  lastDate: DateTime(DateTime.now().year + 5),
-                );
-                if (date != null) {
-                  earliest = date;
-                }
-                return date;
-              },
+      child: Column(
+        children: [
+          Text('Filter by Dates:',
+            style: TextStyle(fontSize: 18,
+                color: kDarkBlue,
+                fontFamily: "Lato"
             ),
           ),
-          SizedBox(
-            width: 10.0,
-          ),
-          Expanded(
-            child: DateTimeField(
-              format: format,
-              decoration: InputDecoration(
-                labelText: "Date to:",
-                suffixIcon: Icon(Icons.calendar_today),
+          Row(
+            children: <Widget>[
+              Expanded(
+                child: DateTimeField(
+                  format: format,
+                  decoration: InputDecoration(
+                    labelText: "Date from:",
+                    suffixIcon: Icon(Icons.calendar_today),
+                  ),
+                  onShowPicker: (context, currentValue) async {
+                    var date = await showDatePicker(
+                      context: context,
+                      firstDate: DateTime(DateTime.now().year - 5),
+                      initialDate: currentValue ?? DateTime.now(),
+                      lastDate: DateTime(DateTime.now().year + 5),
+                    );
+                    if (date != null) {
+                      earliest = date;
+                    }
+                    return date;
+                  },
+                ),
               ),
-              onShowPicker: (context, currentValue) async {
-                var date = await showDatePicker(
-                  context: context,
-                  firstDate: DateTime(DateTime.now().year - 5),
-                  initialDate: currentValue ?? DateTime.now(),
-                  lastDate: DateTime(DateTime.now().year + 5),
-                );
-                if (date != null) {
-                  latest = date;
-                }
-                return date;
-              },
-            ),
+              SizedBox(
+                width: 10.0,
+              ),
+              Expanded(
+                child: DateTimeField(
+                  format: format,
+                  decoration: InputDecoration(
+                    labelText: "Date to:",
+                    suffixIcon: Icon(Icons.calendar_today),
+                  ),
+                  onShowPicker: (context, currentValue) async {
+                    var date = await showDatePicker(
+                      context: context,
+                      firstDate: DateTime(DateTime.now().year - 5),
+                      initialDate: currentValue ?? DateTime.now(),
+                      lastDate: DateTime(DateTime.now().year + 5),
+                    );
+                    if (date != null) {
+                      latest = date;
+                    }
+                    return date;
+                  },
+                ),
+              ),
+            ],
           ),
         ],
       ),
@@ -194,6 +213,7 @@ class _FilterScreenState extends State<FilterScreen> {
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
+        backgroundColor: kDarkBlue,
         elevation: 0,
         leading: IconButton(
           icon: Icon(Icons.clear),
@@ -245,12 +265,40 @@ class _FilterScreenState extends State<FilterScreen> {
           ),
         ],
       ),
-      body: Column(
-        crossAxisAlignment: CrossAxisAlignment.stretch,
-        children: <Widget>[
-          _categoriesSelection(),
-          _datesSelection(),
-        ],
+      body: Container(
+        width: double.infinity,
+        height: double.infinity,
+        decoration: BoxDecoration(
+          image: DecorationImage(
+            image: AssetImage("styles/images/background-2.png"),
+            colorFilter: ColorFilter.mode(Colors.black.withOpacity(0.4), BlendMode.dstATop),
+            fit: BoxFit.cover,
+          ),
+        ),
+        child: Column(
+          crossAxisAlignment: CrossAxisAlignment.stretch,
+          children: <Widget>[
+            SizedBox(height: 30,),
+            _categoriesSelection(),
+            SizedBox(height: 10,),
+            Divider(
+              height: 3,
+              indent: 20,
+              endIndent: 20,
+              color: kDarkBlue.withOpacity(0.7),
+              thickness: 1.5,
+            ),
+            _datesSelection(),
+            SizedBox(height: 20,),
+            Divider(
+              height: 3,
+              indent: 20,
+              endIndent: 20,
+              color: kDarkBlue.withOpacity(0.7),
+              thickness: 1.5,
+            ),
+          ],
+        ),
       ),
     );
   }

@@ -51,6 +51,7 @@ class _ReceiptScreenState extends State<ReceiptScreen> {
               onPressed: () {
                 setState(() {
                   earliest = DateTime(DateTime.now().year - 2);
+                  latest = DateTime(DateTime.now().year + 2);
                   filteredCategories = <Category>[];
                   isActive = false;
                 });
