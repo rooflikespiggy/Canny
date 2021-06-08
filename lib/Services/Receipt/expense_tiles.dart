@@ -107,7 +107,6 @@ class _ExpenseTileState extends State<ExpenseTile> {
           ),
         ),
         onTap: () {
-          // TODO: edit everything
           showModalBottomSheet(
               shape: RoundedRectangleBorder(
                 borderRadius: BorderRadius.only(
@@ -120,7 +119,6 @@ class _ExpenseTileState extends State<ExpenseTile> {
               elevation: 5,
               context: context,
               builder: (BuildContext context) {
-                // TODO: have edit receipt class to handle bottom modal sheet
                 return
                   EditReceipt(
                   categoryId: widget.categoryId,

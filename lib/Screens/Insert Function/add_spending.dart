@@ -65,7 +65,6 @@ class _AddSpendingScreenState extends State<AddSpendingScreen> {
                             mainAxisAlignment: MainAxisAlignment.center,
                             children: <Widget> [
                               SizedBox(width: 30.0),
-                              // TODO: make this Text nicer
                               Text('Add Your Expenses',
                                 style: TextStyle(
                                     fontSize: 18,

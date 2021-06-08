@@ -87,7 +87,7 @@ class ExpenseCalculatorState extends State<ExpenseCalculator> {
     setState(() {
       evaluated = true;
       _history = _expression;
-      _evaluate = exp.evaluate(EvaluationType.REAL, cm).toString();
+      _evaluate = exp.evaluate(EvaluationType.REAL, cm).toStringAsFixed(8);
     });
   }
 
@@ -113,7 +113,7 @@ class ExpenseCalculatorState extends State<ExpenseCalculator> {
           child: Column(
             mainAxisAlignment: MainAxisAlignment.start,
             children: <Widget>[
-              SizedBox(height: 5,),
+              SizedBox(height: 5),
               // how to put this right at the top
               _showTextFormFields(itemNameController,
                 "Enter the name of expense",
@@ -352,20 +352,46 @@ class ExpenseCalculatorState extends State<ExpenseCalculator> {
                     );
                     if (_formKey.currentState.validate()) {
                       // TODO: need error if amount added is 0
-                      await _authReceipt.addReceipt(expense);
-                      itemNameController.clear();
-                      Navigator.pop(context);
-                      Flushbar(
-                        message: "Expense successfully added.",
-                        icon: Icon(
-                          Icons.info_outline,
-                          size: 28.0,
-                          color: Theme.of(context).colorScheme.secondary,
-                        ),
-                        duration: Duration(seconds: 3),
-                        leftBarIndicatorColor:
-                        Theme.of(context).colorScheme.secondary,
-                      )..show(context);
+                      if (roundDouble(double.parse(_evaluate), 2) == 0.00) {
+                        Flushbar(
+                          message: "Cannot enter 0.",
+                          icon: Icon(
+                            Icons.info_outline,
+                            size: 28.0,
+                            color: Theme.of(context).colorScheme.secondary,
+                          ),
+                          duration: Duration(seconds: 3),
+                          leftBarIndicatorColor:
+                          Theme.of(context).colorScheme.secondary,
+                        )..show(context);
+                      } else if (roundDouble(double.parse(_evaluate), 2) < 0.00) {
+                        Flushbar(
+                          message: "Cannot enter a negative number.",
+                          icon: Icon(
+                            Icons.info_outline,
+                            size: 28.0,
+                            color: Theme.of(context).colorScheme.secondary,
+                          ),
+                          duration: Duration(seconds: 3),
+                          leftBarIndicatorColor:
+                          Theme.of(context).colorScheme.secondary,
+                        )..show(context);
+                      } else {
+                        await _authReceipt.addReceipt(expense);
+                        itemNameController.clear();
+                        Navigator.pop(context);
+                        Flushbar(
+                          message: "Expense successfully added.",
+                          icon: Icon(
+                            Icons.info_outline,
+                            size: 28.0,
+                            color: Theme.of(context).colorScheme.secondary,
+                          ),
+                          duration: Duration(seconds: 3),
+                          leftBarIndicatorColor:
+                          Theme.of(context).colorScheme.secondary,
+                        )..show(context);
+                      }
                     }
                   },
                   child: Text(

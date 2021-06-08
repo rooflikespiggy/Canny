@@ -136,7 +136,6 @@ class _EditReceiptState extends State<EditReceipt> {
                                   mainAxisAlignment: MainAxisAlignment.center,
                                   children: <Widget> [
                                     SizedBox(width: 30.0),
-                                    // TODO: make this Text nicer
                                     Text('Edit Your Receipt',
                                       style: TextStyle(
                                           fontSize: 18,
@@ -277,7 +276,6 @@ class _EditReceiptState extends State<EditReceipt> {
                                           TextButton(
                                             onPressed: () async {
                                               if (_formKey.currentState.validate()) {
-                                                // TODO: if they change amount to 0 give error
                                                 if (itemNameChanged) {
                                                   _authReceipt.updateItemName(widget.receiptId, itemNameController.text);
                                                 }
