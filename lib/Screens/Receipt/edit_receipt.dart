@@ -9,6 +9,8 @@ import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:Canny/Database/all_database.dart';
 import 'package:flutter/services.dart';
 import 'package:Canny/Services/Category/category_database.dart';
+import 'package:datetime_picker_formfield/datetime_picker_formfield.dart';
+import 'package:intl/intl.dart';
 
 class EditReceipt extends StatefulWidget {
   static final String id = 'add_spending_screen';
@@ -57,6 +59,8 @@ class _EditReceiptState extends State<EditReceipt> {
   bool itemNameChanged = false;
   bool dateChanged = false;
   bool costChanged = false;
+  final format = DateFormat('d/M/y');
+  DateTime current;
 
   @override
   void dispose() {
@@ -237,11 +241,47 @@ class _EditReceiptState extends State<EditReceipt> {
                                             ],
                                           ),
                                           SizedBox(height: 10,),
+                                          Divider(
+                                            thickness: 0.7,
+                                            color: Colors.grey[600],
+                                            indent: 56,
+                                            endIndent: 56,
+                                          ),
+                                          SizedBox(
+                                            height: 60,
+                                            width: 300,
+                                            child: DateTimeField(
+                                              format: format,
+                                              decoration: InputDecoration(
+                                                labelText: "Edit date of Expenses",
+                                                prefixIcon: Icon(Icons.calendar_today),
+
+                                              ),
+                                              initialValue: DateTime.fromMicrosecondsSinceEpoch(widget.datetime.microsecondsSinceEpoch),
+                                              onShowPicker: (context, currentValue) async {
+                                                var date = await showDatePicker(
+                                                  context: context,
+                                                  firstDate: DateTime(DateTime.now().year - 5),
+                                                  initialDate: currentValue ?? DateTime.now(),
+                                                  lastDate: DateTime(DateTime.now().year + 5),
+                                                );
+                                                if (date != null) {
+                                                  current = date;
+                                                  dateChange();
+                                                }
+                                                return date;
+                                              },
+                                            ),
+                                          ),
+                                          SizedBox(height: 10,),
                                           TextButton(
                                             onPressed: () async {
                                               if (_formKey.currentState.validate()) {
                                                 if (itemNameChanged) {
                                                   _authReceipt.updateItemName(widget.receiptId, itemNameController.text);
+                                                }
+                                                if (dateChanged) {
+                                                  _authReceipt.updateDate(widget.receiptId, current);
                                                 }
                                                 if (costChanged && newCategoryId != null && newCategoryId != widget.categoryId) {
                                                   _authReceipt.updateCostAndCategory(widget.receiptId,
@@ -269,7 +309,6 @@ class _EditReceiptState extends State<EditReceipt> {
                                                 itemNameController.clear();
                                                 costController.clear();
                                                 Navigator.pop(context);
-                                                // TODO: need error if amount added is 0
                                                 /*
                                                 await _authReceipt.updateReceipt(widget.receiptId,
                                                     widget.categoryId,
@@ -389,6 +428,8 @@ class _EditReceiptState extends State<EditReceipt> {
           validator: (value) {
             if (value.isEmpty) {
               return label;
+            } if (value == '0' || value == '0.0' || value == '0.00') {
+              return 'Cost cannot be 0. Enter a valid expense amount.';
             }
             return null;
           },

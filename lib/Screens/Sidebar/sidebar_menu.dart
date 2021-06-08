@@ -7,19 +7,27 @@ import 'package:Canny/Shared/colors.dart';
 import 'package:Canny/Screens/wrapper.dart';
 import 'package:Canny/Screens/Category/category_screen.dart';
 
-class SideBarMenu extends StatelessWidget {
+class SideBarMenu extends StatefulWidget {
+  const SideBarMenu({Key key}) : super(key: key);
+
+  @override
+  _SideBarMenuState createState() => _SideBarMenuState();
+}
+
+class _SideBarMenuState extends State<SideBarMenu> {
   final AuthService _auth = AuthService();
   final String email = FirebaseAuth.instance.currentUser.email;
+  bool isSwitched = false;
 
   @override
   Widget build(BuildContext context) {
     return Drawer(
-      child: Container(
-        color: kLightBlue,
-        child: ListView(
-          padding: EdgeInsets.zero,
-          children: <Widget>[
-            DrawerHeader(
+        child: Container(
+          color: kLightBlue,
+          child: ListView(
+            padding: EdgeInsets.zero,
+            children: <Widget>[
+              DrawerHeader(
               decoration: BoxDecoration(
                 color: kDarkBlue,
                 image: DecorationImage(
@@ -46,10 +54,10 @@ class SideBarMenu extends StatelessWidget {
               leading: Icon(Icons.calculate_outlined),
               trailing: Icon(Icons.arrow_right),
               title: Text(
-                'Customise Quick Input',
-                style: TextStyle(fontFamily: 'Lato',
-                  fontSize: 16,
-                )
+                  'Customise Quick Input',
+                  style: TextStyle(fontFamily: 'Lato',
+                    fontSize: 16,
+                  )
               ),
               onTap: () => {
                 Navigator.push(context,
@@ -57,41 +65,47 @@ class SideBarMenu extends StatelessWidget {
               },
             ),
             Divider(thickness: 1.0),
-            /*
             ListTile(
-              leading: Icon(Icons.category),
-              trailing: Icon(Icons.arrow_right),
+              leading: Icon(Icons.notifications_active),
+              trailing: Switch(
+                value: isSwitched,
+                onChanged: (value) {
+                  setState(() {
+                    isSwitched = value;
+                    print(isSwitched);
+                  });
+                },
+                activeTrackColor: kLightBlueDark,
+                activeColor: kDarkBlue,
+                inactiveThumbColor: Colors.white,
+              ),
               title: Text(
-                'View Categories',
+                  'Turn on Reminder Notifications',
                   style: TextStyle(fontFamily: 'Lato',
                     fontSize: 16,
                   )
               ),
-              onTap: () => {
-                Navigator.push(context,
-                    NoAnimationMaterialPageRoute(builder: (context) => CategoryScreen()))
-              },
             ),
-             */
-            // SizedBox(height: 400.0),
-            // SizedBox(height: 400.0),
+            Divider(thickness: 1.0),
             ListTile(
               leading: Icon(Icons.exit_to_app),
               title: Text(
                 'Logout',
-                  style: TextStyle(fontFamily: 'Lato',
-                    fontSize: 16,
-                  )
+                style: TextStyle(fontFamily: 'Lato',
+                  fontSize: 16,
+                )
               ),
               onTap: () async {
                 await _auth.signOut();
                 Navigator.push(context,
-                    MaterialPageRoute(builder: (context) => Wrapper()));
+                MaterialPageRoute(builder: (context) => Wrapper()));
               },
             ),
+              Divider(thickness: 1.0),
           ],
         ),
       ),
     );
   }
 }
+
