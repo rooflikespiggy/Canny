@@ -136,7 +136,6 @@ class _EditReceiptState extends State<EditReceipt> {
                                   mainAxisAlignment: MainAxisAlignment.center,
                                   children: <Widget> [
                                     SizedBox(width: 30.0),
-                                    // TODO: make this Text nicer
                                     Text('Edit Your Receipt',
                                       style: TextStyle(
                                           fontSize: 18,
@@ -291,7 +290,7 @@ class _EditReceiptState extends State<EditReceipt> {
                                                       newIsIncome
                                                           ? double.parse(costController.text)
                                                           : -(double.parse(costController.text)));
-                                                } else if (costChanged && newCategoryId == null) {
+                                                } else if (costChanged && (newCategoryId == null || newCategoryId == widget.categoryId)) {
                                                   _authReceipt.updateCost(widget.receiptId,
                                                       widget.categoryId,
                                                       isIncome

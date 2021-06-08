@@ -89,7 +89,6 @@ class _AddCategoryScreenState extends State<AddCategoryScreen> {
                                     mainAxisAlignment: MainAxisAlignment.center,
                                     children: <Widget> [
                                       SizedBox(width: 20.0),
-                                      // TODO: make this Text nicer
                                       Text('Add A New Category',
                                         style: TextStyle(
                                           fontSize: 18,
@@ -111,7 +110,6 @@ class _AddCategoryScreenState extends State<AddCategoryScreen> {
                                     ],
                                   ),
                                   SizedBox(height: 10),
-                                  // TODO: think about how to arrange the 3 buttons
                                   Container(
                                       alignment: Alignment.topCenter,
                                       child: Form(
