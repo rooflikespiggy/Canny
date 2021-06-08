@@ -240,6 +240,7 @@ class _EditReceiptState extends State<EditReceipt> {
                                           TextButton(
                                             onPressed: () async {
                                               if (_formKey.currentState.validate()) {
+                                                // TODO: if they change amount to 0 give error
                                                 if (itemNameChanged) {
                                                   _authReceipt.updateItemName(widget.receiptId, itemNameController.text);
                                                 }
@@ -251,7 +252,7 @@ class _EditReceiptState extends State<EditReceipt> {
                                                       newIsIncome
                                                           ? double.parse(costController.text)
                                                           : -(double.parse(costController.text)));
-                                                } else if (costChanged && newCategoryId == null) {
+                                                } else if (costChanged && (newCategoryId == null || newCategoryId == widget.categoryId)) {
                                                   _authReceipt.updateCost(widget.receiptId,
                                                       widget.categoryId,
                                                       isIncome
@@ -269,18 +270,6 @@ class _EditReceiptState extends State<EditReceipt> {
                                                 itemNameController.clear();
                                                 costController.clear();
                                                 Navigator.pop(context);
-                                                // TODO: need error if amount added is 0
-                                                /*
-                                                await _authReceipt.updateReceipt(widget.receiptId,
-                                                    widget.categoryId,
-                                                    newCategoryId,
-                                                    itemNameController.text,
-                                                    DateTime.now(),
-                                                    newIsIncome
-                                                        ? double.parse(costController.text)
-                                                        : -(double.parse(costController.text)));
-
-                                                 */
                                               }
                                               setState(() {});
                                             },

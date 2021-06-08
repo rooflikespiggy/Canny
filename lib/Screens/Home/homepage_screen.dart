@@ -108,28 +108,28 @@ class _HomePageScreenState extends State<HomePageScreen> {
     List<BottomNavyBarItem> _theItems = [
       BottomNavyBarItem(
         icon: Icon(Icons.dashboard),
-        title: Text('Dashboard', style: TextStyle(fontSize: 16),),
+        title: Text('Dashboard', style: TextStyle(fontSize: 16)),
         activeColor: kLightBlue,
         inactiveColor: kBlue,
         textAlign: TextAlign.center,
       ),
       BottomNavyBarItem(
         icon: Icon(Icons.view_list),
-        title: Text('Receipt', style: TextStyle(fontSize: 18),),
+        title: Text('Receipt', style: TextStyle(fontSize: 18)),
         activeColor: kLightBlue,
         inactiveColor: kBlue,
         textAlign: TextAlign.center,
       ),
       BottomNavyBarItem(
         icon: Icon(Icons.category),
-        title: Text('Categories', style: TextStyle(fontSize: 16),),
+        title: Text('Categories', style: TextStyle(fontSize: 16)),
         activeColor: kLightBlue,
         inactiveColor: kBlue,
         textAlign: TextAlign.center,
       ),
       BottomNavyBarItem(
         icon: Icon(Icons.forum),
-        title: Text('Forum', style: TextStyle(fontSize: 18),),
+        title: Text('Forum', style: TextStyle(fontSize: 18)),
         activeColor: kLightBlue,
         inactiveColor: kBlue,
         textAlign: TextAlign.center,
