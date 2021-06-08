@@ -129,8 +129,8 @@ class _ExpenseTileState extends State<ExpenseTile> {
                   datetime: widget.datetime,
                   receiptId: widget.receiptId,
                 );
-
               }
+
           );
         },
         onLongPress: () {
