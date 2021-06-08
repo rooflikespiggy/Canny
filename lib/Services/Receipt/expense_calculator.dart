@@ -351,7 +351,6 @@ class ExpenseCalculatorState extends State<ExpenseCalculator> {
                       uid: uid,
                     );
                     if (_formKey.currentState.validate()) {
-                      // TODO: need error if amount added is 0
                       if (roundDouble(double.parse(_evaluate), 2) == 0.00) {
                         Flushbar(
                           message: "Cannot enter 0.",

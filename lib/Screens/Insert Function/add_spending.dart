@@ -172,7 +172,6 @@ class _AddSpendingScreenState extends State<AddSpendingScreen> {
                                           uid: uid,
                                         );
                                         if (_formKey.currentState.validate()) {
-                                          // TODO: need error if amount added is 0
                                           await _authReceipt.addReceipt(expense);
                                           itemNameController.clear();
                                           costController.clear();
