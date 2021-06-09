@@ -45,7 +45,7 @@ class _AddTEScreenState extends State<AddTEScreen> {
                             mainAxisAlignment: MainAxisAlignment.center,
                             children: <Widget> [
                               SizedBox(width: 20.0),
-                              Text('Add A New Targeted Expenditure',
+                              Text('Enter A Target Expenditure',
                                 style: TextStyle(
                                     fontSize: 18,
                                     fontFamily: "Lato",
@@ -153,7 +153,7 @@ class _AddTEScreenState extends State<AddTEScreen> {
           validator: (value) {
             if (value.isEmpty) {
               return label;
-            } if (value == '0' || value == '0.0' || value == '0.0') {
+            } if (value == '0' || value == '0.0' || value == '0.00') {
               return 'Enter a Targeted Expenditure more than 0';
             }
             return null;
