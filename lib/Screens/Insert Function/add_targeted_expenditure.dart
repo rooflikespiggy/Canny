@@ -1,7 +1,12 @@
+import 'package:Canny/Database/all_database.dart';
 import 'package:Canny/Shared/colors.dart';
+import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:flutter/material.dart';
 import 'package:Canny/Shared/input_formatters.dart';
 import 'package:flutter/services.dart';
+import 'package:Canny/Models/targeted_expenditure.dart';
+import 'package:Canny/Services/Targeted Expenditure/TE_database.dart';
+import 'package:firebase_auth/firebase_auth.dart';
 
 class AddTEScreen extends StatefulWidget {
   static final String id = 'add_te_screen';
@@ -14,6 +19,10 @@ class _AddTEScreenState extends State<AddTEScreen> {
 
   final TextEditingController targetedExpensesController = TextEditingController();
   final _formKey = GlobalKey<FormState>();
+  final CollectionReference TECollection = Database().targetedExpenditureDatabase();
+  final TEDatabaseService _authTargetedExpenditure = TEDatabaseService();
+  String uid = FirebaseAuth.instance.currentUser.uid;
+
 
   @override
   Widget build(BuildContext context) {
@@ -71,7 +80,14 @@ class _AddTEScreenState extends State<AddTEScreen> {
                           SizedBox(height: 10,),
                           TextButton(
                             onPressed: () async {
-                              print(targetedExpensesController.text);
+                              final TargetedExpenditure targetedExpenditure = TargetedExpenditure(
+                                amount: double.parse(targetedExpensesController.text)
+                              );
+                              if (_formKey.currentState.validate()) {
+                                await _authTargetedExpenditure.updateTargetedExpenditure(targetedExpenditure);
+                                targetedExpensesController.clear();
+                                Navigator.pop(context);
+                              }
                             },
                             child: Text('Submit',
                               style: TextStyle(
@@ -137,6 +153,8 @@ class _AddTEScreenState extends State<AddTEScreen> {
           validator: (value) {
             if (value.isEmpty) {
               return label;
+            } if (value == '0' || value == '0.0' || value == '0.0') {
+              return 'Enter a Targeted Expenditure more than 0';
             }
             return null;
           },
