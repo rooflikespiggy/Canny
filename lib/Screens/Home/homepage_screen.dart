@@ -108,28 +108,28 @@ class _HomePageScreenState extends State<HomePageScreen> {
     List<BottomNavyBarItem> _theItems = [
       BottomNavyBarItem(
         icon: Icon(Icons.dashboard),
-        title: Text('Dashboard', style: TextStyle(fontSize: 16),),
+        title: Text('Dashboard', style: TextStyle(fontSize: 16)),
         activeColor: kLightBlue,
         inactiveColor: kBlue,
         textAlign: TextAlign.center,
       ),
       BottomNavyBarItem(
         icon: Icon(Icons.view_list),
-        title: Text('Receipt', style: TextStyle(fontSize: 18),),
+        title: Text('Receipt', style: TextStyle(fontSize: 18)),
         activeColor: kLightBlue,
         inactiveColor: kBlue,
         textAlign: TextAlign.center,
       ),
       BottomNavyBarItem(
         icon: Icon(Icons.category),
-        title: Text('Categories', style: TextStyle(fontSize: 16),),
+        title: Text('Categories', style: TextStyle(fontSize: 16)),
         activeColor: kLightBlue,
         inactiveColor: kBlue,
         textAlign: TextAlign.center,
       ),
       BottomNavyBarItem(
         icon: Icon(Icons.forum),
-        title: Text('Forum', style: TextStyle(fontSize: 18),),
+        title: Text('Forum', style: TextStyle(fontSize: 18)),
         activeColor: kLightBlue,
         inactiveColor: kBlue,
         textAlign: TextAlign.center,
@@ -186,8 +186,23 @@ class _HomePageScreenState extends State<HomePageScreen> {
         ),
         backgroundColor: kBlue,
         onTap: () {
-          Navigator.push(context,
-              MaterialPageRoute(builder: (context) => AddTEScreen()));
+          showModalBottomSheet(
+              shape: RoundedRectangleBorder(
+                borderRadius: BorderRadius.only(
+                  topLeft: Radius.circular(24),
+                  topRight: Radius.circular(24),
+                ),
+              ),
+              enableDrag: true,
+              isScrollControlled: true,
+              elevation: 5,
+              context: context,
+              builder: (BuildContext context) {
+                return AddTEScreen();
+              }
+          );
+          //Navigator.push(context,
+          //    MaterialPageRoute(builder: (context) => AddTEScreen()));
           // print('Add Target Expenditure');
 
         },

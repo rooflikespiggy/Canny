@@ -82,7 +82,7 @@ class QuickInputState extends State<QuickInput> {
     setState(() {
       evaluated = true;
       _history = _expression;
-      _evaluate = exp.evaluate(EvaluationType.REAL, cm).toString();
+      _evaluate = exp.evaluate(EvaluationType.REAL, cm).toStringAsFixed(8);
     });
   }
 
@@ -295,18 +295,44 @@ class QuickInputState extends State<QuickInput> {
                           itemName: _chosenCategory.categoryName,
                           uid: uid,
                         );
-                        await _authReceipt.addReceipt(expense);
-                        Flushbar(
-                          message: "Expense successfully added.",
-                          icon: Icon(
-                            Icons.info_outline,
-                            size: 28.0,
-                            color: Theme.of(context).colorScheme.secondary,
-                          ),
-                          duration: Duration(seconds: 3),
-                          leftBarIndicatorColor:
-                          Theme.of(context).colorScheme.secondary,
-                        )..show(context);
+                        if (roundDouble(double.parse(_evaluate), 2) == 0.00) {
+                          Flushbar(
+                            message: "Cannot enter 0.",
+                            icon: Icon(
+                              Icons.info_outline,
+                              size: 28.0,
+                              color: Theme.of(context).colorScheme.secondary,
+                            ),
+                            duration: Duration(seconds: 3),
+                            leftBarIndicatorColor:
+                            Theme.of(context).colorScheme.secondary,
+                          )..show(context);
+                        } else if (roundDouble(double.parse(_evaluate), 2) < 0.00) {
+                          Flushbar(
+                            message: "Cannot enter a negative number.",
+                            icon: Icon(
+                              Icons.info_outline,
+                              size: 28.0,
+                              color: Theme.of(context).colorScheme.secondary,
+                            ),
+                            duration: Duration(seconds: 3),
+                            leftBarIndicatorColor:
+                            Theme.of(context).colorScheme.secondary,
+                          )..show(context);
+                        } else {
+                          await _authReceipt.addReceipt(expense);
+                          Flushbar(
+                            message: "Expense successfully added.",
+                            icon: Icon(
+                              Icons.info_outline,
+                              size: 28.0,
+                              color: Theme.of(context).colorScheme.secondary,
+                            ),
+                            duration: Duration(seconds: 3),
+                            leftBarIndicatorColor:
+                            Theme.of(context).colorScheme.secondary,
+                          )..show(context);
+                        }
                       },
                       child: Text(
                         "Enter",

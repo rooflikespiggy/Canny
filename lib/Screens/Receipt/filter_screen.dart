@@ -28,10 +28,10 @@ class _FilterScreenState extends State<FilterScreen> {
   Widget _getCategoriesChips() {
     return filteredCategories.isEmpty
         ? Text(
-      "Tap to select categories",
+      "Tap to select Categories to filter by",
       style: TextStyle(
-        fontSize: 12,
-        color: Colors.grey,
+        fontSize: 14,
+        color: Colors.grey[600],
         fontStyle: FontStyle.italic,
       ),
     )
@@ -54,158 +54,187 @@ class _FilterScreenState extends State<FilterScreen> {
   }
 
   Widget _categoriesSelection() {
-    return FutureBuilder<List<Category>>(
-        future: _authCategory.getCategories(),
-        builder: (BuildContext context, AsyncSnapshot<List<Category>> snapshot) {
-          if (snapshot.hasData) {
-            List<Category> allCategories = snapshot.data;
-            return GestureDetector(
-              child: Container(
-                padding: EdgeInsets.all(10.0),
-                child: Column(
-                  crossAxisAlignment: CrossAxisAlignment.center,
-                  children: <Widget>[
-                    Padding(
-                      padding: EdgeInsets.only(bottom: 5.0),
-                      child: Text(
-                        "Filter by categories:",
-                        style: TextStyle(fontSize: 18,
-                          color: kDarkBlue,
-                          fontFamily: "Lato"
+    return Padding(
+      padding: EdgeInsets.all(10),
+      child: Card(
+        shape: RoundedRectangleBorder(
+            borderRadius: BorderRadius.all(Radius.circular(12.0))),
+        color: Colors.white.withOpacity(0.9),
+        child: FutureBuilder<List<Category>>(
+            future: _authCategory.getCategories(),
+            builder: (BuildContext context, AsyncSnapshot<List<Category>> snapshot) {
+              if (snapshot.hasData) {
+                List<Category> allCategories = snapshot.data;
+                return GestureDetector(
+                  child: Container(
+                    padding: EdgeInsets.all(10.0),
+                    child: Column(
+                      crossAxisAlignment: CrossAxisAlignment.center,
+                      children: <Widget>[
+                        Padding(
+                          padding: EdgeInsets.only(bottom: 5.0),
+                          child: Text(
+                            "Filter by categories:",
+                            style: TextStyle(fontSize: 18,
+                              color: kDarkBlue,
+                              fontFamily: "Lato"
+                            ),
+                          ),
                         ),
-                      ),
+                        SizedBox(height: 5,),
+                        _getCategoriesChips(),
+                        SizedBox(height: 10,)
+                      ],
                     ),
-                    _getCategoriesChips(),
-                  ],
-                ),
-              ),
-              onTap: () {
-                showDialog(
-                    context: context,
-                    builder: (context) {
-                      List<Category> tempCtgs = filteredCategories;
-                      return AlertDialog(
-                        backgroundColor: kLightBlue,
-                        actions: <Widget>[
-                          TextButton(
-                            child: Text("CANCEL"),
-                            onPressed: () {
-                              Navigator.pop(context);
-                            },
-                          ),
-                          TextButton(
-                            child: Text("APPLY"),
-                            onPressed: () {
-                              setState(() {
-                                filteredCategories = List.of(tempCtgs);
-                              });
-                              Navigator.pop(context);
-                            },
-                          ),
-                        ],
-                        title: Text("Select Categories to Filter by",
-                          style: TextStyle(
-                            color: kDarkBlue,
-                            fontFamily: "Lato"
-                        ),
-                        ),
-                        content: StatefulBuilder(
-                          builder: (context, setState) {
-                            return Wrap(
-                                spacing: 5,
-                                children: allCategories
-                                    .map(
-                                      (ctg) => InputChip(
-                                      label: Text(ctg.categoryName),
-                                      backgroundColor: tempCtgs.contains(ctg)
-                                          ? ctg.categoryColor.withOpacity(0.6)
-                                          : Colors.grey[300],
-                                      onSelected: (value) {
-                                        setState(() {
-                                          if (!tempCtgs.contains(ctg)) {
-                                            tempCtgs.add(ctg);
-                                          } else {
-                                            tempCtgs.remove(ctg);
-                                          }
-                                          tempCtgs.sort((a, b) => a.categoryId.compareTo(b.categoryId));
-                                        });
-                                      }),
-                                ).toList());
-                          },
-                        ),
-                      );
-                    });
-              },
-            );
-          }
-          return SizedBox();
-        }
+                  ),
+                  onTap: () {
+                    showDialog(
+                        context: context,
+                        builder: (context) {
+                          List<Category> tempCtgs = filteredCategories;
+                          return AlertDialog(
+                            backgroundColor: kLightBlue,
+                            actions: <Widget>[
+                              TextButton(
+                                child: Text("CANCEL"),
+                                onPressed: () {
+                                  Navigator.pop(context);
+                                },
+                              ),
+                              TextButton(
+                                child: Text("APPLY"),
+                                onPressed: () {
+                                  setState(() {
+                                    filteredCategories = List.of(tempCtgs);
+                                  });
+                                  Navigator.pop(context);
+                                },
+                              ),
+                            ],
+                            title: Text("Select Categories",
+                              style: TextStyle(
+                                color: kDarkBlue,
+                                fontFamily: "Lato"
+                            ),
+                            ),
+                            content: StatefulBuilder(
+                              builder: (context, setState) {
+                                return Wrap(
+                                    spacing: 5,
+                                    children: allCategories
+                                        .map(
+                                          (ctg) => InputChip(
+                                          label: Text(ctg.categoryName),
+                                          backgroundColor: tempCtgs.contains(ctg)
+                                              ? ctg.categoryColor.withOpacity(0.6)
+                                              : Colors.grey[300],
+                                          onSelected: (value) {
+                                            setState(() {
+                                              if (!tempCtgs.contains(ctg)) {
+                                                tempCtgs.add(ctg);
+                                              } else {
+                                                tempCtgs.remove(ctg);
+                                              }
+                                              tempCtgs.sort((a, b) => a.categoryId.compareTo(b.categoryId));
+                                            });
+                                          }),
+                                    ).toList());
+                              },
+                            ),
+                          );
+                        });
+                  },
+                );
+              }
+              return SizedBox();
+            }
+        ),
+      ),
     );
   }
 
 
   Widget _datesSelection() {
-    return Container(
-      padding: EdgeInsets.all(10.0),
-      child: Column(
-        children: [
-          Text('Filter by Dates:',
-            style: TextStyle(fontSize: 18,
-                color: kDarkBlue,
-                fontFamily: "Lato"
+    return Padding(
+      padding: EdgeInsets.fromLTRB(10, 2, 10, 10),
+      child: Card(
+        shape: RoundedRectangleBorder(
+            borderRadius: BorderRadius.all(Radius.circular(12.0))),
+        color: Colors.white.withOpacity(0.9),
+      child: Container(
+        padding: EdgeInsets.all(10.0),
+        child: Column(
+          children: [
+            Text('Filter by Dates:',
+              style: TextStyle(fontSize: 18,
+                  color: kDarkBlue,
+                  fontFamily: "Lato"
+              ),
             ),
-          ),
-          Row(
-            children: <Widget>[
-              Expanded(
-                child: DateTimeField(
-                  format: format,
-                  decoration: InputDecoration(
-                    labelText: "Date from:",
-                    suffixIcon: Icon(Icons.calendar_today),
+            Row(
+              children: <Widget>[
+                Expanded(
+                  child: DateTimeField(
+                    format: format,
+                    decoration: InputDecoration(
+                      labelText: "Date from:",
+                      labelStyle: TextStyle(
+                        fontSize: 16,
+                        fontStyle: FontStyle.italic
+                      ),
+                      suffixIcon: Icon(Icons.calendar_today),
+                    ),
+                    onShowPicker: (context, currentValue) async {
+                      var date = await showDatePicker(
+                        context: context,
+                        firstDate: DateTime(DateTime.now().year - 5),
+                        initialDate: currentValue ?? DateTime.now(),
+                        lastDate: DateTime(DateTime.now().year + 5),
+                      );
+                      if (date != null) {
+                        earliest = date;
+                      }
+                      return date;
+                    },
                   ),
-                  onShowPicker: (context, currentValue) async {
-                    var date = await showDatePicker(
-                      context: context,
-                      firstDate: DateTime(DateTime.now().year - 5),
-                      initialDate: currentValue ?? DateTime.now(),
-                      lastDate: DateTime(DateTime.now().year + 5),
-                    );
-                    if (date != null) {
-                      earliest = date;
-                    }
-                    return date;
-                  },
                 ),
-              ),
-              SizedBox(
-                width: 10.0,
-              ),
-              Expanded(
-                child: DateTimeField(
-                  format: format,
-                  decoration: InputDecoration(
-                    labelText: "Date to:",
-                    suffixIcon: Icon(Icons.calendar_today),
+                SizedBox(
+                  width: 10.0,
+                ),
+                Expanded(
+                  child: DateTimeField(
+                    format: format,
+                    decoration: InputDecoration(
+                      labelText: "Date to:",
+                      labelStyle: TextStyle(
+                          fontSize: 16,
+                          fontStyle: FontStyle.italic
+                      ),
+                      suffixIcon: Icon(Icons.calendar_today),
+                    ),
+                    onShowPicker: (context, currentValue) async {
+                      var date = await showDatePicker(
+                        context: context,
+                        firstDate: DateTime(DateTime.now().year - 5),
+                        initialDate: currentValue ?? DateTime.now(),
+                        lastDate: DateTime(DateTime.now().year + 5),
+                      );
+                      if (date != null) {
+                        latest = date;
+                      } if (!date.isAfter(earliest)){
+                        return latest = earliest;
+                      }
+                      return date;
+                    },
                   ),
-                  onShowPicker: (context, currentValue) async {
-                    var date = await showDatePicker(
-                      context: context,
-                      firstDate: DateTime(DateTime.now().year - 5),
-                      initialDate: currentValue ?? DateTime.now(),
-                      lastDate: DateTime(DateTime.now().year + 5),
-                    );
-                    if (date != null) {
-                      latest = date;
-                    }
-                    return date;
-                  },
                 ),
-              ),
-            ],
-          ),
-        ],
+              ],
+            ),
+            SizedBox(height: 10,)
+          ],
+        ),
       ),
+      )
     );
   }
 
@@ -271,32 +300,18 @@ class _FilterScreenState extends State<FilterScreen> {
         decoration: BoxDecoration(
           image: DecorationImage(
             image: AssetImage("styles/images/background-2.png"),
-            colorFilter: ColorFilter.mode(Colors.black.withOpacity(0.4), BlendMode.dstATop),
+            colorFilter: ColorFilter.mode(Colors.black.withOpacity(0.7), BlendMode.dstATop),
             fit: BoxFit.cover,
           ),
         ),
         child: Column(
           crossAxisAlignment: CrossAxisAlignment.stretch,
           children: <Widget>[
-            SizedBox(height: 30,),
-            _categoriesSelection(),
             SizedBox(height: 10,),
-            Divider(
-              height: 3,
-              indent: 20,
-              endIndent: 20,
-              color: kDarkBlue.withOpacity(0.7),
-              thickness: 1.5,
-            ),
+            _categoriesSelection(),
             _datesSelection(),
             SizedBox(height: 20,),
-            Divider(
-              height: 3,
-              indent: 20,
-              endIndent: 20,
-              color: kDarkBlue.withOpacity(0.7),
-              thickness: 1.5,
-            ),
+            
           ],
         ),
       ),
