@@ -19,7 +19,7 @@ class _AddTEScreenState extends State<AddTEScreen> {
 
   final TextEditingController targetedExpensesController = TextEditingController();
   final _formKey = GlobalKey<FormState>();
-  final CollectionReference teCollection = Database().teDatabase();
+  final CollectionReference TECollection = Database().targetedExpenditureDatabase();
   final TEDatabaseService _authTargetedExpenditure = TEDatabaseService();
   String uid = FirebaseAuth.instance.currentUser.uid;
 
@@ -81,10 +81,10 @@ class _AddTEScreenState extends State<AddTEScreen> {
                           TextButton(
                             onPressed: () async {
                               final TargetedExpenditure targetedExpenditure = TargetedExpenditure(
-                                  amount: double.parse(targetedExpensesController.text)
+                                amount: double.parse(targetedExpensesController.text)
                               );
                               if (_formKey.currentState.validate()) {
-                                //await _authTargetedExpenditure.updateTargetedExpenditure(targetedExpenditure);
+                                await _authTargetedExpenditure.updateTargetedExpenditure(targetedExpenditure);
                                 targetedExpensesController.clear();
                                 Navigator.pop(context);
                               }

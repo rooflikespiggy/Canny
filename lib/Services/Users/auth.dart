@@ -39,6 +39,7 @@ class AuthService {
       await CategoryDatabaseService(uid: theUser.uid).initStartCategories();
       await QuickInputDatabaseService(uid: theUser.uid).initStartQuickInputs();
       await TEDatabaseService(uid: theUser.uid).initStartTE();
+      //await TEDatabaseService(uid: theUser.uid).addTargetedExpenditure();
       return _userFromFirebaseUser(theUser);
     } catch (e) {
       print(e.toString());

@@ -136,7 +136,7 @@ class _EditReceiptState extends State<EditReceipt> {
                                   mainAxisAlignment: MainAxisAlignment.center,
                                   children: <Widget> [
                                     SizedBox(width: 30.0),
-                                    Text('Edit Your Receipt',
+                                    Text('Edit Your Expense',
                                       style: TextStyle(
                                           fontSize: 18,
                                           fontFamily: "Lato",
@@ -169,7 +169,7 @@ class _EditReceiptState extends State<EditReceipt> {
                                           SizedBox(height: 15),
                                           // getMultiSelectChipField(),
                                           _showCalFormFields(costController,
-                                            "Edit cost of expense",
+                                            "Edit the cost of expense",
                                             Icon(Icons.drive_file_rename_outline),
                                             390.0
                                           ),
@@ -194,7 +194,7 @@ class _EditReceiptState extends State<EditReceipt> {
                                                         fontFamily: categoryFontFamily)
                                                     )),
                                               ),
-                                              SizedBox(width: 25),
+                                              SizedBox(width: 20),
                                               GestureDetector(
                                                 onTap: () async {
                                                   final Map<String, dynamic> result = await Navigator.push(context,
@@ -216,7 +216,7 @@ class _EditReceiptState extends State<EditReceipt> {
                                                   crossAxisAlignment: CrossAxisAlignment.start,
                                                   children: <Widget>[
                                                     Text(
-                                                      'Edit category for this Expense',
+                                                      'Tap to Edit the category of Expense',
                                                       style: TextStyle(
                                                         color: Colors.blueGrey[300],
                                                         fontSize: 16.0,
@@ -252,7 +252,11 @@ class _EditReceiptState extends State<EditReceipt> {
                                             child: DateTimeField(
                                               format: format,
                                               decoration: InputDecoration(
-                                                labelText: "Edit date of Expenses",
+                                                labelText: "Edit the date of Expense",
+                                                labelStyle: TextStyle(
+                                                  fontSize: 17,
+                                                  fontStyle: FontStyle.italic
+                                                ),
                                                 prefixIcon: Icon(Icons.calendar_today),
 
                                               ),
