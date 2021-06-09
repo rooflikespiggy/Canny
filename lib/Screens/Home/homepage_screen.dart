@@ -186,8 +186,23 @@ class _HomePageScreenState extends State<HomePageScreen> {
         ),
         backgroundColor: kBlue,
         onTap: () {
-          Navigator.push(context,
-              MaterialPageRoute(builder: (context) => AddTEScreen()));
+          showModalBottomSheet(
+              shape: RoundedRectangleBorder(
+                borderRadius: BorderRadius.only(
+                  topLeft: Radius.circular(24),
+                  topRight: Radius.circular(24),
+                ),
+              ),
+              enableDrag: true,
+              isScrollControlled: true,
+              elevation: 5,
+              context: context,
+              builder: (BuildContext context) {
+                return AddTEScreen();
+              }
+          );
+          //Navigator.push(context,
+          //    MaterialPageRoute(builder: (context) => AddTEScreen()));
           // print('Add Target Expenditure');
 
         },

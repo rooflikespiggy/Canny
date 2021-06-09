@@ -28,7 +28,7 @@ class _FilterScreenState extends State<FilterScreen> {
   Widget _getCategoriesChips() {
     return filteredCategories.isEmpty
         ? Text(
-      "Tap to select categories",
+      "Tap to select Categories to filter by",
       style: TextStyle(
         fontSize: 14,
         color: Colors.grey[600],
@@ -111,7 +111,7 @@ class _FilterScreenState extends State<FilterScreen> {
                                 },
                               ),
                             ],
-                            title: Text("Select Categories to Filter by",
+                            title: Text("Select Categories",
                               style: TextStyle(
                                 color: kDarkBlue,
                                 fontFamily: "Lato"
