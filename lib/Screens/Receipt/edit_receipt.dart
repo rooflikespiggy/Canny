@@ -293,6 +293,7 @@ class _EditReceiptState extends State<EditReceipt> {
                                                 } else if (costChanged && (newCategoryId == null || newCategoryId == widget.categoryId)) {
                                                   _authReceipt.updateCost(widget.receiptId,
                                                       widget.categoryId,
+                                                      widget.cost,
                                                       isIncome
                                                           ? double.parse(costController.text)
                                                           : -(double.parse(costController.text)));

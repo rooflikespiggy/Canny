@@ -8,7 +8,7 @@ import 'package:Canny/Screens/Insert%20Function/add_spending.dart';
 import 'package:Canny/Screens/Category/category_screen.dart';
 import 'package:Canny/Services/Receipt/expense_calculator.dart';
 import 'package:draggable_bottom_sheet/draggable_bottom_sheet.dart';
-import 'package:Canny/Screens/Insert Function/add_targeted_expenditure.dart';
+import 'package:Canny/Screens/Insert Function/add_TE.dart';
 import 'package:Canny/Screens/Receipt/receipt_screen.dart';
 import 'package:Canny/Services/Category/category_database.dart';
 import 'package:Canny/Services/Receipt/receipt_database.dart';

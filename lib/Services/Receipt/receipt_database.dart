@@ -16,7 +16,7 @@ class ReceiptDatabaseService {
     await categoryCollection
         .doc(int.parse(expense.categoryId).toString())
         .update({
-      "categoryAmount": FieldValue.increment(-expense.cost)
+      "categoryAmount": FieldValue.increment(expense.cost.abs())
     });
     return true;
   }
@@ -37,7 +37,7 @@ class ReceiptDatabaseService {
     await categoryCollection
         .doc(int.parse(categoryId).toString())
         .update({
-      "categoryAmount": FieldValue.increment(-cost)
+      "categoryAmount": FieldValue.increment(-(cost.abs()))
     });
     return true;
   }
@@ -51,30 +51,9 @@ class ReceiptDatabaseService {
     return true;
   }
 
-  Future updateCategory(String receiptId,
-      String oldCategoryId,
-      String newCategoryId,
-      double cost) async {
-    await expensesCollection
-        .doc(receiptId)
-        .update({
-      'categoryId': newCategoryId,
-    });
-    await categoryCollection
-        .doc(int.parse(newCategoryId).toString())
-        .update({
-      "categoryAmount": FieldValue.increment(cost)
-    });
-    await categoryCollection
-        .doc(int.parse(oldCategoryId).toString())
-        .update({
-      "categoryAmount": FieldValue.increment(-cost)
-    });
-    return true;
-  }
-
   Future updateCost(String receiptId,
       String categoryId,
+      double oldCost,
       double newCost) async {
     await expensesCollection
         .doc(receiptId)
@@ -84,9 +63,7 @@ class ReceiptDatabaseService {
     await categoryCollection
         .doc(int.parse(categoryId).toString())
         .update({
-      "categoryAmount": newCost < 0
-          ? FieldValue.increment(-newCost)
-          : FieldValue.increment(newCost)
+      "categoryAmount": FieldValue.increment(newCost.abs() - oldCost.abs())
     });
     return true;
   }
@@ -105,16 +82,12 @@ class ReceiptDatabaseService {
     await categoryCollection
         .doc(int.parse(newCategoryId).toString())
         .update({
-      "categoryAmount": newCost < 0
-          ? FieldValue.increment(-newCost)
-          : FieldValue.increment(newCost)
+      "categoryAmount": FieldValue.increment(newCost.abs())
     });
     await categoryCollection
         .doc(int.parse(oldCategoryId).toString())
         .update({
-      "categoryAmount": oldCost > 0
-          ? FieldValue.increment(-oldCost)
-          : FieldValue.increment(oldCost)
+      "categoryAmount": FieldValue.increment(-(oldCost.abs()))
     });
     return true;
   }
@@ -133,6 +106,29 @@ class ReceiptDatabaseService {
         .doc(receiptId)
         .update({
       'categoryId': '11',
+    });
+    return true;
+  }
+
+  /*
+  Future updateCategory(String receiptId,
+      String oldCategoryId,
+      String newCategoryId,
+      double cost) async {
+    await expensesCollection
+        .doc(receiptId)
+        .update({
+      'categoryId': newCategoryId,
+    });
+    await categoryCollection
+        .doc(int.parse(newCategoryId).toString())
+        .update({
+      "categoryAmount": FieldValue.increment(cost)
+    });
+    await categoryCollection
+        .doc(int.parse(oldCategoryId).toString())
+        .update({
+      "categoryAmount": FieldValue.increment(-cost)
     });
     return true;
   }
@@ -163,5 +159,5 @@ class ReceiptDatabaseService {
     });
     return true;
   }
-
+   */
 }

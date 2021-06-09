@@ -9,7 +9,7 @@ class QuickInputDatabaseService {
 
   // collection reference
   final CollectionReference quickInputCollection = Database().quickInputDatabase();
-  final String userId = FirebaseAuth.instance.currentUser.uid;
+  // final String userId = FirebaseAuth.instance.currentUser.uid;
   List<Category> _quickInputs;
   //var quickInputs = {FirebaseAuth.instance.currentUser.uid: defaultQuickInputs};
 

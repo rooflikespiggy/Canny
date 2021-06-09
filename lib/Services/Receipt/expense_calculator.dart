@@ -87,7 +87,7 @@ class ExpenseCalculatorState extends State<ExpenseCalculator> {
     setState(() {
       evaluated = true;
       _history = _expression;
-      _evaluate = exp.evaluate(EvaluationType.REAL, cm).toStringAsFixed(8);
+      _evaluate = exp.evaluate(EvaluationType.REAL, cm).toStringAsFixed(2);
     });
   }
 
@@ -432,14 +432,14 @@ class ExpenseCalculatorState extends State<ExpenseCalculator> {
           child: Column(
             mainAxisAlignment: MainAxisAlignment.start,
             children: <Widget>[
-              SizedBox(height: 5,),
+              SizedBox(height: 5),
               // how to put this right at the top
               _showTextFormFields(itemNameController,
-                "Enter the name of expense",
+                "Name of expense",
                 Icon(Icons.drive_file_rename_outline),
                 390.0,
               ),
-              SizedBox(height: 15),
+              SizedBox(height: 20),
               Container(
                 alignment: Alignment(1.0, 1.0),
                 child: Padding(
@@ -453,7 +453,7 @@ class ExpenseCalculatorState extends State<ExpenseCalculator> {
                   ),
                 ),
               ),
-              SizedBox(height: 10,),
+              SizedBox(height: 10),
               Container(
                 alignment: Alignment(1.0, 1.0),
                 child: Padding(
@@ -654,21 +654,46 @@ class ExpenseCalculatorState extends State<ExpenseCalculator> {
                       uid: uid,
                     );
                     if (_formKey.currentState.validate()) {
-                      // TODO: need error if amount added is 0
-                      await _authReceipt.addReceipt(expense);
-                      itemNameController.clear();
-                      Navigator.pop(context);
-                      Flushbar(
-                        message: "Expense successfully added.",
-                        icon: Icon(
-                          Icons.info_outline,
-                          size: 28.0,
-                          color: Theme.of(context).colorScheme.secondary,
-                        ),
-                        duration: Duration(seconds: 3),
-                        leftBarIndicatorColor:
-                        Theme.of(context).colorScheme.secondary,
-                      )..show(context);
+                      if (roundDouble(double.parse(_evaluate), 2) == 0.00) {
+                        Flushbar(
+                          message: "Cannot make a valid expense with 0.",
+                          icon: Icon(
+                            Icons.info_outline,
+                            size: 28.0,
+                            color: Theme.of(context).colorScheme.secondary,
+                          ),
+                          duration: Duration(seconds: 3),
+                          leftBarIndicatorColor:
+                          Theme.of(context).colorScheme.secondary,
+                        )..show(context);
+                      } else if (roundDouble(double.parse(_evaluate), 2) < 0.00) {
+                        Flushbar(
+                          message: "Cannot make a valid expense with a negative number.",
+                          icon: Icon(
+                            Icons.info_outline,
+                            size: 28.0,
+                            color: Theme.of(context).colorScheme.secondary,
+                          ),
+                          duration: Duration(seconds: 3),
+                          leftBarIndicatorColor:
+                          Theme.of(context).colorScheme.secondary,
+                        )..show(context);
+                      } else {
+                        await _authReceipt.addReceipt(expense);
+                        itemNameController.clear();
+                        Navigator.pop(context);
+                        Flushbar(
+                          message: "Expense successfully added.",
+                          icon: Icon(
+                            Icons.info_outline,
+                            size: 28.0,
+                            color: Theme.of(context).colorScheme.secondary,
+                          ),
+                          duration: Duration(seconds: 3),
+                          leftBarIndicatorColor:
+                          Theme.of(context).colorScheme.secondary,
+                        )..show(context);
+                      }
                     }
                   },
                   child: Text(
@@ -718,7 +743,7 @@ class ExpenseCalculatorState extends State<ExpenseCalculator> {
           // The validator receives the text that the user has entered.
           validator: (value) {
             if (value.isEmpty) {
-              return label;
+              return 'Enter the name of expense';
             }
             return null;
           },
