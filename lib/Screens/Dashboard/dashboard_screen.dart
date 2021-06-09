@@ -56,24 +56,26 @@ class _DashboardScreenState extends State<DashboardScreen> {
             color: Colors.transparent,
             child: Column(
               children: <Widget> [
-                StreamBuilder(
-                  stream: teCollection.snapshots(),
-                  builder: (BuildContext context, AsyncSnapshot<QuerySnapshot> snapshot) {
+                FutureBuilder<List<Category>>(
+                  future: _authCategory.getCategories(),
+                  builder: (BuildContext context, AsyncSnapshot<List<Category>> snapshot) {
                     if (snapshot.hasData) {
-                      final snapshotData = snapshot.data.docs[0];
-                      teAmount = snapshotData['amount'];
+                      List<Category> allCategories = snapshot.data;
+                      allCategories.sort((a, b) => a.categoryId.compareTo(b.categoryId));
+                      totalCategoryAmount = allCategories
+                          .map((category) => category.categoryAmount)
+                          .reduce((value, element) => value + element);
+                      //print(totalCategoryAmount);
+                      //print(teAmount);
                       //teSet = false;
-                      return FutureBuilder<List<Category>>(
-                        future: _authCategory.getCategories(),
-                        builder: (BuildContext context, AsyncSnapshot<List<Category>> snapshot2) {
+                      return StreamBuilder(
+                        stream: teCollection.doc('TE').snapshots(),
+                        builder: (BuildContext context, AsyncSnapshot<DocumentSnapshot> snapshot2) {
                           if (snapshot2.hasData) {
-                            List<Category> allCategories = snapshot2.data;
-                            allCategories.sort((a, b) => a.categoryId.compareTo(b.categoryId));
-                            totalCategoryAmount = allCategories
-                                .map((category) => category.categoryAmount)
-                                .reduce((value, element) => value + element);
-                            //print(totalCategoryAmount);
-                            //print(teAmount);
+                            final snapshotData = snapshot2.data;
+                            teAmount = snapshot2.data['amount'];
+                            //print(snapshot2.data['amount']);
+                            // TODO: decide if TE should be edited this way or the usual way, i anything
                             return Container(
                               child: Column(
                                 children: <Widget> [
@@ -82,16 +84,16 @@ class _DashboardScreenState extends State<DashboardScreen> {
                                     child: Column(
                                       children: <Widget>[
                                         Padding(
-                                          padding: EdgeInsets.all(20.0),
+                                          padding: EdgeInsets.all(18.0),
                                           child: Neumorphic(
                                             style: NeumorphicStyle(
-                                              color: kLightBlue,
+                                              color: Colors.white,
                                               intensity: 5,
                                               depth: -2,
                                               boxShape: NeumorphicBoxShape.roundRect(
-                                                  BorderRadius.circular(28))),
+                                                  BorderRadius.circular(10))),
                                             child: Padding(
-                                              padding: EdgeInsets.only(left: 80.0, right: 45.0),
+                                              padding: EdgeInsets.only(left: 70.0, right: 45.0),
                                               child: TextField(
                                                 inputFormatters: [
                                                   DecimalTextInputFormatter(
@@ -118,9 +120,9 @@ class _DashboardScreenState extends State<DashboardScreen> {
                                                       }),
                                                  */
                                                   border: InputBorder.none,
-                                                  labelText: 'Targeted Expenditure: ${snapshotData['set'] == false
+                                                  labelText: 'Targeted Expenditure: ${snapshotData['amount'] == 0
                                                       ? "Not Set"
-                                                      : snapshotData['amount'].toString()}',
+                                                      : snapshotData['amount'].toStringAsFixed(2)}',
                                                   labelStyle: TextStyle(
                                                       fontSize: 16,
                                                       fontWeight: FontWeight.bold,
@@ -136,7 +138,7 @@ class _DashboardScreenState extends State<DashboardScreen> {
                                                 onSubmitted: (value) {
                                                   FocusScope.of(context).requestFocus(FocusNode());
                                                   if (teController.text.isNotEmpty && teController.text != '0') {
-                                                    _authTE.updateTE(snapshotData.id, double.parse(teController.text));
+                                                    _authTE.updateTE(double.parse(teController.text));
                                                     teAmount = double.parse(teController.text);
                                                     teSet = true;
                                                   }

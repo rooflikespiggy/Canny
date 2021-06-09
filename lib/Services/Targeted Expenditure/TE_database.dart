@@ -18,20 +18,21 @@ class TEDatabaseService {
 
   Future addDefaultTE(TargetedExpenditure te) async {
     await teCollection
-        .add(te.toMap());
+        .doc('TE')
+        .set(te.toMap());
     return true;
   }
 
-  Future<List<TargetedExpenditure>> getTE() async {
+  Future<TargetedExpenditure> getTE() async {
     List<DocumentSnapshot> snapshots = await teCollection
         .get()
         .then((value) => value.docs);
-    return snapshots.map((doc) => TargetedExpenditure.fromMap(doc)).toList();
+    return snapshots.map((doc) => TargetedExpenditure.fromMap(doc)).first;
   }
 
-  Future updateTE(String teId, double newTE) async {
+  Future updateTE(double newTE) async {
     await teCollection
-        .doc(teId)
+        .doc('TE')
         .update({
       'amount': newTE,
       'datetime': DateTime.now(),
@@ -40,9 +41,9 @@ class TEDatabaseService {
     return true;
   }
 
-  Future changeTEMonth(String teId) async {
+  Future changeTEMonth() async {
     await teCollection
-        .doc(teId)
+        .doc('TE')
         .update({
       'amount': 0.0,
       'datetime': DateTime.now(),
