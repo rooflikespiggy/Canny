@@ -27,7 +27,7 @@ class _DashboardScreenState extends State<DashboardScreen> {
   bool teSet;
   double teAmount = 0;
   int donutTouchedIndex;
-  double totalCategoryAmount = 0;
+  double totalExpensesAmount = 0;
 
   @override
   Widget build(BuildContext context) {
@@ -62,7 +62,8 @@ class _DashboardScreenState extends State<DashboardScreen> {
                     if (snapshot.hasData) {
                       List<Category> allCategories = snapshot.data;
                       allCategories.sort((a, b) => a.categoryId.compareTo(b.categoryId));
-                      totalCategoryAmount = allCategories
+                      totalExpensesAmount = allCategories
+                          .where((category) => !category.isIncome)
                           .map((category) => category.categoryAmount)
                           .reduce((value, element) => value + element);
                       //print(totalCategoryAmount);
@@ -155,7 +156,7 @@ class _DashboardScreenState extends State<DashboardScreen> {
                                     ),
                                   ),
                                   Container(
-                                    width: 385,
+                                    width: 350,
                                     child: Card(
                                       child: Column(
                                         crossAxisAlignment: CrossAxisAlignment.start,
@@ -199,7 +200,7 @@ class _DashboardScreenState extends State<DashboardScreen> {
                                                       sections: showingCategorySections(
                                                           allCategories,
                                                           teAmount,
-                                                          totalCategoryAmount)),
+                                                          totalExpensesAmount)),
                                                   swapAnimationDuration:
                                                   Duration(seconds: 0),
                                                 ),
@@ -253,25 +254,25 @@ class _DashboardScreenState extends State<DashboardScreen> {
 
   List<PieChartSectionData> showingCategorySections(List<Category> allCategories,
       double setAmount,
-      double sumOfAmount) {
+      double sumOfExpensesAmount) {
     List<Category> selectedCategories = allCategories
-        .where((category) => category.categoryAmount > 0)
+        .where((category) => category.categoryAmount > 0 && !category.isIncome)
         .toList();
     return List.generate(
-      setAmount > 0 && setAmount > sumOfAmount ? selectedCategories.length + 1 : selectedCategories.length,
+      setAmount > 0 && setAmount > sumOfExpensesAmount ? selectedCategories.length + 1 : selectedCategories.length,
           (i) {
         final Category category = i < selectedCategories.length ? selectedCategories[i] : null;
         final bool isTouched = i == donutTouchedIndex;
-        final bool isIncome = i < selectedCategories.length ? category.isIncome : false;
+        //final bool isIncome = i < selectedCategories.length ? category.isIncome : false;
         final double opacity = isTouched ? 1 : 0.6;
-        final value = i < selectedCategories.length ? category.categoryAmount : setAmount - sumOfAmount;
+        final value = i < selectedCategories.length ? category.categoryAmount : setAmount - sumOfExpensesAmount;
         switch (i) {
           default:
             return PieChartSectionData(
               color: i < selectedCategories.length
                   ? category.categoryColor.withOpacity(opacity)
                   : Colors.grey[400].withOpacity(opacity),
-              value: isIncome ? 0 : value,
+              value: value, //isIncome ? 0 : value,
               showTitle: isTouched,
               title: i < selectedCategories.length
                   ? '${category.categoryName} \n ${value.toStringAsFixed(2)}'
