@@ -1,5 +1,6 @@
 import 'package:Canny/Screens/Home/homepage_screen.dart';
 import 'package:Canny/Shared/colors.dart';
+import 'package:flushbar/flushbar.dart';
 import 'package:flutter/material.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:Canny/Models/category.dart';
@@ -372,6 +373,7 @@ class _AddCategoryScreenState extends State<AddCategoryScreen> {
                                                     categoryAmount: 0,
                                                     isIncome: isIncome,
                                                   );
+                                                  // TODO: not sure if needed but have error if no icon is provided
                                                   if (_formKey.currentState.validate()) {
                                                     await _authCategory.addNewCategory(category, category.categoryId);
                                                     categoryNameController.clear();
@@ -379,6 +381,17 @@ class _AddCategoryScreenState extends State<AddCategoryScreen> {
                                                     currentColor = Color(0xff443a49);
                                                     _icon = null;
                                                     Navigator.pop(context);
+                                                    Flushbar(
+                                                      message: "Category successfully added.",
+                                                      icon: Icon(
+                                                        Icons.info_outline,
+                                                        size: 28.0,
+                                                        color: Theme.of(context).colorScheme.secondary,
+                                                      ),
+                                                      duration: Duration(seconds: 3),
+                                                      leftBarIndicatorColor:
+                                                      Theme.of(context).colorScheme.secondary,
+                                                    )..show(context);
                                                   }
                                                 },
                                                 child: Text('Submit',

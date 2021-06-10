@@ -28,7 +28,7 @@ class Database {
         .collection('Receipt');
   }
 
-  CollectionReference targetedExpenditureDatabase() {
+  CollectionReference teDatabase() {
     return userCollection
         .doc(uid)
         .collection('TargetedExpenditure');

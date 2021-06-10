@@ -29,16 +29,21 @@ class _RegisterState extends State<Register> {
 
   @override
   Widget build(BuildContext context) {
-    return loading ? Loading() : Scaffold(
-        body: Container(
-            width: double.infinity,
-            height: double.infinity,
-            decoration: BoxDecoration(
-              image: DecorationImage(
-                image: AssetImage("styles/images/background.png"),
-                fit: BoxFit.cover,
-              ),
+    return loading ? Loading() : Stack(
+        children: [
+        Container(
+        width: double.infinity,
+        height: double.infinity,
+        decoration: BoxDecoration(
+          image: DecorationImage(
+            image: AssetImage("styles/images/background.png"),
+            fit: BoxFit.cover,
             ),
+          ),
+        ),
+        Scaffold(
+          backgroundColor: Colors.transparent,
+          body: Container(
             padding: EdgeInsets.symmetric(horizontal: 40.0),
             child: SingleChildScrollView(
               child: Column(
@@ -183,8 +188,8 @@ class _RegisterState extends State<Register> {
                       label: Text(
                         "Register a new account with Canny",
                         style: TextStyle(
-                            color: Colors.white,
-                            fontFamily: "Lato",
+                          color: Colors.white,
+                          fontFamily: "Lato",
                         ),
                       ),
                       icon: Icon(
@@ -234,7 +239,9 @@ class _RegisterState extends State<Register> {
                 ],
               ),
             )
+          )
         )
+        ],
     );
   }
 }

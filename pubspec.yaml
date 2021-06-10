@@ -57,6 +57,8 @@ dependencies:
   url_launcher: ^6.0.6
   firebase_messaging: ^10.0.1
   flutter_local_notifications: ^6.0.0
+  flutter_neumorphic: ^3.0.3
+  fl_chart: ^0.36.1
 
 
 

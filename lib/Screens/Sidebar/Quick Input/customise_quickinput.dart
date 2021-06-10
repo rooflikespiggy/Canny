@@ -9,8 +9,6 @@ import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
-import 'package:multi_select_flutter/chip_display/multi_select_chip_display.dart';
-import 'package:multi_select_flutter/chip_field/multi_select_chip_field.dart';
 import 'package:multi_select_flutter/dialog/multi_select_dialog_field.dart';
 import 'package:multi_select_flutter/util/multi_select_item.dart';
 
@@ -35,6 +33,7 @@ class _CustomiseQIState extends State<CustomiseQI> {
 
   @override
   Widget build(BuildContext context) {
+    // TODO: i dont know but i feel that should let them choose which button to edit
     return Scaffold(
       resizeToAvoidBottomInset: false,
       body: Container(
