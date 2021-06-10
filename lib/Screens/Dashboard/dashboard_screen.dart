@@ -1,5 +1,6 @@
 import 'package:Canny/Database/all_database.dart';
 import 'package:Canny/Models/category.dart';
+import 'package:Canny/Screens/Insert%20Function/add_TE.dart';
 import 'package:Canny/Screens/Sidebar/sidebar_menu.dart';
 import 'package:Canny/Services/Category/category_database.dart';
 import 'package:Canny/Services/Targeted%20Expenditure/TE_database.dart';
@@ -10,6 +11,7 @@ import 'package:flutter/material.dart';
 import 'package:Canny/Shared/colors.dart';
 import 'package:flutter/services.dart';
 import 'package:flutter_neumorphic/flutter_neumorphic.dart';
+import 'package:Canny/Shared/Indicator.dart';
 
 class DashboardScreen extends StatefulWidget {
   static final String id = 'dashboard_screen';
@@ -23,6 +25,7 @@ class _DashboardScreenState extends State<DashboardScreen> {
   CollectionReference teCollection = Database().teDatabase();
   TextEditingController teController = TextEditingController();
   TEDatabaseService _authTE = TEDatabaseService();
+  CollectionReference categoryCollection = Database().categoryDatabase();
   final CategoryDatabaseService _authCategory = CategoryDatabaseService();
   bool teSet;
   double teAmount = 0;
@@ -79,6 +82,45 @@ class _DashboardScreenState extends State<DashboardScreen> {
                             return Container(
                               child: Column(
                                 children: <Widget> [
+                                  SizedBox(height: 10,),
+                                  SizedBox(
+                                    width: 372,
+                                    child: TextButton(
+                                        onPressed: () {
+                                          showModalBottomSheet(
+                                              shape: RoundedRectangleBorder(
+                                              borderRadius: BorderRadius.only(
+                                              topLeft: Radius.circular(24),
+                                          topRight: Radius.circular(24),
+                                          ),
+                                          ),
+                                          enableDrag: true,
+                                          isScrollControlled: true,
+                                          elevation: 5,
+                                          context: context,
+                                          builder: (BuildContext context) {
+                                          return AddTEScreen();
+                                          }
+                                          );
+                                        },
+                                        child: Text(
+                                          'Monthly Targeted Expenditure: \n' + teAmount.toString(),
+                                          textAlign: TextAlign.center,
+                                          style: TextStyle(
+                                            fontSize: 18,
+                                            fontFamily: "Lato",
+                                            color: kDarkBlue
+                                          ),
+                                        ),
+                                      style: TextButton.styleFrom(
+                                        backgroundColor: Colors.white.withOpacity(0.8),
+                                        shape: RoundedRectangleBorder(
+                                            borderRadius: BorderRadius.all(Radius.circular(10.0))),
+                                      ),
+                                    ),
+                                  ),
+                                  SizedBox(height: 12,),
+                                  /*
                                   Form(
                                     key: _formKey,
                                     child: Column(
@@ -154,9 +196,13 @@ class _DashboardScreenState extends State<DashboardScreen> {
                                       ],
                                     ),
                                   ),
+                                   */
                                   Container(
                                     width: 385,
                                     child: Card(
+                                      shape: RoundedRectangleBorder(
+                                          borderRadius: BorderRadius.all(Radius.circular(12.0))),
+                                      color: Colors.white.withOpacity(0.8),
                                       child: Column(
                                         crossAxisAlignment: CrossAxisAlignment.start,
                                         children: <Widget> [
@@ -223,6 +269,67 @@ class _DashboardScreenState extends State<DashboardScreen> {
                                       ),
                                     ),
                                   ),
+                                  SizedBox(height: 10,),
+                                  StreamBuilder(
+                                      stream: categoryCollection
+                                          //.where('isIncome', isEqualTo: false)
+                                          .where('categoryAmount', isGreaterThan: 0)
+                                          .orderBy("categoryAmount", descending: true)
+                                          .snapshots(),
+                                      builder: (BuildContext context, AsyncSnapshot<QuerySnapshot> snapshot) {
+                                        if (snapshot.hasData) {
+                                          return Align(
+                                              alignment: Alignment.topCenter,
+                                              child: ListView.builder(
+                                                padding: EdgeInsets.fromLTRB(7, 4, 7, 4),
+                                                shrinkWrap: true,
+                                                physics: const NeverScrollableScrollPhysics(),
+                                                itemCount: snapshot.data.docs.length,
+                                                itemBuilder: (BuildContext context, int index) {
+                                                  final snapshotData = snapshot.data.docs[index];
+                                                  return Indicator(
+                                                      categoryName: snapshotData['categoryName'],
+                                                      categoryColorValue: snapshotData['categoryColorValue'],
+                                                      categoryIconCodePoint: snapshotData['categoryIconCodePoint'],
+                                                      categoryFontFamily: snapshotData['categoryFontFamily'],
+                                                      categoryFontPackage: snapshotData['categoryFontPackage'],
+                                                      categoryId: snapshotData.id,
+                                                      categoryAmount: snapshotData['categoryAmount'],
+                                                    size: donutTouchedIndex == 0 ? 18 : 16,
+                                                    textColor: donutTouchedIndex == 0 ? Colors.black : Colors.grey,
+                                                  );
+                                                },
+                                              )
+                                          );
+                                        }
+                                        return CircularProgressIndicator();
+                                      }
+                                  ),
+                                  /*
+                                  Padding(
+                                    padding: EdgeInsets.symmetric(horizontal: 14),
+                                    child: Container(
+                                      child: Column(
+                                        mainAxisAlignment: MainAxisAlignment.spaceEvenly,
+                                        crossAxisAlignment: CrossAxisAlignment.start,
+                                        children: <Widget>[
+                                          Indicator(
+                                            categoryName: 'Food and Drinks',
+                                            categoryColorValue: Colors.blue.value,
+                                            categoryIconCodePoint: Icons.fastfood_rounded.codePoint,
+                                            categoryFontFamily: Icons.fastfood_rounded.fontFamily,
+                                            categoryFontPackage: Icons.fastfood_rounded.fontPackage,
+                                            categoryId: '00',
+                                            categoryAmount: 100,
+                                            size: donutTouchedIndex == 0 ? 18 : 16,
+                                            textColor: donutTouchedIndex == 0 ? Colors.black : Colors.grey,
+                                          ),
+                                          SizedBox(height: 10,),
+                                        ],
+                                      ),
+                                    ),
+                                  ),
+                                  */
                                 ],
                               )
                             );

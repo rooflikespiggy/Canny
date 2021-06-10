@@ -79,6 +79,7 @@ class _CategoryScreenState extends State<CategoryScreen> {
                       ),
                       StreamBuilder(
                           stream: categoryCollection
+                          .where("categoryAmount")
                               .orderBy("categoryId")
                               .snapshots(),
                           builder: (BuildContext context, AsyncSnapshot<QuerySnapshot> snapshot) {
