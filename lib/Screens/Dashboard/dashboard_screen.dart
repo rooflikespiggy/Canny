@@ -1,5 +1,6 @@
 import 'package:Canny/Database/all_database.dart';
 import 'package:Canny/Models/category.dart';
+import 'package:Canny/Screens/Dashboard/indicator.dart';
 import 'package:Canny/Screens/Insert%20Function/add_TE.dart';
 import 'package:Canny/Screens/Sidebar/sidebar_menu.dart';
 import 'package:Canny/Services/Category/category_database.dart';
@@ -11,7 +12,7 @@ import 'package:flutter/material.dart';
 import 'package:Canny/Shared/colors.dart';
 import 'package:flutter/services.dart';
 import 'package:flutter_neumorphic/flutter_neumorphic.dart';
-import 'package:Canny/Shared/Indicator.dart';
+import 'package:Canny/Screens/Dashboard/expense_breakdown.dart';
 
 class DashboardScreen extends StatefulWidget {
   static final String id = 'dashboard_screen';
@@ -78,8 +79,6 @@ class _DashboardScreenState extends State<DashboardScreen> {
                           if (snapshot2.hasData) {
                             final snapshotData = snapshot2.data;
                             teAmount = snapshot2.data['amount'];
-                            //print(snapshot2.data['amount']);
-                            // TODO: decide if TE should be edited this way or the usual way, i anything
                             return Container(
                               child: Column(
                                 children: <Widget> [
@@ -89,23 +88,22 @@ class _DashboardScreenState extends State<DashboardScreen> {
                                     child: TextButton(
                                         onPressed: () {
                                           showModalBottomSheet(
-                                              shape: RoundedRectangleBorder(
+                                            shape: RoundedRectangleBorder(
                                               borderRadius: BorderRadius.only(
-                                              topLeft: Radius.circular(24),
-                                          topRight: Radius.circular(24),
-                                          ),
-                                          ),
+                                                topLeft: Radius.circular(24),
+                                                topRight: Radius.circular(24),
+                                              ),
+                                            ),
                                           enableDrag: true,
                                           isScrollControlled: true,
                                           elevation: 5,
                                           context: context,
                                           builder: (BuildContext context) {
-                                          return AddTEScreen();
-                                          }
-                                          );
+                                            return AddTEScreen();
+                                          });
                                         },
                                         child: Text(
-                                          'Monthly Targeted Expenditure: \n' + teAmount.toString(),
+                                          'Monthly Targeted Expenditure: \n' + teAmount.toStringAsFixed(2),
                                           textAlign: TextAlign.center,
                                           style: TextStyle(
                                             fontSize: 18,
@@ -120,84 +118,7 @@ class _DashboardScreenState extends State<DashboardScreen> {
                                       ),
                                     ),
                                   ),
-                                  SizedBox(height: 12,),
-                                  /*
-                                  Form(
-                                    key: _formKey,
-                                    child: Column(
-                                      children: <Widget>[
-                                        Padding(
-                                          padding: EdgeInsets.all(18.0),
-                                          child: Neumorphic(
-                                            style: NeumorphicStyle(
-                                              color: Colors.white,
-                                              intensity: 5,
-                                              depth: -2,
-                                              boxShape: NeumorphicBoxShape.roundRect(
-                                                  BorderRadius.circular(10))),
-                                            child: Padding(
-                                              padding: EdgeInsets.only(left: 70.0, right: 45.0),
-                                              child: TextField(
-                                                inputFormatters: [
-                                                  DecimalTextInputFormatter(
-                                                      decimalRange: 2),
-                                                  //DecimalPointTextInputFormatter(),
-                                                  LengthLimitingTextInputFormatter(6),
-                                                ],
-                                                textAlign: TextAlign.start,
-                                                controller: teController,
-                                                decoration: InputDecoration(
-                                                  /*
-                                                  suffixIcon: IconButton(
-                                                      icon: Icon(Icons.check),
-                                                      onPressed: () async {
-                                                        FocusScope.of(context).requestFocus(FocusNode());
-                                                        if (teController.text.isNotEmpty && teController.text != '0') {
-                                                          _authTE.updateTE(snapshotData.id, double.parse(teController.text));
-                                                        }
-                                                        setState(() {
-                                                          teAmount = double.parse(teController.text);
-                                                          teSet = true;
-                                                        });
-                                                        teController.clear();
-                                                      }),
-                                                 */
-                                                  border: InputBorder.none,
-                                                  labelText: 'Targeted Expenditure: ${snapshotData['amount'] == 0
-                                                      ? "Not Set"
-                                                      : snapshotData['amount'].toStringAsFixed(2)}',
-                                                  labelStyle: TextStyle(
-                                                      fontSize: 16,
-                                                      fontWeight: FontWeight.bold,
-                                                      color: Colors.grey),
-                                                  /*
-                                                  hintText: "Enter This Month's Targeted Expenditure",
-                                                  hintStyle: TextStyle(
-                                                    fontSize: 12, color: Colors.blueGrey),
-                                                  hintMaxLines: 2
-                                                   */
-                                                ),
-                                                keyboardType: TextInputType.number,
-                                                onSubmitted: (value) {
-                                                  FocusScope.of(context).requestFocus(FocusNode());
-                                                  if (teController.text.isNotEmpty && teController.text != '0') {
-                                                    _authTE.updateTE(double.parse(teController.text));
-                                                    teAmount = double.parse(teController.text);
-                                                    teSet = true;
-                                                  }
-                                                  setState(() {});
-                                                  teController.clear();
-                                                  //print(teSet);
-                                                  //print(teAmount);
-                                                },
-                                              ),
-                                            ),
-                                          ),
-                                        ),
-                                      ],
-                                    ),
-                                  ),
-                                   */
+                                  SizedBox(height: 12),
                                   Container(
                                     width: 350,
                                     child: Card(
@@ -205,7 +126,7 @@ class _DashboardScreenState extends State<DashboardScreen> {
                                           borderRadius: BorderRadius.all(Radius.circular(12.0))),
                                       color: Colors.white.withOpacity(0.8),
                                       child: Column(
-                                        crossAxisAlignment: CrossAxisAlignment.start,
+                                        crossAxisAlignment: CrossAxisAlignment.center,
                                         children: <Widget> [
                                           SizedBox(height: 20.0),
                                           Row(
@@ -266,6 +187,24 @@ class _DashboardScreenState extends State<DashboardScreen> {
                                               ],
                                             ),
                                           ),
+                                          Wrap(
+                                            direction: Axis.horizontal,
+                                            alignment: WrapAlignment.center,
+                                            spacing: 3.0,
+                                            runSpacing: 10.0,
+                                            children: allCategories
+                                                .where((category) => category.categoryAmount > 0 && !category.isIncome)
+                                                .map((category) {
+                                                return Indicator(
+                                                  color: category.categoryColor,
+                                                  text: category.categoryName,
+                                                  isSquare: false,
+                                                  size: 10
+                                                );
+                                              },
+                                            ).toList(),
+                                          ),
+                                          SizedBox(height: 20.0),
                                         ],
                                       ),
                                     ),
@@ -273,7 +212,7 @@ class _DashboardScreenState extends State<DashboardScreen> {
                                   SizedBox(height: 10,),
                                   StreamBuilder(
                                       stream: categoryCollection
-                                          //.where('isIncome', isEqualTo: false)
+                                          .where('isIncome', isEqualTo: false)
                                           .where('categoryAmount', isGreaterThan: 0)
                                           .orderBy("categoryAmount", descending: true)
                                           .snapshots(),
@@ -288,16 +227,16 @@ class _DashboardScreenState extends State<DashboardScreen> {
                                                 itemCount: snapshot.data.docs.length,
                                                 itemBuilder: (BuildContext context, int index) {
                                                   final snapshotData = snapshot.data.docs[index];
-                                                  return Indicator(
-                                                      categoryName: snapshotData['categoryName'],
-                                                      categoryColorValue: snapshotData['categoryColorValue'],
-                                                      categoryIconCodePoint: snapshotData['categoryIconCodePoint'],
-                                                      categoryFontFamily: snapshotData['categoryFontFamily'],
-                                                      categoryFontPackage: snapshotData['categoryFontPackage'],
-                                                      categoryId: snapshotData.id,
-                                                      categoryAmount: snapshotData['categoryAmount'],
-                                                    size: donutTouchedIndex == 0 ? 18 : 16,
-                                                    textColor: donutTouchedIndex == 0 ? Colors.black : Colors.grey,
+                                                  return ExpenseBreakdown(
+                                                    categoryName: snapshotData['categoryName'],
+                                                    categoryColorValue: snapshotData['categoryColorValue'],
+                                                    categoryIconCodePoint: snapshotData['categoryIconCodePoint'],
+                                                    categoryFontFamily: snapshotData['categoryFontFamily'],
+                                                    categoryFontPackage: snapshotData['categoryFontPackage'],
+                                                    categoryId: snapshotData.id,
+                                                    categoryAmount: snapshotData['categoryAmount'],
+                                                    categoryPercentage: ((snapshotData['categoryAmount'] / teAmount) * 100)
+                                                        .toStringAsFixed(0),
                                                   );
                                                 },
                                               )
@@ -306,31 +245,6 @@ class _DashboardScreenState extends State<DashboardScreen> {
                                         return CircularProgressIndicator();
                                       }
                                   ),
-                                  /*
-                                  Padding(
-                                    padding: EdgeInsets.symmetric(horizontal: 14),
-                                    child: Container(
-                                      child: Column(
-                                        mainAxisAlignment: MainAxisAlignment.spaceEvenly,
-                                        crossAxisAlignment: CrossAxisAlignment.start,
-                                        children: <Widget>[
-                                          Indicator(
-                                            categoryName: 'Food and Drinks',
-                                            categoryColorValue: Colors.blue.value,
-                                            categoryIconCodePoint: Icons.fastfood_rounded.codePoint,
-                                            categoryFontFamily: Icons.fastfood_rounded.fontFamily,
-                                            categoryFontPackage: Icons.fastfood_rounded.fontPackage,
-                                            categoryId: '00',
-                                            categoryAmount: 100,
-                                            size: donutTouchedIndex == 0 ? 18 : 16,
-                                            textColor: donutTouchedIndex == 0 ? Colors.black : Colors.grey,
-                                          ),
-                                          SizedBox(height: 10,),
-                                        ],
-                                      ),
-                                    ),
-                                  ),
-                                  */
                                 ],
                               )
                             );
@@ -342,6 +256,7 @@ class _DashboardScreenState extends State<DashboardScreen> {
                     return CircularProgressIndicator();
                   }
                 ),
+                SizedBox(height: 50.0),
               ],
             )
           )

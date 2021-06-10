@@ -1,6 +1,6 @@
 import 'package:flutter/material.dart';
 
-class Indicator extends StatelessWidget {
+class ExpenseBreakdown extends StatelessWidget {
   final String categoryName;
   final int categoryColorValue;
   final int categoryIconCodePoint;
@@ -8,11 +8,12 @@ class Indicator extends StatelessWidget {
   final String categoryFontPackage;
   final String categoryId;
   final double categoryAmount;
+  final String categoryPercentage;
   final double size;
   final Color textColor;
 
 
-  const Indicator({
+  const ExpenseBreakdown({
     Key key,
     this.categoryName,
     this.categoryColorValue,
@@ -21,6 +22,7 @@ class Indicator extends StatelessWidget {
     this.categoryFontPackage,
     this.categoryId,
     this.categoryAmount,
+    this.categoryPercentage,
     this.size = 16,
     this.textColor = const Color(0xff505050),
   }) : super(key: key);
@@ -32,10 +34,27 @@ class Indicator extends StatelessWidget {
         shape: RoundedRectangleBorder(
             borderRadius: BorderRadius.all(Radius.circular(12.0))),
         child: ListTile(
-          contentPadding: EdgeInsets.fromLTRB(10,10,30,10),
-          title: Text(
-            categoryName,
-            style: TextStyle(fontSize: 18, color: textColor, fontFamily: "Lato"),
+          contentPadding: EdgeInsets.fromLTRB(10,10,20,10),
+          title: Column(
+            crossAxisAlignment: CrossAxisAlignment.start,
+            children: <Widget> [
+              Text(
+                categoryName,
+                style: TextStyle(
+                    fontSize: 18,
+                    color: textColor,
+                    fontFamily: "Lato"
+                ),
+              ),
+              Text(
+                categoryPercentage + '%',
+                style: TextStyle(
+                    fontSize: 15,
+                    color: textColor,
+                    fontFamily: "Lato"
+                ),
+              ),
+            ],
           ),
           leading: CircleAvatar(
             backgroundColor: Color(categoryColorValue).withOpacity(0.1),
@@ -48,8 +67,11 @@ class Indicator extends StatelessWidget {
                 )
             ),
           ),
-          trailing:Text(categoryAmount.toString(),
-            style: TextStyle(fontSize: 16, color: textColor, fontFamily: "Lato"),
+          trailing: Text('\$' + categoryAmount.toStringAsFixed(2),
+            style: TextStyle(
+                fontSize: 16,
+                color: textColor,
+                fontFamily: "Lato"),
           ),
           /*
           children: <Widget>[
