@@ -190,19 +190,9 @@ class _DashboardScreenState extends State<DashboardScreen> {
                                           Wrap(
                                             direction: Axis.horizontal,
                                             alignment: WrapAlignment.center,
-                                            spacing: 3.0,
+                                            spacing: 5.0,
                                             runSpacing: 10.0,
-                                            children: allCategories
-                                                .where((category) => category.categoryAmount > 0 && !category.isIncome)
-                                                .map((category) {
-                                                return Indicator(
-                                                  color: category.categoryColor,
-                                                  text: category.categoryName,
-                                                  isSquare: false,
-                                                  size: 10
-                                                );
-                                              },
-                                            ).toList(),
+                                            children: showAllIndicators(allCategories),
                                           ),
                                           SizedBox(height: 20.0),
                                         ],
@@ -305,6 +295,29 @@ class _DashboardScreenState extends State<DashboardScreen> {
             );
         }
       },
+    );
+  }
+
+  List<Indicator> showAllIndicators(List<Category> allCategories) {
+    List<Category> selectedCategories = allCategories
+        .where((category) => category.categoryAmount > 0 && !category.isIncome)
+        .toList();
+    return List.generate(
+      selectedCategories.length,
+      (i) {
+        final Category category = selectedCategories[i];
+        final bool isTouched = i == donutTouchedIndex;
+        switch (i) {
+          default:
+            return Indicator(
+              color: category.categoryColor,
+              text: category.categoryName,
+              isSquare: false,
+              size: isTouched ? 16 : 12,
+              textColor: isTouched ? Colors.black : Colors.grey,
+            );
+        }
+      }
     );
   }
 }

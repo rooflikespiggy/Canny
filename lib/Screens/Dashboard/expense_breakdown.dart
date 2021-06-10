@@ -29,6 +29,50 @@ class ExpenseBreakdown extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
+    /*
+    return ListTile(
+      contentPadding: EdgeInsets.fromLTRB(10, 10, 20, 10),
+      title: Column(
+        crossAxisAlignment: CrossAxisAlignment.start,
+        children: <Widget>[
+          Text(
+            categoryName,
+            style: TextStyle(
+                fontSize: 18,
+                color: textColor,
+                fontFamily: "Lato"
+            ),
+          ),
+          Text(
+            categoryPercentage + '%',
+            style: TextStyle(
+                fontSize: 15,
+                color: textColor,
+                fontFamily: "Lato"
+            ),
+          ),
+        ],
+      ),
+      leading: CircleAvatar(
+        backgroundColor: Color(categoryColorValue).withOpacity(0.1),
+        radius: 30,
+        child: IconTheme(
+            data: IconThemeData(
+                color: Color(categoryColorValue).withOpacity(1), size: 25),
+            child: Icon(IconData(categoryIconCodePoint,
+                fontFamily: categoryFontFamily,
+                fontPackage: categoryFontPackage)
+            )
+        ),
+      ),
+      trailing: Text('\$' + categoryAmount.toStringAsFixed(2),
+        style: TextStyle(
+            fontSize: 16,
+            color: textColor,
+            fontFamily: "Lato"),
+      ),
+  }
+     */
     return Card(
         color: Colors.white.withOpacity(0.9),
         shape: RoundedRectangleBorder(
@@ -73,34 +117,6 @@ class ExpenseBreakdown extends StatelessWidget {
                 color: textColor,
                 fontFamily: "Lato"),
           ),
-          /*
-          children: <Widget>[
-            SizedBox(width:15,),
-            CircleAvatar(
-              backgroundColor: Color(categoryColorValue).withOpacity(0.1),
-              radius: 25,
-              child: IconTheme(
-                  data: IconThemeData(color: Color(categoryColorValue).withOpacity(1), size: 25),
-                  child: Icon(IconData(categoryIconCodePoint,
-                      fontFamily: categoryFontFamily,
-                      fontPackage: categoryFontPackage)
-                  )
-              ),
-            ),
-            Padding(
-              padding: EdgeInsets.only(left: 10, right: 6.0),
-              child: Text(
-                categoryName,
-                style: TextStyle(fontSize: 16, color: textColor, fontFamily: "Lato"),
-              ),
-            ),
-            SizedBox(width: 90,),
-            Text(categoryAmount.toString(),
-              style: TextStyle(fontSize: 16, color: textColor, fontFamily: "Lato"),
-            )
-          ],
-
-           */
         ),
     );
   }
