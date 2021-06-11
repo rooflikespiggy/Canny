@@ -162,14 +162,14 @@ class _EditReceiptState extends State<EditReceipt> {
                                     child: Column(
                                         children: <Widget> [
                                           _showTextFormFields(itemNameController,
-                                            "Edit the name of expense",
+                                            "Edit name of expense",
                                             Icon(Icons.drive_file_rename_outline),
                                             390.0
                                           ),
                                           SizedBox(height: 15),
                                           // getMultiSelectChipField(),
                                           _showCalFormFields(costController,
-                                            "Edit the cost of expense",
+                                            "Edit cost of expense",
                                             Icon(Icons.drive_file_rename_outline),
                                             390.0
                                           ),
@@ -216,7 +216,7 @@ class _EditReceiptState extends State<EditReceipt> {
                                                   crossAxisAlignment: CrossAxisAlignment.start,
                                                   children: <Widget>[
                                                     Text(
-                                                      'Tap to Edit the category of Expense',
+                                                      'Tap to Edit category of Expense',
                                                       style: TextStyle(
                                                         color: Colors.blueGrey[300],
                                                         fontSize: 16.0,
@@ -252,7 +252,7 @@ class _EditReceiptState extends State<EditReceipt> {
                                             child: DateTimeField(
                                               format: format,
                                               decoration: InputDecoration(
-                                                labelText: "Edit the date of Expense",
+                                                labelText: "Edit date of Expense",
                                                 labelStyle: TextStyle(
                                                   fontSize: 17,
                                                   fontStyle: FontStyle.italic
@@ -264,9 +264,9 @@ class _EditReceiptState extends State<EditReceipt> {
                                               onShowPicker: (context, currentValue) async {
                                                 var date = await showDatePicker(
                                                   context: context,
-                                                  firstDate: DateTime(DateTime.now().year - 5),
+                                                  firstDate: DateTime(DateTime.now().year, DateTime.now().month - 3),
                                                   initialDate: currentValue ?? DateTime.now(),
-                                                  lastDate: DateTime(DateTime.now().year + 5),
+                                                  lastDate: DateTime(DateTime.now().year, DateTime.now().month + 3),
                                                 );
                                                 if (date != null) {
                                                   current = date;
@@ -276,7 +276,7 @@ class _EditReceiptState extends State<EditReceipt> {
                                               },
                                             ),
                                           ),
-                                          SizedBox(height: 10,),
+                                          SizedBox(height: 10),
                                           TextButton(
                                             onPressed: () async {
                                               if (_formKey.currentState.validate()) {

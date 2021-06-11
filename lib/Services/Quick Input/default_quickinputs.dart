@@ -1,5 +1,8 @@
 import 'package:Canny/Models/category.dart';
 import 'package:flutter/material.dart';
+import 'package:intl/intl.dart';
+
+String monthYear = DateFormat('MMM y').format(DateTime.now());
 
 List<Category> defaultQuickInputs = [
   foodDrinks,

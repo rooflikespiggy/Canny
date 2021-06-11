@@ -13,6 +13,7 @@ import 'package:Canny/Shared/colors.dart';
 import 'package:flutter/services.dart';
 import 'package:flutter_neumorphic/flutter_neumorphic.dart';
 import 'package:Canny/Screens/Dashboard/expense_breakdown.dart';
+import 'package:intl/intl.dart';
 
 class DashboardScreen extends StatefulWidget {
   static final String id = 'dashboard_screen';
@@ -84,7 +85,7 @@ class _DashboardScreenState extends State<DashboardScreen> {
                                 children: <Widget> [
                                   SizedBox(height: 10,),
                                   SizedBox(
-                                    width: 372,
+                                    width: 360,
                                     child: TextButton(
                                         onPressed: () {
                                           showModalBottomSheet(
@@ -112,7 +113,7 @@ class _DashboardScreenState extends State<DashboardScreen> {
                                           ),
                                         ),
                                       style: TextButton.styleFrom(
-                                        backgroundColor: Colors.white.withOpacity(0.8),
+                                        backgroundColor: Colors.white.withOpacity(0.9),
                                         shape: RoundedRectangleBorder(
                                             borderRadius: BorderRadius.all(Radius.circular(10.0))),
                                       ),
@@ -120,18 +121,19 @@ class _DashboardScreenState extends State<DashboardScreen> {
                                   ),
                                   SizedBox(height: 12),
                                   Container(
-                                    width: 350,
+                                    width: 370,
                                     child: Card(
                                       shape: RoundedRectangleBorder(
                                           borderRadius: BorderRadius.all(Radius.circular(12.0))),
-                                      color: Colors.white.withOpacity(0.8),
+                                      color: Colors.white.withOpacity(0.9),
                                       child: Column(
                                         crossAxisAlignment: CrossAxisAlignment.center,
                                         children: <Widget> [
-                                          SizedBox(height: 20.0),
+                                          SizedBox(height: 15.0),
                                           Row(
-                                            mainAxisAlignment: MainAxisAlignment.center,
+                                            mainAxisAlignment: MainAxisAlignment.start,
                                             children: <Widget> [
+                                              SizedBox(width: 15.0),
                                               Text('Expenses Breakdown',
                                                 style: TextStyle(
                                                     fontSize: 16,
@@ -141,8 +143,33 @@ class _DashboardScreenState extends State<DashboardScreen> {
                                               ),
                                             ],
                                           ),
+                                          // TODO: decide where to put this total expenses
+                                          Row(
+                                            mainAxisAlignment: MainAxisAlignment.start,
+                                            children: <Widget> [
+                                              SizedBox(width: 15.0),
+                                              RichText(
+                                                text: TextSpan(
+                                                  text: 'Total Expenses: ',
+                                                  style: TextStyle(
+                                                      fontFamily: "Lato",
+                                                      color: Colors.black54,
+                                                  ),
+                                                  children: <TextSpan>[
+                                                    TextSpan(
+                                                      text: totalExpensesAmount.toStringAsFixed(2),
+                                                      style: TextStyle(
+                                                        fontFamily: "Lato",
+                                                        color: totalExpensesAmount <= teAmount ? Colors.green : Colors.red,
+                                                      ),
+                                                    ),
+                                                  ],
+                                                ),
+                                              ),
+                                            ],
+                                          ),
                                           Container(
-                                            height: 280,
+                                            height: 270,
                                             width: 380,
                                             child: Stack(
                                               alignment: Alignment.topCenter,
@@ -225,8 +252,9 @@ class _DashboardScreenState extends State<DashboardScreen> {
                                                     categoryFontPackage: snapshotData['categoryFontPackage'],
                                                     categoryId: snapshotData.id,
                                                     categoryAmount: snapshotData['categoryAmount'],
-                                                    categoryPercentage: ((snapshotData['categoryAmount'] / teAmount) * 100)
-                                                        .toStringAsFixed(0),
+                                                    categoryPercentage: totalExpensesAmount <= teAmount
+                                                        ? ((snapshotData['categoryAmount'] / teAmount) * 100).toStringAsFixed(0)
+                                                        : ((snapshotData['categoryAmount'] / totalExpensesAmount) * 100).toStringAsFixed(0)
                                                   );
                                                 },
                                               )
