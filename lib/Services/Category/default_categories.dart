@@ -24,7 +24,7 @@ Category foodDrinks = Category(
     categoryIcon: Icon(Icons.fastfood_rounded),
     categoryColor: Colors.green[800],
     categoryId: '00',
-    categoryAmount: 0,
+    categoryAmount: {monthYear : 0},
     isIncome: false
 );
 
@@ -33,7 +33,7 @@ Category transportation = Category(
     categoryIcon: Icon(Icons.directions_bus),
     categoryColor: Colors.red[800],
     categoryId: '01',
-    categoryAmount: 0,
+    categoryAmount: {monthYear : 0},
     isIncome: false)
 ;
 
@@ -42,7 +42,7 @@ Category shopping = Category(
     categoryIcon: Icon(Icons.shopping_bag_rounded),
     categoryColor: Colors.pinkAccent,
     categoryId: '02',
-    categoryAmount: 0,
+    categoryAmount: {monthYear : 0},
     isIncome: false
 );
 
@@ -51,7 +51,7 @@ Category entertainment = Category(
     categoryIcon: Icon(Icons.local_movies_rounded),
     categoryColor: Colors.deepOrange,
     categoryId: '03',
-    categoryAmount: 0,
+    categoryAmount: {monthYear : 0},
     isIncome: false
 );
 
@@ -60,7 +60,7 @@ Category billAndFees = Category(
     categoryIcon: Icon(Icons.sticky_note_2_rounded),
     categoryColor: Colors.purple[800],
     categoryId: '04',
-    categoryAmount: 0,
+    categoryAmount: {monthYear : 0},
     isIncome: false
 );
 
@@ -69,7 +69,7 @@ Category education = Category(
     categoryIcon: Icon(Icons.school_rounded),
     categoryColor: Colors.blue,
     categoryId: '05',
-    categoryAmount: 0,
+    categoryAmount: {monthYear : 0},
     isIncome: false
 );
 
@@ -78,7 +78,7 @@ Category gift = Category(
     categoryIcon: Icon(Icons.card_giftcard_rounded),
     categoryColor: Colors.amber[700],
     categoryId: '06',
-    categoryAmount: 0,
+    categoryAmount: {monthYear : 0},
     isIncome: false
 );
 
@@ -87,7 +87,7 @@ Category household = Category(
     categoryIcon: Icon(Icons.home_work_rounded),
     categoryColor: Colors.teal,
     categoryId: '07',
-    categoryAmount: 0,
+    categoryAmount: {monthYear : 0},
     isIncome: false
 );
 
@@ -96,7 +96,7 @@ Category allowance = Category(
     categoryIcon: Icon(Icons.person),
     categoryColor: Colors.indigo[600],
     categoryId: '08',
-    categoryAmount: 0,
+    categoryAmount: {monthYear : 0},
     isIncome: true
 );
 
@@ -105,7 +105,7 @@ Category salary = Category(
     categoryIcon: Icon(Icons.attach_money_rounded),
     categoryColor: Colors.pink[900],
     categoryId: '09',
-    categoryAmount: 0,
+    categoryAmount: {monthYear : 0},
     isIncome: true
 );
 
@@ -114,7 +114,7 @@ Category loan = Category(
     categoryIcon: Icon(Icons.location_city_rounded),
     categoryColor: Colors.orange,
     categoryId: '10',
-    categoryAmount: 0,
+    categoryAmount: {monthYear : 0},
     isIncome: false
 );
 
@@ -123,6 +123,6 @@ Category others = Category(
     categoryIcon: Icon(Icons.scatter_plot),
     categoryColor: Colors.grey[700],
     categoryId: '11',
-    categoryAmount: 0,
+    categoryAmount: {monthYear : 0},
     isIncome: false
 );

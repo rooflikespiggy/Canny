@@ -5,12 +5,10 @@ import 'package:Canny/Screens/Insert%20Function/add_TE.dart';
 import 'package:Canny/Screens/Sidebar/sidebar_menu.dart';
 import 'package:Canny/Services/Category/category_database.dart';
 import 'package:Canny/Services/Targeted%20Expenditure/TE_database.dart';
-import 'package:Canny/Shared/input_formatters.dart';
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:fl_chart/fl_chart.dart';
 import 'package:flutter/material.dart';
 import 'package:Canny/Shared/colors.dart';
-import 'package:flutter/services.dart';
 import 'package:flutter_neumorphic/flutter_neumorphic.dart';
 import 'package:Canny/Screens/Dashboard/expense_breakdown.dart';
 import 'package:intl/intl.dart';
@@ -27,8 +25,9 @@ class _DashboardScreenState extends State<DashboardScreen> {
   CollectionReference teCollection = Database().teDatabase();
   TextEditingController teController = TextEditingController();
   TEDatabaseService _authTE = TEDatabaseService();
-  CollectionReference categoryCollection = Database().categoryDatabase();
+  final CollectionReference categoryCollection = Database().categoryDatabase();
   final CategoryDatabaseService _authCategory = CategoryDatabaseService();
+  final String monthYear = DateFormat('MMM y').format(DateTime.now());
   bool teSet;
   double teAmount = 0;
   int donutTouchedIndex;
@@ -69,7 +68,7 @@ class _DashboardScreenState extends State<DashboardScreen> {
                       allCategories.sort((a, b) => a.categoryId.compareTo(b.categoryId));
                       totalExpensesAmount = allCategories
                           .where((category) => !category.isIncome)
-                          .map((category) => category.categoryAmount)
+                          .map((category) => category.categoryAmount[monthYear])
                           .reduce((value, element) => value + element);
                       //print(totalCategoryAmount);
                       //print(teAmount);
@@ -230,8 +229,8 @@ class _DashboardScreenState extends State<DashboardScreen> {
                                   StreamBuilder(
                                       stream: categoryCollection
                                           .where('isIncome', isEqualTo: false)
-                                          .where('categoryAmount', isGreaterThan: 0)
-                                          .orderBy("categoryAmount", descending: true)
+                                          .where('categoryAmount.$monthYear', isGreaterThan: 0)
+                                          .orderBy("categoryAmount.$monthYear", descending: true)
                                           .snapshots(),
                                       builder: (BuildContext context, AsyncSnapshot<QuerySnapshot> snapshot) {
                                         if (snapshot.hasData) {
@@ -251,10 +250,12 @@ class _DashboardScreenState extends State<DashboardScreen> {
                                                     categoryFontFamily: snapshotData['categoryFontFamily'],
                                                     categoryFontPackage: snapshotData['categoryFontPackage'],
                                                     categoryId: snapshotData.id,
-                                                    categoryAmount: snapshotData['categoryAmount'],
+                                                    categoryAmount: snapshotData['categoryAmount'][monthYear],
                                                     categoryPercentage: totalExpensesAmount <= teAmount
-                                                        ? ((snapshotData['categoryAmount'] / teAmount) * 100).toStringAsFixed(0)
-                                                        : ((snapshotData['categoryAmount'] / totalExpensesAmount) * 100).toStringAsFixed(0)
+                                                        ? ((snapshotData['categoryAmount'][monthYear] / teAmount) * 100)
+                                                        .toStringAsFixed(0)
+                                                        : ((snapshotData['categoryAmount'][monthYear] / totalExpensesAmount) * 100)
+                                                        .toStringAsFixed(0)
                                                   );
                                                 },
                                               )
@@ -296,7 +297,7 @@ class _DashboardScreenState extends State<DashboardScreen> {
       double setAmount,
       double sumOfExpensesAmount) {
     List<Category> selectedCategories = allCategories
-        .where((category) => category.categoryAmount > 0 && !category.isIncome)
+        .where((category) => category.categoryAmount[monthYear] > 0 && !category.isIncome)
         .toList();
     return List.generate(
       setAmount > 0 && setAmount > sumOfExpensesAmount ? selectedCategories.length + 1 : selectedCategories.length,
@@ -305,7 +306,7 @@ class _DashboardScreenState extends State<DashboardScreen> {
         final bool isTouched = i == donutTouchedIndex;
         //final bool isIncome = i < selectedCategories.length ? category.isIncome : false;
         final double opacity = isTouched ? 1 : 0.6;
-        final value = i < selectedCategories.length ? category.categoryAmount : setAmount - sumOfExpensesAmount;
+        final value = i < selectedCategories.length ? category.categoryAmount[monthYear] : setAmount - sumOfExpensesAmount;
         switch (i) {
           default:
             return PieChartSectionData(
@@ -328,7 +329,7 @@ class _DashboardScreenState extends State<DashboardScreen> {
 
   List<Indicator> showAllIndicators(List<Category> allCategories) {
     List<Category> selectedCategories = allCategories
-        .where((category) => category.categoryAmount > 0 && !category.isIncome)
+        .where((category) => category.categoryAmount[monthYear] > 0 && !category.isIncome)
         .toList();
     return List.generate(
       selectedCategories.length,

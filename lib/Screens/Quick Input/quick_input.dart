@@ -6,6 +6,7 @@ import 'package:Canny/Services/Receipt/receipt_database.dart';
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:flushbar/flushbar.dart';
 import 'package:flutter/material.dart';
+import 'package:intl/intl.dart';
 import 'package:math_expressions/math_expressions.dart';
 import 'package:Canny/Services/Quick%20Input/calculator_buttons.dart';
 import 'package:Canny/Shared/colors.dart';
@@ -28,6 +29,7 @@ class QuickInputState extends State<QuickInput> {
   final QuickInputDatabaseService _authQuickInput = QuickInputDatabaseService();
   final ReceiptDatabaseService _authReceipt = ReceiptDatabaseService();
   final CollectionReference quickInputCollection = Database().quickInputDatabase();
+  final String monthYear = DateFormat('MMM y').format(DateTime.now());
   Category _chosenCategory;
   bool evaluated = false;
 

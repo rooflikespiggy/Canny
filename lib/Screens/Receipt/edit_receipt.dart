@@ -284,7 +284,11 @@ class _EditReceiptState extends State<EditReceipt> {
                                                   _authReceipt.updateItemName(widget.receiptId, itemNameController.text);
                                                 }
                                                 if (dateChanged) {
-                                                  _authReceipt.updateDate(widget.receiptId, current);
+                                                  _authReceipt.updateDate(widget.receiptId,
+                                                    widget.datetime,
+                                                    current,
+                                                    widget.categoryId,
+                                                    widget.cost);
                                                 }
                                                 if (costChanged && newCategoryId != null && newCategoryId != widget.categoryId) {
                                                   _authReceipt.updateCostAndCategory(widget.receiptId,

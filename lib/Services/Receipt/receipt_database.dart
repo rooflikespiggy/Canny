@@ -7,6 +7,7 @@ class ReceiptDatabaseService {
 
   final CollectionReference expensesCollection = Database().expensesDatabase();
   final CollectionReference categoryCollection = Database().categoryDatabase();
+  final String monthYear = DateFormat('MMM y').format(DateTime.now());
 
   Future addReceipt(Expense expense) async {
     await expensesCollection
@@ -16,7 +17,7 @@ class ReceiptDatabaseService {
     await categoryCollection
         .doc(int.parse(expense.categoryId).toString())
         .update({
-      "categoryAmount": FieldValue.increment(expense.cost.abs())
+      "categoryAmount.$monthYear": FieldValue.increment(expense.cost.abs())
     });
     return true;
   }
@@ -37,7 +38,7 @@ class ReceiptDatabaseService {
     await categoryCollection
         .doc(int.parse(categoryId).toString())
         .update({
-      "categoryAmount": FieldValue.increment(-(cost.abs()))
+      "categoryAmount.$monthYear": FieldValue.increment(-(cost.abs()))
     });
     return true;
   }
@@ -63,7 +64,7 @@ class ReceiptDatabaseService {
     await categoryCollection
         .doc(int.parse(categoryId).toString())
         .update({
-      "categoryAmount": FieldValue.increment(newCost.abs() - oldCost.abs())
+      "categoryAmount.$monthYear": FieldValue.increment(newCost.abs() - oldCost.abs())
     });
     return true;
   }
@@ -82,22 +83,40 @@ class ReceiptDatabaseService {
     await categoryCollection
         .doc(int.parse(newCategoryId).toString())
         .update({
-      "categoryAmount": FieldValue.increment(newCost.abs())
+      "categoryAmount.$monthYear": FieldValue.increment(newCost.abs())
     });
     await categoryCollection
         .doc(int.parse(oldCategoryId).toString())
         .update({
-      "categoryAmount": FieldValue.increment(-(oldCost.abs()))
+      "categoryAmount.$monthYear": FieldValue.increment(-(oldCost.abs()))
     });
     return true;
   }
 
-  Future updateDate(String receiptId, DateTime newDate) async {
+  Future updateDate(String receiptId,
+      Timestamp oldDate,
+      DateTime newDate,
+      String categoryId,
+      double cost) async {
+    String formattedOldDate = DateFormat('MMM y')
+        .format(DateTime.fromMillisecondsSinceEpoch(oldDate.seconds * 1000));
+    String formattedNewDate = DateFormat('MMM y').format(newDate);
     await expensesCollection
         .doc(receiptId)
         .update({
       'datetime': newDate,
     });
+    await categoryCollection
+        .doc(int.parse(categoryId).toString())
+        .update({
+      "categoryAmount.$formattedOldDate": FieldValue.increment(-(cost.abs()))
+    });
+    await categoryCollection
+        .doc(int.parse(categoryId).toString())
+        .update({
+      "categoryAmount.$formattedNewDate": FieldValue.increment(cost.abs())
+    });
+
     return true;
   }
 

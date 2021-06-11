@@ -11,6 +11,7 @@ import 'package:flutter_colorpicker/flutter_colorpicker.dart';
 import 'package:flutter_iconpicker/Models/IconPack.dart';
 import 'package:flutter_iconpicker/flutter_iconpicker.dart';
 import 'package:font_awesome_flutter/font_awesome_flutter.dart';
+import 'package:intl/intl.dart';
 
 class AddCategoryScreen extends StatefulWidget {
   static final String id = 'add_category_screen';
@@ -26,6 +27,7 @@ class _AddCategoryScreenState extends State<AddCategoryScreen> {
   final TextEditingController categoryNameController = TextEditingController();
   final CollectionReference categoryCollection = Database().categoryDatabase();
   final CategoryDatabaseService _authCategory = CategoryDatabaseService();
+  final String monthYear = DateFormat('MMM y').format(DateTime.now());
   IconTheme _icon = IconTheme(
       data: IconThemeData(color: Color(0xff443a49)),
       child: Icon(FontAwesomeIcons.question));
@@ -370,7 +372,7 @@ class _AddCategoryScreenState extends State<AddCategoryScreen> {
                                                     categoryColor: currentColor,
                                                     categoryIcon: _icon.child,
                                                     categoryId: categoryId,
-                                                    categoryAmount: 0,
+                                                    categoryAmount: {monthYear: 0},
                                                     isIncome: isIncome,
                                                   );
                                                   // TODO: not sure if needed but have error if no icon is provided

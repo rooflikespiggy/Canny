@@ -7,8 +7,8 @@ class Category {
   Color categoryColor;
   Icon categoryIcon;
   String categoryId;
-  double categoryAmount;
-  // Map<String, double> catAmount;
+  // double categoryAmount;
+  Map<String, dynamic> categoryAmount;
   bool isIncome;
 
   Category({
