@@ -2,6 +2,7 @@ import 'package:Canny/Database/all_database.dart';
 import 'package:Canny/Models/expense.dart';
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:intl/intl.dart';
+import 'package:math_expressions/math_expressions.dart';
 
 class ReceiptDatabaseService {
 
@@ -10,10 +11,7 @@ class ReceiptDatabaseService {
   final String monthYear = DateFormat('MMM y').format(DateTime.now());
 
   Future addReceipt(Expense expense) async {
-    await expensesCollection
-        //.doc(DateFormat('yyyy-MM').format(expense.datetime))
-        //.collection(DateFormat('yyyy-MM').format(expense.datetime))
-        .add(expense.toMap());
+    await expensesCollection.add(expense.toMap());
     await categoryCollection
         .doc(int.parse(expense.categoryId).toString())
         .update({
@@ -31,14 +29,17 @@ class ReceiptDatabaseService {
 
   Future removeReceipt(String receiptId,
       String categoryId,
+      Timestamp date,
       double cost) async {
+    String formattedDate = DateFormat('MMM y')
+        .format(DateTime.fromMillisecondsSinceEpoch(date.seconds * 1000));
     await expensesCollection
         .doc(receiptId)
         .delete();
     await categoryCollection
         .doc(int.parse(categoryId).toString())
         .update({
-      "categoryAmount.$monthYear": FieldValue.increment(-(cost.abs()))
+      "categoryAmount.$formattedDate": FieldValue.increment(-(cost.abs()))
     });
     return true;
   }
@@ -54,8 +55,11 @@ class ReceiptDatabaseService {
 
   Future updateCost(String receiptId,
       String categoryId,
+      Timestamp date,
       double oldCost,
       double newCost) async {
+    String formattedDate = DateFormat('MMM y')
+        .format(DateTime.fromMillisecondsSinceEpoch(date.seconds * 1000));
     await expensesCollection
         .doc(receiptId)
         .update({
@@ -64,7 +68,7 @@ class ReceiptDatabaseService {
     await categoryCollection
         .doc(int.parse(categoryId).toString())
         .update({
-      "categoryAmount.$monthYear": FieldValue.increment(newCost.abs() - oldCost.abs())
+      "categoryAmount.$formattedDate": FieldValue.increment(newCost.abs() - oldCost.abs())
     });
     return true;
   }
@@ -72,8 +76,11 @@ class ReceiptDatabaseService {
   Future updateCostAndCategory(String receiptId,
       String oldCategoryId,
       String newCategoryId,
+      Timestamp date,
       double oldCost,
       double newCost) async {
+    String formattedDate = DateFormat('MMM y')
+        .format(DateTime.fromMillisecondsSinceEpoch(date.seconds * 1000));
     await expensesCollection
         .doc(receiptId)
         .update({
@@ -83,12 +90,12 @@ class ReceiptDatabaseService {
     await categoryCollection
         .doc(int.parse(newCategoryId).toString())
         .update({
-      "categoryAmount.$monthYear": FieldValue.increment(newCost.abs())
+      "categoryAmount.$formattedDate": FieldValue.increment(newCost.abs())
     });
     await categoryCollection
         .doc(int.parse(oldCategoryId).toString())
         .update({
-      "categoryAmount.$monthYear": FieldValue.increment(-(oldCost.abs()))
+      "categoryAmount.$formattedDate": FieldValue.increment(-(oldCost.abs()))
     });
     return true;
   }
@@ -116,7 +123,6 @@ class ReceiptDatabaseService {
         .update({
       "categoryAmount.$formattedNewDate": FieldValue.increment(cost.abs())
     });
-
     return true;
   }
 

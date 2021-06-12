@@ -5,6 +5,7 @@ import 'package:Canny/Services/Category/default_categories.dart';
 import 'package:Canny/Services/Receipt/receipt_database.dart';
 import 'package:Canny/Shared/colors.dart';
 import 'package:cloud_firestore/cloud_firestore.dart';
+import 'package:flushbar/flushbar.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_colorpicker/flutter_colorpicker.dart';
 import 'package:font_awesome_flutter/font_awesome_flutter.dart';
@@ -16,7 +17,7 @@ class CategoryTile extends StatefulWidget {
   final String categoryFontFamily;
   final String categoryFontPackage;
   final String categoryId;
-  final double categoryAmount;
+  final Map<String, dynamic> categoryAmount;
   final bool isIncome;
   final bool tappable;
 
@@ -189,6 +190,17 @@ class _CategoryTileState extends State<CategoryTile> {
                                             }
                                           }
                                           Navigator.pop(context);
+                                          Flushbar(
+                                            message: "Category Deleted.",
+                                            icon: Icon(
+                                              Icons.info_outline,
+                                              size: 28.0,
+                                              color: Theme.of(context).colorScheme.secondary,
+                                            ),
+                                            duration: Duration(seconds: 3),
+                                            leftBarIndicatorColor:
+                                            Theme.of(context).colorScheme.secondary,
+                                          )..show(context);
                                         },
                                       ),
                                       TextButton(

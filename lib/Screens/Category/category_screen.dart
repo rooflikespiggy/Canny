@@ -105,7 +105,7 @@ class _CategoryScreenState extends State<CategoryScreen> {
                                           categoryFontFamily: snapshotData['categoryFontFamily'],
                                           categoryFontPackage: snapshotData['categoryFontPackage'],
                                           categoryId: snapshotData.id,
-                                          categoryAmount: snapshotData['categoryAmount'][monthYear],
+                                          categoryAmount: snapshotData['categoryAmount'],
                                           isIncome: snapshotData['isIncome'],
                                           tappable: false
                                       );

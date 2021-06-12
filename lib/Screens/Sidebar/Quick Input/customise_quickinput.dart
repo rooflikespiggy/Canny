@@ -26,9 +26,8 @@ class _CustomiseQIState extends State<CustomiseQI> {
   final CollectionReference categoryCollection = Database().categoryDatabase();
   final CollectionReference quickInputCollection = Database().quickInputDatabase();
   List<MultiSelectItem<Category>> _allCategories;
-  bool isSelected = false;
 
-  List<Category> selectedCategories;
+  List<Category> selectedCategories = [];
   String firstSelectedCategory;
 
   @override
@@ -64,8 +63,6 @@ class _CustomiseQIState extends State<CustomiseQI> {
                   ),
                   SizedBox(height: 12.0),
                   getMultiSelectDialogField(),
-                  // SizedBox(height: 20.0),
-                  //getMultiSelectChipField(),
                   SizedBox(height: 20.0),
                   Column(
                     crossAxisAlignment: CrossAxisAlignment.stretch,
@@ -199,11 +196,10 @@ class _CustomiseQIState extends State<CustomiseQI> {
                       },
                       onConfirm: (categories) {
                         selectedCategories = categories;
-                        isSelected = true;
                       }
                   ),
                   // need figure out why this dont work
-                  !isSelected
+                  selectedCategories.isEmpty
                       ? Container(
                     padding: EdgeInsets.all(10),
                     alignment: Alignment.centerLeft,
@@ -283,16 +279,14 @@ class _CustomiseQIState extends State<CustomiseQI> {
                                   child: Text("Back to homepage"),
                                   onPressed: () {
                                     Navigator.push(context,
-                                        MaterialPageRoute(
-                                            builder: (context) => HomePageScreen()));
+                                        MaterialPageRoute(builder: (context) => HomePageScreen()));
                                   },
                                 ),
                                 TextButton(
                                   child: Text("Check Quick Input"),
                                   onPressed: () {
                                     Navigator.push(context,
-                                        MaterialPageRoute(
-                                            builder: (context) => QuickInput()));
+                                        MaterialPageRoute(builder: (context) => QuickInput()));
                                   },
                                 )
                               ],

@@ -1,7 +1,9 @@
 import 'package:Canny/Models/category.dart';
 import 'package:Canny/Screens/Receipt/edit_receipt.dart';
 import 'package:Canny/Services/Category/category_database.dart';
+import 'package:Canny/Services/Receipt/receipt_database.dart';
 import 'package:cloud_firestore/cloud_firestore.dart';
+import 'package:flushbar/flushbar.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_slidable/flutter_slidable.dart';
 import 'package:intl/intl.dart';
@@ -29,6 +31,7 @@ class ExpenseTile extends StatefulWidget {
 
 class _ExpenseTileState extends State<ExpenseTile> {
   final CategoryDatabaseService _authCategory = CategoryDatabaseService();
+  final ReceiptDatabaseService _authReceipt = ReceiptDatabaseService();
   Category selectedCategory;
   final SlidableController slidableController = SlidableController();
 
@@ -94,15 +97,6 @@ class _ExpenseTileState extends State<ExpenseTile> {
                       : Colors.green,
                 ),
               ),
-              // maybe can change this to onTap for the whole ListTile
-              // so that the text can be right at the back
-              /*
-              IconButton(
-                icon: Icon(Icons.more_vert),
-                onPressed: () {
-                },
-              ),
-               */
             ],
           ),
         ),
@@ -121,17 +115,57 @@ class _ExpenseTileState extends State<ExpenseTile> {
               builder: (BuildContext context) {
                 return
                   EditReceipt(
-                  categoryId: widget.categoryId,
-                  cost: widget.cost,
-                  itemName: widget.itemName,
-                  datetime: widget.datetime,
-                  receiptId: widget.receiptId,
+                    categoryId: widget.categoryId,
+                    cost: widget.cost,
+                    itemName: widget.itemName,
+                    datetime: widget.datetime,
+                    receiptId: widget.receiptId,
                 );
               }
           );
         },
+        // TODO: I feel that should use dismissable or slidable to edit and delete but background hard
+        // TODO: refer to dayspend expenses.dart
         onLongPress: () {
-          // TODO: delete the expenses
+          showDialog(
+            context: context,
+            builder: (BuildContext context) {
+              return AlertDialog(
+                title: Text("Are you sure you want to delete this receipt?"),
+                content: Text("Once it is deleted, you will not be able to retrieve it back."),
+                actions: <Widget>[
+                  // usually buttons at the bottom of the dialog
+                  TextButton(
+                    child: Text("Yes"),
+                    onPressed: () async {
+                      await _authReceipt.removeReceipt(widget.receiptId,
+                          widget.categoryId,
+                          widget.datetime,
+                          widget.cost);
+                      Navigator.pop(context);
+                      Flushbar(
+                        message: "Receipt Deleted.",
+                        icon: Icon(
+                          Icons.info_outline,
+                          size: 28.0,
+                          color: Theme.of(context).colorScheme.secondary,
+                        ),
+                        duration: Duration(seconds: 3),
+                        leftBarIndicatorColor:
+                        Theme.of(context).colorScheme.secondary,
+                      )..show(context);
+                    },
+                  ),
+                  TextButton(
+                    child: Text("No"),
+                    onPressed: () {
+                      Navigator.pop(context);
+                    },
+                  ),
+                ],
+              );
+            },
+          );
         },
       ),
     );

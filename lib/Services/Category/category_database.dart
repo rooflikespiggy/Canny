@@ -58,14 +58,16 @@ class CategoryDatabaseService {
     return true;
   }
 
-  Future removeCategory(String categoryId, double categoryAmount) async {
+  Future removeCategory(String categoryId, Map<String, dynamic> categoryDateAmount) async {
     await categoryCollection
         .doc(categoryId)
         .delete();
-    await categoryCollection
-        .doc('11')
-        .update({
-      'categoryAmount.$monthYear': FieldValue.increment(categoryAmount)
+    categoryDateAmount.forEach((date, amount) async {
+      await categoryCollection
+          .doc('11')
+          .update({
+        'categoryAmount.$date': FieldValue.increment(amount)
+      });
     });
     return true;
   }

@@ -375,7 +375,6 @@ class _AddCategoryScreenState extends State<AddCategoryScreen> {
                                                     categoryAmount: {monthYear: 0},
                                                     isIncome: isIncome,
                                                   );
-                                                  // TODO: not sure if needed but have error if no icon is provided
                                                   if (_formKey.currentState.validate()) {
                                                     await _authCategory.addNewCategory(category, category.categoryId);
                                                     categoryNameController.clear();

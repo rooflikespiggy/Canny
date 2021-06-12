@@ -294,6 +294,7 @@ class _EditReceiptState extends State<EditReceipt> {
                                                   _authReceipt.updateCostAndCategory(widget.receiptId,
                                                       widget.categoryId,
                                                       newCategoryId,
+                                                      widget.datetime,
                                                       widget.cost,
                                                       newIsIncome
                                                           ? double.parse(costController.text)
@@ -301,6 +302,7 @@ class _EditReceiptState extends State<EditReceipt> {
                                                 } else if (costChanged && (newCategoryId == null || newCategoryId == widget.categoryId)) {
                                                   _authReceipt.updateCost(widget.receiptId,
                                                       widget.categoryId,
+                                                      widget.datetime,
                                                       widget.cost,
                                                       isIncome
                                                           ? double.parse(costController.text)
@@ -309,6 +311,7 @@ class _EditReceiptState extends State<EditReceipt> {
                                                   _authReceipt.updateCostAndCategory(widget.receiptId,
                                                       widget.categoryId,
                                                       newCategoryId,
+                                                      widget.datetime,
                                                       widget.cost,
                                                       newIsIncome
                                                           ? double.parse(costController.text)

@@ -16,7 +16,6 @@ class FilterScreen extends StatefulWidget {
 class _FilterScreenState extends State<FilterScreen> {
   CategoryDatabaseService _authCategory = CategoryDatabaseService();
   List<Category> filteredCategories = [];
-  List<MultiSelectItem<Category>> _allCategories;
   final format = DateFormat('d/M/y');
   DateTime earliest;
   DateTime latest;
@@ -48,8 +47,7 @@ class _FilterScreenState extends State<FilterScreen> {
             });
           },
         ),
-      )
-          .toList(),
+      ).toList(),
     );
   }
 
@@ -65,6 +63,7 @@ class _FilterScreenState extends State<FilterScreen> {
             builder: (BuildContext context, AsyncSnapshot<List<Category>> snapshot) {
               if (snapshot.hasData) {
                 List<Category> allCategories = snapshot.data;
+                allCategories.sort((a, b) => a.categoryId.compareTo(b.categoryId));
                 return GestureDetector(
                   child: Container(
                     padding: EdgeInsets.all(10.0),
@@ -81,9 +80,9 @@ class _FilterScreenState extends State<FilterScreen> {
                             ),
                           ),
                         ),
-                        SizedBox(height: 5,),
+                        SizedBox(height: 5),
                         _getCategoriesChips(),
-                        SizedBox(height: 10,)
+                        SizedBox(height: 10)
                       ],
                     ),
                   ),
@@ -307,10 +306,10 @@ class _FilterScreenState extends State<FilterScreen> {
         child: Column(
           crossAxisAlignment: CrossAxisAlignment.stretch,
           children: <Widget>[
-            SizedBox(height: 10,),
+            SizedBox(height: 10),
             _categoriesSelection(),
             _datesSelection(),
-            SizedBox(height: 20,),
+            SizedBox(height: 20),
             
           ],
         ),
