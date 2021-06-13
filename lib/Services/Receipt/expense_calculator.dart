@@ -98,7 +98,7 @@ class ExpenseCalculatorState extends State<ExpenseCalculator> {
 
   @override
   Widget build(BuildContext context) {
-
+    /*
     return Scaffold(
       backgroundColor: kLightBlue,
       resizeToAvoidBottomInset: false,
@@ -415,7 +415,7 @@ class ExpenseCalculatorState extends State<ExpenseCalculator> {
         ),
       ),
     );
-    /*
+    */
     return Scaffold(
       backgroundColor: kLightBlue,
       resizeToAvoidBottomInset: false,
@@ -425,20 +425,19 @@ class ExpenseCalculatorState extends State<ExpenseCalculator> {
         elevation: 0.0,
       ),
       body: Container(
-        padding: EdgeInsets.fromLTRB(10, 12, 10, 12),
+        padding: EdgeInsets.fromLTRB(8, 12, 8, 12),
         child: Form(
           key: _formKey,
           child: Column(
             mainAxisAlignment: MainAxisAlignment.start,
             children: <Widget>[
               SizedBox(height: 5),
-              // how to put this right at the top
               _showTextFormFields(itemNameController,
                 "Name of expense",
                 Icon(Icons.drive_file_rename_outline),
-                390.0,
+                400.0,
               ),
-              SizedBox(height: 20),
+              SizedBox(height: 50),
               Container(
                 alignment: Alignment(1.0, 1.0),
                 child: Padding(
@@ -483,8 +482,9 @@ class ExpenseCalculatorState extends State<ExpenseCalculator> {
                       callback: clear,
                       textSize: 22,
                     ),
+                    SizedBox(width: 2.0),
                     Container(
-                      width: 180,
+                      width: 165,
                       height: 60,
                       decoration: BoxDecoration(
                           borderRadius: BorderRadius.all(Radius.circular(18.0)),
@@ -529,6 +529,7 @@ class ExpenseCalculatorState extends State<ExpenseCalculator> {
                         ),
                       ),
                     ),
+                    SizedBox(width: 3.0),
                   ],
                 ),
               Row(
@@ -640,7 +641,7 @@ class ExpenseCalculatorState extends State<ExpenseCalculator> {
                 height: 6,
               ),
               SizedBox(
-                width: 360,
+                width: 350,
                 height: 60,
                 child: TextButton(
                   onPressed: () async {
@@ -716,13 +717,11 @@ class ExpenseCalculatorState extends State<ExpenseCalculator> {
         ),
       ),
     );
-
-     */
   }
 
   Widget _showTextFormFields(TextEditingController text, String label, Icon icon, double size) {
     return Padding(
-      padding: EdgeInsets.symmetric(horizontal: 20.0),
+      padding: EdgeInsets.symmetric(horizontal: 16.0),
       child: SizedBox(
         width: size,
         child: TextFormField(

@@ -8,6 +8,7 @@ import 'package:Canny/Shared/colors.dart';
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
+import 'package:intl/intl.dart';
 
 
 class CategoryScreen extends StatefulWidget {
@@ -21,6 +22,7 @@ class _CategoryScreenState extends State<CategoryScreen> {
   final CollectionReference categoryCollection = Database().categoryDatabase();
   final int categoriesSize = defaultCategories.length;
   bool isDefault = true;
+  final String monthYear = DateFormat('MMM y').format(DateTime.now());
 
   @override
   Widget build(BuildContext context) {

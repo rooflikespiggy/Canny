@@ -5,6 +5,7 @@ import 'package:Canny/Services/Category/default_categories.dart';
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
+import 'package:intl/intl.dart';
 
 class CategoryDatabaseService {
   final String uid;
@@ -15,7 +16,7 @@ class CategoryDatabaseService {
   List<Category> _categories;
   //var categories = {FirebaseAuth.instance.currentUser.uid: defaultCategories};
   final CollectionReference receiptCollection = Database().expensesDatabase();
-
+  final String monthYear = DateFormat('MMM y').format(DateTime.now());
   CategoryDatabaseService({this.uid});
 
 
@@ -57,27 +58,16 @@ class CategoryDatabaseService {
     return true;
   }
 
-  Future removeCategory(String categoryId, double categoryAmount) async {
-    // if removeCategory all the expenses should go to Others category
-    /*
-    for (Category category in categories[userId]) {
-      if (category.categoryId == categoryId) {
-        categories[userId].remove(category);
-      }
-    }
-    await receiptCollection
-        .where('categoryId', isEqualTo: categoryId)
-        .get()
-        .then((value) => null);
-    //how to update the categoryid value to 11 for each expense
-     */
+  Future removeCategory(String categoryId, Map<String, dynamic> categoryDateAmount) async {
     await categoryCollection
         .doc(categoryId)
         .delete();
-    await categoryCollection
-        .doc('11')
-        .update({
-      'categoryAmount': FieldValue.increment(categoryAmount)
+    categoryDateAmount.forEach((date, amount) async {
+      await categoryCollection
+          .doc('11')
+          .update({
+        'categoryAmount.$date': FieldValue.increment(amount)
+      });
     });
     return true;
   }

@@ -11,6 +11,7 @@ import 'package:flutter_colorpicker/flutter_colorpicker.dart';
 import 'package:flutter_iconpicker/Models/IconPack.dart';
 import 'package:flutter_iconpicker/flutter_iconpicker.dart';
 import 'package:font_awesome_flutter/font_awesome_flutter.dart';
+import 'package:intl/intl.dart';
 
 class AddCategoryScreen extends StatefulWidget {
   static final String id = 'add_category_screen';
@@ -26,6 +27,7 @@ class _AddCategoryScreenState extends State<AddCategoryScreen> {
   final TextEditingController categoryNameController = TextEditingController();
   final CollectionReference categoryCollection = Database().categoryDatabase();
   final CategoryDatabaseService _authCategory = CategoryDatabaseService();
+  final String monthYear = DateFormat('MMM y').format(DateTime.now());
   IconTheme _icon = IconTheme(
       data: IconThemeData(color: Color(0xff443a49)),
       child: Icon(FontAwesomeIcons.question));
@@ -267,101 +269,6 @@ class _AddCategoryScreenState extends State<AddCategoryScreen> {
                                                     },
                                                   )
                                               ),
-
-
-                                        /*
-                                              Padding(
-                                                padding: EdgeInsets.all(8.0),
-                                                child: Row(
-                                                    mainAxisAlignment: MainAxisAlignment.spaceEvenly,
-                                                    children: <Widget> [
-                                                      Container(
-                                                        color: pickerColor,
-                                                        child: IconButton(
-                                                          icon: Icon(
-                                                              Icons.edit,
-                                                              color: Colors.white),
-                                                          onPressed: () {
-                                                            showDialog(
-                                                              context: context,
-                                                              builder: (BuildContext context) {
-                                                                return AlertDialog(
-                                                                  title: Text('Color your category'),
-                                                                  content: SingleChildScrollView(
-                                                                      child: Column(
-                                                                          children: <Widget>[
-                                                                            BlockPicker(
-                                                                              pickerColor: currentColor,
-                                                                              onColorChanged: changeColor,
-                                                                            ),
-                                                                            SizedBox(height: 10),
-                                                                            TextButton(
-                                                                                child: Text("Set as color",
-                                                                                  style: TextStyle(
-                                                                                    color: Colors.white,
-                                                                                  ),
-                                                                                ),
-                                                                                style: TextButton.styleFrom(
-                                                                                    backgroundColor: kDeepOrangeLight
-                                                                                ),
-                                                                                onPressed: () {
-                                                                                  setState(() => currentColor = pickerColor);
-                                                                                  Navigator.of(context).pop();
-                                                                                }
-                                                                            )
-                                                                          ]
-                                                                      )
-                                                                  ),
-                                                                );
-                                                              },
-                                                            );
-                                                          },
-                                                        ),
-                                                      ),
-                                                      SizedBox(height: 10.0),
-                                                      TextButton(
-                                                        child: Text('Pick a \n Category Icon',
-                                                          style: TextStyle(
-                                                            color: Colors.white,
-                                                          ),
-                                                          textAlign: TextAlign.center,
-                                                        ),
-                                                        style: TextButton.styleFrom(
-                                                            backgroundColor: kPalePurple
-                                                        ),
-                                                        onPressed: _pickIcon,
-                                                      ),
-                                                      SizedBox(height: 10.0),
-                                                      // figure out why this wont work else change to dropdownmenu
-                                                      TextButton(
-                                                        child: Row(
-                                                          mainAxisAlignment: MainAxisAlignment.center,
-                                                          children: <Widget>[
-                                                            Icon(Icons.touch_app, size: 20, color: isIncome ? Colors.teal : Colors.redAccent,),
-                                                            SizedBox(width: 12),
-                                                            Text(isIncome ? 'INCOME' : 'EXPENSE',
-                                                              style: TextStyle(
-                                                                  color: isIncome
-                                                                      ? Colors.teal
-                                                                      : Colors.redAccent
-                                                              ),
-                                                            ),
-                                                          ],
-                                                        ),
-                                                        style: TextButton.styleFrom(
-                                                          minimumSize: Size(150, 40),
-                                                          backgroundColor: isIncome
-                                                              ? Colors.teal.withOpacity(0.2)
-                                                              : Colors.redAccent.withOpacity(0.2),
-                                                        ),
-                                                        onPressed: () {
-                                                          changeIsIncome();
-                                                        },
-                                                      )
-                                                    ]
-                                                ),
-                                              ),
-                                              */
                                               SizedBox(height: 10.0),
                                               TextButton(
                                                 onPressed: () async {
@@ -370,10 +277,9 @@ class _AddCategoryScreenState extends State<AddCategoryScreen> {
                                                     categoryColor: currentColor,
                                                     categoryIcon: _icon.child,
                                                     categoryId: categoryId,
-                                                    categoryAmount: 0,
+                                                    categoryAmount: {monthYear: 0},
                                                     isIncome: isIncome,
                                                   );
-                                                  // TODO: not sure if needed but have error if no icon is provided
                                                   if (_formKey.currentState.validate()) {
                                                     await _authCategory.addNewCategory(category, category.categoryId);
                                                     categoryNameController.clear();

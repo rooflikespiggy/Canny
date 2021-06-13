@@ -365,6 +365,7 @@ class _ForumScreenState extends State<ForumScreen> {
                       return CircularProgressIndicator();
                     },
                   ),
+                  SizedBox(height: 50.0),
                 ],
               ),
             ),
@@ -375,6 +376,13 @@ class _ForumScreenState extends State<ForumScreen> {
   }
 
   Future<void> _launchInWebViewOrVC(String url) async {
+    await launch(
+      url,
+      forceSafariVC: false,
+      forceWebView: false,
+      headers: <String, String>{'my_header_key': 'my_header_value'},
+    );
+    /*
     if (await canLaunch(url)) {
       await launch(
         url,
@@ -385,6 +393,7 @@ class _ForumScreenState extends State<ForumScreen> {
     } else {
       throw 'Could not launch $url';
     }
+     */
   }
 
   Future<void> _launchEmail(String url) async {
@@ -393,10 +402,13 @@ class _ForumScreenState extends State<ForumScreen> {
       path: url,
     );
     String newUrl = params.toString();
+    await launch(newUrl);
+    /*
     if (await canLaunch(newUrl)) {
       await launch(newUrl);
     } else {
       throw 'Could not launch $newUrl';
     }
+     */
   }
 }

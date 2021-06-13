@@ -26,86 +26,84 @@ class _AddTEScreenState extends State<AddTEScreen> {
 
   @override
   Widget build(BuildContext context) {
-    return Material(
-      child: SingleChildScrollView(
-        child: Container(
-            padding: EdgeInsets.only(bottom: MediaQuery.of(context).viewInsets.bottom),
-            child: Column(
-                mainAxisSize: MainAxisSize.max,
-                mainAxisAlignment: MainAxisAlignment.start,
-                children: <Widget> [
-                  Container(
-                      decoration: BoxDecoration(
-                        color: kLightBlue,
-                        borderRadius:
-                        BorderRadius.all(Radius.circular(15)),
-                      ),
-                      child: Column(
-                          children: <Widget> [
-                            Row(
-                              mainAxisAlignment: MainAxisAlignment.center,
-                              children: <Widget> [
-                                SizedBox(width: 20.0),
-                                Text('Enter A Target Expenditure',
-                                  style: TextStyle(
-                                      fontSize: 18,
-                                      fontFamily: "Lato",
-                                      color: kDarkBlue
-                                  ),
+    return SingleChildScrollView(
+      child: Container(
+          padding: EdgeInsets.only(bottom: MediaQuery.of(context).viewInsets.bottom),
+          child: Column(
+              mainAxisSize: MainAxisSize.max,
+              mainAxisAlignment: MainAxisAlignment.start,
+              children: <Widget> [
+                Container(
+                    decoration: BoxDecoration(
+                      color: kLightBlue,
+                      borderRadius:
+                      BorderRadius.all(Radius.circular(15)),
+                    ),
+                    child: Column(
+                        children: <Widget> [
+                          Row(
+                            mainAxisAlignment: MainAxisAlignment.center,
+                            children: <Widget> [
+                              SizedBox(width: 20.0),
+                              Text('Enter A Target Expenditure',
+                                style: TextStyle(
+                                    fontSize: 18,
+                                    fontFamily: "Lato",
+                                    color: kDarkBlue
                                 ),
-                                Spacer(),
-                                TextButton(
-                                  onPressed: () {
-                                    targetedExpensesController.clear();
-                                    Navigator.pop(context);
-                                  },
-                                  child: Icon(Icons.clear),
-                                ),
-                              ],
-                            ),
-                            SizedBox(height: 10),
-                            Container(
-                                alignment: Alignment.topCenter,
-                                child: Form(
-                                  key: _formKey,
-                                  child: Padding(
-                                    padding: EdgeInsets.all(8),
-                                    child: _showTextFormFields(targetedExpensesController,
-                                      "Targeted Expenditure",
-                                      Icon(Icons.track_changes_rounded),
-                                      390.0,
-                                    ),
-                                  ),
-                                )
-                            ),
-                            SizedBox(height: 10,),
-                            TextButton(
-                              onPressed: () async {
-                                //final TargetedExpenditure targetedExpenditure = TargetedExpenditure(
-                                //    amount: double.parse(targetedExpensesController.text));
-                                if (_formKey.currentState.validate()) {
-                                  await _authTargetedExpenditure.updateTE(double.parse(targetedExpensesController.text));
+                              ),
+                              Spacer(),
+                              TextButton(
+                                onPressed: () {
                                   targetedExpensesController.clear();
                                   Navigator.pop(context);
-                                }
-                              },
-                              child: Text('Submit',
-                                style: TextStyle(
-                                  color: Colors.white,
-                                ),
+                                },
+                                child: Icon(Icons.clear),
                               ),
-                              style: TextButton.styleFrom(
-                                backgroundColor: kDarkBlue,
-                                minimumSize: Size(350, 40),
+                            ],
+                          ),
+                          SizedBox(height: 10),
+                          Container(
+                              alignment: Alignment.topCenter,
+                              child: Form(
+                                key: _formKey,
+                                child: Padding(
+                                  padding: EdgeInsets.all(8),
+                                  child: _showTextFormFields(targetedExpensesController,
+                                    "Targeted Expenditure",
+                                    Icon(Icons.track_changes_rounded),
+                                    390.0,
+                                  ),
+                                ),
+                              )
+                          ),
+                          SizedBox(height: 10,),
+                          TextButton(
+                            onPressed: () async {
+                              //final TargetedExpenditure targetedExpenditure = TargetedExpenditure(
+                              //    amount: double.parse(targetedExpensesController.text));
+                              if (_formKey.currentState.validate()) {
+                                await _authTargetedExpenditure.updateTE(double.parse(targetedExpensesController.text));
+                                targetedExpensesController.clear();
+                                Navigator.pop(context);
+                              }
+                            },
+                            child: Text('Submit',
+                              style: TextStyle(
+                                color: Colors.white,
                               ),
                             ),
-                            SizedBox(height: 20,),
-                          ]
-                      )
-                  )
-                ]
-            )
-        ),
+                            style: TextButton.styleFrom(
+                              backgroundColor: kDarkBlue,
+                              minimumSize: Size(350, 40),
+                            ),
+                          ),
+                          SizedBox(height: 20,),
+                        ]
+                    )
+                )
+              ]
+          )
       ),
     );
 

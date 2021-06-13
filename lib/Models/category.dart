@@ -3,12 +3,12 @@ import 'package:flutter/material.dart';
 import 'package:font_awesome_flutter/font_awesome_flutter.dart';
 
 class Category {
-  // should add isIncome and categoryAmount
   String categoryName;
   Color categoryColor;
   Icon categoryIcon;
   String categoryId;
-  double categoryAmount;
+  // double categoryAmount;
+  Map<String, dynamic> categoryAmount;
   bool isIncome;
 
   Category({
@@ -19,18 +19,6 @@ class Category {
     this.categoryAmount,
     this.isIncome
   });
-
-  factory Category.newBlankCategory() {
-    return Category(
-      categoryName: '',
-      categoryIcon: Icon(FontAwesomeIcons.question),
-      categoryColor: Colors.white,
-      categoryId: '',
-      categoryAmount: 0,
-      isIncome: false
-
-    );
-  }
 
   /*
   Category.fromMap(Map<String, dynamic> json) {
