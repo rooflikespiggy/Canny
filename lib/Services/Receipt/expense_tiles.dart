@@ -40,7 +40,7 @@ class _ExpenseTileState extends State<ExpenseTile> {
 
   @override
   Widget build(BuildContext context) {
-    // TODO: I feel that should use dismissable or slidable to edit and delete but background hard
+    // TODO: should use dismissable or slidable to edit and delete but background hard
     // TODO: refer to dayspend expenses.dart
     return Card(
       color: Colors.white,
