@@ -365,6 +365,7 @@ class _ForumScreenState extends State<ForumScreen> {
                       return CircularProgressIndicator();
                     },
                   ),
+                  SizedBox(height: 50.0),
                 ],
               ),
             ),

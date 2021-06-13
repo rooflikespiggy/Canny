@@ -3,7 +3,6 @@ import 'package:Canny/Models/targeted_expenditure.dart';
 import 'package:Canny/Services/Targeted%20Expenditure/default_TE.dart';
 import 'package:cloud_firestore/cloud_firestore.dart';
 
-// TODO: figure out how TE will be like
 class TEDatabaseService {
   final String uid;
 
