@@ -1,73 +1,37 @@
 import 'package:Canny/Database/all_database.dart';
 import 'package:Canny/Models/category.dart';
-import 'package:Canny/Models/expense.dart';
 import 'package:Canny/Screens/Dashboard/dashboard_screen.dart';
 import 'package:Canny/Screens/Forum/forum_screen.dart';
 import 'package:Canny/Screens/Insert Function/add_category.dart';
-import 'package:Canny/Screens/Insert%20Function/add_spending.dart';
 import 'package:Canny/Screens/Category/category_screen.dart';
 import 'package:Canny/Services/Receipt/expense_calculator.dart';
 import 'package:Canny/Screens/Insert Function/add_TE.dart';
 import 'package:Canny/Screens/Receipt/receipt_screen.dart';
-import 'package:Canny/Services/Category/category_database.dart';
-import 'package:Canny/Services/Receipt/receipt_database.dart';
 import 'package:Canny/Shared/colors.dart';
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_speed_dial/flutter_speed_dial.dart';
-import 'package:multi_select_flutter/util/multi_select_item.dart';
 import 'package:bottom_navy_bar/bottom_navy_bar.dart';
 
 class HomePageScreen extends StatefulWidget {
   static final String id = 'homepage_screen';
+  int selectedTab;
+
+  HomePageScreen({this.selectedTab});
 
   @override
   _HomePageScreenState createState() => _HomePageScreenState();
 }
 
 class _HomePageScreenState extends State<HomePageScreen> {
-  int _selectedTab = 0;
   String uid = FirebaseAuth.instance.currentUser.uid;
-  final _formKey = GlobalKey<FormState>();
-  final ReceiptDatabaseService _authReceipt = ReceiptDatabaseService();
   final CollectionReference categoryCollection = Database().categoryDatabase();
-  final CategoryDatabaseService _authCategory = CategoryDatabaseService();
   final TextEditingController itemNameController = TextEditingController();
   final TextEditingController costController = TextEditingController();
   final TextEditingController categoryNameController = TextEditingController();
-  List<MultiSelectItem<Category>> _allCategories = [];
   List<Category> selectedCategory = [];
   String categoryId = '00';
-  // Icon _icon;
-  // bool isIncome = false;
-  // String _title = 'CANNY';
-
-  /*
-  // create some values
-  Color pickerColor = Color(0xff443a49);
-  Color currentColor = Color(0xff443a49);
-
-  // ValueChanged<Color> callback
-  void changeColor(Color color) {
-    setState(() => pickerColor = color);
-  }
-
-  void changeIsIncome() {
-    setState(() => isIncome = !isIncome);
-  }
-
-  _pickIcon() async {
-    IconData icon = await FlutterIconPicker.showIconPicker(context);
-    _icon = Icon(icon,
-      color: currentColor,
-      size: 35,
-    );
-    setState((){});
-    debugPrint('Picked Icon:  $icon');
-  }
-
-   */
 
   @override
   Widget build(BuildContext context) {
@@ -77,25 +41,6 @@ class _HomePageScreenState extends State<HomePageScreen> {
       ReceiptScreen(),
       CategoryScreen(),
       ForumScreen(),
-    ];
-
-    List<BottomNavigationBarItem> _items = [
-      BottomNavigationBarItem(
-        icon: Icon(Icons.dashboard),
-        label: 'Dashboard',
-      ),
-      BottomNavigationBarItem(
-        icon: Icon(Icons.view_list),
-        label: 'Receipt',
-      ),
-      BottomNavigationBarItem(
-        icon: Icon(Icons.category),
-        label: 'Categories',
-      ),
-      BottomNavigationBarItem(
-        icon: Icon(Icons.forum),
-        label: 'Forum',
-      ),
     ];
 
     List<BottomNavyBarItem> _theItems = [
@@ -238,7 +183,7 @@ class _HomePageScreenState extends State<HomePageScreen> {
 
     return Scaffold(
       resizeToAvoidBottomInset: false,
-      body: _pageOptions[_selectedTab],
+      body: _pageOptions[widget.selectedTab],
       bottomNavigationBar: Container(
         color: kDarkBlue,
         /*
@@ -263,10 +208,10 @@ class _HomePageScreenState extends State<HomePageScreen> {
           items: _theItems,
           onItemSelected: (int index) {
             setState(() {
-              _selectedTab = index;
+              widget.selectedTab = index;
             });
           },
-          selectedIndex: _selectedTab,
+          selectedIndex: widget.selectedTab,
           backgroundColor: kDarkBlue,
           containerHeight: 55,
           curve: Curves.easeInOut,

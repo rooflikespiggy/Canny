@@ -5,7 +5,6 @@ import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
 import 'package:Canny/Shared/colors.dart';
 import 'package:Canny/Screens/wrapper.dart';
-import 'package:Canny/Screens/Category/category_screen.dart';
 
 class SideBarMenu extends StatefulWidget {
   const SideBarMenu({Key key}) : super(key: key);

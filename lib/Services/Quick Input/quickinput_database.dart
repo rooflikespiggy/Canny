@@ -2,16 +2,13 @@ import 'package:Canny/Database/all_database.dart';
 import 'package:Canny/Models/category.dart';
 import 'package:Canny/Services/Quick Input/default_quickinputs.dart';
 import 'package:cloud_firestore/cloud_firestore.dart';
-import 'package:firebase_auth/firebase_auth.dart';
 
 class QuickInputDatabaseService {
   final String uid;
 
   // collection reference
   final CollectionReference quickInputCollection = Database().quickInputDatabase();
-  // final String userId = FirebaseAuth.instance.currentUser.uid;
   List<Category> _quickInputs;
-  //var quickInputs = {FirebaseAuth.instance.currentUser.uid: defaultQuickInputs};
 
   QuickInputDatabaseService({this.uid});
 

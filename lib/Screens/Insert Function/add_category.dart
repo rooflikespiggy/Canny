@@ -1,4 +1,3 @@
-import 'package:Canny/Screens/Home/homepage_screen.dart';
 import 'package:Canny/Shared/colors.dart';
 import 'package:flushbar/flushbar.dart';
 import 'package:flutter/material.dart';
@@ -8,7 +7,6 @@ import 'package:Canny/Database/all_database.dart';
 import 'package:Canny/Services/Category/category_database.dart';
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:flutter_colorpicker/flutter_colorpicker.dart';
-import 'package:flutter_iconpicker/Models/IconPack.dart';
 import 'package:flutter_iconpicker/flutter_iconpicker.dart';
 import 'package:font_awesome_flutter/font_awesome_flutter.dart';
 import 'package:intl/intl.dart';

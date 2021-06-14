@@ -1,8 +1,6 @@
 import 'package:Canny/Database/all_database.dart';
-import 'package:Canny/Models/category.dart';
 import 'package:Canny/Models/expense.dart';
 import 'package:Canny/Screens/Insert%20Function/select_category_screen.dart';
-import 'package:Canny/Services/Quick%20Input/calculator_icon_buttons.dart';
 import 'package:Canny/Services/Receipt/receipt_database.dart';
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:flushbar/flushbar.dart';
@@ -11,7 +9,6 @@ import 'package:flutter/material.dart';
 import 'package:math_expressions/math_expressions.dart';
 import 'package:Canny/Services/Quick%20Input/calculator_buttons.dart';
 import 'package:Canny/Shared/colors.dart';
-import 'package:Canny/Services/Quick Input/quickinput_database.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'dart:math';
 
@@ -29,7 +26,6 @@ class ExpenseCalculatorState extends State<ExpenseCalculator> {
   String _evaluate = '';
   final _formKey = GlobalKey<FormState>();
   final TextEditingController itemNameController = TextEditingController();
-  final QuickInputDatabaseService _authQuickInput = QuickInputDatabaseService();
   final ReceiptDatabaseService _authReceipt = ReceiptDatabaseService();
   final CollectionReference quickInputCollection = Database().quickInputDatabase();
   String categoryName = 'Food & Drinks';

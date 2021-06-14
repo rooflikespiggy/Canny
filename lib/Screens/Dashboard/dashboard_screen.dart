@@ -4,7 +4,6 @@ import 'package:Canny/Screens/Dashboard/indicator.dart';
 import 'package:Canny/Screens/Insert%20Function/add_TE.dart';
 import 'package:Canny/Screens/Sidebar/sidebar_menu.dart';
 import 'package:Canny/Services/Category/category_database.dart';
-import 'package:Canny/Services/Targeted%20Expenditure/TE_database.dart';
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:fl_chart/fl_chart.dart';
 import 'package:flutter/material.dart';
@@ -21,10 +20,8 @@ class DashboardScreen extends StatefulWidget {
 }
 
 class _DashboardScreenState extends State<DashboardScreen> {
-  final _formKey = GlobalKey<FormState>();
   CollectionReference teCollection = Database().teDatabase();
   TextEditingController teController = TextEditingController();
-  TEDatabaseService _authTE = TEDatabaseService();
   final CollectionReference categoryCollection = Database().categoryDatabase();
   final CategoryDatabaseService _authCategory = CategoryDatabaseService();
   final String monthYear = DateFormat('MMM y').format(DateTime.now());
@@ -141,6 +138,10 @@ class _DashboardScreenState extends State<DashboardScreen> {
                                                 ),
                                               ),
                                             ],
+                                          ),
+                                          Padding(
+                                            padding: const EdgeInsets.only(left: 12.0, right: 12.0),
+                                            child: Divider(thickness: 2.0),
                                           ),
                                           // TODO: decide where to put this total expenses
                                           Row(

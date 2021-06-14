@@ -1,6 +1,4 @@
 import 'package:Canny/Database/all_database.dart';
-import 'package:Canny/Screens/Home/homepage_screen.dart';
-import 'package:Canny/Screens/Sidebar/sidebar_menu.dart';
 import 'package:Canny/Services/Category/default_categories.dart';
 import 'package:Canny/Services/Category/category_tiles.dart';
 import 'package:Canny/Services/Quick%20Input/quickinput_database.dart';

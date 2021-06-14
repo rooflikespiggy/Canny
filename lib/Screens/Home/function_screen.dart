@@ -88,7 +88,7 @@ class _FunctionScreenState extends State<FunctionScreen> {
               MaterialButton(
                 onPressed: () {
                   Navigator.push(context,
-                      MaterialPageRoute(builder: (context) => HomePageScreen()));
+                      MaterialPageRoute(builder: (context) => HomePageScreen(selectedTab: 0)));
                 },
                 shape: RoundedRectangleBorder(
                     borderRadius: BorderRadius.all(Radius.circular(15.0))),

@@ -4,7 +4,6 @@ import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:flutter/material.dart';
 import 'package:Canny/Shared/input_formatters.dart';
 import 'package:flutter/services.dart';
-import 'package:Canny/Models/targeted_expenditure.dart';
 import 'package:Canny/Services/Targeted Expenditure/TE_database.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 

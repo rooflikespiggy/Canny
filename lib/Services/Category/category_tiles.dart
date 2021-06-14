@@ -1,5 +1,4 @@
 import 'package:Canny/Database/all_database.dart';
-import 'package:Canny/Models/expense.dart';
 import 'package:Canny/Services/Category/category_database.dart';
 import 'package:Canny/Services/Category/default_categories.dart';
 import 'package:Canny/Services/Receipt/receipt_database.dart';

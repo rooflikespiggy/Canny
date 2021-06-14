@@ -75,7 +75,7 @@ class _CustomiseQIState extends State<CustomiseQI> {
                               onPressed: () {
                                 Navigator.push(context,
                                     MaterialPageRoute(
-                                        builder: (context) => HomePageScreen()));
+                                        builder: (context) => HomePageScreen(selectedTab: 0)));
                               },
                               child: Text('Return To Homepage'),
                               style: ButtonStyle(
