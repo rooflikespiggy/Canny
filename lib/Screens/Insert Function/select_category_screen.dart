@@ -1,6 +1,6 @@
 import 'package:Canny/Database/all_database.dart';
 import 'package:Canny/Services/Category/default_categories.dart';
-import 'package:Canny/Services/Category/category_tiles.dart';
+import 'package:Canny/Screens/Category/category_tiles.dart';
 import 'package:Canny/Services/Quick%20Input/quickinput_database.dart';
 import 'package:Canny/Shared/colors.dart';
 import 'package:cloud_firestore/cloud_firestore.dart';

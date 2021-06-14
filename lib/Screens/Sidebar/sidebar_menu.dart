@@ -16,7 +16,7 @@ class SideBarMenu extends StatefulWidget {
 class _SideBarMenuState extends State<SideBarMenu> {
   final AuthService _auth = AuthService();
   final String email = FirebaseAuth.instance.currentUser.email;
-  bool isSwitched = false;
+  bool notifSwitch = false;
 
   @override
   Widget build(BuildContext context) {
@@ -67,11 +67,11 @@ class _SideBarMenuState extends State<SideBarMenu> {
             ListTile(
               leading: Icon(Icons.notifications_active),
               trailing: Switch(
-                value: isSwitched,
+                value: notifSwitch,
                 onChanged: (value) {
                   setState(() {
-                    isSwitched = value;
-                    print(isSwitched);
+                    notifSwitch = value;
+                    print(notifSwitch);
                   });
                 },
                 activeTrackColor: kLightBlueDark,
@@ -97,10 +97,9 @@ class _SideBarMenuState extends State<SideBarMenu> {
               onTap: () async {
                 await _auth.signOut();
                 Navigator.push(context,
-                MaterialPageRoute(builder: (context) => Wrapper()));
+                    MaterialPageRoute(builder: (context) => Wrapper()));
               },
             ),
-              Divider(thickness: 1.0),
           ],
         ),
       ),

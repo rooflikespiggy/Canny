@@ -3,7 +3,7 @@ import 'package:Canny/Screens/Forum/add_comment.dart';
 import 'package:Canny/Screens/Forum/comment_detail.dart';
 import 'package:Canny/Screens/Home/homepage_screen.dart';
 import 'package:Canny/Shared/colors.dart';
-import 'package:Canny/Services/Forum/icon_with_text.dart';
+import 'package:Canny/Shared/icon_with_text.dart';
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';

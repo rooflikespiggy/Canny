@@ -2,6 +2,7 @@ import 'package:Canny/Database/all_database.dart';
 import 'package:Canny/Models/category.dart';
 import 'package:Canny/Screens/Dashboard/indicator.dart';
 import 'package:Canny/Screens/Insert%20Function/add_TE.dart';
+import 'package:Canny/Screens/Receipt/expense_tiles.dart';
 import 'package:Canny/Screens/Sidebar/sidebar_menu.dart';
 import 'package:Canny/Services/Category/category_database.dart';
 import 'package:cloud_firestore/cloud_firestore.dart';
@@ -25,6 +26,7 @@ class _DashboardScreenState extends State<DashboardScreen> {
   CollectionReference teCollection = Database().teDatabase();
   TextEditingController teController = TextEditingController();
   final CollectionReference categoryCollection = Database().categoryDatabase();
+  final CollectionReference expensesCollection = Database().expensesDatabase();
   final CategoryDatabaseService _authCategory = CategoryDatabaseService();
   final String monthYear = DateFormat('MMM y').format(DateTime.now());
   bool teSet;
@@ -157,29 +159,63 @@ class _DashboardScreenState extends State<DashboardScreen> {
                                               padding: const EdgeInsets.only(left: 12.0, right: 12.0),
                                               child: Divider(thickness: 2.0),
                                             ),
-                                            Row(
-                                              mainAxisAlignment: MainAxisAlignment.start,
-                                              children: <Widget> [
-                                                SizedBox(width: 15.0),
-                                                RichText(
-                                                  text: TextSpan(
-                                                    text: 'Balance: ',
-                                                    style: TextStyle(
-                                                      fontFamily: "Lato",
-                                                      color: Colors.black54,
-                                                    ),
-                                                    children: <TextSpan>[
-                                                      TextSpan(
-                                                        text: '\$' + balance.toStringAsFixed(2),
+                                            Padding(
+                                              padding: const EdgeInsets.only(left: 14.0, right: 14.0),
+                                              child: Column(
+                                                children: <Widget> [
+                                                  Row(
+                                                    mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                                                    children: <Widget>[
+                                                      Text('Total Expense',
+                                                        style: TextStyle(
+                                                          fontFamily: "Lato",
+                                                          color: Colors.black54,
+                                                        ),
+                                                      ),
+                                                      Text("-" + totalExpensesAmount.toStringAsFixed(2),
+                                                        style: TextStyle(
+                                                          fontFamily: "Lato",
+                                                          color: Colors.red,
+                                                        ),
+                                                      )
+                                                    ],
+                                                  ),
+                                                  Row(
+                                                    mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                                                    children: <Widget>[
+                                                      Text('Total Income',
+                                                        style: TextStyle(
+                                                          fontFamily: "Lato",
+                                                          color: Colors.black54,
+                                                        ),
+                                                      ),
+                                                      Text(totalIncome.toStringAsFixed(2),
+                                                        style: TextStyle(
+                                                          fontFamily: "Lato",
+                                                          color: Colors.teal,
+                                                        ),
+                                                      )
+                                                    ],
+                                                  ),
+                                                  Row(
+                                                    mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                                                    children: <Widget>[
+                                                      Text('Balance Amount',
                                                         style: TextStyle(
                                                           fontFamily: "Lato",
                                                           color: Colors.black,
                                                         ),
                                                       ),
+                                                      Text(balance.toStringAsFixed(2),
+                                                        style: TextStyle(
+                                                          fontFamily: "Lato",
+                                                          color: Colors.teal,
+                                                        ),
+                                                      )
                                                     ],
                                                   ),
-                                                ),
-                                              ],
+                                                ],
+                                              ),
                                             ),
                                             Padding(
                                               padding: const EdgeInsets.all(8.0),
@@ -233,17 +269,17 @@ class _DashboardScreenState extends State<DashboardScreen> {
                                               SizedBox(width: 15.0),
                                               RichText(
                                                 text: TextSpan(
-                                                  text: 'Total Expenses: ',
+                                                  text: 'Total Expense: ',
                                                   style: TextStyle(
                                                       fontFamily: "Lato",
                                                       color: Colors.black54,
                                                   ),
                                                   children: <TextSpan>[
                                                     TextSpan(
-                                                      text: '\$' + totalExpensesAmount.toStringAsFixed(2),
+                                                      text: totalExpensesAmount.toStringAsFixed(2),
                                                       style: TextStyle(
                                                         fontFamily: "Lato",
-                                                        color: totalExpensesAmount <= teAmount ? Colors.green : Colors.red,
+                                                        color: totalExpensesAmount <= teAmount ? Colors.teal : Colors.red,
                                                       ),
                                                     ),
                                                   ],
