@@ -36,6 +36,10 @@ class _DashboardScreenState extends State<DashboardScreen> {
   double totalIncome = 0;
   double balance = 0;
   double percent = 0;
+  bool showBalance = true;
+  bool showExpenseBreakdown = true;
+  bool showExpenseSummary = true;
+  bool showRecentReceipts = true;
 
   @override
   Widget build(BuildContext context) {
@@ -129,9 +133,109 @@ class _DashboardScreenState extends State<DashboardScreen> {
                                     ),
                                   ),
                                   SizedBox(height: 12),
+                                  // TODO: see if got a nicer way to display the buttons
+                                  Padding(
+                                    padding: const EdgeInsets.only(left: 25.0, right: 25.0),
+                                    child: ClipRRect(
+                                      borderRadius: BorderRadius.circular(5.0),
+                                      child: SingleChildScrollView(
+                                        scrollDirection: Axis.horizontal,
+                                        child: Row(
+                                          children: <Widget>[
+                                            Visibility(
+                                              visible: totalIncome > 0,
+                                              child: MaterialButton(
+                                                  shape: RoundedRectangleBorder(
+                                                    borderRadius: BorderRadius.circular(8.0),
+                                                  ),
+                                                  elevation: 3,
+                                                  padding: EdgeInsets.symmetric(vertical: 0, horizontal: 10.0),
+                                                  minWidth: 0,
+                                                  splashColor: null,
+                                                  color: showBalance ? Colors.white : Colors.white.withOpacity(0.5),
+                                                  child: Text('Balance'),
+                                                  textColor: Colors.black,
+                                                  onPressed: () {
+                                                    setState(() {
+                                                      showBalance = !showBalance;
+                                                    });
+                                                  }
+                                              ),
+                                            ),
+                                            SizedBox(width: 10.0),
+                                            Visibility(
+                                              visible: totalExpensesAmount > 0,
+                                              child: MaterialButton(
+                                                  shape: RoundedRectangleBorder(
+                                                    borderRadius: BorderRadius.circular(8.0),
+                                                  ),
+                                                  elevation: 3,
+                                                  padding: EdgeInsets.symmetric(vertical: 0, horizontal: 10.0),
+                                                  minWidth: 0,
+                                                  splashColor: null,
+                                                  color: showExpenseBreakdown ? Colors.white : Colors.white.withOpacity(0.5),
+                                                  child: Text('Expense Breakdown'),
+                                                  textColor: Colors.black,
+                                                  onPressed: () {
+                                                    setState(() {
+                                                      showExpenseBreakdown = !showExpenseBreakdown;
+                                                    });
+                                                  }
+                                              ),
+                                            ),
+                                            SizedBox(width: 10.0),
+                                            Visibility(
+                                              visible: totalExpensesAmount > 0,
+                                              child: MaterialButton(
+                                                  shape: RoundedRectangleBorder(
+                                                    borderRadius: BorderRadius.circular(8.0),
+                                                  ),
+                                                  elevation: 3,
+                                                  padding: EdgeInsets.symmetric(vertical: 0, horizontal: 10.0),
+                                                  minWidth: 0,
+                                                  splashColor: null,
+                                                  color: showExpenseSummary ? Colors.white : Colors.white.withOpacity(0.5),
+                                                  child: Text('Expense Summary'),
+                                                  textColor: Colors.black,
+                                                  onPressed: () {
+                                                    setState(() {
+                                                      showExpenseSummary = !showExpenseSummary;
+                                                    });
+                                                  }
+                                              ),
+                                            ),
+                                            SizedBox(width: 10.0),
+                                            Visibility(
+                                              visible: totalExpensesAmount > 0,
+                                              child: MaterialButton(
+                                                  shape: RoundedRectangleBorder(
+                                                    borderRadius: BorderRadius.circular(8.0),
+                                                  ),
+                                                  elevation: 3,
+                                                  padding: EdgeInsets.symmetric(vertical: 0, horizontal: 10.0),
+                                                  minWidth: 0,
+                                                  splashColor: null,
+                                                  color: showRecentReceipts ? Colors.white : Colors.white.withOpacity(0.5),
+                                                  child: Text('Recent Receipts'),
+                                                  textColor: Colors.black,
+                                                  onPressed: () {
+                                                    setState(() {
+                                                      showRecentReceipts = !showRecentReceipts;
+                                                    });
+                                                  }
+                                              ),
+                                            ),
+                                          ],
+                                        ),
+                                      ),
+                                    ),
+                                  ),
+                                  Visibility(
+                                    visible: showBalance,
+                                    child: SizedBox(height: 10)),
                                   /// Balance card
                                   Visibility(
-                                    visible: totalIncome > 0,
+                                    visible: totalIncome > 0 && showBalance,
                                     child: Container(
                                       width: 370,
                                       child: Card(
@@ -234,122 +338,129 @@ class _DashboardScreenState extends State<DashboardScreen> {
                                       ),
                                     ),
                                   ),
-                                  SizedBox(height: 10),
+                                  Visibility(
+                                    visible: totalExpensesAmount > 0 && showExpenseBreakdown,
+                                    child: SizedBox(height: 10)),
                                   /// Expenses Breakdown card
-                                  Container(
-                                    width: 370,
-                                    child: Card(
-                                      shape: RoundedRectangleBorder(
-                                          borderRadius: BorderRadius.all(Radius.circular(12.0))),
-                                      color: Colors.white.withOpacity(0.9),
-                                      child: Column(
-                                        crossAxisAlignment: CrossAxisAlignment.center,
-                                        children: <Widget> [
-                                          SizedBox(height: 15.0),
-                                          Row(
-                                            mainAxisAlignment: MainAxisAlignment.start,
-                                            children: <Widget> [
-                                              SizedBox(width: 15.0),
-                                              Text('Expenses Breakdown',
-                                                style: TextStyle(
-                                                    fontSize: 16,
-                                                    fontFamily: "Lato",
-                                                    color: kDarkBlue
-                                                ),
-                                              ),
-                                            ],
-                                          ),
-                                          Padding(
-                                            padding: const EdgeInsets.only(left: 12.0, right: 12.0),
-                                            child: Divider(thickness: 2.0),
-                                          ),
-                                          Row(
-                                            mainAxisAlignment: MainAxisAlignment.start,
-                                            children: <Widget> [
-                                              SizedBox(width: 15.0),
-                                              RichText(
-                                                text: TextSpan(
-                                                  text: 'Total Expense: ',
+                                  Visibility(
+                                    visible: showExpenseBreakdown,
+                                    child: Container(
+                                      width: 370,
+                                      child: Card(
+                                        shape: RoundedRectangleBorder(
+                                            borderRadius: BorderRadius.all(Radius.circular(12.0))),
+                                        color: Colors.white.withOpacity(0.9),
+                                        child: Column(
+                                          crossAxisAlignment: CrossAxisAlignment.center,
+                                          children: <Widget> [
+                                            SizedBox(height: 15.0),
+                                            Row(
+                                              mainAxisAlignment: MainAxisAlignment.start,
+                                              children: <Widget> [
+                                                SizedBox(width: 15.0),
+                                                Text('Expenses Breakdown',
                                                   style: TextStyle(
+                                                      fontSize: 16,
                                                       fontFamily: "Lato",
-                                                      color: Colors.black54,
-                                                  ),
-                                                  children: <TextSpan>[
-                                                    TextSpan(
-                                                      text: totalExpensesAmount.toStringAsFixed(2),
-                                                      style: TextStyle(
-                                                        fontFamily: "Lato",
-                                                        color: totalExpensesAmount <= teAmount ? Colors.teal : Colors.red,
-                                                      ),
-                                                    ),
-                                                  ],
-                                                ),
-                                              ),
-                                            ],
-                                          ),
-                                          Container(
-                                            height: 270,
-                                            width: 380,
-                                            child: Stack(
-                                              alignment: Alignment.topCenter,
-                                              children: <Widget>[
-                                                PieChart(
-                                                  PieChartData(
-                                                      pieTouchData: PieTouchData(
-                                                          touchCallback: (pieTouchResponse) {
-                                                            if (pieTouchResponse.touchedSection.touchedSectionIndex != null) {
-                                                              setState(() {
-                                                                updateDonutTouchedIndex(
-                                                                    pieTouchResponse.touchedSection.touchedSectionIndex);
-                                                              });
-                                                            }
-                                                          }),
-                                                      startDegreeOffset: -90,
-                                                      borderData: FlBorderData(
-                                                        show: false,
-                                                      ),
-                                                      sectionsSpace: 2,
-                                                      centerSpaceRadius: 70,
-                                                      sections: showingCategorySections(
-                                                          allCategories,
-                                                          teAmount,
-                                                          totalExpensesAmount)),
-                                                  swapAnimationDuration:
-                                                  Duration(seconds: 0),
-                                                ),
-                                                Visibility(
-                                                  visible: donutTouchedIndex == null,
-                                                  child: Center(
-                                                    child: Text(
-                                                      'Tap section for details.',
-                                                      style: TextStyle(
-                                                        fontStyle: FontStyle.italic,
-                                                        fontSize: 10,
-                                                        color: Colors.black,
-                                                      ),
-                                                    ),
+                                                      color: kDarkBlue
                                                   ),
                                                 ),
                                               ],
                                             ),
-                                          ),
-                                          Wrap(
-                                            direction: Axis.horizontal,
-                                            alignment: WrapAlignment.center,
-                                            spacing: 5.0,
-                                            runSpacing: 10.0,
-                                            children: showAllIndicators(allCategories),
-                                          ),
-                                          SizedBox(height: 20.0),
-                                        ],
+                                            Padding(
+                                              padding: const EdgeInsets.only(left: 12.0, right: 12.0),
+                                              child: Divider(thickness: 2.0),
+                                            ),
+                                            Row(
+                                              mainAxisAlignment: MainAxisAlignment.start,
+                                              children: <Widget> [
+                                                SizedBox(width: 15.0),
+                                                RichText(
+                                                  text: TextSpan(
+                                                    text: 'Total Expense: ',
+                                                    style: TextStyle(
+                                                        fontFamily: "Lato",
+                                                        color: Colors.black54,
+                                                    ),
+                                                    children: <TextSpan>[
+                                                      TextSpan(
+                                                        text: totalExpensesAmount.toStringAsFixed(2),
+                                                        style: TextStyle(
+                                                          fontFamily: "Lato",
+                                                          color: totalExpensesAmount <= teAmount ? Colors.teal : Colors.red,
+                                                        ),
+                                                      ),
+                                                    ],
+                                                  ),
+                                                ),
+                                              ],
+                                            ),
+                                            Container(
+                                              height: 270,
+                                              width: 380,
+                                              child: Stack(
+                                                alignment: Alignment.topCenter,
+                                                children: <Widget>[
+                                                  PieChart(
+                                                    PieChartData(
+                                                        pieTouchData: PieTouchData(
+                                                            touchCallback: (pieTouchResponse) {
+                                                              if (pieTouchResponse.touchedSection.touchedSectionIndex != null) {
+                                                                setState(() {
+                                                                  updateDonutTouchedIndex(
+                                                                      pieTouchResponse.touchedSection.touchedSectionIndex);
+                                                                });
+                                                              }
+                                                            }),
+                                                        startDegreeOffset: -90,
+                                                        borderData: FlBorderData(
+                                                          show: false,
+                                                        ),
+                                                        sectionsSpace: 2,
+                                                        centerSpaceRadius: 70,
+                                                        sections: showingCategorySections(
+                                                            allCategories,
+                                                            teAmount,
+                                                            totalExpensesAmount)),
+                                                    swapAnimationDuration:
+                                                    Duration(seconds: 0),
+                                                  ),
+                                                  Visibility(
+                                                    visible: donutTouchedIndex == null,
+                                                    child: Center(
+                                                      child: Text(
+                                                        'Tap section for details.',
+                                                        style: TextStyle(
+                                                          fontStyle: FontStyle.italic,
+                                                          fontSize: 10,
+                                                          color: Colors.black,
+                                                        ),
+                                                      ),
+                                                    ),
+                                                  ),
+                                                ],
+                                              ),
+                                            ),
+                                            Wrap(
+                                              direction: Axis.horizontal,
+                                              alignment: WrapAlignment.center,
+                                              spacing: 5.0,
+                                              runSpacing: 10.0,
+                                              children: showAllIndicators(allCategories),
+                                            ),
+                                            SizedBox(height: 20.0),
+                                          ],
+                                        ),
                                       ),
                                     ),
                                   ),
-                                  SizedBox(height: 10),
+                                  Visibility(
+                                    visible: showExpenseSummary,
+                                    child: SizedBox(height: 10)),
                                   /// Expenses Summary card
                                   // TODO: find a nice way to display this card
                                   Visibility(
-                                    visible: totalExpensesAmount > 0,
+                                    visible: totalExpensesAmount > 0 && showExpenseSummary,
                                     child: StreamBuilder(
                                         stream: categoryCollection
                                             .where('isIncome', isEqualTo: false)
@@ -420,6 +531,77 @@ class _DashboardScreenState extends State<DashboardScreen> {
                                         }
                                     ),
                                   ),
+                                  Visibility(
+                                    visible: showRecentReceipts,
+                                    child: SizedBox(height: 10)),
+                                  /// Receipt card
+                                  // may not be necessary
+                                  Visibility(
+                                    visible: totalExpensesAmount > 0 && showRecentReceipts,
+                                    child: StreamBuilder(
+                                        stream: expensesCollection
+                                            .orderBy('datetime', descending: true)
+                                            .limit(5)
+                                            .snapshots(),
+                                        builder: (BuildContext context, AsyncSnapshot<QuerySnapshot> snapshot) {
+                                          if (snapshot.hasData) {
+                                            return Container(
+                                              width: 370,
+                                              child: Card(
+                                                shape: RoundedRectangleBorder(
+                                                    borderRadius: BorderRadius.all(Radius.circular(12.0))),
+                                                color: Colors.white.withOpacity(0.9),
+                                                child: Column(
+                                                  crossAxisAlignment: CrossAxisAlignment.center,
+                                                  children: <Widget> [
+                                                    SizedBox(height: 15.0),
+                                                    Row(
+                                                      mainAxisAlignment: MainAxisAlignment.start,
+                                                      children: <Widget> [
+                                                        SizedBox(width: 15.0),
+                                                        Text('Recent Receipts',
+                                                          style: TextStyle(
+                                                              fontSize: 16,
+                                                              fontFamily: "Lato",
+                                                              color: kDarkBlue
+                                                          ),
+                                                        ),
+                                                      ],
+                                                    ),
+                                                    Padding(
+                                                      padding: const EdgeInsets.only(left: 12.0, right: 12.0),
+                                                      child: Divider(thickness: 2.0),
+                                                    ),
+                                                    Align(
+                                                        alignment: Alignment.topCenter,
+                                                        child: ListView.builder(
+                                                          padding: EdgeInsets.fromLTRB(7, 4, 7, 4),
+                                                          shrinkWrap: true,
+                                                          physics: const NeverScrollableScrollPhysics(),
+                                                          itemCount: snapshot.data.docs.length,
+                                                          itemBuilder: (BuildContext context, int index) {
+                                                            final snapshotData = snapshot.data.docs[index];
+                                                            return ExpenseTile(
+                                                              categoryId: snapshotData['categoryId'],
+                                                              cost: snapshotData['cost'],
+                                                              itemName: snapshotData['itemName'],
+                                                              datetime: snapshotData['datetime'],
+                                                              receiptId: snapshotData.id,
+                                                              uid: snapshotData['uid'],
+                                                            );
+                                                          },
+                                                        )
+                                                    ),
+                                                  ],
+                                                ),
+                                              ),
+                                            );
+                                          }
+                                          return CircularProgressIndicator();
+                                        }
+                                    ),
+                                  ),
+                                  // TODO: maybe add in a card to show weekly spending
                                 ],
                               )
                             );
