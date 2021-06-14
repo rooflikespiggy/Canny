@@ -228,7 +228,6 @@ class _DashboardScreenState extends State<DashboardScreen> {
                                   ),
                                   SizedBox(height: 10),
                                   // TODO: maybe put this into a card, refer to snapsheet statistics.dart
-                                  // TODO: maybe if more than 5 categories, include see more in the card
                                   StreamBuilder(
                                       stream: categoryCollection
                                           .where('isIncome', isEqualTo: false)
