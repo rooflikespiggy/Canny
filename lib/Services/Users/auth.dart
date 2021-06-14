@@ -1,5 +1,6 @@
 import 'package:Canny/Models/own_user.dart';
 import 'package:Canny/Services/Category/category_database.dart';
+import 'package:Canny/Services/Dashboard/dashboard_database.dart';
 import 'package:Canny/Services/Quick%20Input/quickinput_database.dart';
 import 'package:Canny/Services/Targeted%20Expenditure/TE_database.dart';
 import 'package:firebase_auth/firebase_auth.dart';
@@ -39,6 +40,7 @@ class AuthService {
       await CategoryDatabaseService(uid: theUser.uid).initStartCategories();
       await QuickInputDatabaseService(uid: theUser.uid).initStartQuickInputs();
       await TEDatabaseService(uid: theUser.uid).initStartTE();
+      await DashboardDatabaseService(uid: theUser.uid).initStartSwitch();
       //await TEDatabaseService(uid: theUser.uid).addTargetedExpenditure();
       return _userFromFirebaseUser(theUser);
     } catch (e) {
