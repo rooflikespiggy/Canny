@@ -1,8 +1,8 @@
 import 'package:Canny/Database/all_database.dart';
 import 'package:Canny/Models/category.dart';
 import 'package:Canny/Screens/Dashboard/indicator.dart';
+import 'package:Canny/Screens/Dashboard/recent_expense_tiles.dart';
 import 'package:Canny/Screens/Insert%20Function/add_TE.dart';
-import 'package:Canny/Screens/Receipt/expense_tiles.dart';
 import 'package:Canny/Screens/Sidebar/sidebar_menu.dart';
 import 'package:Canny/Services/Category/category_database.dart';
 import 'package:cloud_firestore/cloud_firestore.dart';
@@ -41,6 +41,8 @@ class _DashboardScreenState extends State<DashboardScreen> {
   bool showExpenseBreakdown = true;
   bool showExpenseSummary = true;
   bool showRecentReceipts = true;
+  bool showMore = false;
+  bool showLess = true;
 
   @override
   Widget build(BuildContext context) {
@@ -500,30 +502,56 @@ class _DashboardScreenState extends State<DashboardScreen> {
                                                             child: Divider(thickness: 2.0),
                                                           ),
                                                           Align(
-                                                              alignment: Alignment.topCenter,
-                                                              child: ListView.builder(
-                                                                padding: EdgeInsets.fromLTRB(7, 4, 7, 4),
-                                                                shrinkWrap: true,
-                                                                physics: const NeverScrollableScrollPhysics(),
-                                                                itemCount: snapshot.data.docs.length,
-                                                                itemBuilder: (BuildContext context, int index) {
-                                                                  final snapshotData = snapshot.data.docs[index];
-                                                                  return ExpenseBreakdown(
-                                                                      categoryName: snapshotData['categoryName'],
-                                                                      categoryColorValue: snapshotData['categoryColorValue'],
-                                                                      categoryIconCodePoint: snapshotData['categoryIconCodePoint'],
-                                                                      categoryFontFamily: snapshotData['categoryFontFamily'],
-                                                                      categoryFontPackage: snapshotData['categoryFontPackage'],
-                                                                      categoryId: snapshotData.id,
-                                                                      categoryAmount: snapshotData['categoryAmount'][monthYear],
-                                                                      categoryPercentage: totalExpensesAmount <= teAmount
-                                                                          ? ((snapshotData['categoryAmount'][monthYear] / teAmount) * 100)
-                                                                          .toStringAsFixed(0)
-                                                                          : ((snapshotData['categoryAmount'][monthYear] / totalExpensesAmount) * 100)
-                                                                          .toStringAsFixed(0)
-                                                                  );
-                                                                },
-                                                              )
+                                                            alignment: Alignment.topCenter,
+                                                            child: ListView.builder(
+                                                              padding: EdgeInsets.fromLTRB(7, 4, 7, 4),
+                                                              shrinkWrap: true,
+                                                              physics: const NeverScrollableScrollPhysics(),
+                                                              itemCount: snapshot.data.docs.length > 5 && !showMore
+                                                                  ? 5
+                                                                  : snapshot.data.docs.length,
+                                                              itemBuilder: (BuildContext context, int index) {
+                                                                final snapshotData = snapshot.data.docs[index];
+                                                                return ExpenseBreakdown(
+                                                                    categoryName: snapshotData['categoryName'],
+                                                                    categoryColorValue: snapshotData['categoryColorValue'],
+                                                                    categoryIconCodePoint: snapshotData['categoryIconCodePoint'],
+                                                                    categoryFontFamily: snapshotData['categoryFontFamily'],
+                                                                    categoryFontPackage: snapshotData['categoryFontPackage'],
+                                                                    categoryId: snapshotData.id,
+                                                                    categoryAmount: snapshotData['categoryAmount'][monthYear],
+                                                                    categoryPercentage: totalExpensesAmount <= teAmount
+                                                                        ? ((snapshotData['categoryAmount'][monthYear] / teAmount) * 100)
+                                                                        .toStringAsFixed(0)
+                                                                        : ((snapshotData['categoryAmount'][monthYear] / totalExpensesAmount) * 100)
+                                                                        .toStringAsFixed(0)
+                                                                );
+                                                              },
+                                                            )
+                                                          ),
+                                                          Visibility(
+                                                            visible: snapshot.data.docs.length > 5 && !showMore,
+                                                            child: TextButton(
+                                                              child: Text('SHOW MORE'),
+                                                              onPressed: () {
+                                                                setState(() {
+                                                                  showMore = !showMore;
+                                                                  showLess = !showLess;
+                                                                });
+                                                              }
+                                                            ),
+                                                          ),
+                                                          Visibility(
+                                                            visible: snapshot.data.docs.length > 5 && !showLess,
+                                                            child: TextButton(
+                                                                child: Text('SHOW LESS'),
+                                                                onPressed: () {
+                                                                  setState(() {
+                                                                    showMore = !showMore;
+                                                                    showLess = !showLess;
+                                                                  });
+                                                                }
+                                                            ),
                                                           ),
                                                         ],
                                                       ),
@@ -584,7 +612,7 @@ class _DashboardScreenState extends State<DashboardScreen> {
                                                                 itemCount: snapshot.data.docs.length,
                                                                 itemBuilder: (BuildContext context, int index) {
                                                                   final snapshotData = snapshot.data.docs[index];
-                                                                  return ExpenseTile(
+                                                                  return RExpenseTile(
                                                                     categoryId: snapshotData['categoryId'],
                                                                     cost: snapshotData['cost'],
                                                                     itemName: snapshotData['itemName'],
