@@ -5,6 +5,7 @@ import 'package:Canny/Screens/Dashboard/recent_expense_tiles.dart';
 import 'package:Canny/Screens/Insert%20Function/add_TE.dart';
 import 'package:Canny/Screens/Sidebar/sidebar_menu.dart';
 import 'package:Canny/Services/Category/category_database.dart';
+import 'package:Canny/Shared/empty_state.dart';
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:fl_chart/fl_chart.dart';
 import 'package:flutter/material.dart';
@@ -13,6 +14,7 @@ import 'package:flutter_neumorphic/flutter_neumorphic.dart';
 import 'package:Canny/Screens/Dashboard/expense_breakdown.dart';
 import 'package:flutter_rounded_progress_bar/flutter_rounded_progress_bar.dart';
 import 'package:flutter_rounded_progress_bar/rounded_progress_bar_style.dart';
+import 'package:font_awesome_flutter/font_awesome_flutter.dart';
 import 'package:intl/intl.dart';
 
 class DashboardScreen extends StatefulWidget {
@@ -238,6 +240,24 @@ class _DashboardScreenState extends State<DashboardScreen> {
                                           ),
                                         ),
                                          */
+                                        Visibility(
+                                          visible: totalExpensesAmount == 0,
+                                          child: Column(
+                                            children: <Widget> [
+                                              SizedBox(height: 180),
+                                              EmptyState(
+                                                icon: Icon(
+                                                  FontAwesomeIcons.solidMeh,
+                                                  color: Colors.grey,
+                                                  size: 100.0,
+                                                ),
+                                                messageColor: Colors.grey,
+                                                message: 'Nothing to show here yet. \n'
+                                                    'Add a new receipt.',
+                                              ),
+                                            ],
+                                          ),
+                                        ),
                                         /// Balance card
                                         Visibility(
                                           visible: totalIncome > 0 && snapshot3.data['balance'],

@@ -92,12 +92,13 @@ class _ExpenseTileState extends State<ExpenseTile> {
               backgroundColor: Colors.deepOrange[50],
               radius: 30,
               child: IconTheme(
-                  data: IconThemeData(color: _authCategory
-                      .getCategory(widget.categoryId).categoryColor.withOpacity(1),
+                  data: IconThemeData(
+                      color: Color(widget.categoryColorValue).withOpacity(1),
                       size: 25),
-                  child: _authCategory
-                      .getCategory(widget.categoryId)
-                      .categoryIcon
+                  child: Icon(IconData(
+                      widget.categoryIconCodePoint,
+                      fontFamily: widget.categoryFontFamily)
+                  ),
               ),
             ),
              */

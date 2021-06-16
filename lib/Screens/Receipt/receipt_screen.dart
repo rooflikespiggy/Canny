@@ -2,7 +2,9 @@ import 'package:Canny/Database/all_database.dart';
 import 'package:Canny/Models/category.dart';
 import 'package:Canny/Screens/Sidebar/sidebar_menu.dart';
 import 'package:Canny/Screens/Receipt/expense_tiles.dart';
+import 'package:Canny/Services/Category/category_database.dart';
 import 'package:Canny/Shared/custom_route.dart';
+import 'package:Canny/Shared/empty_state.dart';
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
@@ -29,7 +31,7 @@ class _ReceiptScreenState extends State<ReceiptScreen> {
   DateTime latest;
   List<Category> filteredCategories = [];
   final CollectionReference expensesCollection = Database().expensesDatabase();
-  var data;
+  final CollectionReference categoryCollection = Database().categoryDatabase();
 
   @override
   Widget build(BuildContext context) {
@@ -130,23 +132,41 @@ class _ReceiptScreenState extends State<ReceiptScreen> {
                         .snapshots(),
                     builder: (BuildContext context, AsyncSnapshot<QuerySnapshot> snapshot) {
                       if (snapshot.hasData) {
-                        return ListView.builder(
-                          padding: EdgeInsets.all(4),
-                          shrinkWrap: true,
-                          physics: const NeverScrollableScrollPhysics(),
-                          itemCount: snapshot.data.docs.length,
-                          itemBuilder: (BuildContext context, int index) {
-                            final snapshotData = snapshot.data.docs[index];
-                            return ExpenseTile(
-                              categoryId: snapshotData['categoryId'],
-                              cost: snapshotData['cost'],
-                              itemName: snapshotData['itemName'],
-                              datetime: snapshotData['datetime'],
-                              receiptId: snapshotData.id,
-                              uid: uid,
-                            );
-                          },
-                        );
+                        if (snapshot.data.docs.isEmpty) {
+                          return Column(
+                            children: <Widget> [
+                              SizedBox(height: 255),
+                              EmptyState(
+                                icon: Icon(
+                                  FontAwesomeIcons.solidMeh,
+                                  color: Colors.grey,
+                                  size: 100.0,
+                                ),
+                                messageColor: Colors.grey,
+                                message: 'Nothing to show here yet. \n'
+                                    'Add a new receipt.',
+                              ),
+                            ],
+                          );
+                        } else {
+                          return ListView.builder(
+                            padding: EdgeInsets.all(4),
+                            shrinkWrap: true,
+                            physics: const NeverScrollableScrollPhysics(),
+                            itemCount: snapshot.data.docs.length,
+                            itemBuilder: (BuildContext context, int index) {
+                              final snapshotData = snapshot.data.docs[index];
+                              return ExpenseTile(
+                                categoryId: snapshotData['categoryId'],
+                                cost: snapshotData['cost'],
+                                itemName: snapshotData['itemName'],
+                                datetime: snapshotData['datetime'],
+                                receiptId: snapshotData.id,
+                                uid: uid,
+                              );
+                            },
+                          );
+                        }
                       }
                       return CircularProgressIndicator();
                     }
