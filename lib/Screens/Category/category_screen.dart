@@ -63,6 +63,7 @@ class _CategoryScreenState extends State<CategoryScreen> {
                       Visibility(
                         visible: !isDefault,
                         child: Container(
+                          width: 380,
                           padding: EdgeInsets.all(8),
                           decoration: BoxDecoration(
                             borderRadius: BorderRadius.circular(5.0),

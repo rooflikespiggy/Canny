@@ -70,9 +70,7 @@ class _CategoryTileState extends State<CategoryTile> {
                           fontWeight: FontWeight.bold,
                         ),
                       ),
-                      SizedBox(
-                        height: 5,
-                      ),
+                      SizedBox(height: 5),
                       SizedBox(
                         width: 260,
                         height: 260,
@@ -81,9 +79,7 @@ class _CategoryTileState extends State<CategoryTile> {
                           onColorChanged: changeColor,
                         ),
                       ),
-                      SizedBox(
-                          height: 10
-                      ),
+                      SizedBox(height: 10),
                       TextButton(
                         onPressed: () {
                           setState(() => currentColor = pickerColor);
@@ -153,11 +149,15 @@ class _CategoryTileState extends State<CategoryTile> {
             child: Row(
               mainAxisAlignment: MainAxisAlignment.end,
               children: <Widget> [
-                IconButton(
-                  icon: Icon(Icons.edit),
-                  onPressed: () {
-                    _editCatPanel();
-                  },
+                Visibility(
+                  visible: int.parse(widget.categoryId) >= categoriesSize,
+                  child: IconButton(
+                    icon: Icon(Icons.edit),
+                    onPressed: () {
+                      // TODO: edit categoryName and categoryIcon
+                      _editCatPanel();
+                    },
+                  ),
                 ),
                 Visibility(
                   visible: int.parse(widget.categoryId) >= categoriesSize,

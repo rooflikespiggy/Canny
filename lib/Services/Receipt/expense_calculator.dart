@@ -28,8 +28,8 @@ class ExpenseCalculatorState extends State<ExpenseCalculator> {
   final TextEditingController itemNameController = TextEditingController();
   final ReceiptDatabaseService _authReceipt = ReceiptDatabaseService();
   final CollectionReference quickInputCollection = Database().quickInputDatabase();
-  String categoryName = 'Food & Drinks';
-  String categoryId = '00';
+  String categoryName = 'Others';
+  String categoryId = '11';
   Icon icon;
   int categoryColorValue;
   int categoryIconCodePoint;

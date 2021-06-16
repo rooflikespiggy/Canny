@@ -81,6 +81,26 @@ class CategoryDatabaseService {
     return true;
   }
 
+  Future updateCategoryName(String categoryId, String newName) async {
+    await categoryCollection
+        .doc(int.parse(categoryId).toString())
+        .update({
+      "categoryName": newName
+    });
+    return true;
+  }
+
+  Future updateIcon(String categoryId, Icon newIcon) async {
+    await categoryCollection
+        .doc(int.parse(categoryId).toString())
+        .update({
+      'categoryIconCodePoint': newIcon.icon.codePoint,
+      'categoryFontFamily': newIcon.icon.fontFamily,
+      'categoryFontPackage': newIcon.icon.fontPackage,
+    });
+    return true;
+  }
+
   /*
   Category getCategory(String categoryId) {
     for (Category category in categories[userId]) {

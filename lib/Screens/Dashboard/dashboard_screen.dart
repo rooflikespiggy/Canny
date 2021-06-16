@@ -72,35 +72,32 @@ class _DashboardScreenState extends State<DashboardScreen> {
             ),
           ),
           child: SingleChildScrollView(
+            physics: AlwaysScrollableScrollPhysics(),
             child: Container(
               color: Colors.transparent,
               child: Column(
                 children: <Widget> [
-                  FutureBuilder<List<Category>>(
-                    future: _authCategory.getCategories(),
-                    builder: (BuildContext context, AsyncSnapshot<List<Category>> snapshot) {
+                  StreamBuilder(
+                    stream: teCollection.doc('TE').snapshots(),
+                    builder: (BuildContext context, AsyncSnapshot<DocumentSnapshot> snapshot) {
                       if (snapshot.hasData) {
-                        List<Category> allCategories = snapshot.data;
-                        allCategories.sort((a, b) => a.categoryId.compareTo(b.categoryId));
-                        totalExpensesAmount = allCategories
-                            .where((category) => !category.isIncome)
-                            .map((category) => category.categoryAmount[monthYear])
-                            .reduce((value, element) => value.toDouble() + element.toDouble());
-                        totalIncome = allCategories
-                            .where((category) => category.isIncome)
-                            .map((category) => category.categoryAmount[monthYear])
-                            .reduce((value, element) => value.toDouble() + element.toDouble());
-                        balance = totalIncome - totalExpensesAmount;
-                        percent = totalIncome > 0 ? ((totalExpensesAmount / totalIncome) * 100) : 0;
-                        //print(totalCategoryAmount);
-                        //print(teAmount);
-                        //teSet = false;
-                        return StreamBuilder(
-                          stream: teCollection.doc('TE').snapshots(),
-                          builder: (BuildContext context, AsyncSnapshot<DocumentSnapshot> snapshot2) {
+                        teAmount = snapshot.data['amount'];
+                        return FutureBuilder<List<Category>>(
+                            future: _authCategory.getCategories(),
+                          builder: (BuildContext context, AsyncSnapshot<List<Category>> snapshot2) {
                             if (snapshot2.hasData) {
-                              final snapshotData = snapshot2.data;
-                              teAmount = snapshot2.data['amount'];
+                              List<Category> allCategories = snapshot2.data;
+                              allCategories.sort((a, b) => a.categoryId.compareTo(b.categoryId));
+                              totalExpensesAmount = allCategories
+                                  .where((category) => !category.isIncome)
+                                  .map((category) => category.categoryAmount[monthYear])
+                                  .reduce((value, element) => value.toDouble() + element.toDouble());
+                              totalIncome = allCategories
+                                  .where((category) => category.isIncome)
+                                  .map((category) => category.categoryAmount[monthYear])
+                                  .reduce((value, element) => value.toDouble() + element.toDouble());
+                              balance = totalIncome - totalExpensesAmount;
+                              percent = totalIncome > 0 ? ((totalExpensesAmount / totalIncome) * 100) : 0;
                               return StreamBuilder(
                                 stream: dashboardCollection.doc('Switch').snapshots(),
                                 builder: (BuildContext context, AsyncSnapshot<DocumentSnapshot> snapshot3) {
@@ -146,7 +143,7 @@ class _DashboardScreenState extends State<DashboardScreen> {
                                           ),
                                           SizedBox(height: 12),
                                           Padding(
-                                            padding: const EdgeInsets.only(left: 22.0, right: 22.0),
+                                            padding: const EdgeInsets.only(left: 22.0, right: 22.0, bottom: 10.0),
                                             child: ClipRRect(
                                               borderRadius: BorderRadius.circular(5.0),
                                               child: SingleChildScrollView(
@@ -164,7 +161,7 @@ class _DashboardScreenState extends State<DashboardScreen> {
                                                       visible: snapshot3.data['expenseBreakdown'],
                                                       child: makeDirectoryButton(
                                                           'Expenses Breakdown',
-                                                          (snapshot3.data['expenseBreakdown'] && totalExpensesAmount > 0),
+                                                          (snapshot3.data['expenseBreakdown']),
                                                           _expensesBreakdownKey),
                                                     ),
                                                     Visibility(
@@ -184,25 +181,6 @@ class _DashboardScreenState extends State<DashboardScreen> {
                                                   ],
                                                 ),
                                               ),
-                                            ),
-                                          ),
-                                          SizedBox(height: 10),
-                                          Visibility(
-                                            visible: totalExpensesAmount == 0,
-                                            child: Column(
-                                              children: <Widget> [
-                                                SizedBox(height: 150),
-                                                EmptyState(
-                                                  icon: Icon(
-                                                    FontAwesomeIcons.solidMeh,
-                                                    color: Colors.grey,
-                                                    size: 100.0,
-                                                  ),
-                                                  messageColor: Colors.grey,
-                                                  message: 'Nothing to show here yet. \n'
-                                                      'Add a new receipt.',
-                                                ),
-                                              ],
                                             ),
                                           ),
                                           /// Balance card
@@ -313,7 +291,7 @@ class _DashboardScreenState extends State<DashboardScreen> {
                                           ),
                                           /// Expenses Breakdown card
                                           Visibility(
-                                            visible: totalExpensesAmount > 0 && snapshot3.data['expenseBreakdown'],
+                                            visible: snapshot3.data['expenseBreakdown'],
                                             child: Container(
                                               padding: EdgeInsets.only(bottom: 10.0),
                                               width: 370,
