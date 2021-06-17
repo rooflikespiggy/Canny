@@ -48,7 +48,7 @@ class _ForumScreenState extends State<ForumScreen> {
             icon: Icon(Icons.add_circle_outline_sharp),
             onPressed: () {
               Navigator.push(context,
-                  NoAnimationMaterialPageRoute(builder: (context) => AddDiscussion()));
+                  MaterialPageRoute(builder: (context) => AddDiscussion()));
             },
           ),
         ],

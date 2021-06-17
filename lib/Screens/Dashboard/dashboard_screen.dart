@@ -185,6 +185,7 @@ class _DashboardScreenState extends State<DashboardScreen> {
                                           ),
                                           /// Balance card
                                           Visibility(
+                                            key: _balanceKey,
                                             visible: totalIncome > 0 && snapshot3.data['balance'],
                                             child: Container(
                                               padding: EdgeInsets.only(bottom: 10.0),
@@ -291,6 +292,7 @@ class _DashboardScreenState extends State<DashboardScreen> {
                                           ),
                                           /// Expenses Breakdown card
                                           Visibility(
+                                            key: _expensesBreakdownKey,
                                             visible: snapshot3.data['expenseBreakdown'],
                                             child: Container(
                                               padding: EdgeInsets.only(bottom: 10.0),
@@ -406,6 +408,7 @@ class _DashboardScreenState extends State<DashboardScreen> {
                                           /// Expenses Summary card
                                           // TODO: find a nice way to display this card
                                           Visibility(
+                                            key: _expenseSummaryKey,
                                             visible: totalExpensesAmount > 0 && snapshot3.data['expenseSummary'],
                                             child: StreamBuilder(
                                                 stream: categoryCollection
@@ -507,6 +510,7 @@ class _DashboardScreenState extends State<DashboardScreen> {
                                           /// Receipt card
                                           // may not be necessary
                                           Visibility(
+                                            key: _recentReceiptsKey,
                                             visible: totalExpensesAmount > 0 && snapshot3.data['recentReceipts'],
                                             child: StreamBuilder(
                                                 stream: expensesCollection
@@ -572,7 +576,8 @@ class _DashboardScreenState extends State<DashboardScreen> {
                                                 }
                                             ),
                                           ),
-                                          // TODO: maybe add in a card to show weekly spending
+                                          // TODO: maybe add in a card to show past 5 days spending
+                                          // for milestone 3
                                         ],
                                       ),
                                     );
