@@ -266,30 +266,19 @@ class _CustomiseQIState extends State<CustomiseQI> {
                             style:
                             TextStyle(fontFamily: 'Lato.Thin'),
                           ),
-                          actions: <Widget>[
-                            Column(
-                              children: [
-                                TextButton(
-                                  child: Text("ReEdit Categories"),
-                                  onPressed: () {
-                                    Navigator.pop(context);
-                                  },
-                                ),
-                                TextButton(
-                                  child: Text("Back to homepage"),
-                                  onPressed: () {
-                                    Navigator.push(context,
-                                        MaterialPageRoute(builder: (context) => HomePageScreen()));
-                                  },
-                                ),
-                                TextButton(
-                                  child: Text("Check Quick Input"),
-                                  onPressed: () {
-                                    Navigator.push(context,
-                                        MaterialPageRoute(builder: (context) => QuickInput()));
-                                  },
-                                )
-                              ],
+                          actions: <Widget> [
+                            TextButton(
+                              child: Text("Back to homepage"),
+                              onPressed: () {
+                                Navigator.push(context,
+                                    MaterialPageRoute(builder: (context) => HomePageScreen(selectedTab: 0)));
+                              },
+                            ),
+                            TextButton(
+                              child: Text("ReEdit Categories"),
+                              onPressed: () {
+                                Navigator.pop(context);
+                              },
                             ),
                           ],
                         );

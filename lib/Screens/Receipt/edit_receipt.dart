@@ -148,8 +148,6 @@ class _EditReceiptState extends State<EditReceipt> {
                                     TextButton(
                                       onPressed: () {
                                         Navigator.pop(context);
-                                        itemNameController.clear();
-                                        costController.clear();
                                       },
                                       child: Icon(Icons.clear),
                                     ),
@@ -318,8 +316,7 @@ class _EditReceiptState extends State<EditReceipt> {
                                                           ? double.parse(costController.text)
                                                           : -(double.parse(costController.text)));
                                                 }
-                                                itemNameController.clear();
-                                                costController.clear();
+                                                FocusScope.of(context).unfocus();
                                                 Navigator.pop(context);
                                                 Flushbar(
                                                   message: "Receipt successfully edited.",
@@ -331,6 +328,8 @@ class _EditReceiptState extends State<EditReceipt> {
                                                   duration: Duration(seconds: 3),
                                                   leftBarIndicatorColor: kLightBlueDark,
                                                 )..show(context);
+                                                itemNameController.clear();
+                                                costController.clear();
                                                 /*
                                                 await _authReceipt.updateReceipt(widget.receiptId,
                                                     widget.categoryId,
@@ -408,7 +407,6 @@ class _EditReceiptState extends State<EditReceipt> {
             }
             return null;
           },
-          autovalidateMode: AutovalidateMode.onUserInteraction,
         ),
       ),
     );
