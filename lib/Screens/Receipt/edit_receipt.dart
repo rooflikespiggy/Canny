@@ -147,9 +147,9 @@ class _EditReceiptState extends State<EditReceipt> {
                                     Spacer(),
                                     TextButton(
                                       onPressed: () {
+                                        Navigator.pop(context);
                                         itemNameController.clear();
                                         costController.clear();
-                                        Navigator.pop(context);
                                       },
                                       child: Icon(Icons.clear),
                                     ),

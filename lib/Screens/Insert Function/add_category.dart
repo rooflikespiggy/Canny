@@ -189,30 +189,48 @@ class _AddCategoryScreenState extends State<AddCategoryScreen> {
                                                               return AlertDialog(
                                                                 title: Text('Color your category'),
                                                                 content: SingleChildScrollView(
-                                                                    child: Column(
-                                                                        children: <Widget>[
-                                                                          BlockPicker(
-                                                                            pickerColor: currentColor,
-                                                                            onColorChanged: changeColor,
-                                                                          ),
-                                                                          SizedBox(height: 10),
-                                                                          TextButton(
-                                                                              child: Text("Set as color",
-                                                                                style: TextStyle(
-                                                                                  color: Colors.white,
-                                                                                ),
-                                                                              ),
-                                                                              style: TextButton.styleFrom(
-                                                                                  backgroundColor: kDeepOrangeLight
-                                                                              ),
-                                                                              onPressed: () {
-                                                                                setState(() => currentColor = pickerColor);
-                                                                                Navigator.of(context).pop();
-                                                                              }
-                                                                          )
-                                                                        ]
-                                                                    )
+                                                                  child: BlockPicker(
+                                                                    pickerColor: currentColor,
+                                                                    onColorChanged: changeColor,
+                                                                  ),
                                                                 ),
+                                                                actions: <Widget> [
+                                                                  Padding(
+                                                                    padding: EdgeInsets.only(bottom: 10.0),
+                                                                    child: Row(
+                                                                      mainAxisAlignment: MainAxisAlignment.spaceEvenly,
+                                                                      children: <Widget> [
+                                                                        TextButton(
+                                                                            child: Text("Submit",
+                                                                              style: TextStyle(
+                                                                                color: Colors.white,
+                                                                              ),
+                                                                            ),
+                                                                            style: TextButton.styleFrom(
+                                                                              backgroundColor: kDarkBlue,
+                                                                            ),
+                                                                            onPressed: () {
+                                                                              setState(() => currentColor = pickerColor);
+                                                                              Navigator.of(context).pop();
+                                                                            }
+                                                                        ),
+                                                                        TextButton(
+                                                                            child: Text("Cancel",
+                                                                              style: TextStyle(
+                                                                                color: Colors.white,
+                                                                              ),
+                                                                            ),
+                                                                            style: TextButton.styleFrom(
+                                                                              backgroundColor: kDarkBlue,
+                                                                            ),
+                                                                            onPressed: () {
+                                                                              Navigator.of(context).pop();
+                                                                            }
+                                                                        ),
+                                                                      ],
+                                                                    ),
+                                                                  )
+                                                                ]
                                                               );
                                                             },
                                                           );

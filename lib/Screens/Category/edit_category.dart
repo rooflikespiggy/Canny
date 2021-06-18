@@ -249,30 +249,40 @@ class _EditCategoryState extends State<EditCategory> {
                                                               return AlertDialog(
                                                                 title: Text('Update category color'),
                                                                 content: SingleChildScrollView(
-                                                                    child: Column(
-                                                                        children: <Widget>[
-                                                                          BlockPicker(
-                                                                            pickerColor: currentColor,
-                                                                            onColorChanged: changeColor,
-                                                                          ),
-                                                                          SizedBox(height: 10),
-                                                                          TextButton(
-                                                                              child: Text("Set as color",
-                                                                                style: TextStyle(
-                                                                                  color: Colors.white,
-                                                                                ),
-                                                                              ),
-                                                                              style: TextButton.styleFrom(
-                                                                                  backgroundColor: kDeepOrangeLight
-                                                                              ),
-                                                                              onPressed: () {
-                                                                                setState(() => currentColor = pickerColor);
-                                                                                Navigator.of(context).pop();
-                                                                              }
-                                                                          )
-                                                                        ]
-                                                                    )
+                                                                  child: BlockPicker(
+                                                                    pickerColor: currentColor,
+                                                                    onColorChanged: changeColor,
+                                                                  ),
                                                                 ),
+                                                                actions: <Widget> [
+                                                                  TextButton(
+                                                                    child: Text("Submit",
+                                                                      style: TextStyle(
+                                                                        color: Colors.white,
+                                                                      ),
+                                                                    ),
+                                                                    style: TextButton.styleFrom(
+                                                                      backgroundColor: kDarkBlue,
+                                                                    ),
+                                                                    onPressed: () {
+                                                                      setState(() => currentColor = pickerColor);
+                                                                      Navigator.of(context).pop();
+                                                                    }
+                                                                  ),
+                                                                  TextButton(
+                                                                    child: Text("Cancel",
+                                                                      style: TextStyle(
+                                                                        color: Colors.white,
+                                                                      ),
+                                                                    ),
+                                                                    style: TextButton.styleFrom(
+                                                                      backgroundColor: kDarkBlue,
+                                                                    ),
+                                                                    onPressed: () {
+                                                                      Navigator.of(context).pop();
+                                                                    }
+                                                                  ),
+                                                                ]
                                                               );
                                                             },
                                                           );
