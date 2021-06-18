@@ -101,6 +101,15 @@ class CategoryDatabaseService {
     return true;
   }
 
+  Future updateIsIncome(String categoryId, bool newIsIncome) async {
+    await categoryCollection
+        .doc(int.parse(categoryId).toString())
+        .update({
+      'isIncome': newIsIncome,
+    });
+    return true;
+  }
+
   /*
   Category getCategory(String categoryId) {
     for (Category category in categories[userId]) {

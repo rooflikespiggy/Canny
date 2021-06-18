@@ -260,7 +260,9 @@ class _ForumScreenState extends State<ForumScreen> {
                                                                             onPressed: () {
                                                                               Navigator.pop(context);
                                                                               },
-                                                                            child: Text("Cancel")
+                                                                            child: Text(
+                                                                                "Cancel",
+                                                                            )
                                                                         ),
                                                                         TextButton(
                                                                             onPressed: () {

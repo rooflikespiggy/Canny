@@ -184,6 +184,7 @@ class _AddCommentState extends State<AddComment> {
           }
           return null;
         },
+        autovalidateMode: AutovalidateMode.onUserInteraction,
       ),
     );
   }

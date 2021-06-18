@@ -1,4 +1,5 @@
 import 'package:Canny/Database/all_database.dart';
+import 'package:Canny/Screens/Category/edit_category.dart';
 import 'package:Canny/Services/Category/category_database.dart';
 import 'package:Canny/Services/Category/default_categories.dart';
 import 'package:Canny/Services/Receipt/receipt_database.dart';
@@ -154,8 +155,28 @@ class _CategoryTileState extends State<CategoryTile> {
                   child: IconButton(
                     icon: Icon(Icons.edit),
                     onPressed: () {
-                      // TODO: edit categoryName and categoryIcon
-                      _editCatPanel();
+                      showModalBottomSheet(
+                          shape: RoundedRectangleBorder(
+                            borderRadius: BorderRadius.only(
+                              topLeft: Radius.circular(24),
+                              topRight: Radius.circular(24),
+                            ),
+                          ),
+                          enableDrag: true,
+                          isScrollControlled: true,
+                          elevation: 5,
+                          context: context,
+                          builder: (BuildContext context) {
+                            return EditCategory(
+                              categoryId: widget.categoryId,
+                              categoryName: widget.categoryName,
+                              categoryColorValue: widget.categoryColorValue,
+                              categoryIconCodePoint: widget.categoryIconCodePoint,
+                              categoryFontFamily: widget.categoryFontFamily,
+                              isIncome: widget.isIncome,
+                            );
+                          }
+                      );
                     },
                   ),
                 ),
@@ -194,11 +215,10 @@ class _CategoryTileState extends State<CategoryTile> {
                                             icon: Icon(
                                               Icons.info_outline,
                                               size: 28.0,
-                                              color: Theme.of(context).colorScheme.secondary,
+                                              color: kLightBlueDark,
                                             ),
                                             duration: Duration(seconds: 3),
-                                            leftBarIndicatorColor:
-                                            Theme.of(context).colorScheme.secondary,
+                                            leftBarIndicatorColor: kLightBlueDark,
                                           )..show(context);
                                         },
                                       ),
