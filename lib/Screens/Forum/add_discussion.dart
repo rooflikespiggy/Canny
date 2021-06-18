@@ -182,6 +182,7 @@ class _AddDiscussionState extends State<AddDiscussion> {
           }
           return null;
         },
+        autovalidateMode: AutovalidateMode.onUserInteraction,
       ),
     );
   }

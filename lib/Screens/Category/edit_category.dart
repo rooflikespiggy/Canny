@@ -1,3 +1,5 @@
+import 'dart:math';
+
 import 'package:Canny/Shared/colors.dart';
 import 'package:flushbar/flushbar.dart';
 import 'package:flutter/material.dart';
@@ -11,14 +13,29 @@ import 'package:flutter_iconpicker/flutter_iconpicker.dart';
 import 'package:font_awesome_flutter/font_awesome_flutter.dart';
 import 'package:intl/intl.dart';
 
-class AddCategoryScreen extends StatefulWidget {
+class EditCategory extends StatefulWidget {
   static final String id = 'add_category_screen';
+  final String categoryId;
+  final String categoryName;
+  final int categoryColorValue;
+  final int categoryIconCodePoint;
+  final String categoryFontFamily;
+  final bool isIncome;
+
+  EditCategory({
+    this.categoryId,
+    this.categoryName,
+    this.categoryColorValue,
+    this.categoryIconCodePoint,
+    this.categoryFontFamily,
+    this.isIncome,
+  });
 
   @override
-  _AddCategoryScreenState createState() => _AddCategoryScreenState();
+  _EditCategoryState createState() => _EditCategoryState();
 }
 
-class _AddCategoryScreenState extends State<AddCategoryScreen> {
+class _EditCategoryState extends State<EditCategory> {
 
   String uid = FirebaseAuth.instance.currentUser.uid;
   final _formKey = GlobalKey<FormState>();
@@ -26,15 +43,30 @@ class _AddCategoryScreenState extends State<AddCategoryScreen> {
   final CollectionReference categoryCollection = Database().categoryDatabase();
   final CategoryDatabaseService _authCategory = CategoryDatabaseService();
   final String monthYear = DateFormat('MMM y').format(DateTime.now());
-  IconTheme _icon = IconTheme(
-      data: IconThemeData(color: Color(0xff443a49)),
-      child: Icon(FontAwesomeIcons.question));
+  IconTheme _icon;
   String categoryId = '00';
-  bool isIncome = false;
+  bool isIncome;
+  bool categoryNameChanged = false;
+  bool colorChanged = false;
+  bool iconChanged = false;
+  bool typeChanged = false;
 
   // create some values
-  Color pickerColor = Color(0xff443a49);
-  Color currentColor = Color(0xff443a49);
+  Color pickerColor;
+  Color currentColor;
+
+  void initState() {
+    categoryNameController.text = widget.categoryName;
+    pickerColor = Color(widget.categoryColorValue);
+    currentColor = Color(widget.categoryColorValue);
+    _icon = IconTheme(
+        data: IconThemeData(color: Color(widget.categoryColorValue)),
+        child: Icon(IconData(widget.categoryIconCodePoint,
+            fontFamily: widget.categoryFontFamily)
+        ));
+    isIncome = widget.isIncome;
+    return super.initState();
+  }
 
   // ValueChanged<Color> callback
   void changeColor(Color color) {
@@ -42,14 +74,16 @@ class _AddCategoryScreenState extends State<AddCategoryScreen> {
     _icon = IconTheme(
         data: IconThemeData(color: pickerColor),
         child: _icon.child);
+    colorChange();
+    print(colorChanged);
   }
 
   _pickIcon() async {
     IconData icon = await FlutterIconPicker.showIconPicker(
         context,
-      adaptiveDialog: true,
-      iconPickerShape:
-      RoundedRectangleBorder(borderRadius: BorderRadius.circular(20)));
+        adaptiveDialog: true,
+        iconPickerShape:
+        RoundedRectangleBorder(borderRadius: BorderRadius.circular(20)));
     if (icon == null) {
       _icon = IconTheme(
           data: IconThemeData(color: pickerColor),
@@ -61,12 +95,38 @@ class _AddCategoryScreenState extends State<AddCategoryScreen> {
           child: Icon(icon, size: 40)
       );
     }
+    iconChange();
+    print(iconChanged);
     setState((){});
     debugPrint('Picked Icon:  $icon');
   }
 
   void changeIsIncome() {
     setState(() => isIncome = !isIncome);
+  }
+
+  void colorChange() {
+    setState(() {
+      colorChanged = true;
+    });
+  }
+
+  void iconChange() {
+    setState(() {
+      iconChanged = true;
+    });
+  }
+
+  void typeChange() {
+    setState(() {
+      typeChanged = true;
+    });
+  }
+
+  void categoryNameChange() {
+    setState(() {
+      categoryNameChanged = true;
+    });
   }
 
   @override
@@ -97,11 +157,11 @@ class _AddCategoryScreenState extends State<AddCategoryScreen> {
                                     mainAxisAlignment: MainAxisAlignment.center,
                                     children: <Widget> [
                                       SizedBox(width: 20.0),
-                                      Text('Add Category',
+                                      Text('Edit Category',
                                         style: TextStyle(
-                                          fontSize: 18,
-                                          fontFamily: "Lato",
-                                          color: kDarkBlue
+                                            fontSize: 18,
+                                            fontFamily: "Lato",
+                                            color: kDarkBlue
                                         ),
                                       ),
                                       Spacer(),
@@ -134,44 +194,44 @@ class _AddCategoryScreenState extends State<AddCategoryScreen> {
                                                       backgroundColor: pickerColor.withOpacity(0.1),
                                                       radius: 35,
                                                       child: AnimatedSwitcher(
-                                                          duration: Duration(milliseconds: 300),
-                                                          child: _icon,
+                                                        duration: Duration(milliseconds: 300),
+                                                        child: _icon,
                                                       ),
                                                     ),
                                                     _showTextFormFields(categoryNameController,
-                                                        "Category Name",
-                                                        Icon(Icons.drive_file_rename_outline),
-                                                        240.0,
+                                                      "Category Name",
+                                                      Icon(Icons.drive_file_rename_outline),
+                                                      240.0,
                                                     ),
                                                   ],
                                                 ),
                                               ),
                                               SizedBox(height: 7),
                                               Padding(
-                                                padding: EdgeInsets.fromLTRB(8,8,8,0),
-                                                child: Row(
-                                                  mainAxisAlignment: MainAxisAlignment.spaceEvenly,
-                                                  children: <Widget> [
-                                                    Text('Pick a Category Color',
-                                                      style: TextStyle(
-                                                        fontSize: 12,
-                                                        color: Colors.grey[600]
+                                                  padding: EdgeInsets.fromLTRB(8,8,8,0),
+                                                  child: Row(
+                                                    mainAxisAlignment: MainAxisAlignment.spaceEvenly,
+                                                    children: <Widget> [
+                                                      Text('Edit category color',
+                                                        style: TextStyle(
+                                                            fontSize: 12,
+                                                            color: Colors.grey[600]
+                                                        ),
                                                       ),
-                                                    ),
-                                                    SizedBox(width: 10),
-                                                    Text('Pick a Category Icon',
-                                                      style: TextStyle(
-                                                          fontSize: 12,
-                                                          color: Colors.grey[600]
+                                                      SizedBox(width: 10),
+                                                      Text('Edit category icon',
+                                                        style: TextStyle(
+                                                            fontSize: 12,
+                                                            color: Colors.grey[600]
+                                                        ),
                                                       ),
-                                                    ),
-                                                  ],
-                                                )
+                                                    ],
+                                                  )
                                               ),
                                               Padding(
-                                                padding: EdgeInsets.all(8.0),
-                                                child: Row(
-                                                  mainAxisAlignment: MainAxisAlignment.spaceAround,
+                                                  padding: EdgeInsets.all(8.0),
+                                                  child: Row(
+                                                    mainAxisAlignment: MainAxisAlignment.spaceAround,
                                                     children: <Widget> [
                                                       TextButton(
                                                         child: Icon(
@@ -187,7 +247,7 @@ class _AddCategoryScreenState extends State<AddCategoryScreen> {
                                                             context: context,
                                                             builder: (BuildContext context) {
                                                               return AlertDialog(
-                                                                title: Text('Color your category'),
+                                                                title: Text('Update category color'),
                                                                 content: SingleChildScrollView(
                                                                     child: Column(
                                                                         children: <Widget>[
@@ -222,22 +282,22 @@ class _AddCategoryScreenState extends State<AddCategoryScreen> {
                                                         child: _icon,
                                                         style: TextButton.styleFrom(
                                                             backgroundColor: pickerColor.withOpacity(0.2),
-                                                          minimumSize: Size(50,50)
+                                                            minimumSize: Size(50,50)
                                                         ),
                                                         onPressed: _pickIcon,
                                                       ),
                                                     ],
-                                                )
+                                                  )
                                               ),
                                               SizedBox(height: 5),
                                               Padding(
-                                                  padding: EdgeInsets.fromLTRB(8,8,8,0),
-                                                  child: Text('This category is an',
-                                                    style: TextStyle(
-                                                        fontSize: 12,
-                                                        color: Colors.grey[600]
-                                                    ),
+                                                padding: EdgeInsets.fromLTRB(8,8,8,0),
+                                                child: Text('Edit category type',
+                                                  style: TextStyle(
+                                                      fontSize: 12,
+                                                      color: Colors.grey[600]
                                                   ),
+                                                ),
                                               ),
                                               Padding(
                                                   padding: EdgeInsets.fromLTRB(70,8,70,8),
@@ -265,29 +325,30 @@ class _AddCategoryScreenState extends State<AddCategoryScreen> {
                                                     ),
                                                     onPressed: () {
                                                       changeIsIncome();
+                                                      typeChange();
                                                     },
                                                   )
                                               ),
                                               SizedBox(height: 10.0),
                                               TextButton(
                                                 onPressed: () async {
-                                                  final Category category = Category(
-                                                    categoryName: categoryNameController.text,
-                                                    categoryColor: currentColor,
-                                                    categoryIcon: _icon.child,
-                                                    categoryId: categoryId,
-                                                    categoryAmount: {monthYear: 0},
-                                                    isIncome: isIncome,
-                                                  );
                                                   if (_formKey.currentState.validate()) {
-                                                    await _authCategory.addNewCategory(category, category.categoryId);
+                                                    if (categoryNameChanged) {
+                                                      _authCategory.updateCategoryName(widget.categoryId, categoryNameController.text);
+                                                    }
+                                                    if (typeChanged) {
+                                                      _authCategory.updateIsIncome(widget.categoryId, isIncome);
+                                                    }
+                                                    if (colorChanged) {
+                                                      _authCategory.updateCategoryColor(widget.categoryId, currentColor);
+                                                    }
+                                                    if (iconChanged) {
+                                                      _authCategory.updateIcon(widget.categoryId, _icon.child);
+                                                    }
                                                     categoryNameController.clear();
-                                                    pickerColor = Color(0xff443a49);
-                                                    currentColor = Color(0xff443a49);
-                                                    _icon = null;
                                                     Navigator.pop(context);
                                                     Flushbar(
-                                                      message: "Category successfully added.",
+                                                      message: "Category successfully edited.",
                                                       icon: Icon(
                                                         Icons.check,
                                                         size: 28.0,
@@ -353,6 +414,9 @@ class _AddCategoryScreenState extends State<AddCategoryScreen> {
               return "Enter category name";
             }
             return null;
+          },
+          onChanged: (val) {
+            categoryNameChange();
           },
           autovalidateMode: AutovalidateMode.onUserInteraction,
         ),
