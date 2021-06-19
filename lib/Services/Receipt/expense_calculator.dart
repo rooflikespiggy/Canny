@@ -97,7 +97,7 @@ class ExpenseCalculatorState extends State<ExpenseCalculator> {
 
   @override
   Widget build(BuildContext context) {
-    /*
+
     return Scaffold(
       backgroundColor: kLightBlue,
       resizeToAvoidBottomInset: false,
@@ -414,7 +414,8 @@ class ExpenseCalculatorState extends State<ExpenseCalculator> {
         ),
       ),
     );
-    */
+
+    /*
     return Scaffold(
       backgroundColor: kLightBlue,
       resizeToAvoidBottomInset: false,
@@ -724,6 +725,8 @@ class ExpenseCalculatorState extends State<ExpenseCalculator> {
         ),
       ),
     );
+
+     */
   }
 
   Widget _showTextFormFields(TextEditingController text, String label, Icon icon, double size) {

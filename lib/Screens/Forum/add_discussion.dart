@@ -83,6 +83,7 @@ class _AddDiscussionState extends State<AddDiscussion> {
                                   context: context,
                                   builder: (BuildContext context) {
                                     return AlertDialog(
+                                      backgroundColor: kLightBlue,
                                       title: Text(
                                         "Discussion successfully added.",
                                         style: TextStyle(fontFamily: 'Lato'),
@@ -92,19 +93,37 @@ class _AddDiscussionState extends State<AddDiscussion> {
                                         style: TextStyle(fontFamily: 'Lato.Thin'),
                                       ),
                                       actions: <Widget> [
-                                        TextButton(
-                                          child: Text("Back to forum"),
+                                        SizedBox(
+                                          width: 130,
+                                          child: TextButton(
+                                            child: Text("Back to forum",
+                                              style: TextStyle(
+                                                color: Colors.white,
+                                              ),
+                                            ),
+                                            style: TextButton.styleFrom(
+                                              backgroundColor: kDarkBlue,
+                                            ),
                                           onPressed: () {
                                             Navigator.push(context,
                                                 MaterialPageRoute(builder: (context) => HomePageScreen(selectedTab: 3)));
                                           },
-                                        ),
-                                        TextButton(
-                                          child: Text("Add another discussion"),
+                                        ),),
+                                        SizedBox(
+                                          width: 175,
+                                          child: TextButton(
+                                            child: Text("Add another discussion",
+                                              style: TextStyle(
+                                                color: Colors.white,
+                                              ),
+                                            ),
+                                            style: TextButton.styleFrom(
+                                              backgroundColor: kDarkBlue,
+                                            ),
                                           onPressed: () {
                                             Navigator.pop(context);
                                           },
-                                        ),
+                                        ),),
                                       ],
                                     );
                                   },

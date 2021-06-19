@@ -194,14 +194,24 @@ class _CategoryTileState extends State<CategoryTile> {
                                 builder:
                                     (BuildContext context) {
                                   return AlertDialog(
+                                    backgroundColor: kLightBlue,
                                     title: Text("Are you sure you want to delete " + widget.categoryName + "?"),
                                     content: Text("Once it is deleted, you will not be able "
                                         "to retrieve it back. Your expenses for " + widget.categoryName +
                                         " will be moved to Others."),
                                     actions: <Widget>[
                                       // usually buttons at the bottom of the dialog
-                                      TextButton(
-                                        child: Text("Yes"),
+                                    SizedBox(
+                                      width: 130,
+                                      child: TextButton(
+                                        child: Text("Yes",
+                                          style: TextStyle(
+                                            color: Colors.white,
+                                          ),
+                                        ),
+                                        style: TextButton.styleFrom(
+                                          backgroundColor: kDarkBlue,
+                                        ),
                                         onPressed: () async {
                                           await _authCategory.removeCategory(widget.categoryId, widget.categoryAmount);
                                           for (int i = 0; i < snapshot.data.docs.length; i++) {
@@ -222,12 +232,24 @@ class _CategoryTileState extends State<CategoryTile> {
                                           )..show(context);
                                         },
                                       ),
-                                      TextButton(
-                                        child: Text("No"),
+                                    ),
+                                      SizedBox(
+                                        width: 130,
+                                        child: TextButton(
+                                          child: Text("No",
+                                            style: TextStyle(
+                                              color: Colors.white,
+                                            ),
+                                          ),
+                                          style: TextButton.styleFrom(
+                                            backgroundColor: kDarkBlue,
+                                          ),
                                         onPressed: () {
                                           Navigator.pop(context);
                                         },
                                       ),
+                                      ),
+                                      SizedBox(width: 14,)
                                     ],
                                   );
                                 },

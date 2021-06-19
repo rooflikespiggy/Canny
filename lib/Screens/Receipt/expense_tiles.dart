@@ -156,12 +156,22 @@ class _ExpenseTileState extends State<ExpenseTile> {
                 context: context,
                 builder: (BuildContext context) {
                   return AlertDialog(
+                    backgroundColor: kLightBlue,
                     title: Text("Are you sure you want to delete this receipt?"),
                     content: Text("Once it is deleted, you will not be able to retrieve it back."),
                     actions: <Widget>[
                       // usually buttons at the bottom of the dialog
-                      TextButton(
-                        child: Text("Yes"),
+                      SizedBox(
+                        width: 130,
+                        child: TextButton(
+                          child: Text("Yes",
+                            style: TextStyle(
+                              color: Colors.white,
+                            ),
+                          ),
+                          style: TextButton.styleFrom(
+                            backgroundColor: kDarkBlue,
+                          ),
                         onPressed: () async {
                           await _authReceipt.removeReceipt(widget.receiptId,
                               widget.categoryId,
@@ -179,13 +189,23 @@ class _ExpenseTileState extends State<ExpenseTile> {
                             leftBarIndicatorColor: kLightBlueDark,
                           )..show(context);
                         },
-                      ),
-                      TextButton(
-                        child: Text("No"),
+                      ),),
+                      SizedBox(
+                        width: 130,
+                        child: TextButton(
+                          child: Text("No",
+                            style: TextStyle(
+                              color: Colors.white,
+                            ),
+                          ),
+                          style: TextButton.styleFrom(
+                            backgroundColor: kDarkBlue,
+                          ),
                         onPressed: () {
                           Navigator.pop(context);
                         },
-                      ),
+                      ),),
+                      SizedBox(width: 15,)
                     ],
                   );
                 },

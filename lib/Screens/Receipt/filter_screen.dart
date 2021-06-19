@@ -92,21 +92,40 @@ class _FilterScreenState extends State<FilterScreen> {
                           return AlertDialog(
                             backgroundColor: kLightBlue,
                             actions: <Widget>[
-                              TextButton(
-                                child: Text("CANCEL"),
+                              SizedBox(
+                                width: 130,
+                                child: TextButton(
+                                  child: Text("CANCEL",
+                                    style: TextStyle(
+                                      color: Colors.white,
+                                    ),
+                                  ),
+                                  style: TextButton.styleFrom(
+                                    backgroundColor: kDarkBlue,
+                                  ),
                                 onPressed: () {
                                   Navigator.pop(context);
                                 },
-                              ),
-                              TextButton(
-                                child: Text("APPLY"),
+                              ),),
+                              SizedBox(
+                                width: 130,
+                                child: TextButton(
+                                  child: Text("APPLY",
+                                    style: TextStyle(
+                                      color: Colors.white,
+                                    ),
+                                  ),
+                                  style: TextButton.styleFrom(
+                                    backgroundColor: kDarkBlue,
+                                  ),
                                 onPressed: () {
                                   setState(() {
                                     filteredCategories = List.of(tempCtgs);
                                   });
                                   Navigator.pop(context);
                                 },
-                              ),
+                              ),),
+                              SizedBox(width: 15,)
                             ],
                             title: Text("Select Categories",
                               style: TextStyle(

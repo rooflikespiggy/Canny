@@ -344,7 +344,7 @@ class _DashboardScreenState extends State<DashboardScreen> {
                                                         childLeft: Text(totalExpensesAmount.toStringAsFixed(2),
                                                             style: TextStyle(color: Colors.white)),
                                                         childRight: Text(balance.toStringAsFixed(2),
-                                                            style: TextStyle(color: Colors.white)),
+                                                            style: TextStyle(color: Colors.blueGrey[700])),
                                                       ),
                                                       */
                                                     ),
@@ -493,12 +493,15 @@ class _DashboardScreenState extends State<DashboardScreen> {
                                                         ],
                                                       ),
                                                     ),
-                                                    Wrap(
-                                                      direction: Axis.horizontal,
-                                                      alignment: WrapAlignment.center,
-                                                      spacing: 5.0,
-                                                      runSpacing: 10.0,
-                                                      children: showAllIndicators(allCategories),
+                                                    Padding(
+                                                      padding: EdgeInsets.symmetric(horizontal: 8),
+                                                      child: Wrap(
+                                                        direction: Axis.horizontal,
+                                                        alignment: WrapAlignment.center,
+                                                        spacing: 5.0,
+                                                        runSpacing: 10.0,
+                                                        children: showAllIndicators(allCategories),
+                                                      ),
                                                     ),
                                                     SizedBox(height: 20.0),
                                                   ],

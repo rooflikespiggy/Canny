@@ -224,7 +224,7 @@ class _ForumScreenState extends State<ForumScreen> {
                                                                   context: context,
                                                                   builder: (BuildContext context) {
                                                                     return AlertDialog(
-                                                                      backgroundColor: Colors.white.withOpacity(0.85),
+                                                                      backgroundColor: kLightBlue,
                                                                       contentPadding: EdgeInsets.all(20),
                                                                       content: Column(
                                                                         children: <Widget> [
@@ -256,31 +256,49 @@ class _ForumScreenState extends State<ForumScreen> {
                                                                         ],
                                                                       ),
                                                                       actions: <Widget> [
-                                                                        TextButton(
-                                                                            onPressed: () {
-                                                                              Navigator.pop(context);
-                                                                              },
-                                                                            child: Text(
-                                                                                "Cancel",
-                                                                            )
+                                                                        SizedBox(
+                                                                          width: 130,
+                                                                          child: TextButton(
+                                                                              onPressed: () {
+                                                                                Navigator.pop(context);
+                                                                                },
+                                                                            child: Text("Cancel",
+                                                                              style: TextStyle(
+                                                                                color: Colors.white,
+                                                                              ),
+                                                                            ),
+                                                                            style: TextButton.styleFrom(
+                                                                              backgroundColor: kDarkBlue,
+                                                                            ),
+                                                                          ),
                                                                         ),
-                                                                        TextButton(
-                                                                            onPressed: () {
-                                                                              if (nameInputController.text.isNotEmpty &&
-                                                                                  titleInputController.text.isNotEmpty &&
-                                                                                  descriptionInputController.text.isNotEmpty) {
-                                                                                _authForum.updateDiscussion(snapshotData.id,
-                                                                                    nameInputController.text,
-                                                                                    titleInputController.text,
-                                                                                    descriptionInputController.text).then((_) {
-                                                                                      nameInputController.clear();
-                                                                                      titleInputController.clear();
-                                                                                      descriptionInputController.clear();
-                                                                                      Navigator.pop(context);
-                                                                                    }).catchError((error) => print(error));
-                                                                              }
-                                                                              },
-                                                                            child: Text("Update")
+                                                                        SizedBox(
+                                                                          width: 130,
+                                                                          child: TextButton(
+                                                                              onPressed: () {
+                                                                                if (nameInputController.text.isNotEmpty &&
+                                                                                    titleInputController.text.isNotEmpty &&
+                                                                                    descriptionInputController.text.isNotEmpty) {
+                                                                                  _authForum.updateDiscussion(snapshotData.id,
+                                                                                      nameInputController.text,
+                                                                                      titleInputController.text,
+                                                                                      descriptionInputController.text).then((_) {
+                                                                                        nameInputController.clear();
+                                                                                        titleInputController.clear();
+                                                                                        descriptionInputController.clear();
+                                                                                        Navigator.pop(context);
+                                                                                      }).catchError((error) => print(error));
+                                                                                }
+                                                                                },
+                                                                            child: Text("Update",
+                                                                              style: TextStyle(
+                                                                                color: Colors.white,
+                                                                              ),
+                                                                            ),
+                                                                            style: TextButton.styleFrom(
+                                                                              backgroundColor: kDarkBlue,
+                                                                            ),
+                                                                          ),
                                                                         ),
                                                                       ],
                                                                     );
@@ -300,12 +318,22 @@ class _ForumScreenState extends State<ForumScreen> {
                                                                     context: context,
                                                                     builder: (BuildContext context) {
                                                                       return AlertDialog(
+                                                                        backgroundColor: kLightBlue,
                                                                         title: Text("Are you sure you want to delete your discussion"),
                                                                         content: Text("Once your discussion is deleted, you will not be able to retrieve it back."),
                                                                         actions: <Widget>[
                                                                           // usually buttons at the bottom of the dialog
-                                                                          TextButton(
-                                                                            child: Text("Yes"),
+                                                                          SizedBox(
+                                                                            width: 130,
+                                                                            child: TextButton(
+                                                                              child: Text("Yes",
+                                                                                style: TextStyle(
+                                                                                  color: Colors.white,
+                                                                                ),
+                                                                              ),
+                                                                              style: TextButton.styleFrom(
+                                                                                backgroundColor: kDarkBlue,
+                                                                              ),
                                                                             onPressed: () async {
                                                                               await _authForum.removeDiscussion(
                                                                                 snapshotData.id,
@@ -315,13 +343,23 @@ class _ForumScreenState extends State<ForumScreen> {
                                                                               });
                                                                               Navigator.pop(context);
                                                                             },
-                                                                          ),
-                                                                          TextButton(
-                                                                            child: Text("No"),
+                                                                          ),),
+                                                                          SizedBox(
+                                                                            width: 130,
+                                                                            child: TextButton(
+                                                                              child: Text("No",
+                                                                                style: TextStyle(
+                                                                                  color: Colors.white,
+                                                                                ),
+                                                                              ),
+                                                                              style: TextButton.styleFrom(
+                                                                                backgroundColor: kDarkBlue,
+                                                                              ),
                                                                             onPressed: () {
                                                                               Navigator.pop(context);
                                                                             },
-                                                                          ),
+                                                                          ),),
+                                                                          SizedBox(width: 15,)
                                                                         ],
                                                                       );
                                                                     },

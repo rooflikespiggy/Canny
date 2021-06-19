@@ -128,11 +128,11 @@ class CommentDetail extends StatelessWidget {
                                                           context: context,
                                                           builder: (BuildContext context) {
                                                             return AlertDialog(
-                                                              backgroundColor: Colors.white.withOpacity(0.85),
+                                                              backgroundColor: kLightBlue,
                                                               contentPadding: EdgeInsets.all(20),
                                                               content: Column(
                                                                 children: <Widget> [
-                                                                  Text("Update discussion"),
+                                                                  Text("Update Comment"),
                                                                   TextField(
                                                                     decoration: InputDecoration(
                                                                         labelText: "Edit Name"
@@ -153,30 +153,50 @@ class CommentDetail extends StatelessWidget {
                                                                 ],
                                                               ),
                                                               actions: <Widget> [
-                                                                TextButton(
-                                                                    onPressed: () {
-                                                                      nameInputController.clear();
-                                                                      descriptionInputController.clear();
-                                                                      Navigator.pop(context);
-                                                                    },
-                                                                    child: Text("Cancel")
+                                                                SizedBox(
+                                                                  width: 130,
+                                                                  child: TextButton(
+                                                                      onPressed: () {
+                                                                        nameInputController.clear();
+                                                                        descriptionInputController.clear();
+                                                                        Navigator.pop(context);
+                                                                      },
+                                                                    child: Text("Cancel",
+                                                                      style: TextStyle(
+                                                                        color: Colors.white,
+                                                                      ),
+                                                                    ),
+                                                                    style: TextButton.styleFrom(
+                                                                      backgroundColor: kDarkBlue,
+                                                                    ),
+                                                                  ),
                                                                 ),
-                                                                TextButton(
-                                                                    onPressed: () async {
-                                                                      if (nameInputController.text.isNotEmpty &&
-                                                                          descriptionInputController.text.isNotEmpty) {
-                                                                        await CommentDatabaseService(inputId).updateComment(
-                                                                            snapshotData.id,
-                                                                            nameInputController.text,
-                                                                            descriptionInputController.text
-                                                                        ).then((_) {
-                                                                          nameInputController.clear();
-                                                                          descriptionInputController.clear();
-                                                                          Navigator.pop(context);
-                                                                        }).catchError((error) => print(error));
-                                                                      }
-                                                                    },
-                                                                    child: Text("Update")
+                                                                SizedBox(
+                                                                  width: 130,
+                                                                  child: TextButton(
+                                                                      onPressed: () async {
+                                                                        if (nameInputController.text.isNotEmpty &&
+                                                                            descriptionInputController.text.isNotEmpty) {
+                                                                          await CommentDatabaseService(inputId).updateComment(
+                                                                              snapshotData.id,
+                                                                              nameInputController.text,
+                                                                              descriptionInputController.text
+                                                                          ).then((_) {
+                                                                            nameInputController.clear();
+                                                                            descriptionInputController.clear();
+                                                                            Navigator.pop(context);
+                                                                          }).catchError((error) => print(error));
+                                                                        }
+                                                                      },
+                                                                    child: Text("Update",
+                                                                      style: TextStyle(
+                                                                        color: Colors.white,
+                                                                      ),
+                                                                    ),
+                                                                    style: TextButton.styleFrom(
+                                                                      backgroundColor: kDarkBlue,
+                                                                    ),
+                                                                  ),
                                                                 ),
                                                               ],
                                                             );
@@ -195,26 +215,48 @@ class CommentDetail extends StatelessWidget {
                                                           builder:
                                                               (BuildContext context) {
                                                             return AlertDialog(
-                                                              title: Text("Are you sure you want to delete your discussion"),
-                                                              content: Text("Once your discussion is deleted, you will not be able to retrieve it back."),
+                                                              backgroundColor: kLightBlue,
+                                                              title: Text("Are you sure you want to delete your comment"),
+                                                              content: Text("Once your comment is deleted, you will not be able to retrieve it back."),
                                                               actions: <Widget>[
                                                                 // usually buttons at the bottom of the dialog
-                                                                TextButton(
-                                                                  child: Text("Yes"),
-                                                                  onPressed: () async {
-                                                                    await CommentDatabaseService(inputId).removeComment(
-                                                                      snapshotData.id,
-                                                                    );
-                                                                    snapshot.data.docs.removeAt(index);
-                                                                    Navigator.pop(context);
-                                                                  },
+                                                                SizedBox(
+                                                                  width: 130,
+                                                                  child: TextButton(
+                                                                    child: Text("Yes",
+                                                                      style: TextStyle(
+                                                                        color: Colors.white,
+                                                                      ),
+                                                                    ),
+                                                                    style: TextButton.styleFrom(
+                                                                      backgroundColor: kDarkBlue,
+                                                                    ),
+                                                                    onPressed: () async {
+                                                                      await CommentDatabaseService(inputId).removeComment(
+                                                                        snapshotData.id,
+                                                                      );
+                                                                      snapshot.data.docs.removeAt(index);
+                                                                      Navigator.pop(context);
+                                                                    },
+                                                                  ),
                                                                 ),
-                                                                TextButton(
-                                                                  child: Text("No"),
-                                                                  onPressed: () {
-                                                                    Navigator.pop(context);
-                                                                  },
+                                                                SizedBox(
+                                                                  width: 130,
+                                                                  child: TextButton(
+                                                                    child: Text("No",
+                                                                      style: TextStyle(
+                                                                        color: Colors.white,
+                                                                      ),
+                                                                    ),
+                                                                    style: TextButton.styleFrom(
+                                                                      backgroundColor: kDarkBlue,
+                                                                    ),
+                                                                    onPressed: () {
+                                                                      Navigator.pop(context);
+                                                                    },
+                                                                  ),
                                                                 ),
+                                                                SizedBox(width: 15,)
                                                               ],
                                                             );
                                                           },

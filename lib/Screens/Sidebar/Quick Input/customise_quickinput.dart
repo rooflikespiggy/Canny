@@ -41,7 +41,7 @@ class _CustomiseQIState extends State<CustomiseQI> {
         decoration: BoxDecoration(
           image: DecorationImage(
             image: AssetImage("styles/images/background.png"),
-            colorFilter: ColorFilter.mode(Colors.black.withOpacity(0.4), BlendMode.dstATop),
+            //colorFilter: ColorFilter.mode(Colors.black.withOpacity(0.4), BlendMode.dstATop),
             fit: BoxFit.cover,
           ),
         ),
@@ -61,9 +61,9 @@ class _CustomiseQIState extends State<CustomiseQI> {
                       color: kDarkBlue,
                     ),
                   ),
-                  SizedBox(height: 12.0),
+                  SizedBox(height: 8.0),
                   getMultiSelectDialogField(),
-                  SizedBox(height: 20.0),
+                  SizedBox(height: 10.0),
                   Column(
                     crossAxisAlignment: CrossAxisAlignment.stretch,
                     children: <Widget>[
@@ -86,6 +86,7 @@ class _CustomiseQIState extends State<CustomiseQI> {
                         ],
                       ),
                     ],
+                    //will add an illustration
                   ),
                 ],
               ),
@@ -199,7 +200,9 @@ class _CustomiseQIState extends State<CustomiseQI> {
                       }
                   ),
                   // need figure out why this dont work
-                  selectedCategories.isEmpty
+
+                  /*
+                  selectedCategories.length == 0
                       ? Container(
                     padding: EdgeInsets.all(10),
                     alignment: Alignment.centerLeft,
@@ -208,7 +211,14 @@ class _CustomiseQIState extends State<CustomiseQI> {
                       style: TextStyle(color: Colors.black54),
                     ),
                   )
-                      : Container(),
+                      : Container(
+                    padding: EdgeInsets.all(10),
+                    alignment: Alignment.centerLeft,
+                    child: Text(
+                      '',
+                    ),
+                  )
+                  */
                 ],
               )
             ),
@@ -232,18 +242,30 @@ class _CustomiseQIState extends State<CustomiseQI> {
                       context: context,
                       builder: (BuildContext context) {
                         return AlertDialog(
+                          backgroundColor: kLightBlue,
                           content: Text(
                             "Please select 3 categories",
                             style:
                             TextStyle(fontFamily: 'Lato.Thin'),
                           ),
                           actions: <Widget> [
-                            TextButton(
-                              child: Text("OK"),
-                              onPressed: () {
-                                Navigator.pop(context);
-                              },
+                            SizedBox(
+                              width: 130,
+                              child: TextButton(
+                                  child: Text("OK",
+                                    style: TextStyle(
+                                      color: Colors.white,
+                                    ),
+                                  ),
+                                  style: TextButton.styleFrom(
+                                    backgroundColor: kDarkBlue,
+                                  ),
+                                  onPressed: () {
+                                    Navigator.of(context).pop();
+                                  }
+                              ),
                             ),
+                            SizedBox(width: 58,)
                           ],
                         );
                       }
@@ -266,19 +288,62 @@ class _CustomiseQIState extends State<CustomiseQI> {
                             style:
                             TextStyle(fontFamily: 'Lato.Thin'),
                           ),
-                          actions: <Widget> [
-                            TextButton(
-                              child: Text("Back to homepage"),
-                              onPressed: () {
-                                Navigator.push(context,
-                                    MaterialPageRoute(builder: (context) => HomePageScreen(selectedTab: 0)));
-                              },
-                            ),
-                            TextButton(
-                              child: Text("ReEdit Categories"),
-                              onPressed: () {
-                                Navigator.pop(context);
-                              },
+                          backgroundColor: kLightBlue,
+                          actions: <Widget>[
+                            Padding(
+                              padding: EdgeInsets.symmetric(horizontal: 20),
+                              child: Column(
+                                crossAxisAlignment: CrossAxisAlignment.stretch,
+                                children: [
+                                  SizedBox(
+                                    width: 250,
+                                    child: TextButton(
+                                      child: Text("ReEdit categories",
+                                        style: TextStyle(
+                                          color: Colors.white,
+                                        ),
+                                      ),
+                                      style: TextButton.styleFrom(
+                                        backgroundColor: kDarkBlue,
+                                      ),
+                                    onPressed: () {
+                                      Navigator.pop(context);
+                                    },
+                                  ),),
+                                  SizedBox(
+                                    width: 250,
+                                    child: TextButton(
+                                      child: Text("Back to homepage",
+                                        style: TextStyle(
+                                          color: Colors.white,
+                                        ),
+                                      ),
+                                      style: TextButton.styleFrom(
+                                        backgroundColor: kDarkBlue,
+                                      ),
+                                    onPressed: () {
+                                      Navigator.push(context,
+                                          MaterialPageRoute(builder: (context) => HomePageScreen()));
+                                    },
+                                  ),),
+                                  SizedBox(
+                                    width: 250,
+                                    child: TextButton(
+                                      child: Text("Check quick input",
+                                        style: TextStyle(
+                                          color: Colors.white,
+                                        ),
+                                      ),
+                                      style: TextButton.styleFrom(
+                                        backgroundColor: kDarkBlue,
+                                      ),
+                                    onPressed: () {
+                                      Navigator.push(context,
+                                          MaterialPageRoute(builder: (context) => QuickInput()));
+                                    },
+                                  ),),
+                                ],
+                              ),
                             ),
                           ],
                         );

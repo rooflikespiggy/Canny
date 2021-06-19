@@ -1,6 +1,7 @@
 import 'package:Canny/Database/all_database.dart';
 import 'package:Canny/Screens/Sidebar/Quick%20Input/customise_quickinput.dart';
 import 'package:Canny/Services/Dashboard/dashboard_database.dart';
+import 'package:Canny/Services/Notifications/notification_database.dart';
 import 'package:Canny/Services/Users/auth.dart';
 import 'package:Canny/Shared/custom_route.dart';
 import 'package:cloud_firestore/cloud_firestore.dart';
@@ -21,7 +22,8 @@ class _SideBarMenuState extends State<SideBarMenu> with AutomaticKeepAliveClient
   final String email = FirebaseAuth.instance.currentUser.email;
   final CollectionReference dashboardCollection = Database().dashboardDatabase();
   final DashboardDatabaseService _authDashboard = DashboardDatabaseService();
-  bool notifSwitch = false;
+  final CollectionReference notifCollection = Database().notificationDatabase();
+  final NotificationDatabaseService _authNotification = NotificationDatabaseService();
 
   @override
   bool get wantKeepAlive => true;
@@ -129,26 +131,36 @@ class _SideBarMenuState extends State<SideBarMenu> with AutomaticKeepAliveClient
               }
             ),
             Divider(thickness: 1.0),
-            ListTile(
-              leading: Icon(Icons.notifications_active),
-              trailing: Switch(
-                value: notifSwitch,
-                onChanged: (value) {
-                  setState(() {
-                    notifSwitch = value;
-                    print(notifSwitch);
-                  });
-                },
-                activeTrackColor: kLightBlueDark,
-                activeColor: kDarkBlue,
-                inactiveThumbColor: Colors.white,
-              ),
-              title: Text(
-                  'Turn on Reminder Notifications',
-                  style: TextStyle(fontFamily: 'Lato',
-                    fontSize: 16,
-                  )
-              ),
+            StreamBuilder(
+                stream: notifCollection.doc('NotifStatus').snapshots(),
+                builder: (BuildContext context, AsyncSnapshot<DocumentSnapshot> snapshot) {
+                  if (snapshot.hasData) {
+                    return Theme(
+                      data: Theme.of(context).copyWith(dividerColor: Colors.transparent),
+                      child: ListTile(
+                        leading: Icon(Icons.notifications_active),
+                        title: Text(
+                            'Turn on Reminder Notifications',
+                            style: TextStyle(
+                              fontFamily: 'Lato',
+                              fontSize: 16,
+                            )
+                        ),
+                        trailing: Switch(
+                            value:snapshot.data['notificationStatus'],
+                            onChanged: (value) async {
+                              await _authNotification.updateNotifStatus(value);
+                            },
+                              activeTrackColor: kLightBlueDark,
+                              activeColor: kDarkBlue,
+                              inactiveThumbColor: Colors.white,
+                            ),
+
+                      ),
+                    );
+                  }
+                  return Container();
+                }
             ),
             Divider(thickness: 1.0),
             ListTile(
