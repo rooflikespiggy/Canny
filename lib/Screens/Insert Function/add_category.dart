@@ -187,6 +187,7 @@ class _AddCategoryScreenState extends State<AddCategoryScreen> {
                                                             context: context,
                                                             builder: (BuildContext context) {
                                                               return AlertDialog(
+                                                                  backgroundColor: kLightBlue,
                                                                 title: Text('Color your category'),
                                                                 content: SingleChildScrollView(
                                                                   child: BlockPicker(
@@ -200,32 +201,38 @@ class _AddCategoryScreenState extends State<AddCategoryScreen> {
                                                                     child: Row(
                                                                       mainAxisAlignment: MainAxisAlignment.spaceEvenly,
                                                                       children: <Widget> [
-                                                                        TextButton(
-                                                                            child: Text("Submit",
-                                                                              style: TextStyle(
-                                                                                color: Colors.white,
+                                                                        SizedBox(
+                                                                          width: 130,
+                                                                          child: TextButton(
+                                                                              child: Text("Submit",
+                                                                                style: TextStyle(
+                                                                                  color: Colors.white,
+                                                                                ),
                                                                               ),
-                                                                            ),
-                                                                            style: TextButton.styleFrom(
-                                                                              backgroundColor: kDarkBlue,
-                                                                            ),
-                                                                            onPressed: () {
-                                                                              setState(() => currentColor = pickerColor);
-                                                                              Navigator.of(context).pop();
-                                                                            }
+                                                                              style: TextButton.styleFrom(
+                                                                                backgroundColor: kDarkBlue,
+                                                                              ),
+                                                                              onPressed: () {
+                                                                                setState(() => currentColor = pickerColor);
+                                                                                Navigator.of(context).pop();
+                                                                              }
+                                                                          ),
                                                                         ),
-                                                                        TextButton(
-                                                                            child: Text("Cancel",
-                                                                              style: TextStyle(
-                                                                                color: Colors.white,
+                                                                        SizedBox(
+                                                                          width: 130,
+                                                                          child: TextButton(
+                                                                              child: Text("Cancel",
+                                                                                style: TextStyle(
+                                                                                  color: Colors.white,
+                                                                                ),
                                                                               ),
-                                                                            ),
-                                                                            style: TextButton.styleFrom(
-                                                                              backgroundColor: kDarkBlue,
-                                                                            ),
-                                                                            onPressed: () {
-                                                                              Navigator.of(context).pop();
-                                                                            }
+                                                                              style: TextButton.styleFrom(
+                                                                                backgroundColor: kDarkBlue,
+                                                                              ),
+                                                                              onPressed: () {
+                                                                                Navigator.of(context).pop();
+                                                                              }
+                                                                          ),
                                                                         ),
                                                                       ],
                                                                     ),

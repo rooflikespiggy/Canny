@@ -45,4 +45,10 @@ class Database {
         .doc(uid)
         .collection('QuickInput');
   }
+
+  CollectionReference notificationDatabase() {
+    return userCollection
+        .doc(uid)
+        .collection('Notification');
+  }
 }

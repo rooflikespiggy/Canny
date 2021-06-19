@@ -85,6 +85,7 @@ class _AddCommentState extends State<AddComment> {
                                     context: context,
                                     builder: (BuildContext context) {
                                       return AlertDialog(
+                                        backgroundColor: kLightBlue,
                                         title: Text(
                                           "Succesfully Submitted Your Comment!",
                                           style: TextStyle(fontFamily: 'Lato'),
@@ -94,19 +95,37 @@ class _AddCommentState extends State<AddComment> {
                                           style: TextStyle(fontFamily: 'Lato.Thin'),
                                         ),
                                         actions: <Widget> [
-                                          TextButton(
-                                            child: Text("Back to discussion"),
+                                          SizedBox(
+                                            width: 140,
+                                            child: TextButton(
+                                              child: Text("Back to discussion",
+                                                style: TextStyle(
+                                                color: Colors.white,
+                                              ),
+                                            ),
+                                            style: TextButton.styleFrom(
+                                              backgroundColor: kDarkBlue,
+                                            ),
                                             onPressed: () {
                                               Navigator.push(context,
                                                   MaterialPageRoute(builder: (context) => ForumDetailScreen(inputId: inputId)));
                                             },
-                                          ),
-                                          TextButton(
-                                            child: Text("Add another comment"),
+                                          ),),
+                                          SizedBox(
+                                            width: 165,
+                                            child: TextButton(
+                                              child: Text("Add another comment",
+                                                style: TextStyle(
+                                                  color: Colors.white,
+                                                ),
+                                              ),
+                                              style: TextButton.styleFrom(
+                                                backgroundColor: kDarkBlue,
+                                              ),
                                             onPressed: () {
                                               Navigator.pop(context);
                                             },
-                                          ),
+                                          ),),
                                         ],
                                       );
                                     },

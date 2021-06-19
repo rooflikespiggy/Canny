@@ -247,6 +247,7 @@ class _EditCategoryState extends State<EditCategory> {
                                                             context: context,
                                                             builder: (BuildContext context) {
                                                               return AlertDialog(
+                                                                  backgroundColor: kLightBlue,
                                                                 title: Text('Update category color'),
                                                                 content: SingleChildScrollView(
                                                                   child: BlockPicker(
@@ -255,33 +256,40 @@ class _EditCategoryState extends State<EditCategory> {
                                                                   ),
                                                                 ),
                                                                 actions: <Widget> [
-                                                                  TextButton(
-                                                                    child: Text("Submit",
-                                                                      style: TextStyle(
-                                                                        color: Colors.white,
+                                                                  SizedBox(
+                                                                    width: 130,
+                                                                    child: TextButton(
+                                                                      child: Text("Submit",
+                                                                        style: TextStyle(
+                                                                          color: Colors.white,
+                                                                        ),
                                                                       ),
-                                                                    ),
-                                                                    style: TextButton.styleFrom(
-                                                                      backgroundColor: kDarkBlue,
-                                                                    ),
-                                                                    onPressed: () {
-                                                                      setState(() => currentColor = pickerColor);
-                                                                      Navigator.of(context).pop();
-                                                                    }
-                                                                  ),
-                                                                  TextButton(
-                                                                    child: Text("Cancel",
-                                                                      style: TextStyle(
-                                                                        color: Colors.white,
+                                                                      style: TextButton.styleFrom(
+                                                                        backgroundColor: kDarkBlue,
                                                                       ),
+                                                                      onPressed: () {
+                                                                        setState(() => currentColor = pickerColor);
+                                                                        Navigator.of(context).pop();
+                                                                      }
                                                                     ),
-                                                                    style: TextButton.styleFrom(
-                                                                      backgroundColor: kDarkBlue,
-                                                                    ),
-                                                                    onPressed: () {
-                                                                      Navigator.of(context).pop();
-                                                                    }
                                                                   ),
+                                                                  SizedBox(
+                                                                    width: 130,
+                                                                    child: TextButton(
+                                                                      child: Text("Cancel",
+                                                                        style: TextStyle(
+                                                                          color: Colors.white,
+                                                                        ),
+                                                                      ),
+                                                                      style: TextButton.styleFrom(
+                                                                        backgroundColor: kDarkBlue,
+                                                                      ),
+                                                                      onPressed: () {
+                                                                        Navigator.of(context).pop();
+                                                                      }
+                                                                    ),
+                                                                  ),
+                                                                  SizedBox(width: 13.5,)
                                                                 ]
                                                               );
                                                             },

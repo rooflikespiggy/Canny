@@ -126,6 +126,7 @@ class _AddTEScreenState extends State<AddTEScreen> {
       child: SizedBox(
         width: size,
         child: TextFormField(
+          autovalidateMode: AutovalidateMode.onUserInteraction,
           keyboardType: TextInputType.number,
           controller: text,
           inputFormatters: [

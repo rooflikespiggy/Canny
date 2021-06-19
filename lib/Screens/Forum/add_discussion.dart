@@ -79,6 +79,7 @@ class _AddDiscussionState extends State<AddDiscussion> {
                                   context: context,
                                   builder: (BuildContext context) {
                                     return AlertDialog(
+                                      backgroundColor: kLightBlue,
                                       title: Text(
                                         "Succesfully Submitted Your Discussion!",
                                         style: TextStyle(fontFamily: 'Lato'),
@@ -88,21 +89,39 @@ class _AddDiscussionState extends State<AddDiscussion> {
                                         style: TextStyle(fontFamily: 'Lato.Thin'),
                                       ),
                                       actions: <Widget> [
-                                        TextButton(
-                                          child: Text("Back to forum"),
+                                        SizedBox(
+                                          width: 130,
+                                          child: TextButton(
+                                            child: Text("Back to forum",
+                                              style: TextStyle(
+                                                color: Colors.white,
+                                              ),
+                                            ),
+                                            style: TextButton.styleFrom(
+                                              backgroundColor: kDarkBlue,
+                                            ),
                                           onPressed: () {
                                             int count = 0;
                                             Navigator.popUntil(context, (route) {
                                               return count++ == 2;
                                             });
                                           },
-                                        ),
-                                        TextButton(
-                                          child: Text("Add another discussion"),
+                                        ),),
+                                        SizedBox(
+                                          width: 175,
+                                          child: TextButton(
+                                            child: Text("Add another discussion",
+                                              style: TextStyle(
+                                                color: Colors.white,
+                                              ),
+                                            ),
+                                            style: TextButton.styleFrom(
+                                              backgroundColor: kDarkBlue,
+                                            ),
                                           onPressed: () {
                                             Navigator.pop(context);
                                           },
-                                        ),
+                                        ),),
                                       ],
                                     );
                                   },
