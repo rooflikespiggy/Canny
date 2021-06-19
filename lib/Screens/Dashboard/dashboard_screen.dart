@@ -73,27 +73,27 @@ class _DashboardScreenState extends State<DashboardScreen> {
               color: Colors.transparent,
               child: Column(
                 children: <Widget> [
-                  StreamBuilder(
-                    stream: teCollection.doc('TE').snapshots(),
-                    builder: (BuildContext context, AsyncSnapshot<DocumentSnapshot> snapshot) {
+                  FutureBuilder<List<Category>>(
+                    future: _authCategory.getCategories(),
+                    builder: (BuildContext context, AsyncSnapshot<List<Category>> snapshot) {
                       if (snapshot.hasData) {
-                        teAmount = snapshot.data['amount'];
-                        return FutureBuilder<List<Category>>(
-                            future: _authCategory.getCategories(),
-                          builder: (BuildContext context, AsyncSnapshot<List<Category>> snapshot2) {
+                        List<Category> allCategories = snapshot.data;
+                        allCategories.sort((a, b) => a.categoryId.compareTo(b.categoryId));
+                        totalExpensesAmount = allCategories
+                            .where((category) => !category.isIncome)
+                            .map((category) => category.categoryAmount[monthYear])
+                            .reduce((value, element) => value.toDouble() + element.toDouble());
+                        totalIncome = allCategories
+                            .where((category) => category.isIncome)
+                            .map((category) => category.categoryAmount[monthYear])
+                            .reduce((value, element) => value.toDouble() + element.toDouble());
+                        balance = totalIncome - totalExpensesAmount;
+                        percent = totalIncome > 0 ? ((totalExpensesAmount / totalIncome) * 100) : 0;
+                        return StreamBuilder(
+                          stream: getData(),
+                          builder: (BuildContext context, AsyncSnapshot<DocumentSnapshot> snapshot2) {
                             if (snapshot2.hasData) {
-                              List<Category> allCategories = snapshot2.data;
-                              allCategories.sort((a, b) => a.categoryId.compareTo(b.categoryId));
-                              totalExpensesAmount = allCategories
-                                  .where((category) => !category.isIncome)
-                                  .map((category) => category.categoryAmount[monthYear])
-                                  .reduce((value, element) => value.toDouble() + element.toDouble());
-                              totalIncome = allCategories
-                                  .where((category) => category.isIncome)
-                                  .map((category) => category.categoryAmount[monthYear])
-                                  .reduce((value, element) => value.toDouble() + element.toDouble());
-                              balance = totalIncome - totalExpensesAmount;
-                              percent = totalIncome > 0 ? ((totalExpensesAmount / totalIncome) * 100) : 0;
+                              teAmount = snapshot2.data['amount'];
                               return StreamBuilder(
                                 stream: dashboardCollection.doc('Switch').snapshots(),
                                 builder: (BuildContext context, AsyncSnapshot<DocumentSnapshot> snapshot3) {
@@ -683,15 +683,78 @@ class _DashboardScreenState extends State<DashboardScreen> {
                                       ),
                                     );
                                   }
-                                  return CircularProgressIndicator();
+                                  return Center(
+                                    child: Column(
+                                      mainAxisAlignment: MainAxisAlignment.center,
+                                      children: <Widget> [
+                                        SizedBox(height: 200),
+                                        Container(
+                                            color: Colors.white,
+                                            height: 150,
+                                            width: 150,
+                                            child: Column(
+                                                mainAxisAlignment: MainAxisAlignment.center,
+                                                crossAxisAlignment: CrossAxisAlignment.center,
+                                                children: <Widget> [
+                                                  CircularProgressIndicator(color: kDarkBlue),
+                                                  SizedBox(height: 15.0),
+                                                  Text('Loading data'),
+                                                ]
+                                            )
+                                        )
+                                      ],
+                                    ),
+                                  );
                                 }
                               );
                             }
-                            return CircularProgressIndicator();
+                            return Center(
+                              child: Column(
+                                mainAxisAlignment: MainAxisAlignment.center,
+                                children: <Widget> [
+                                  SizedBox(height: 200),
+                                  Container(
+                                      color: Colors.white,
+                                      height: 150,
+                                      width: 150,
+                                      child: Column(
+                                          mainAxisAlignment: MainAxisAlignment.center,
+                                          crossAxisAlignment: CrossAxisAlignment.center,
+                                          children: <Widget> [
+                                            CircularProgressIndicator(color: kDarkBlue),
+                                            SizedBox(height: 15.0),
+                                            Text('Loading data'),
+                                          ]
+                                      )
+                                  )
+                                ],
+                              ),
+                            );
                           }
                         );
                       }
-                      return CircularProgressIndicator();
+                      return Center(
+                        child: Column(
+                          mainAxisAlignment: MainAxisAlignment.center,
+                          children: <Widget> [
+                            SizedBox(height: 200),
+                            Container(
+                              color: Colors.white,
+                              height: 150,
+                              width: 150,
+                              child: Column(
+                                mainAxisAlignment: MainAxisAlignment.center,
+                                crossAxisAlignment: CrossAxisAlignment.center,
+                                children: <Widget> [
+                                  CircularProgressIndicator(color: kDarkBlue),
+                                  SizedBox(height: 15.0),
+                                  Text('Loading data'),
+                                ]
+                              )
+                            )
+                          ],
+                        ),
+                      );
                     }
                   ),
                   SizedBox(height: 50.0),
@@ -797,5 +860,12 @@ class _DashboardScreenState extends State<DashboardScreen> {
     await Future.delayed(Duration(seconds: 2));
 
     setState(() {});
+  }
+
+  Stream<DocumentSnapshot> getData() async* {
+    await Future.delayed(const Duration(seconds: 2));
+    yield* teCollection
+        .doc('TE')
+        .snapshots();
   }
 }

@@ -22,8 +22,6 @@ class _FunctionScreenState extends State<FunctionScreen> {
 
   @override
   Widget build(BuildContext context) {
-    _authQuickInput.initNewQuickInputs();
-    _authCategory.initNewCategories();
     return Scaffold(
       body: Container(
         width: double.infinity,
