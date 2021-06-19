@@ -310,6 +310,7 @@ class _AddCategoryScreenState extends State<AddCategoryScreen> {
                                                     pickerColor = Color(0xff443a49);
                                                     currentColor = Color(0xff443a49);
                                                     _icon = null;
+                                                    FocusScope.of(context).unfocus();
                                                     Navigator.pop(context);
                                                     Flushbar(
                                                       message: "Category successfully added.",

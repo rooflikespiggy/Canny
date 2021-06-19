@@ -84,7 +84,7 @@ class _HomePageScreenState extends State<HomePageScreen> with AutomaticKeepAlive
             Icons.attach_money_rounded,
           color: Colors.white,
         ),
-        label: 'Add Your Expenses',
+        label: 'Add Receipt',
         labelStyle: TextStyle(
             fontSize: 18,
           fontFamily: "Lato",
@@ -120,7 +120,7 @@ class _HomePageScreenState extends State<HomePageScreen> with AutomaticKeepAlive
         child: Icon(Icons.star,
           color: Colors.white,
         ),
-        label: 'Enter A Target Expenditure',
+        label: 'Enter Target Expenditure',
         labelStyle: TextStyle(
           fontSize: 18,
           fontFamily: "Lato",
@@ -153,7 +153,7 @@ class _HomePageScreenState extends State<HomePageScreen> with AutomaticKeepAlive
         child: Icon(Icons.category,
           color: Colors.white,
         ),
-        label: 'Add A New Category',
+        label: 'Add Category',
         labelStyle: TextStyle(
           fontSize: 18,
           fontFamily: "Lato",

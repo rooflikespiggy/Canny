@@ -421,7 +421,7 @@ class ExpenseCalculatorState extends State<ExpenseCalculator> {
       resizeToAvoidBottomInset: false,
       appBar: AppBar(
         backgroundColor: kDarkBlue,
-        title: Text('Enter your Expenses'),
+        title: Text('Enter your Receipt'),
         elevation: 0.0,
       ),
       body: Container(

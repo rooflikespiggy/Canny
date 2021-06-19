@@ -1,6 +1,7 @@
 import 'package:Canny/Services/Forum/comment_database.dart';
 import 'package:Canny/Shared/colors.dart';
 import 'package:firebase_auth/firebase_auth.dart';
+import 'package:flushbar/flushbar.dart';
 import 'package:flutter/material.dart';
 import 'package:Canny/Models/comment.dart';
 
@@ -79,6 +80,8 @@ class _AddCommentState extends State<AddComment> {
                                   name: nameController.text,
                                   description: descriptionController.text);
                               if (_formKey.currentState.validate()) {
+                                await CommentDatabaseService(inputId).addComment(comment);
+                                FocusScope.of(context).unfocus();
                                 await CommentDatabaseService(inputId)
                                     .addComment(comment).then((_) {
                                   showDialog(
@@ -87,7 +90,7 @@ class _AddCommentState extends State<AddComment> {
                                       return AlertDialog(
                                         backgroundColor: kLightBlue,
                                         title: Text(
-                                          "Succesfully Submitted Your Comment!",
+                                          "Comment successfully added.",
                                           style: TextStyle(fontFamily: 'Lato'),
                                         ),
                                         content: Text(
@@ -130,10 +133,10 @@ class _AddCommentState extends State<AddComment> {
                                       );
                                     },
                                   );
-                                  nameController.clear();
-                                  descriptionController.clear();
                                 });
                               }
+                              nameController.clear();
+                              descriptionController.clear();
                             },
                             child: Text('Submit'),
                             style: ButtonStyle(
@@ -142,6 +145,7 @@ class _AddCommentState extends State<AddComment> {
                         ),
                         ElevatedButton(
                             onPressed: () {
+                              FocusScope.of(context).unfocus();
                               Navigator.pop(context);
                             },
                             child: Text('Back'),
@@ -203,7 +207,6 @@ class _AddCommentState extends State<AddComment> {
           }
           return null;
         },
-        autovalidateMode: AutovalidateMode.onUserInteraction,
       ),
     );
   }

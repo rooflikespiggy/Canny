@@ -5,16 +5,12 @@ import 'package:Canny/Screens/Dashboard/recent_expense_tiles.dart';
 import 'package:Canny/Screens/Insert%20Function/add_TE.dart';
 import 'package:Canny/Screens/Sidebar/sidebar_menu.dart';
 import 'package:Canny/Services/Category/category_database.dart';
-import 'package:Canny/Shared/empty_state.dart';
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:fl_chart/fl_chart.dart';
 import 'package:flutter/material.dart';
 import 'package:Canny/Shared/colors.dart';
 import 'package:flutter_neumorphic/flutter_neumorphic.dart';
 import 'package:Canny/Screens/Dashboard/expense_breakdown.dart';
-import 'package:flutter_rounded_progress_bar/flutter_rounded_progress_bar.dart';
-import 'package:flutter_rounded_progress_bar/rounded_progress_bar_style.dart';
-import 'package:font_awesome_flutter/font_awesome_flutter.dart';
 import 'package:intl/intl.dart';
 
 class DashboardScreen extends StatefulWidget {
@@ -274,9 +270,75 @@ class _DashboardScreenState extends State<DashboardScreen> {
                                                       ),
                                                     ),
                                                     Padding(
-                                                      padding: const EdgeInsets.all(8.0),
+                                                      padding: const EdgeInsets.all(15.0),
                                                       // TODO: find a nice way to display expense vs income
-                                                      child: RoundedProgressBar(
+                                                      child: Column(
+                                                        crossAxisAlignment: CrossAxisAlignment.center,
+                                                        children: <Widget> [
+                                                          Row(
+                                                            mainAxisAlignment:
+                                                            MainAxisAlignment.spaceBetween,
+                                                            children: <Widget>[
+                                                              Text(
+                                                                'Income',
+                                                                style: TextStyle(
+                                                                  fontFamily: "Lato-Thin",
+                                                                ),
+                                                              ),
+                                                              Text(
+                                                                'Expense',
+                                                                style: TextStyle(
+                                                                  fontFamily: "Lato-Thin",
+                                                                ),
+                                                              )
+                                                            ],
+                                                          ),
+                                                          SizedBox(
+                                                            height: 2.0,
+                                                          ),
+                                                          ClipRRect(
+                                                            borderRadius: BorderRadius.circular(5.0),
+                                                            child: Row(
+                                                              children: <Widget>[
+                                                                Expanded(
+                                                                  child: Container(
+                                                                    padding: EdgeInsets.only(left: 5.0),
+                                                                    alignment: Alignment.centerLeft,
+                                                                    color: Colors.teal,
+                                                                    height: 25,
+                                                                    child: Text(
+                                                                      totalIncome.toStringAsFixed(2),
+                                                                      style: TextStyle(
+                                                                        color: Colors.white,
+                                                                        fontSize: 12,
+                                                                      )
+                                                                    ),
+                                                                  ),
+                                                                  flex: totalIncome.round(),
+                                                                ),
+                                                                Expanded(
+                                                                  child: Container(
+                                                                    padding: EdgeInsets.only(right: 5.0),
+                                                                    alignment: Alignment.centerRight,
+                                                                    color: Colors.redAccent,
+                                                                    height: 25,
+                                                                    child: Text(
+                                                                      totalExpensesAmount.toStringAsFixed(2),
+                                                                      style: TextStyle(
+                                                                        color: Colors.white,
+                                                                        fontSize: 12,
+                                                                      ),
+                                                                    ),
+                                                                  ),
+                                                                  flex: totalExpensesAmount.round(),
+                                                                ),
+                                                              ],
+                                                            ),
+                                                          ),
+                                                        ]
+                                                      )
+                                                      /*
+                                                      RoundedProgressBar(
                                                         percent: percent,
                                                         theme: RoundedProgressBarTheme.green,
                                                         childLeft: Text(totalExpensesAmount.toStringAsFixed(2),
@@ -284,6 +346,7 @@ class _DashboardScreenState extends State<DashboardScreen> {
                                                         childRight: Text(balance.toStringAsFixed(2),
                                                             style: TextStyle(color: Colors.blueGrey[700])),
                                                       ),
+                                                      */
                                                     ),
                                                   ],
                                                 ),

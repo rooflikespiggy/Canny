@@ -167,10 +167,7 @@ class _EditCategoryState extends State<EditCategory> {
                                       Spacer(),
                                       TextButton(
                                         onPressed: () {
-                                          _icon = null;
-                                          pickerColor = Color(0xff443a49);
-                                          currentColor = Color(0xff443a49);
-                                          categoryNameController.clear();
+                                          FocusScope.of(context).unfocus();
                                           Navigator.pop(context);
                                         },
                                         child: Icon(Icons.clear),
@@ -363,7 +360,6 @@ class _EditCategoryState extends State<EditCategory> {
                                                     if (iconChanged) {
                                                       _authCategory.updateIcon(widget.categoryId, _icon.child);
                                                     }
-                                                    categoryNameController.clear();
                                                     Navigator.pop(context);
                                                     Flushbar(
                                                       message: "Category successfully edited.",
@@ -375,6 +371,7 @@ class _EditCategoryState extends State<EditCategory> {
                                                       duration: Duration(seconds: 3),
                                                       leftBarIndicatorColor: kLightBlueDark,
                                                     )..show(context);
+                                                    categoryNameController.clear();
                                                   }
                                                 },
                                                 child: Text('Submit',
@@ -436,7 +433,6 @@ class _EditCategoryState extends State<EditCategory> {
           onChanged: (val) {
             categoryNameChange();
           },
-          autovalidateMode: AutovalidateMode.onUserInteraction,
         ),
       ),
     );

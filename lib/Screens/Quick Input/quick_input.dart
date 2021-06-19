@@ -290,7 +290,19 @@ class QuickInputState extends State<QuickInput> {
                   height: 50,
                   child: TextButton(
                       onPressed: () async {
-                        if (isNumeric(_evaluate) == false) {
+                        if (_chosenCategory == null) {
+                          Flushbar(
+                            message: "Choose a category.",
+                            icon: Icon(
+                              Icons.info_outline,
+                              size: 28.0,
+                              color: kLightBlueDark,
+                            ),
+                            duration: Duration(seconds: 3),
+                            leftBarIndicatorColor: kLightBlueDark,
+                          )..show(context);
+                        }
+                        else if (isNumeric(_evaluate) == false) {
                           Flushbar(
                             message: "Enter a valid expense.",
                             icon: Icon(

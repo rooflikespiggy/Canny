@@ -24,7 +24,6 @@ final CollectionReference notifCollection = Database().notificationDatabase();
 final NotificationDatabaseService _authNotification = NotificationDatabaseService();
 
 Future<void> _firebaseMessagingBackgroundHandler(RemoteMessage message) async {
-  await Firebase.initializeApp();
       print('A bg message just showed up :  ${message.messageId}');
       flutterLocalNotificationsPlugin.show(
           message.data.hashCode,
