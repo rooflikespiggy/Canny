@@ -3,6 +3,7 @@ import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:flutter/material.dart';
 import 'package:Canny/Database/get_forum_database.dart';
 import 'package:Canny/Screens/Forum/forum_detail_screen.dart';
+import 'package:firestore_search/firestore_search.dart';
 
 class ForumSearch extends SearchDelegate {
   CollectionReference forumCollection = Database().forumDatabase();
@@ -89,3 +90,4 @@ class ForumSearch extends SearchDelegate {
     );
   }
 }
+

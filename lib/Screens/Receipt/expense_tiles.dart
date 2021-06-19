@@ -3,6 +3,7 @@ import 'package:Canny/Models/category.dart';
 import 'package:Canny/Screens/Receipt/edit_receipt.dart';
 import 'package:Canny/Services/Category/category_database.dart';
 import 'package:Canny/Services/Receipt/receipt_database.dart';
+import 'package:Canny/Shared/colors.dart';
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:flushbar/flushbar.dart';
 import 'package:flutter/cupertino.dart';
@@ -92,12 +93,13 @@ class _ExpenseTileState extends State<ExpenseTile> {
               backgroundColor: Colors.deepOrange[50],
               radius: 30,
               child: IconTheme(
-                  data: IconThemeData(color: _authCategory
-                      .getCategory(widget.categoryId).categoryColor.withOpacity(1),
+                  data: IconThemeData(
+                      color: Color(widget.categoryColorValue).withOpacity(1),
                       size: 25),
-                  child: _authCategory
-                      .getCategory(widget.categoryId)
-                      .categoryIcon
+                  child: Icon(IconData(
+                      widget.categoryIconCodePoint,
+                      fontFamily: widget.categoryFontFamily)
+                  ),
               ),
             ),
              */
@@ -139,13 +141,12 @@ class _ExpenseTileState extends State<ExpenseTile> {
                   elevation: 5,
                   context: context,
                   builder: (BuildContext context) {
-                    return
-                      EditReceipt(
-                        categoryId: widget.categoryId,
-                        cost: widget.cost,
-                        itemName: widget.itemName,
-                        datetime: widget.datetime,
-                        receiptId: widget.receiptId,
+                    return EditReceipt(
+                      categoryId: widget.categoryId,
+                      cost: widget.cost,
+                      itemName: widget.itemName,
+                      datetime: widget.datetime,
+                      receiptId: widget.receiptId,
                     );
                   }
               );
@@ -155,12 +156,22 @@ class _ExpenseTileState extends State<ExpenseTile> {
                 context: context,
                 builder: (BuildContext context) {
                   return AlertDialog(
+                    backgroundColor: kLightBlue,
                     title: Text("Are you sure you want to delete this receipt?"),
                     content: Text("Once it is deleted, you will not be able to retrieve it back."),
                     actions: <Widget>[
                       // usually buttons at the bottom of the dialog
-                      TextButton(
-                        child: Text("Yes"),
+                      SizedBox(
+                        width: 130,
+                        child: TextButton(
+                          child: Text("Yes",
+                            style: TextStyle(
+                              color: Colors.white,
+                            ),
+                          ),
+                          style: TextButton.styleFrom(
+                            backgroundColor: kDarkBlue,
+                          ),
                         onPressed: () async {
                           await _authReceipt.removeReceipt(widget.receiptId,
                               widget.categoryId,
@@ -172,20 +183,29 @@ class _ExpenseTileState extends State<ExpenseTile> {
                             icon: Icon(
                               Icons.info_outline,
                               size: 28.0,
-                              color: Theme.of(context).colorScheme.secondary,
+                              color: kLightBlueDark,
                             ),
                             duration: Duration(seconds: 3),
-                            leftBarIndicatorColor:
-                            Theme.of(context).colorScheme.secondary,
+                            leftBarIndicatorColor: kLightBlueDark,
                           )..show(context);
                         },
-                      ),
-                      TextButton(
-                        child: Text("No"),
+                      ),),
+                      SizedBox(
+                        width: 130,
+                        child: TextButton(
+                          child: Text("No",
+                            style: TextStyle(
+                              color: Colors.white,
+                            ),
+                          ),
+                          style: TextButton.styleFrom(
+                            backgroundColor: kDarkBlue,
+                          ),
                         onPressed: () {
                           Navigator.pop(context);
                         },
-                      ),
+                      ),),
+                      SizedBox(width: 15,)
                     ],
                   );
                 },

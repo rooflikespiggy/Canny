@@ -95,7 +95,7 @@ class ExpenseBreakdown extends StatelessWidget {
                 style: TextStyle(
                     fontSize: 15,
                     color: textColor,
-                    fontFamily: "Lato"
+                    fontFamily: "Lato-Thin"
                 ),
               ),
             ],
@@ -115,7 +115,7 @@ class ExpenseBreakdown extends StatelessWidget {
             style: TextStyle(
                 fontSize: 16,
                 color: textColor,
-                fontFamily: "Lato"),
+                fontFamily: "Lato-Thin"),
           ),
         ),
     );

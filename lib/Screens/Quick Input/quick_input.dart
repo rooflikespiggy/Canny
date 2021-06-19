@@ -40,9 +40,10 @@ class QuickInputState extends State<QuickInput> {
   }
 
   void numClick(String text) {
-    if (_expression.contains('.') &&
+    if ((_expression.contains('.') &&
         text == '.' &&
-        _expression.substring(_expression.length - 1, _expression.length) == ".") {
+        _expression.substring(_expression.length - 1, _expression.length) == ".") ||
+        _expression.length > 10) {
       setState(() => _expression += '');
     } else if (text == '*') {
       setState(() => _expression += 'x');
@@ -51,9 +52,10 @@ class QuickInputState extends State<QuickInput> {
     } else {
       setState(() => _expression += text);
     }
-    if (_expression.contains('.') &&
+    if ((_evaluate.contains('.') &&
         text == '.' &&
-        _evaluate.substring(_evaluate.length - 1, _evaluate.length) == ".") {
+        _evaluate.substring(_evaluate.length - 1, _evaluate.length) == ".") ||
+        _evaluate.length > 10) {
       setState(() => _evaluate += '');
     } else {
       setState(() => _evaluate += text);
@@ -85,6 +87,7 @@ class QuickInputState extends State<QuickInput> {
       evaluated = true;
       _history = _expression;
       _evaluate = exp.evaluate(EvaluationType.REAL, cm).toStringAsFixed(8);
+      _evaluate = _evaluate.substring(0, 11);
     });
   }
 
@@ -287,27 +290,39 @@ class QuickInputState extends State<QuickInput> {
                   height: 50,
                   child: TextButton(
                       onPressed: () async {
-                        print(_chosenCategory);
-                        final Expense expense = Expense(
-                          categoryId: _chosenCategory.categoryId,
-                          datetime: DateTime.now(),
-                          cost: _chosenCategory.isIncome
-                              ? roundDouble(double.parse(_evaluate), 2)
-                              : -(roundDouble(double.parse(_evaluate), 2)),
-                          itemName: _chosenCategory.categoryName,
-                          uid: uid,
-                        );
-                        if (roundDouble(double.parse(_evaluate), 2) == 0.00) {
+                        if (_chosenCategory == null) {
+                          Flushbar(
+                            message: "Choose a category.",
+                            icon: Icon(
+                              Icons.info_outline,
+                              size: 28.0,
+                              color: kLightBlueDark,
+                            ),
+                            duration: Duration(seconds: 3),
+                            leftBarIndicatorColor: kLightBlueDark,
+                          )..show(context);
+                        }
+                        else if (isNumeric(_evaluate) == false) {
+                          Flushbar(
+                            message: "Enter a valid expense.",
+                            icon: Icon(
+                              Icons.info_outline,
+                              size: 28.0,
+                              color: kLightBlueDark,
+                            ),
+                            duration: Duration(seconds: 3),
+                            leftBarIndicatorColor: kLightBlueDark,
+                          )..show(context);
+                        } else if (roundDouble(double.parse(_evaluate), 2) == 0.00) {
                           Flushbar(
                             message: "Cannot enter 0.",
                             icon: Icon(
                               Icons.info_outline,
                               size: 28.0,
-                              color: Theme.of(context).colorScheme.secondary,
+                              color: kLightBlueDark,
                             ),
                             duration: Duration(seconds: 3),
-                            leftBarIndicatorColor:
-                            Theme.of(context).colorScheme.secondary,
+                            leftBarIndicatorColor: kLightBlueDark,
                           )..show(context);
                         } else if (roundDouble(double.parse(_evaluate), 2) < 0.00) {
                           Flushbar(
@@ -315,24 +330,31 @@ class QuickInputState extends State<QuickInput> {
                             icon: Icon(
                               Icons.info_outline,
                               size: 28.0,
-                              color: Theme.of(context).colorScheme.secondary,
+                              color: kLightBlueDark,
                             ),
                             duration: Duration(seconds: 3),
-                            leftBarIndicatorColor:
-                            Theme.of(context).colorScheme.secondary,
+                            leftBarIndicatorColor: kLightBlueDark,
                           )..show(context);
                         } else {
+                          final Expense expense = Expense(
+                            categoryId: _chosenCategory.categoryId,
+                            datetime: DateTime.now(),
+                            cost: _chosenCategory.isIncome
+                                ? roundDouble(double.parse(_evaluate), 2)
+                                : -(roundDouble(double.parse(_evaluate), 2)),
+                            itemName: _chosenCategory.categoryName,
+                            uid: uid,
+                          );
                           await _authReceipt.addReceipt(expense);
                           Flushbar(
                             message: "Expense successfully added.",
                             icon: Icon(
-                              Icons.info_outline,
+                              Icons.check,
                               size: 28.0,
-                              color: Theme.of(context).colorScheme.secondary,
+                              color: kLightBlueDark,
                             ),
                             duration: Duration(seconds: 3),
-                            leftBarIndicatorColor:
-                            Theme.of(context).colorScheme.secondary,
+                            leftBarIndicatorColor: kLightBlueDark,
                           )..show(context);
                         }
                       },
@@ -448,5 +470,12 @@ class QuickInputState extends State<QuickInput> {
           }
       ),
     );
+  }
+
+  bool isNumeric(String str) {
+    if(str == null) {
+      return false;
+    }
+    return num.tryParse(str) != null;
   }
 }

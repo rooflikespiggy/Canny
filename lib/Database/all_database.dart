@@ -34,9 +34,21 @@ class Database {
         .collection('TargetedExpenditure');
   }
 
+  CollectionReference dashboardDatabase() {
+    return userCollection
+        .doc(uid)
+        .collection('Dashboard');
+  }
+
   CollectionReference quickInputDatabase() {
     return userCollection
         .doc(uid)
         .collection('QuickInput');
+  }
+
+  CollectionReference notificationDatabase() {
+    return userCollection
+        .doc(uid)
+        .collection('Notification');
   }
 }

@@ -1,11 +1,14 @@
+import 'package:Canny/Database/all_database.dart';
 import 'package:Canny/Screens/Sidebar/Quick%20Input/customise_quickinput.dart';
+import 'package:Canny/Services/Dashboard/dashboard_database.dart';
+import 'package:Canny/Services/Notifications/notification_database.dart';
 import 'package:Canny/Services/Users/auth.dart';
 import 'package:Canny/Shared/custom_route.dart';
+import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
 import 'package:Canny/Shared/colors.dart';
 import 'package:Canny/Screens/wrapper.dart';
-import 'package:Canny/Screens/Category/category_screen.dart';
 
 class SideBarMenu extends StatefulWidget {
   const SideBarMenu({Key key}) : super(key: key);
@@ -14,13 +17,20 @@ class SideBarMenu extends StatefulWidget {
   _SideBarMenuState createState() => _SideBarMenuState();
 }
 
-class _SideBarMenuState extends State<SideBarMenu> {
+class _SideBarMenuState extends State<SideBarMenu> with AutomaticKeepAliveClientMixin {
   final AuthService _auth = AuthService();
   final String email = FirebaseAuth.instance.currentUser.email;
-  bool isSwitched = false;
+  final CollectionReference dashboardCollection = Database().dashboardDatabase();
+  final DashboardDatabaseService _authDashboard = DashboardDatabaseService();
+  final CollectionReference notifCollection = Database().notificationDatabase();
+  final NotificationDatabaseService _authNotification = NotificationDatabaseService();
+
+  @override
+  bool get wantKeepAlive => true;
 
   @override
   Widget build(BuildContext context) {
+    super.build(context);
     return Drawer(
         child: Container(
           color: kLightBlue,
@@ -65,26 +75,92 @@ class _SideBarMenuState extends State<SideBarMenu> {
               },
             ),
             Divider(thickness: 1.0),
-            ListTile(
-              leading: Icon(Icons.notifications_active),
-              trailing: Switch(
-                value: isSwitched,
-                onChanged: (value) {
-                  setState(() {
-                    isSwitched = value;
-                    print(isSwitched);
-                  });
-                },
-                activeTrackColor: kLightBlueDark,
-                activeColor: kDarkBlue,
-                inactiveThumbColor: Colors.white,
-              ),
-              title: Text(
-                  'Turn on Reminder Notifications',
-                  style: TextStyle(fontFamily: 'Lato',
-                    fontSize: 16,
-                  )
-              ),
+            StreamBuilder(
+              stream: dashboardCollection.doc('Switch').snapshots(),
+              builder: (BuildContext context, AsyncSnapshot<DocumentSnapshot> snapshot) {
+                if (snapshot.hasData) {
+                  return Theme(
+                    data: Theme.of(context).copyWith(dividerColor: Colors.transparent),
+                    child: ExpansionTile(
+                      leading: Icon(Icons.settings),
+                      title: Text(
+                        'Customise Dashboard',
+                        style: TextStyle(
+                          fontFamily: 'Lato',
+                          fontSize: 16,
+                        )
+                      ),
+                      children: <Widget>[
+                        SwitchListTile(
+                          value: snapshot.data['balance'],
+                          onChanged: (value) => _authDashboard.updateBudget(value),
+                          title: Text('Balance'),
+                          activeTrackColor: kLightBlueDark,
+                          activeColor: kDarkBlue,
+                          inactiveThumbColor: Colors.white,
+                        ),
+                        SwitchListTile(
+                          value: snapshot.data['expenseBreakdown'],
+                          onChanged: (value) => _authDashboard.updateExpenseBreakdown(value),
+                          title: Text('Expenses Breakdown'),
+                          activeTrackColor: kLightBlueDark,
+                          activeColor: kDarkBlue,
+                          inactiveThumbColor: Colors.white,
+                        ),
+                        SwitchListTile(
+                          value: snapshot.data['expenseSummary'],
+                          onChanged: (value) => _authDashboard.updateExpenseSummary(value),
+                          title: Text('Expenses Summary'),
+                          activeTrackColor: kLightBlueDark,
+                          activeColor: kDarkBlue,
+                          inactiveThumbColor: Colors.white,
+                        ),
+                        SwitchListTile(
+                          value: snapshot.data['recentReceipts'],
+                          onChanged: (value) => _authDashboard.updateRecentReceipts(value),
+                          title: Text('Recent Receipts'),
+                          activeTrackColor: kLightBlueDark,
+                          activeColor: kDarkBlue,
+                          inactiveThumbColor: Colors.white,
+                        ),
+                      ],
+                    ),
+                  );
+                }
+                return Container();
+              }
+            ),
+            Divider(thickness: 1.0),
+            StreamBuilder(
+                stream: notifCollection.doc('NotifStatus').snapshots(),
+                builder: (BuildContext context, AsyncSnapshot<DocumentSnapshot> snapshot) {
+                  if (snapshot.hasData) {
+                    return Theme(
+                      data: Theme.of(context).copyWith(dividerColor: Colors.transparent),
+                      child: ListTile(
+                        leading: Icon(Icons.notifications_active),
+                        title: Text(
+                            'Turn on Reminder Notifications',
+                            style: TextStyle(
+                              fontFamily: 'Lato',
+                              fontSize: 16,
+                            )
+                        ),
+                        trailing: Switch(
+                            value:snapshot.data['notificationStatus'],
+                            onChanged: (value) async {
+                              await _authNotification.updateNotifStatus(value);
+                            },
+                              activeTrackColor: kLightBlueDark,
+                              activeColor: kDarkBlue,
+                              inactiveThumbColor: Colors.white,
+                            ),
+
+                      ),
+                    );
+                  }
+                  return Container();
+                }
             ),
             Divider(thickness: 1.0),
             ListTile(
@@ -98,10 +174,9 @@ class _SideBarMenuState extends State<SideBarMenu> {
               onTap: () async {
                 await _auth.signOut();
                 Navigator.push(context,
-                MaterialPageRoute(builder: (context) => Wrapper()));
+                    MaterialPageRoute(builder: (context) => Wrapper()));
               },
             ),
-              Divider(thickness: 1.0),
           ],
         ),
       ),

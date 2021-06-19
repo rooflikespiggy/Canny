@@ -1,7 +1,9 @@
 import 'package:Canny/Models/forum.dart';
+import 'package:Canny/Screens/Home/homepage_screen.dart';
 import 'package:Canny/Services/Forum/forum_database.dart';
 import 'package:Canny/Shared/colors.dart';
 import 'package:firebase_auth/firebase_auth.dart';
+import 'package:flushbar/flushbar.dart';
 import 'package:flutter/material.dart';
 
 class AddDiscussion extends StatefulWidget {
@@ -74,13 +76,16 @@ class _AddDiscussionState extends State<AddDiscussion> {
                                 title: titleController.text,
                                 description: descriptionController.text);
                             if (_formKey.currentState.validate()) {
+                              await _authForum.addDiscussion(forum);
+                              FocusScope.of(context).unfocus();
                               await _authForum.addDiscussion(forum).then((_) {
                                 showDialog(
                                   context: context,
                                   builder: (BuildContext context) {
                                     return AlertDialog(
+                                      backgroundColor: kLightBlue,
                                       title: Text(
-                                        "Succesfully Submitted Your Discussion!",
+                                        "Discussion successfully added.",
                                         style: TextStyle(fontFamily: 'Lato'),
                                       ),
                                       content: Text(
@@ -88,29 +93,45 @@ class _AddDiscussionState extends State<AddDiscussion> {
                                         style: TextStyle(fontFamily: 'Lato.Thin'),
                                       ),
                                       actions: <Widget> [
-                                        TextButton(
-                                          child: Text("Back to forum"),
+                                        SizedBox(
+                                          width: 130,
+                                          child: TextButton(
+                                            child: Text("Back to forum",
+                                              style: TextStyle(
+                                                color: Colors.white,
+                                              ),
+                                            ),
+                                            style: TextButton.styleFrom(
+                                              backgroundColor: kDarkBlue,
+                                            ),
                                           onPressed: () {
-                                            int count = 0;
-                                            Navigator.popUntil(context, (route) {
-                                              return count++ == 2;
-                                            });
+                                            Navigator.push(context,
+                                                MaterialPageRoute(builder: (context) => HomePageScreen(selectedTab: 3)));
                                           },
-                                        ),
-                                        TextButton(
-                                          child: Text("Add another discussion"),
+                                        ),),
+                                        SizedBox(
+                                          width: 175,
+                                          child: TextButton(
+                                            child: Text("Add another discussion",
+                                              style: TextStyle(
+                                                color: Colors.white,
+                                              ),
+                                            ),
+                                            style: TextButton.styleFrom(
+                                              backgroundColor: kDarkBlue,
+                                            ),
                                           onPressed: () {
                                             Navigator.pop(context);
                                           },
-                                        ),
+                                        ),),
                                       ],
                                     );
                                   },
                                 );
-                                titleController.clear();
-                                nameController.clear();
-                                descriptionController.clear();
                               });
+                              titleController.clear();
+                              nameController.clear();
+                              descriptionController.clear();
                             }
                           },
                           child: Text('Submit'),

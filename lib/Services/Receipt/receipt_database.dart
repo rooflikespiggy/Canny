@@ -2,7 +2,6 @@ import 'package:Canny/Database/all_database.dart';
 import 'package:Canny/Models/expense.dart';
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:intl/intl.dart';
-import 'package:math_expressions/math_expressions.dart';
 
 class ReceiptDatabaseService {
 

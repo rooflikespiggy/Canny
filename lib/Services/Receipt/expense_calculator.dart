@@ -1,8 +1,6 @@
 import 'package:Canny/Database/all_database.dart';
-import 'package:Canny/Models/category.dart';
 import 'package:Canny/Models/expense.dart';
 import 'package:Canny/Screens/Insert%20Function/select_category_screen.dart';
-import 'package:Canny/Services/Quick%20Input/calculator_icon_buttons.dart';
 import 'package:Canny/Services/Receipt/receipt_database.dart';
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:flushbar/flushbar.dart';
@@ -11,7 +9,6 @@ import 'package:flutter/material.dart';
 import 'package:math_expressions/math_expressions.dart';
 import 'package:Canny/Services/Quick%20Input/calculator_buttons.dart';
 import 'package:Canny/Shared/colors.dart';
-import 'package:Canny/Services/Quick Input/quickinput_database.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'dart:math';
 
@@ -29,11 +26,10 @@ class ExpenseCalculatorState extends State<ExpenseCalculator> {
   String _evaluate = '';
   final _formKey = GlobalKey<FormState>();
   final TextEditingController itemNameController = TextEditingController();
-  final QuickInputDatabaseService _authQuickInput = QuickInputDatabaseService();
   final ReceiptDatabaseService _authReceipt = ReceiptDatabaseService();
   final CollectionReference quickInputCollection = Database().quickInputDatabase();
-  String categoryName = 'Food & Drinks';
-  String categoryId = '00';
+  String categoryName = 'Others';
+  String categoryId = '11';
   Icon icon;
   int categoryColorValue;
   int categoryIconCodePoint;
@@ -43,9 +39,10 @@ class ExpenseCalculatorState extends State<ExpenseCalculator> {
   bool evaluated = false;
 
   void numClick(String text) {
-    if (_expression.contains('.') &&
+    if ((_expression.contains('.') &&
         text == '.' &&
-        _expression.substring(_expression.length - 1, _expression.length) == ".") {
+        _expression.substring(_expression.length - 1, _expression.length) == ".") ||
+        _expression.length > 10) {
       setState(() => _expression += '');
     } else if (text == '*') {
       setState(() => _expression += 'x');
@@ -54,9 +51,10 @@ class ExpenseCalculatorState extends State<ExpenseCalculator> {
     } else {
       setState(() => _expression += text);
     }
-    if (_expression.contains('.') &&
+    if ((_evaluate.contains('.') &&
         text == '.' &&
-        _evaluate.substring(_evaluate.length - 1, _evaluate.length) == ".") {
+        _evaluate.substring(_evaluate.length - 1, _evaluate.length) == ".") ||
+        _evaluate.length > 10) {
       setState(() => _evaluate += '');
     } else {
       setState(() => _evaluate += text);
@@ -87,7 +85,8 @@ class ExpenseCalculatorState extends State<ExpenseCalculator> {
     setState(() {
       evaluated = true;
       _history = _expression;
-      _evaluate = exp.evaluate(EvaluationType.REAL, cm).toStringAsFixed(2);
+      _evaluate = exp.evaluate(EvaluationType.REAL, cm).toString();
+      _evaluate = _evaluate.substring(0, 11);
     });
   }
 
@@ -98,7 +97,7 @@ class ExpenseCalculatorState extends State<ExpenseCalculator> {
 
   @override
   Widget build(BuildContext context) {
-    /*
+
     return Scaffold(
       backgroundColor: kLightBlue,
       resizeToAvoidBottomInset: false,
@@ -415,13 +414,14 @@ class ExpenseCalculatorState extends State<ExpenseCalculator> {
         ),
       ),
     );
-    */
+
+    /*
     return Scaffold(
       backgroundColor: kLightBlue,
       resizeToAvoidBottomInset: false,
       appBar: AppBar(
         backgroundColor: kDarkBlue,
-        title: Text('Enter your Expenses'),
+        title: Text('Enter your Receipt'),
         elevation: 0.0,
       ),
       body: Container(
@@ -645,26 +645,28 @@ class ExpenseCalculatorState extends State<ExpenseCalculator> {
                 height: 60,
                 child: TextButton(
                   onPressed: () async {
-                    final Expense expense = Expense(
-                      categoryId: categoryId, //selectedCategory[0].categoryId,
-                      cost: isIncome //selectedCategory[0].isIncome
-                          ? roundDouble(double.parse(_evaluate), 2)
-                          : -(roundDouble(double.parse(_evaluate), 2)),
-                      itemName: itemNameController.text,
-                      uid: uid,
-                    );
                     if (_formKey.currentState.validate()) {
-                      if (roundDouble(double.parse(_evaluate), 2) == 0.00) {
+                      if (isNumeric(_evaluate) == false) {
+                        Flushbar(
+                          message: "Enter a valid expense.",
+                          icon: Icon(
+                            Icons.info_outline,
+                            size: 28.0,
+                            color: kLightBlueDark,
+                          ),
+                          duration: Duration(seconds: 3),
+                          leftBarIndicatorColor: kLightBlueDark,
+                        )..show(context);
+                      } else if (roundDouble(double.parse(_evaluate), 2) == 0.00) {
                         Flushbar(
                           message: "Cannot make a valid expense with 0.",
                           icon: Icon(
                             Icons.info_outline,
                             size: 28.0,
-                            color: Theme.of(context).colorScheme.secondary,
+                            color: kLightBlueDark,
                           ),
                           duration: Duration(seconds: 3),
-                          leftBarIndicatorColor:
-                          Theme.of(context).colorScheme.secondary,
+                          leftBarIndicatorColor: kLightBlueDark,
                         )..show(context);
                       } else if (roundDouble(double.parse(_evaluate), 2) < 0.00) {
                         Flushbar(
@@ -672,26 +674,32 @@ class ExpenseCalculatorState extends State<ExpenseCalculator> {
                           icon: Icon(
                             Icons.info_outline,
                             size: 28.0,
-                            color: Theme.of(context).colorScheme.secondary,
+                            color: kLightBlueDark,
                           ),
                           duration: Duration(seconds: 3),
-                          leftBarIndicatorColor:
-                          Theme.of(context).colorScheme.secondary,
+                          leftBarIndicatorColor: kLightBlueDark,
                         )..show(context);
                       } else {
+                        final Expense expense = Expense(
+                          categoryId: categoryId, //selectedCategory[0].categoryId,
+                          cost: isIncome //selectedCategory[0].isIncome
+                              ? roundDouble(double.parse(_evaluate), 2)
+                              : -(roundDouble(double.parse(_evaluate), 2)),
+                          itemName: itemNameController.text,
+                          uid: uid,
+                        );
                         await _authReceipt.addReceipt(expense);
                         itemNameController.clear();
                         Navigator.pop(context);
                         Flushbar(
                           message: "Expense successfully added.",
                           icon: Icon(
-                            Icons.info_outline,
+                            Icons.check,
                             size: 28.0,
-                            color: Theme.of(context).colorScheme.secondary,
+                            color: kLightBlueDark,
                           ),
                           duration: Duration(seconds: 3),
-                          leftBarIndicatorColor:
-                          Theme.of(context).colorScheme.secondary,
+                          leftBarIndicatorColor: kLightBlueDark,
                         )..show(context);
                       }
                     }
@@ -717,6 +725,8 @@ class ExpenseCalculatorState extends State<ExpenseCalculator> {
         ),
       ),
     );
+
+     */
   }
 
   Widget _showTextFormFields(TextEditingController text, String label, Icon icon, double size) {
@@ -747,10 +757,16 @@ class ExpenseCalculatorState extends State<ExpenseCalculator> {
             }
             return null;
           },
+          autovalidateMode: AutovalidateMode.onUserInteraction,
         ),
       ),
     );
+  }
 
-
+  bool isNumeric(String str) {
+    if(str == null) {
+      return false;
+    }
+    return num.tryParse(str) != null;
   }
 }

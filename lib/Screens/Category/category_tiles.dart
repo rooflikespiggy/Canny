@@ -1,5 +1,5 @@
 import 'package:Canny/Database/all_database.dart';
-import 'package:Canny/Models/expense.dart';
+import 'package:Canny/Screens/Category/edit_category.dart';
 import 'package:Canny/Services/Category/category_database.dart';
 import 'package:Canny/Services/Category/default_categories.dart';
 import 'package:Canny/Services/Receipt/receipt_database.dart';
@@ -71,9 +71,7 @@ class _CategoryTileState extends State<CategoryTile> {
                           fontWeight: FontWeight.bold,
                         ),
                       ),
-                      SizedBox(
-                        height: 5,
-                      ),
+                      SizedBox(height: 5),
                       SizedBox(
                         width: 260,
                         height: 260,
@@ -82,9 +80,7 @@ class _CategoryTileState extends State<CategoryTile> {
                           onColorChanged: changeColor,
                         ),
                       ),
-                      SizedBox(
-                          height: 10
-                      ),
+                      SizedBox(height: 10),
                       TextButton(
                         onPressed: () {
                           setState(() => currentColor = pickerColor);
@@ -154,11 +150,35 @@ class _CategoryTileState extends State<CategoryTile> {
             child: Row(
               mainAxisAlignment: MainAxisAlignment.end,
               children: <Widget> [
-                IconButton(
-                  icon: Icon(Icons.edit),
-                  onPressed: () {
-                    _editCatPanel();
-                  },
+                Visibility(
+                  visible: int.parse(widget.categoryId) >= categoriesSize,
+                  child: IconButton(
+                    icon: Icon(Icons.edit),
+                    onPressed: () {
+                      showModalBottomSheet(
+                          shape: RoundedRectangleBorder(
+                            borderRadius: BorderRadius.only(
+                              topLeft: Radius.circular(24),
+                              topRight: Radius.circular(24),
+                            ),
+                          ),
+                          enableDrag: true,
+                          isScrollControlled: true,
+                          elevation: 5,
+                          context: context,
+                          builder: (BuildContext context) {
+                            return EditCategory(
+                              categoryId: widget.categoryId,
+                              categoryName: widget.categoryName,
+                              categoryColorValue: widget.categoryColorValue,
+                              categoryIconCodePoint: widget.categoryIconCodePoint,
+                              categoryFontFamily: widget.categoryFontFamily,
+                              isIncome: widget.isIncome,
+                            );
+                          }
+                      );
+                    },
+                  ),
                 ),
                 Visibility(
                   visible: int.parse(widget.categoryId) >= categoriesSize,
@@ -174,14 +194,24 @@ class _CategoryTileState extends State<CategoryTile> {
                                 builder:
                                     (BuildContext context) {
                                   return AlertDialog(
+                                    backgroundColor: kLightBlue,
                                     title: Text("Are you sure you want to delete " + widget.categoryName + "?"),
                                     content: Text("Once it is deleted, you will not be able "
                                         "to retrieve it back. Your expenses for " + widget.categoryName +
                                         " will be moved to Others."),
                                     actions: <Widget>[
                                       // usually buttons at the bottom of the dialog
-                                      TextButton(
-                                        child: Text("Yes"),
+                                    SizedBox(
+                                      width: 130,
+                                      child: TextButton(
+                                        child: Text("Yes",
+                                          style: TextStyle(
+                                            color: Colors.white,
+                                          ),
+                                        ),
+                                        style: TextButton.styleFrom(
+                                          backgroundColor: kDarkBlue,
+                                        ),
                                         onPressed: () async {
                                           await _authCategory.removeCategory(widget.categoryId, widget.categoryAmount);
                                           for (int i = 0; i < snapshot.data.docs.length; i++) {
@@ -195,20 +225,31 @@ class _CategoryTileState extends State<CategoryTile> {
                                             icon: Icon(
                                               Icons.info_outline,
                                               size: 28.0,
-                                              color: Theme.of(context).colorScheme.secondary,
+                                              color: kLightBlueDark,
                                             ),
                                             duration: Duration(seconds: 3),
-                                            leftBarIndicatorColor:
-                                            Theme.of(context).colorScheme.secondary,
+                                            leftBarIndicatorColor: kLightBlueDark,
                                           )..show(context);
                                         },
                                       ),
-                                      TextButton(
-                                        child: Text("No"),
+                                    ),
+                                      SizedBox(
+                                        width: 130,
+                                        child: TextButton(
+                                          child: Text("No",
+                                            style: TextStyle(
+                                              color: Colors.white,
+                                            ),
+                                          ),
+                                          style: TextButton.styleFrom(
+                                            backgroundColor: kDarkBlue,
+                                          ),
                                         onPressed: () {
                                           Navigator.pop(context);
                                         },
                                       ),
+                                      ),
+                                      SizedBox(width: 14,)
                                     ],
                                   );
                                 },

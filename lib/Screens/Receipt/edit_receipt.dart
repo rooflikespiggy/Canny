@@ -3,6 +3,7 @@ import 'package:Canny/Screens/Insert%20Function/select_category_screen.dart';
 import 'package:Canny/Services/Receipt/receipt_database.dart';
 import 'package:Canny/Shared/colors.dart';
 import 'package:Canny/Shared/input_formatters.dart';
+import 'package:flushbar/flushbar.dart';
 import 'package:flutter/material.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:cloud_firestore/cloud_firestore.dart';
@@ -136,7 +137,7 @@ class _EditReceiptState extends State<EditReceipt> {
                                   mainAxisAlignment: MainAxisAlignment.center,
                                   children: <Widget> [
                                     SizedBox(width: 30.0),
-                                    Text('Edit Your Expense',
+                                    Text('Edit Receipt',
                                       style: TextStyle(
                                           fontSize: 18,
                                           fontFamily: "Lato",
@@ -146,8 +147,6 @@ class _EditReceiptState extends State<EditReceipt> {
                                     Spacer(),
                                     TextButton(
                                       onPressed: () {
-                                        itemNameController.clear();
-                                        costController.clear();
                                         Navigator.pop(context);
                                       },
                                       child: Icon(Icons.clear),
@@ -317,9 +316,20 @@ class _EditReceiptState extends State<EditReceipt> {
                                                           ? double.parse(costController.text)
                                                           : -(double.parse(costController.text)));
                                                 }
+                                                FocusScope.of(context).unfocus();
+                                                Navigator.pop(context);
+                                                Flushbar(
+                                                  message: "Receipt successfully edited.",
+                                                  icon: Icon(
+                                                    Icons.check,
+                                                    size: 28.0,
+                                                    color: kLightBlueDark,
+                                                  ),
+                                                  duration: Duration(seconds: 3),
+                                                  leftBarIndicatorColor: kLightBlueDark,
+                                                )..show(context);
                                                 itemNameController.clear();
                                                 costController.clear();
-                                                Navigator.pop(context);
                                                 /*
                                                 await _authReceipt.updateReceipt(widget.receiptId,
                                                     widget.categoryId,
@@ -444,6 +454,7 @@ class _EditReceiptState extends State<EditReceipt> {
             }
             return null;
           },
+          autovalidateMode: AutovalidateMode.onUserInteraction,
         ),
       ),
     );
