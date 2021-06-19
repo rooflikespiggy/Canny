@@ -86,7 +86,9 @@ class ExpenseCalculatorState extends State<ExpenseCalculator> {
       evaluated = true;
       _history = _expression;
       _evaluate = exp.evaluate(EvaluationType.REAL, cm).toString();
-      _evaluate = _evaluate.substring(0, 11);
+      if (_evaluate.length > 11) {
+        _evaluate = _evaluate.substring(0, 11);
+      }
     });
   }
 
@@ -95,9 +97,10 @@ class ExpenseCalculatorState extends State<ExpenseCalculator> {
     return ((value * mod).round().toDouble() / mod);
   }
 
+
   @override
   Widget build(BuildContext context) {
-
+    /*
     return Scaffold(
       backgroundColor: kLightBlue,
       resizeToAvoidBottomInset: false,
@@ -414,8 +417,8 @@ class ExpenseCalculatorState extends State<ExpenseCalculator> {
         ),
       ),
     );
+    */
 
-    /*
     return Scaffold(
       backgroundColor: kLightBlue,
       resizeToAvoidBottomInset: false,
@@ -692,7 +695,7 @@ class ExpenseCalculatorState extends State<ExpenseCalculator> {
                         itemNameController.clear();
                         Navigator.pop(context);
                         Flushbar(
-                          message: "Expense successfully added.",
+                          message: "Receipt successfully added.",
                           icon: Icon(
                             Icons.check,
                             size: 28.0,
@@ -725,8 +728,6 @@ class ExpenseCalculatorState extends State<ExpenseCalculator> {
         ),
       ),
     );
-
-     */
   }
 
   Widget _showTextFormFields(TextEditingController text, String label, Icon icon, double size) {

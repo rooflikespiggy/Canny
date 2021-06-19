@@ -108,6 +108,7 @@ class _ReceiptScreenState extends State<ReceiptScreen> {
                 Visibility(
                   visible: isActive,
                   child: Container(
+                    width: 380,
                     padding: EdgeInsets.all(8),
                     margin: EdgeInsets.symmetric(horizontal: 15.0),
                     decoration: BoxDecoration(

@@ -3,8 +3,10 @@ import 'package:Canny/Services/Forum/comment_database.dart';
 import 'package:Canny/Shared/colors.dart';
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:firebase_auth/firebase_auth.dart';
+import 'package:flushbar/flushbar.dart';
 import 'package:flutter/material.dart';
 import 'package:font_awesome_flutter/font_awesome_flutter.dart';
+import 'package:intl/intl.dart';
 
 class CommentDetail extends StatelessWidget {
   final String uid = FirebaseAuth.instance.currentUser.uid;
@@ -60,6 +62,7 @@ class CommentDetail extends StatelessWidget {
                                         title: Text(
                                           snapshotData["name"],
                                           style: TextStyle(
+                                            fontFamily: 'Lato-Thin',
                                             fontSize: 20,
 
                                           ),
@@ -73,11 +76,29 @@ class CommentDetail extends StatelessWidget {
                                           child: Text(
                                             snapshotData["name"][0],
                                             style: TextStyle(
+                                              fontFamily: 'Lato',
                                               fontSize: 23,
                                               color: Colors.white,
                                             ),
                                           ),
                                         )
+                                    ),
+                                    Padding(
+                                      padding: EdgeInsets.fromLTRB(20.0, 0, 20.0, 10.0),
+                                      child: Row(
+                                        crossAxisAlignment: CrossAxisAlignment.start,
+                                        children: <Widget>[
+                                          Text(DateFormat("EEEE, d MMMM y")
+                                              .format(DateTime.fromMillisecondsSinceEpoch(
+                                              snapshotData["datetime"].seconds * 1000)),
+                                              style: TextStyle(
+                                                fontFamily: 'Lato-Thin',
+                                                fontSize: 16,
+                                                color: Colors.grey[850],
+                                              )
+                                          ),
+                                        ],
+                                      ),
                                     ),
                                     Padding(
                                       padding: EdgeInsets.only(left: 8.0, right: 8.0, top: 5.0),
@@ -182,9 +203,20 @@ class CommentDetail extends StatelessWidget {
                                                                               nameInputController.text,
                                                                               descriptionInputController.text
                                                                           ).then((_) {
+                                                                            FocusScope.of(context).unfocus();
                                                                             nameInputController.clear();
                                                                             descriptionInputController.clear();
                                                                             Navigator.pop(context);
+                                                                            Flushbar(
+                                                                              message: "Comment successfully edited.",
+                                                                              icon: Icon(
+                                                                                Icons.check,
+                                                                                size: 28.0,
+                                                                                color: kLightBlueDark,
+                                                                              ),
+                                                                              duration: Duration(seconds: 3),
+                                                                              leftBarIndicatorColor: kLightBlueDark,
+                                                                            )..show(context);
                                                                           }).catchError((error) => print(error));
                                                                         }
                                                                       },

@@ -80,7 +80,6 @@ class _AddCommentState extends State<AddComment> {
                                   name: nameController.text,
                                   description: descriptionController.text);
                               if (_formKey.currentState.validate()) {
-                                await CommentDatabaseService(inputId).addComment(comment);
                                 FocusScope.of(context).unfocus();
                                 await CommentDatabaseService(inputId)
                                     .addComment(comment).then((_) {

@@ -86,8 +86,10 @@ class QuickInputState extends State<QuickInput> {
     setState(() {
       evaluated = true;
       _history = _expression;
-      _evaluate = exp.evaluate(EvaluationType.REAL, cm).toStringAsFixed(8);
-      _evaluate = _evaluate.substring(0, 11);
+      _evaluate = exp.evaluate(EvaluationType.REAL, cm).toString();
+      if (_evaluate.length > 11) {
+        _evaluate = _evaluate.substring(0, 11);
+      }
     });
   }
 
@@ -101,6 +103,7 @@ class QuickInputState extends State<QuickInput> {
     _authQuickInput.initNewQuickInputs();
     return Scaffold(
       appBar: AppBar(
+        title: Text("QUICK INPUT"),
         backgroundColor: kDarkBlue,
         elevation: 0.0,
       ),
@@ -347,7 +350,7 @@ class QuickInputState extends State<QuickInput> {
                           );
                           await _authReceipt.addReceipt(expense);
                           Flushbar(
-                            message: "Expense successfully added.",
+                            message: "Receipt successfully added.",
                             icon: Icon(
                               Icons.check,
                               size: 28.0,

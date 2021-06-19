@@ -4,7 +4,7 @@ import 'package:Canny/Services/Dashboard/dashboard_database.dart';
 import 'package:Canny/Services/Quick%20Input/quickinput_database.dart';
 import 'package:Canny/Services/Targeted%20Expenditure/TE_database.dart';
 import 'package:firebase_auth/firebase_auth.dart';
-import 'package:Canny/Services/Notifications/notification_database.dart';
+import 'package:Canny/Services/Notification/notification_database.dart';
 
 
 class AuthService {
