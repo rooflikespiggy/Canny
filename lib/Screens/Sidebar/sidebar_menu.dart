@@ -4,6 +4,7 @@ import 'package:Canny/Services/Dashboard/dashboard_database.dart';
 import 'package:Canny/Services/Notification/notification_database.dart';
 import 'package:Canny/Services/Users/auth.dart';
 import 'package:Canny/Shared/custom_route.dart';
+import 'package:Canny/Shared/loading.dart';
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';

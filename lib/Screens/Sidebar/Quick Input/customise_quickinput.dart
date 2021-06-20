@@ -50,9 +50,10 @@ class _CustomiseQIState extends State<CustomiseQI> {
             key: _formKey,
             child: SingleChildScrollView(
               child: Column(
+                crossAxisAlignment: CrossAxisAlignment.stretch,
                 children: <Widget>[
                   Text(
-                    'Select 3 categories for Quick Input',
+                    'Select 3 categories for \n Quick Input',
                     textAlign: TextAlign.center,
                     style: TextStyle(
                       fontSize: 22.0,
@@ -62,7 +63,8 @@ class _CustomiseQIState extends State<CustomiseQI> {
                     ),
                   ),
                   SizedBox(height: 8.0),
-                  getMultiSelectDialogField(),
+                  _categoriesSelection(),
+                  //getMultiSelectDialogField(),
                   SizedBox(height: 10.0),
                   Column(
                     crossAxisAlignment: CrossAxisAlignment.stretch,
@@ -152,75 +154,45 @@ class _CustomiseQIState extends State<CustomiseQI> {
               MultiSelectItem<Category>(category, category.categoryName)).toList();
           return Padding(
             padding: const EdgeInsets.all(20.0),
-            child: Container(
-              decoration: BoxDecoration(
-                color: Colors.blue.withOpacity(0.1),
-                borderRadius: BorderRadius.all(Radius.circular(10)),
-                border: Border.all(
-                  color: kBlue,
-                  width: 2,
-                ),
-              ),
-              child: Column(
-                children: <Widget> [
-                  MultiSelectDialogField(
-                      backgroundColor: kLightBlue,
-                      searchable: true,
-                      items: _allCategories,
-                      title: Text("Categories"),
-                      selectedColor: kBlue,
-                      decoration: BoxDecoration(
+            child: Column(
+              children: <Widget> [
+                MultiSelectDialogField(
+                    backgroundColor: kLightBlue,
+                    searchable: true,
+                    items: _allCategories,
+                    title: Text("Categories"),
+                    selectedColor: kBlue,
+                    decoration: BoxDecoration(
+                      color: kBlue,
+                      borderRadius: BorderRadius.only(
+                          topLeft: Radius.circular(8),
+                          topRight: Radius.circular(8)),
+                      border: Border.all(
                         color: kBlue,
-                        borderRadius: BorderRadius.only(
-                            topLeft: Radius.circular(8),
-                            topRight: Radius.circular(8)),
-                        border: Border.all(
-                          color: kBlue,
-                          width: 2,
-                        ),
+                        width: 2,
                       ),
-                      buttonIcon: Icon(
-                        Icons.arrow_downward_outlined,
+                    ),
+                    buttonIcon: Icon(
+                      Icons.arrow_downward_outlined,
+                      color: Colors.white,
+                    ),
+                    buttonText: Text(
+                      "Select Your Categories",
+                      style: TextStyle(
                         color: Colors.white,
+                        fontSize: 16,
                       ),
-                      buttonText: Text(
-                        "Select Your Categories",
-                        style: TextStyle(
-                          color: Colors.white,
-                          fontSize: 16,
-                        ),
-                      ),
-                      onSelectionChanged: (categories) {
-                        categories.length > 3
-                            ? categories.removeAt(0)
-                            : categories;
-                      },
-                      onConfirm: (categories) {
-                        selectedCategories = categories;
-                      }
-                  ),
-                  // need figure out why this dont work
-
-                  /*
-                  selectedCategories.length == 0
-                      ? Container(
-                    padding: EdgeInsets.all(10),
-                    alignment: Alignment.centerLeft,
-                    child: Text(
-                      "None selected",
-                      style: TextStyle(color: Colors.black54),
                     ),
-                  )
-                      : Container(
-                    padding: EdgeInsets.all(10),
-                    alignment: Alignment.centerLeft,
-                    child: Text(
-                      '',
-                    ),
-                  )
-                  */
-                ],
-              )
+                    onSelectionChanged: (categories) {
+                      categories.length > 3
+                          ? categories.removeAt(0)
+                          : categories;
+                    },
+                    onConfirm: (categories) {
+                      selectedCategories = categories;
+                    }
+                ),
+              ],
             ),
           );
         }
@@ -243,10 +215,15 @@ class _CustomiseQIState extends State<CustomiseQI> {
                       builder: (BuildContext context) {
                         return AlertDialog(
                           backgroundColor: kLightBlue,
-                          content: Text(
-                            "Please select 3 categories",
-                            style:
-                            TextStyle(fontFamily: 'Lato.Thin'),
+                          title: Align(
+                            alignment: Alignment.topCenter,
+                            child: Text(
+                              "Please select 3 categories",
+                              style: TextStyle(
+                                fontSize: 16,
+                                fontFamily: 'Lato.Thin'
+                              ),
+                            ),
                           ),
                           actions: <Widget> [
                             SizedBox(
@@ -363,74 +340,153 @@ class _CustomiseQIState extends State<CustomiseQI> {
     );
   }
 
-  /*
-  void editQuickInput() {
-    for (int i = 0; i < selectedCategories.length; i++) {
-      Category category = selectedCategories[i];
-      String categoryId = category.categoryId;
-      _authQuickInput.updateQuickInput(category, categoryId, i);
-    }
+  Widget _getCategoriesChips() {
+    return selectedCategories.isEmpty
+        ? Text(
+      "Tap to select Categories for Quick Input",
+      style: TextStyle(
+        fontSize: 14,
+        color: Colors.grey[600],
+        fontStyle: FontStyle.italic,
+      ),
+    )
+        : Wrap(
+      spacing: 5,
+      children: selectedCategories
+          .map(
+            (ctg) => InputChip(
+          label: Text(ctg.categoryName),
+          backgroundColor: ctg.categoryColor.withOpacity(0.6),
+          onDeleted: () {
+            setState(() {
+              selectedCategories.remove(ctg);
+            });
+          },
+        ),
+      ).toList(),
+    );
   }
-   */
 
-  /*
-  // this way very ugly though
-  Widget getFirstStreamBuilder() {
-    return StreamBuilder(
-        stream: categoryCollection.snapshots(),
-        builder: (BuildContext context, AsyncSnapshot<QuerySnapshot> snapshot) {
-          if (snapshot.hasData) {
-            List<DropdownMenuItem> categoryItems = [];
-            for (DocumentSnapshot snap in snapshot.data.docs) {
-              categoryItems.add(
-                DropdownMenuItem(
-                  child: Text(
-                    snap['categoryName'],
-                    style: TextStyle(color: Color(0xff11b719)),
+  Widget _categoriesSelection() {
+    return Padding(
+      padding: EdgeInsets.all(10),
+      child: Card(
+        shape: RoundedRectangleBorder(
+            borderRadius: BorderRadius.all(Radius.circular(12.0))),
+        color: Colors.white.withOpacity(0.9),
+        child: FutureBuilder<List<Category>>(
+            future: _authCategory.getCategories(),
+            builder: (BuildContext context, AsyncSnapshot<List<Category>> snapshot) {
+              if (snapshot.hasData) {
+                List<Category> allCategories = snapshot.data;
+                allCategories.sort((a, b) => a.categoryId.compareTo(b.categoryId));
+                return GestureDetector(
+                  child: Container(
+                    padding: EdgeInsets.all(10.0),
+                    child: Column(
+                      crossAxisAlignment: CrossAxisAlignment.center,
+                      children: <Widget>[
+                        Padding(
+                          padding: EdgeInsets.only(bottom: 5.0),
+                          child: Text(
+                            "Categories chosen:",
+                            style: TextStyle(fontSize: 18,
+                                color: kDarkBlue,
+                                fontFamily: "Lato"
+                            ),
+                          ),
+                        ),
+                        SizedBox(height: 5),
+                        _getCategoriesChips(),
+                        SizedBox(height: 10)
+                      ],
+                    ),
                   ),
-                  value: "${snap.id}",
-                ),
-              );
-            }
-            return Row(
-              mainAxisAlignment: MainAxisAlignment.center,
-              children: <Widget> [
-                SizedBox(width: 50.0),
-                DropdownButton(
-                  items: categoryItems,
-                  onChanged: (category) {
-                    setState(() {
-                      firstSelectedCategory = category;
-                    });
+                  onTap: () {
+                    showDialog(
+                        context: context,
+                        builder: (context) {
+                          List<Category> tempCtgs = selectedCategories;
+                          return AlertDialog(
+                            backgroundColor: kLightBlue,
+                            actions: <Widget>[
+                              SizedBox(
+                                width: 130,
+                                child: TextButton(
+                                  child: Text("CANCEL",
+                                    style: TextStyle(
+                                      color: Colors.white,
+                                    ),
+                                  ),
+                                  style: TextButton.styleFrom(
+                                    backgroundColor: kDarkBlue,
+                                  ),
+                                  onPressed: () {
+                                    Navigator.pop(context);
+                                  },
+                                ),),
+                              SizedBox(
+                                width: 130,
+                                child: TextButton(
+                                  child: Text("APPLY",
+                                    style: TextStyle(
+                                      color: Colors.white,
+                                    ),
+                                  ),
+                                  style: TextButton.styleFrom(
+                                    backgroundColor: kDarkBlue,
+                                  ),
+                                  onPressed: () {
+                                    setState(() {
+                                      selectedCategories = List.of(tempCtgs);
+                                    });
+                                    Navigator.pop(context);
+                                  },
+                                ),),
+                              SizedBox(width: 15,)
+                            ],
+                            title: Text("Select Categories",
+                              style: TextStyle(
+                                  color: kDarkBlue,
+                                  fontFamily: "Lato"
+                              ),
+                            ),
+                            content: StatefulBuilder(
+                              builder: (context, setState) {
+                                return Wrap(
+                                    spacing: 5,
+                                    children: allCategories
+                                        .map(
+                                          (ctg) => InputChip(
+                                          label: Text(ctg.categoryName),
+                                          backgroundColor: tempCtgs.contains(ctg)
+                                              ? ctg.categoryColor.withOpacity(0.6)
+                                              : Colors.grey[300],
+                                          onSelected: (value) {
+                                            setState(() {
+                                              if (!tempCtgs.contains(ctg) && tempCtgs.length < 3) {
+                                                tempCtgs.add(ctg);
+                                              } else if (!tempCtgs.contains(ctg) && tempCtgs.length == 3) {
+                                                tempCtgs.removeAt(0);
+                                                tempCtgs.add(ctg);
+                                              } else {
+                                                tempCtgs.remove(ctg);
+                                              }
+                                              tempCtgs.sort((a, b) => a.categoryId.compareTo(b.categoryId));
+                                            });
+                                          }),
+                                    ).toList());
+                              },
+                            ),
+                          );
+                        });
                   },
-                  value: firstSelectedCategory,
-                  isExpanded: false,
-                  hint: Text(
-                    "Choose Your Category",
-                    style: TextStyle(color: Color(0xff11b719)),
-                  ),
-                ),
-              ],
-            );
-          }
-          return CircularProgressIndicator();
-        });
+                );
+              }
+              return SizedBox();
+            }
+        ),
+      ),
+    );
   }
-
-  void editFirstQuickInput() {
-    categoryCollection.doc(firstSelectedCategory).get().then((value) {
-      String categoryName = value['categoryName'];
-      int categoryColorValue = value['categoryColorValue'];
-      int categoryIconCodePoint = value['categoryIconCodePoint'];
-      Category category = Category(
-        categoryName: categoryName,
-        categoryColor: Color(categoryColorValue),
-        categoryIcon:
-        Icon(IconData(categoryIconCodePoint, fontFamily: 'MaterialIcons')),
-        categoryId: firstSelectedCategory,
-      );
-      _authQuickInput.updateQuickInput(category, firstSelectedCategory, 0);
-    });
-  }
-   */
 }

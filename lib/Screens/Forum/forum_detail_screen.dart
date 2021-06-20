@@ -88,10 +88,13 @@ class _ForumDetailScreenState extends State<ForumDetailScreen> {
                                         fontFamily: 'Lato-Thin',
                                       ),
                                     ),
-                                    subtitle: Text(
-                                      snapshot.data["description"],
-                                      style: TextStyle(
-                                        fontFamily: 'Lato-Thin',
+                                    subtitle: Padding(
+                                      padding: const EdgeInsets.only(top: 8.0),
+                                      child: Text(
+                                        snapshot.data["description"],
+                                        style: TextStyle(
+                                          fontFamily: 'Lato-Thin',
+                                        ),
                                       ),
                                     ),
                                   ),

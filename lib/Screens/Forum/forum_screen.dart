@@ -119,22 +119,25 @@ class _ForumScreenState extends State<ForumScreen> {
                                                       fontSize: 20,
                                                     ),
                                                   ),
-                                                  subtitle: AutolinkText(
-                                                    text: snapshotData["description"].length > 500
-                                                        ? snapshotData["description"].substring(0, 500) + "..."
-                                                        : snapshotData["description"],
-                                                    textStyle: TextStyle(
-                                                      fontFamily: 'Lato-Thin',
-                                                      color: Colors.black,
-                                                      fontSize: 16,
+                                                  subtitle: Padding(
+                                                    padding: const EdgeInsets.only(top: 8.0),
+                                                    child: AutolinkText(
+                                                      text: snapshotData["description"].length > 500
+                                                          ? snapshotData["description"].substring(0, 500) + "..."
+                                                          : snapshotData["description"],
+                                                      textStyle: TextStyle(
+                                                        fontFamily: 'Lato-Thin',
+                                                        color: Colors.black,
+                                                        fontSize: 16,
+                                                      ),
+                                                      linkStyle: TextStyle(
+                                                        fontFamily: 'Lato-Thin',
+                                                        color: Colors.blue,
+                                                        fontSize: 16),
+                                                      humanize: false,
+                                                      onWebLinkTap: (link) => _launchInWebViewOrVC(link),
+                                                      onEmailTap: (link) => _launchEmail(link),
                                                     ),
-                                                    linkStyle: TextStyle(
-                                                      fontFamily: 'Lato-Thin',
-                                                      color: Colors.blue,
-                                                      fontSize: 16),
-                                                    humanize: false,
-                                                    onWebLinkTap: (link) => _launchInWebViewOrVC(link),
-                                                    onEmailTap: (link) => _launchEmail(link),
                                                   ),
                                                   /*
                                                   Text(

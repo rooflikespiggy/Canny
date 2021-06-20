@@ -64,11 +64,16 @@ class CommentDetail extends StatelessWidget {
                                           style: TextStyle(
                                             fontFamily: 'Lato-Thin',
                                             fontSize: 20,
-
                                           ),
                                         ),
-                                        subtitle: Text(
-                                          snapshotData["description"],
+                                        subtitle: Padding(
+                                          padding: const EdgeInsets.only(top: 8.0),
+                                          child: Text(
+                                            snapshotData["description"],
+                                            style: TextStyle(
+                                              fontFamily: 'Lato-Thin',
+                                            ),
+                                          ),
                                         ),
                                         leading: CircleAvatar(
                                           backgroundColor: kPalePurple,
