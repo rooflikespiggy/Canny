@@ -4,7 +4,7 @@ import 'package:Canny/Screens/Receipt/edit_receipt.dart';
 import 'package:Canny/Services/Category/category_database.dart';
 import 'package:Canny/Services/Receipt/receipt_database.dart';
 import 'package:cloud_firestore/cloud_firestore.dart';
-import 'package:flushbar/flushbar.dart';
+import 'package:another_flushbar/flushbar.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_slidable/flutter_slidable.dart';

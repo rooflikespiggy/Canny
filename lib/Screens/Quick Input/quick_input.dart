@@ -4,7 +4,7 @@ import 'package:Canny/Models/expense.dart';
 import 'package:Canny/Services/Quick%20Input/calculator_icon_buttons.dart';
 import 'package:Canny/Services/Receipt/receipt_database.dart';
 import 'package:cloud_firestore/cloud_firestore.dart';
-import 'package:flushbar/flushbar.dart';
+import 'package:another_flushbar/flushbar.dart';
 import 'package:flutter/material.dart';
 import 'package:intl/intl.dart';
 import 'package:math_expressions/math_expressions.dart';
@@ -68,6 +68,7 @@ class QuickInputState extends State<QuickInput> {
       _history = '';
       _expression = '';
       _evaluate = '';
+      _chosenCategory = null;
     });
   }
 
@@ -301,7 +302,7 @@ class QuickInputState extends State<QuickInput> {
                               size: 28.0,
                               color: kLightBlueDark,
                             ),
-                            duration: Duration(seconds: 3),
+                            duration: Duration(seconds: 2),
                             leftBarIndicatorColor: kLightBlueDark,
                           )..show(context);
                         }
@@ -313,7 +314,7 @@ class QuickInputState extends State<QuickInput> {
                               size: 28.0,
                               color: kLightBlueDark,
                             ),
-                            duration: Duration(seconds: 3),
+                            duration: Duration(seconds: 2),
                             leftBarIndicatorColor: kLightBlueDark,
                           )..show(context);
                         } else if (roundDouble(double.parse(_evaluate), 2) == 0.00) {
@@ -324,7 +325,7 @@ class QuickInputState extends State<QuickInput> {
                               size: 28.0,
                               color: kLightBlueDark,
                             ),
-                            duration: Duration(seconds: 3),
+                            duration: Duration(seconds: 2),
                             leftBarIndicatorColor: kLightBlueDark,
                           )..show(context);
                         } else if (roundDouble(double.parse(_evaluate), 2) < 0.00) {
@@ -335,7 +336,7 @@ class QuickInputState extends State<QuickInput> {
                               size: 28.0,
                               color: kLightBlueDark,
                             ),
-                            duration: Duration(seconds: 3),
+                            duration: Duration(seconds: 2),
                             leftBarIndicatorColor: kLightBlueDark,
                           )..show(context);
                         } else {
@@ -356,7 +357,7 @@ class QuickInputState extends State<QuickInput> {
                               size: 28.0,
                               color: kLightBlueDark,
                             ),
-                            duration: Duration(seconds: 3),
+                            duration: Duration(seconds: 1),
                             leftBarIndicatorColor: kLightBlueDark,
                           )..show(context);
                         }

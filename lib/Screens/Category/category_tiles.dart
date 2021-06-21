@@ -5,7 +5,7 @@ import 'package:Canny/Services/Category/default_categories.dart';
 import 'package:Canny/Services/Receipt/receipt_database.dart';
 import 'package:Canny/Shared/colors.dart';
 import 'package:cloud_firestore/cloud_firestore.dart';
-import 'package:flushbar/flushbar.dart';
+import 'package:another_flushbar/flushbar.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_colorpicker/flutter_colorpicker.dart';
 import 'package:font_awesome_flutter/font_awesome_flutter.dart';
@@ -223,7 +223,7 @@ class _CategoryTileState extends State<CategoryTile> {
                                           Flushbar(
                                             message: "Category Deleted.",
                                             icon: Icon(
-                                              Icons.info_outline,
+                                              Icons.check,
                                               size: 28.0,
                                               color: kLightBlueDark,
                                             ),

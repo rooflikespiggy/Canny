@@ -3,7 +3,7 @@ import 'package:Canny/Models/expense.dart';
 import 'package:Canny/Screens/Insert%20Function/select_category_screen.dart';
 import 'package:Canny/Services/Receipt/receipt_database.dart';
 import 'package:cloud_firestore/cloud_firestore.dart';
-import 'package:flushbar/flushbar.dart';
+import 'package:another_flushbar/flushbar.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:math_expressions/math_expressions.dart';
@@ -440,7 +440,7 @@ class ExpenseCalculatorState extends State<ExpenseCalculator> {
                 Icon(Icons.drive_file_rename_outline),
                 400.0,
               ),
-              SizedBox(height: 50),
+              SizedBox(height: 45),
               Container(
                 alignment: Alignment(1.0, 1.0),
                 child: Padding(

@@ -2,6 +2,7 @@ import 'package:Canny/Database/all_database.dart';
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:flutter/material.dart';
 import 'package:Canny/Screens/Forum/forum_detail_screen.dart';
+import 'package:page_transition/page_transition.dart';
 
 class ForumSearch extends SearchDelegate {
   CollectionReference forumCollection = Database().forumDatabase();
@@ -81,8 +82,8 @@ class ForumSearch extends SearchDelegate {
                           ),
                           onTap: () {
                             Navigator.push(context,
-                                MaterialPageRoute(builder: (context) =>
-                                    ForumDetailScreen(inputId: listToShow[index].id)));
+                                MaterialPageRoute(builder: (context) => ForumDetailScreen(inputId: listToShow[index].id))
+                            );
                           },
                         ),
                         Divider(),

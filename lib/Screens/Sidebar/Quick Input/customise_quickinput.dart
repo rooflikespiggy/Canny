@@ -300,7 +300,7 @@ class _CustomiseQIState extends State<CustomiseQI> {
                                       ),
                                     onPressed: () {
                                       Navigator.push(context,
-                                          MaterialPageRoute(builder: (context) => HomePageScreen()));
+                                          MaterialPageRoute(builder: (context) => HomePageScreen(selectedTab: 0)));
                                     },
                                   ),),
                                   SizedBox(

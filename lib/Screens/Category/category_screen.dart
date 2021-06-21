@@ -25,6 +25,7 @@ class _CategoryScreenState extends State<CategoryScreen> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
+      resizeToAvoidBottomInset: false,
         drawer: SideBarMenu(),
         appBar: AppBar(
           elevation: 0,
