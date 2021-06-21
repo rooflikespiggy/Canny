@@ -12,6 +12,7 @@ import 'package:flutter/services.dart';
 import 'package:Canny/Services/Category/category_database.dart';
 import 'package:datetime_picker_formfield/datetime_picker_formfield.dart';
 import 'package:intl/intl.dart';
+import 'dart:math';
 
 class EditReceipt extends StatefulWidget {
   static final String id = 'add_spending_screen';
@@ -99,6 +100,11 @@ class _EditReceiptState extends State<EditReceipt> {
     setState(() {
       itemNameChanged = true;
     });
+  }
+
+  double roundDouble(double value, int places){
+    double mod = pow(10.0, places);
+    return ((value * mod).round().toDouble() / mod);
   }
 
   @override
@@ -449,8 +455,10 @@ class _EditReceiptState extends State<EditReceipt> {
           validator: (value) {
             if (value.isEmpty) {
               return label;
-            } if (value == '0' || value == '0.0' || value == '0.00') {
+            } if (roundDouble(double.parse(value), 2) == 0.00) {
               return 'Cost cannot be 0. Enter a valid expense amount.';
+            } if (roundDouble(double.parse(value), 2) < 0) {
+              return 'Cost cannot be a negative number. Enter a valid expense amount.';
             }
             return null;
           },

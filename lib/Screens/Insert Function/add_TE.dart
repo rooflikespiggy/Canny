@@ -6,6 +6,8 @@ import 'package:Canny/Shared/input_formatters.dart';
 import 'package:flutter/services.dart';
 import 'package:Canny/Services/Targeted Expenditure/TE_database.dart';
 import 'package:firebase_auth/firebase_auth.dart';
+import 'dart:math';
+
 
 class AddTEScreen extends StatefulWidget {
   static final String id = 'add_te_screen';
@@ -21,6 +23,11 @@ class _AddTEScreenState extends State<AddTEScreen> {
   final CollectionReference teCollection = Database().teDatabase();
   final TEDatabaseService _authTargetedExpenditure = TEDatabaseService();
   String uid = FirebaseAuth.instance.currentUser.uid;
+
+  double roundDouble(double value, int places){
+    double mod = pow(10.0, places);
+    return ((value * mod).round().toDouble() / mod);
+  }
 
 
   @override
@@ -152,7 +159,9 @@ class _AddTEScreenState extends State<AddTEScreen> {
           validator: (value) {
             if (value.isEmpty) {
               return label;
-            } if (value == '0' || value == '0.0' || value == '0.00') {
+            } if (roundDouble(double.parse(value), 2) == 0.00 ) {
+              return 'Enter a Targeted Expenditure more than 0';
+            } if (roundDouble(double.parse(value), 2) < 0) {
               return 'Enter a Targeted Expenditure more than 0';
             }
             return null;
