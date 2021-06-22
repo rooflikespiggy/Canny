@@ -76,7 +76,6 @@ class _AddDiscussionState extends State<AddDiscussion> {
                                 title: titleController.text,
                                 description: descriptionController.text);
                             if (_formKey.currentState.validate()) {
-                              await _authForum.addDiscussion(forum);
                               FocusScope.of(context).unfocus();
                               await _authForum.addDiscussion(forum).then((_) {
                                 showDialog(

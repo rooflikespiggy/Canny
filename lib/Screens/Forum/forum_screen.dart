@@ -361,6 +361,16 @@ class _ForumScreenState extends State<ForumScreen> {
                                                                                 snapshot.data.docs.removeAt(index);
                                                                               });
                                                                               Navigator.pop(context);
+                                                                              Flushbar(
+                                                                                message: "Discussion deleted.",
+                                                                                icon: Icon(
+                                                                                  Icons.check,
+                                                                                  size: 28.0,
+                                                                                  color: kLightBlueDark,
+                                                                                ),
+                                                                                duration: Duration(seconds: 3),
+                                                                                leftBarIndicatorColor: kLightBlueDark,
+                                                                              )..show(context);
                                                                             },
                                                                           ),),
                                                                           SizedBox(

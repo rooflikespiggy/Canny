@@ -40,10 +40,19 @@ class QuickInputState extends State<QuickInput> {
   }
 
   void numClick(String text) {
-    if ((_expression.contains('.') &&
+    if (_expression == '' && (text == '+' || text == '-' || text == '/' || text == '*')) {
+      setState(() => _expression += '');
+    } else if ((_expression.contains('.') &&
         text == '.' &&
         _expression.substring(_expression.length - 1, _expression.length) == ".") ||
         _expression.length > 10) {
+      setState(() => _expression += '');
+    } else if (_expression != '' &&
+        (text == '+' || text == '-' || text == '/' || text == '*') &&
+        (_expression[_expression.length - 1] == "x" ||
+            _expression[_expression.length - 1] == "÷" ||
+            _expression[_expression.length - 1] == "+" ||
+            _expression[_expression.length - 1] == "-")) {
       setState(() => _expression += '');
     } else if (text == '*') {
       setState(() => _expression += 'x');
@@ -52,14 +61,24 @@ class QuickInputState extends State<QuickInput> {
     } else {
       setState(() => _expression += text);
     }
-    if ((_evaluate.contains('.') &&
+    if (_evaluate == '' && (text == '+' || text == '-' || text == '/' || text == '*')) {
+      setState(() => _evaluate += '');
+    } else if ((_evaluate.contains('.') &&
         text == '.' &&
         _evaluate.substring(_evaluate.length - 1, _evaluate.length) == ".") ||
         _evaluate.length > 10) {
       setState(() => _evaluate += '');
+    } else if (_evaluate != '' &&
+        (text == '+' || text == '-' || text == '/' || text == '*') &&
+        (_evaluate[_evaluate.length - 1] == "*" ||
+            _evaluate[_evaluate.length - 1] == "/" ||
+            _evaluate[_evaluate.length - 1] == "+" ||
+            _evaluate[_evaluate.length - 1] == "-")) {
+      setState(() => _evaluate += '');
     } else {
       setState(() => _evaluate += text);
     }
+    setState(() => evaluated = false);
   }
 
   void allClear(String text) {
@@ -88,9 +107,13 @@ class QuickInputState extends State<QuickInput> {
       evaluated = true;
       _history = _expression;
       _evaluate = exp.evaluate(EvaluationType.REAL, cm).toString();
+      if (_evaluate[_evaluate.length - 1] == '0' && _evaluate[_evaluate.length - 2] == '.') {
+        _evaluate = _evaluate.substring(0, _evaluate.length - 2);
+      }
       if (_evaluate.length > 11) {
         _evaluate = _evaluate.substring(0, 11);
       }
+      _expression = _evaluate;
     });
   }
 

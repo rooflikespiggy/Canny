@@ -91,7 +91,7 @@ class _DashboardScreenState extends State<DashboardScreen> {
                         balance = totalIncome - totalExpensesAmount;
                         percent = totalIncome > 0 ? ((totalExpensesAmount / totalIncome) * 100) : 0;
                         return StreamBuilder(
-                          stream: getData(),
+                          stream: teCollection.doc('TE').snapshots(),
                           builder: (BuildContext context, AsyncSnapshot<DocumentSnapshot> snapshot2) {
                             if (snapshot2.hasData) {
                               teAmount = snapshot2.data['amount'];
@@ -879,7 +879,7 @@ class _DashboardScreenState extends State<DashboardScreen> {
   }
 
   Stream<DocumentSnapshot> getData() async* {
-    await Future.delayed(const Duration(seconds: 2));
+    // await Future.delayed(const Duration(seconds: 2));
     yield* teCollection
         .doc('TE')
         .snapshots();

@@ -359,6 +359,7 @@ class _EditCategoryState extends State<EditCategory> {
                                                     if (iconChanged) {
                                                       _authCategory.updateIcon(widget.categoryId, _icon.child);
                                                     }
+                                                    FocusScope.of(context).unfocus();
                                                     Navigator.pop(context);
                                                     Flushbar(
                                                       message: "Category successfully edited.",

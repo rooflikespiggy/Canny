@@ -272,8 +272,18 @@ class CommentDetail extends StatelessWidget {
                                                                       await CommentDatabaseService(inputId).removeComment(
                                                                         snapshotData.id,
                                                                       );
-                                                                      snapshot.data.docs.removeAt(index);
                                                                       Navigator.pop(context);
+                                                                      snapshot.data.docs.removeAt(index);
+                                                                      Flushbar(
+                                                                        message: "Comment deleted.",
+                                                                        icon: Icon(
+                                                                          Icons.check,
+                                                                          size: 28.0,
+                                                                          color: kLightBlueDark,
+                                                                        ),
+                                                                        duration: Duration(seconds: 3),
+                                                                        leftBarIndicatorColor: kLightBlueDark,
+                                                                      )..show(context);
                                                                     },
                                                                   ),
                                                                 ),
