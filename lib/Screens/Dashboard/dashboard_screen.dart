@@ -27,7 +27,7 @@ class _DashboardScreenState extends State<DashboardScreen> {
   final CollectionReference expensesCollection = Database().expensesDatabase();
   final CollectionReference dashboardCollection = Database().dashboardDatabase();
   final CategoryDatabaseService _authCategory = CategoryDatabaseService();
-  final String monthYear = DateFormat('MMM y').format(DateTime.now());
+  final String monthYear = DateFormat('MMM y').format(DateTime(DateTime.now().year, 5));
   final _balanceKey = GlobalKey();
   final _expensesBreakdownKey = GlobalKey();
   final _expenseSummaryKey = GlobalKey();
@@ -82,11 +82,11 @@ class _DashboardScreenState extends State<DashboardScreen> {
                         allCategories.sort((a, b) => a.categoryId.compareTo(b.categoryId));
                         totalExpensesAmount = allCategories
                             .where((category) => !category.isIncome)
-                            .map((category) => category.categoryAmount[monthYear])
+                            .map((category) => category.categoryAmount[monthYear] != null ? category.categoryAmount[monthYear] : 0)
                             .reduce((value, element) => value.toDouble() + element.toDouble());
                         totalIncome = allCategories
                             .where((category) => category.isIncome)
-                            .map((category) => category.categoryAmount[monthYear])
+                            .map((category) => category.categoryAmount[monthYear] != null ? category.categoryAmount[monthYear] : 0)
                             .reduce((value, element) => value.toDouble() + element.toDouble());
                         balance = totalIncome - totalExpensesAmount;
                         percent = totalIncome > 0 ? ((totalExpensesAmount / totalIncome) * 100) : 0;
@@ -225,7 +225,9 @@ class _DashboardScreenState extends State<DashboardScreen> {
                                                                   color: Colors.black54,
                                                                 ),
                                                               ),
-                                                              Text("-" + totalExpensesAmount.toStringAsFixed(2),
+                                                              Text(totalExpensesAmount > 0
+                                                                  ? "-" + totalExpensesAmount.toStringAsFixed(2)
+                                                                  : totalExpensesAmount.toStringAsFixed(2),
                                                                 style: TextStyle(
                                                                   fontFamily: "Lato",
                                                                   color: Colors.red,
@@ -317,21 +319,24 @@ class _DashboardScreenState extends State<DashboardScreen> {
                                                                   ),
                                                                   flex: totalIncome.round(),
                                                                 ),
-                                                                Expanded(
-                                                                  child: Container(
-                                                                    padding: EdgeInsets.only(right: 5.0),
-                                                                    alignment: Alignment.centerRight,
-                                                                    color: Colors.redAccent,
-                                                                    height: 25,
-                                                                    child: Text(
-                                                                      totalExpensesAmount.toStringAsFixed(2),
-                                                                      style: TextStyle(
-                                                                        color: Colors.white,
-                                                                        fontSize: 12,
+                                                                Visibility(
+                                                                  visible: totalExpensesAmount > 0,
+                                                                  child: Expanded(
+                                                                    child: Container(
+                                                                      padding: EdgeInsets.only(right: 5.0),
+                                                                      alignment: Alignment.centerRight,
+                                                                      color: Colors.redAccent,
+                                                                      height: 25,
+                                                                      child: Text(
+                                                                        totalExpensesAmount.toStringAsFixed(2),
+                                                                        style: TextStyle(
+                                                                          color: Colors.white,
+                                                                          fontSize: 12,
+                                                                        ),
                                                                       ),
                                                                     ),
+                                                                    flex: totalExpensesAmount.round(),
                                                                   ),
-                                                                  flex: totalExpensesAmount.round(),
                                                                 ),
                                                               ],
                                                             ),
@@ -399,7 +404,9 @@ class _DashboardScreenState extends State<DashboardScreen> {
                                                                   color: Colors.black54,
                                                                 ),
                                                               ),
-                                                              Text("-" + totalExpensesAmount.toStringAsFixed(2),
+                                                              Text(totalExpensesAmount > 0
+                                                                  ? "-" + totalExpensesAmount.toStringAsFixed(2)
+                                                                  : totalExpensesAmount.toStringAsFixed(2),
                                                                 style: TextStyle(
                                                                   fontFamily: "Lato",
                                                                   color: Colors.red,
@@ -795,7 +802,7 @@ class _DashboardScreenState extends State<DashboardScreen> {
       double setAmount,
       double sumOfExpensesAmount) {
     List<Category> selectedCategories = allCategories
-        .where((category) => category.categoryAmount[monthYear] > 0 && !category.isIncome)
+        .where((category) => category.categoryAmount[monthYear] != null ? category.categoryAmount[monthYear] > 0 && !category.isIncome : false)
         .toList();
     return List.generate(
       setAmount > 0 && setAmount > sumOfExpensesAmount ? selectedCategories.length + 1 : selectedCategories.length,
@@ -827,7 +834,7 @@ class _DashboardScreenState extends State<DashboardScreen> {
 
   List<Indicator> showAllIndicators(List<Category> allCategories) {
     List<Category> selectedCategories = allCategories
-        .where((category) => category.categoryAmount[monthYear] > 0 && !category.isIncome)
+        .where((category) => category.categoryAmount[monthYear] != null ? category.categoryAmount[monthYear] > 0 && !category.isIncome : false)
         .toList();
     return List.generate(
       selectedCategories.length,
@@ -874,7 +881,6 @@ class _DashboardScreenState extends State<DashboardScreen> {
 
   Future _refreshData() async {
     await Future.delayed(Duration(seconds: 2));
-
     setState(() {});
   }
 

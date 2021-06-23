@@ -299,11 +299,10 @@ class _FilterScreenState extends State<FilterScreen> {
                   icon: Icon(
                     Icons.info_outline,
                     size: 28.0,
-                    color: Theme.of(context).colorScheme.secondary,
+                    color: kLightBlueDark,
                   ),
                   duration: Duration(seconds: 3),
-                  leftBarIndicatorColor:
-                  Theme.of(context).colorScheme.secondary,
+                  leftBarIndicatorColor: kLightBlueDark,
                 )..show(context);
               }
             },
