@@ -27,7 +27,7 @@ class _DashboardScreenState extends State<DashboardScreen> {
   final CollectionReference expensesCollection = Database().expensesDatabase();
   final CollectionReference dashboardCollection = Database().dashboardDatabase();
   final CategoryDatabaseService _authCategory = CategoryDatabaseService();
-  final String monthYear = DateFormat('MMM y').format(DateTime(DateTime.now().year, 5));
+  final String monthYear = DateFormat('MMM y').format(DateTime.now());
   final _balanceKey = GlobalKey();
   final _expensesBreakdownKey = GlobalKey();
   final _expenseSummaryKey = GlobalKey();
