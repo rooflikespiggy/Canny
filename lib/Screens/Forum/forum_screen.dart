@@ -360,7 +360,7 @@ class _ForumScreenState extends State<ForumScreen> {
                                                                               setState(() {
                                                                                 snapshot.data.docs.removeAt(index);
                                                                               });
-                                                                              Navigator.pop(context);
+                                                                              Navigator.pop(context, true);
                                                                               Flushbar(
                                                                                 message: "Discussion deleted.",
                                                                                 icon: Icon(

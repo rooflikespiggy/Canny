@@ -463,7 +463,7 @@ class ExpenseCalculatorState extends State<ExpenseCalculator> {
                 Icon(Icons.drive_file_rename_outline),
                 400.0,
               ),
-              SizedBox(height: 36),
+              SizedBox(height: 45),
               Container(
                 alignment: Alignment(1.0, 1.0),
                 child: Padding(

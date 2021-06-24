@@ -306,10 +306,6 @@ class _AddCategoryScreenState extends State<AddCategoryScreen> {
                                                   );
                                                   if (_formKey.currentState.validate()) {
                                                     await _authCategory.addNewCategory(category, category.categoryId);
-                                                    categoryNameController.clear();
-                                                    pickerColor = Color(0xff443a49);
-                                                    currentColor = Color(0xff443a49);
-                                                    _icon = null;
                                                     FocusScope.of(context).unfocus();
                                                     Navigator.pop(context);
                                                     Flushbar(

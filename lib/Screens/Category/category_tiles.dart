@@ -219,7 +219,7 @@ class _CategoryTileState extends State<CategoryTile> {
                                               await _authReceipt.changeCategoryToOthers(snapshot.data.docs[i].id);
                                             }
                                           }
-                                          Navigator.pop(context);
+                                          Navigator.pop(context, true);
                                           Flushbar(
                                             message: "Category Deleted.",
                                             icon: Icon(

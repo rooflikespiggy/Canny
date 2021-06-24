@@ -328,8 +328,6 @@ class _EditReceiptState extends State<EditReceipt> {
                                                   duration: Duration(seconds: 3),
                                                   leftBarIndicatorColor: kLightBlueDark,
                                                 )..show(context);
-                                                itemNameController.clear();
-                                                costController.clear();
                                                 /*
                                                 await _authReceipt.updateReceipt(widget.receiptId,
                                                     widget.categoryId,

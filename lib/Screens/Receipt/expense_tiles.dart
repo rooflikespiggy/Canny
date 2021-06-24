@@ -177,7 +177,7 @@ class _ExpenseTileState extends State<ExpenseTile> {
                               widget.categoryId,
                               widget.datetime,
                               widget.cost);
-                          Navigator.pop(context);
+                          Navigator.pop(context, true);
                           Flushbar(
                             message: "Receipt Deleted.",
                             icon: Icon(

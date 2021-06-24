@@ -12,6 +12,8 @@ import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:Canny/Database/all_database.dart';
 import 'package:Canny/Services/Notification/notification_database.dart';
 
+import 'Screens/splash_screen.dart';
+
 /*
 const AndroidNotificationChannel channel = AndroidNotificationChannel(
     'high_importance_channel', // id
@@ -70,7 +72,7 @@ class MyApp extends StatelessWidget {
       value: AuthService().userFromStream,
       child: MaterialApp(
         debugShowCheckedModeBanner: false,
-        home: Wrapper(),
+        home: SplashScreen(),
       ),
     );
   }

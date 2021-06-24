@@ -457,7 +457,7 @@ class _DashboardScreenState extends State<DashboardScreen> {
                                                     ),
                                                     Container(
                                                       height: 270,
-                                                      width: 380,
+                                                      width: 270,
                                                       child: Stack(
                                                         alignment: Alignment.topCenter,
                                                         children: <Widget>[
@@ -822,7 +822,7 @@ class _DashboardScreenState extends State<DashboardScreen> {
               showTitle: isTouched,
               title: i < selectedCategories.length
                   ? '${category.categoryName} \n ${value.toStringAsFixed(2)}'
-                  : 'remaining',
+                  : 'Amount left \n to spend',
               radius: isTouched ? 50 : 40,
               titleStyle: TextStyle(fontSize: 15, color: Colors.black87),
               titlePositionPercentageOffset: -1.5,
