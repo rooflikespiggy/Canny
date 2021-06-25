@@ -14,6 +14,7 @@ import 'package:Canny/Models/category.dart';
 import 'package:multi_select_flutter/multi_select_flutter.dart';
 import 'package:multi_select_flutter/util/multi_select_item.dart';
 import 'package:flutter_calculator/flutter_calculator.dart';
+import 'dart:math';
 
 class AddSpendingScreen extends StatefulWidget {
   static final String id = 'add_spending_screen';

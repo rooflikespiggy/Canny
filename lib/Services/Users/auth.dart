@@ -10,7 +10,7 @@ import 'package:Canny/Services/Notification/notification_database.dart';
 class AuthService {
   final FirebaseAuth _auth = FirebaseAuth.instance;
 
-  OwnUser _userFromFirebaseUser(User theUser) {
+  OwnUser _userFromFirebaseUser( theUser) {
     return theUser != null ? OwnUser(theUser: theUser) : null;
   }
 

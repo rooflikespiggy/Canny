@@ -4,6 +4,7 @@ import 'package:flutter/material.dart';
 import 'package:Canny/Screens/Forum/forum_detail_screen.dart';
 import 'package:page_transition/page_transition.dart';
 
+
 class ForumSearch extends SearchDelegate {
   CollectionReference forumCollection = Database().forumDatabase();
 
