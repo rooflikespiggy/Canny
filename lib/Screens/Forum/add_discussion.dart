@@ -70,15 +70,14 @@ class _AddDiscussionState extends State<AddDiscussion> {
                       mainAxisAlignment: MainAxisAlignment.spaceEvenly,
                       children: <Widget>[
                         ElevatedButton(
-                          onPressed: () async {
+                          onPressed: () {
                             final Forum forum = Forum(uid: uid,
                                 name: nameController.text,
                                 title: titleController.text,
                                 description: descriptionController.text);
                             if (_formKey.currentState.validate()) {
-                              await _authForum.addDiscussion(forum);
                               FocusScope.of(context).unfocus();
-                              await _authForum.addDiscussion(forum).then((_) {
+                              _authForum.addDiscussion(forum).then((_) {
                                 showDialog(
                                   context: context,
                                   builder: (BuildContext context) {

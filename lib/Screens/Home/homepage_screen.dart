@@ -24,7 +24,7 @@ class HomePageScreen extends StatefulWidget {
   _HomePageScreenState createState() => _HomePageScreenState();
 }
 
-class _HomePageScreenState extends State<HomePageScreen> with AutomaticKeepAliveClientMixin {
+class _HomePageScreenState extends State<HomePageScreen> {//with AutomaticKeepAliveClientMixin {
   String uid = FirebaseAuth.instance.currentUser.uid;
   final CollectionReference categoryCollection = Database().categoryDatabase();
   final TextEditingController itemNameController = TextEditingController();
@@ -33,12 +33,12 @@ class _HomePageScreenState extends State<HomePageScreen> with AutomaticKeepAlive
   List<Category> selectedCategory = [];
   String categoryId = '00';
 
-  @override
-  bool get wantKeepAlive => true;
+  // @override
+  // bool get wantKeepAlive => true;
 
   @override
   Widget build(BuildContext context) {
-    super.build(context);
+    // super.build(context);
 
     List<Widget> _pageOptions = [
       DashboardScreen(),

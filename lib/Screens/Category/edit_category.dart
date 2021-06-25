@@ -345,7 +345,7 @@ class _EditCategoryState extends State<EditCategory> {
                                               ),
                                               SizedBox(height: 10.0),
                                               TextButton(
-                                                onPressed: () async {
+                                                onPressed: () {
                                                   if (_formKey.currentState.validate()) {
                                                     if (categoryNameChanged) {
                                                       _authCategory.updateCategoryName(widget.categoryId, categoryNameController.text);
@@ -359,6 +359,7 @@ class _EditCategoryState extends State<EditCategory> {
                                                     if (iconChanged) {
                                                       _authCategory.updateIcon(widget.categoryId, _icon.child);
                                                     }
+                                                    FocusScope.of(context).unfocus();
                                                     Navigator.pop(context);
                                                     Flushbar(
                                                       message: "Category successfully edited.",

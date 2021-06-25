@@ -10,7 +10,6 @@ import 'package:firebase_messaging/firebase_messaging.dart';
 import 'package:flutter_local_notifications/flutter_local_notifications.dart';
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:Canny/Database/all_database.dart';
-import 'package:Canny/Services/Notification/notification_database.dart';
 
 /*
 const AndroidNotificationChannel channel = AndroidNotificationChannel(

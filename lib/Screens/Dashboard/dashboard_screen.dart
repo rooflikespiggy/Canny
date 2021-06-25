@@ -82,16 +82,16 @@ class _DashboardScreenState extends State<DashboardScreen> {
                         allCategories.sort((a, b) => a.categoryId.compareTo(b.categoryId));
                         totalExpensesAmount = allCategories
                             .where((category) => !category.isIncome)
-                            .map((category) => category.categoryAmount[monthYear])
+                            .map((category) => category.categoryAmount[monthYear] != null ? category.categoryAmount[monthYear] : 0)
                             .reduce((value, element) => value.toDouble() + element.toDouble());
                         totalIncome = allCategories
                             .where((category) => category.isIncome)
-                            .map((category) => category.categoryAmount[monthYear])
+                            .map((category) => category.categoryAmount[monthYear] != null ? category.categoryAmount[monthYear] : 0)
                             .reduce((value, element) => value.toDouble() + element.toDouble());
                         balance = totalIncome - totalExpensesAmount;
                         percent = totalIncome > 0 ? ((totalExpensesAmount / totalIncome) * 100) : 0;
                         return StreamBuilder(
-                          stream: getData(),
+                          stream: teCollection.doc('TE').snapshots(),
                           builder: (BuildContext context, AsyncSnapshot<DocumentSnapshot> snapshot2) {
                             if (snapshot2.hasData) {
                               teAmount = snapshot2.data['amount'];
@@ -225,7 +225,9 @@ class _DashboardScreenState extends State<DashboardScreen> {
                                                                   color: Colors.black54,
                                                                 ),
                                                               ),
-                                                              Text("-" + totalExpensesAmount.toStringAsFixed(2),
+                                                              Text(totalExpensesAmount > 0
+                                                                  ? "-" + totalExpensesAmount.toStringAsFixed(2)
+                                                                  : totalExpensesAmount.toStringAsFixed(2),
                                                                 style: TextStyle(
                                                                   fontFamily: "Lato",
                                                                   color: Colors.red,
@@ -317,21 +319,24 @@ class _DashboardScreenState extends State<DashboardScreen> {
                                                                   ),
                                                                   flex: totalIncome.round(),
                                                                 ),
-                                                                Expanded(
-                                                                  child: Container(
-                                                                    padding: EdgeInsets.only(right: 5.0),
-                                                                    alignment: Alignment.centerRight,
-                                                                    color: Colors.redAccent,
-                                                                    height: 25,
-                                                                    child: Text(
-                                                                      totalExpensesAmount.toStringAsFixed(2),
-                                                                      style: TextStyle(
-                                                                        color: Colors.white,
-                                                                        fontSize: 12,
+                                                                Visibility(
+                                                                  visible: totalExpensesAmount > 0,
+                                                                  child: Expanded(
+                                                                    child: Container(
+                                                                      padding: EdgeInsets.only(right: 5.0),
+                                                                      alignment: Alignment.centerRight,
+                                                                      color: Colors.redAccent,
+                                                                      height: 25,
+                                                                      child: Text(
+                                                                        totalExpensesAmount.toStringAsFixed(2),
+                                                                        style: TextStyle(
+                                                                          color: Colors.white,
+                                                                          fontSize: 12,
+                                                                        ),
                                                                       ),
                                                                     ),
+                                                                    flex: totalExpensesAmount.round(),
                                                                   ),
-                                                                  flex: totalExpensesAmount.round(),
                                                                 ),
                                                               ],
                                                             ),
@@ -399,7 +404,9 @@ class _DashboardScreenState extends State<DashboardScreen> {
                                                                   color: Colors.black54,
                                                                 ),
                                                               ),
-                                                              Text("-" + totalExpensesAmount.toStringAsFixed(2),
+                                                              Text(totalExpensesAmount > 0
+                                                                  ? "-" + totalExpensesAmount.toStringAsFixed(2)
+                                                                  : totalExpensesAmount.toStringAsFixed(2),
                                                                 style: TextStyle(
                                                                   fontFamily: "Lato",
                                                                   color: Colors.red,
@@ -450,7 +457,7 @@ class _DashboardScreenState extends State<DashboardScreen> {
                                                     ),
                                                     Container(
                                                       height: 270,
-                                                      width: 380,
+                                                      width: 270,
                                                       child: Stack(
                                                         alignment: Alignment.topCenter,
                                                         children: <Widget>[
@@ -795,7 +802,7 @@ class _DashboardScreenState extends State<DashboardScreen> {
       double setAmount,
       double sumOfExpensesAmount) {
     List<Category> selectedCategories = allCategories
-        .where((category) => category.categoryAmount[monthYear] > 0 && !category.isIncome)
+        .where((category) => category.categoryAmount[monthYear] != null ? category.categoryAmount[monthYear] > 0 && !category.isIncome : false)
         .toList();
     return List.generate(
       setAmount > 0 && setAmount > sumOfExpensesAmount ? selectedCategories.length + 1 : selectedCategories.length,
@@ -815,7 +822,7 @@ class _DashboardScreenState extends State<DashboardScreen> {
               showTitle: isTouched,
               title: i < selectedCategories.length
                   ? '${category.categoryName} \n ${value.toStringAsFixed(2)}'
-                  : 'remaining',
+                  : 'Amount left \n to spend',
               radius: isTouched ? 50 : 40,
               titleStyle: TextStyle(fontSize: 15, color: Colors.black87),
               titlePositionPercentageOffset: -1.5,
@@ -827,7 +834,7 @@ class _DashboardScreenState extends State<DashboardScreen> {
 
   List<Indicator> showAllIndicators(List<Category> allCategories) {
     List<Category> selectedCategories = allCategories
-        .where((category) => category.categoryAmount[monthYear] > 0 && !category.isIncome)
+        .where((category) => category.categoryAmount[monthYear] != null ? category.categoryAmount[monthYear] > 0 && !category.isIncome : false)
         .toList();
     return List.generate(
       selectedCategories.length,
@@ -874,12 +881,11 @@ class _DashboardScreenState extends State<DashboardScreen> {
 
   Future _refreshData() async {
     await Future.delayed(Duration(seconds: 2));
-
     setState(() {});
   }
 
   Stream<DocumentSnapshot> getData() async* {
-    await Future.delayed(const Duration(seconds: 2));
+    // await Future.delayed(const Duration(seconds: 2));
     yield* teCollection
         .doc('TE')
         .snapshots();

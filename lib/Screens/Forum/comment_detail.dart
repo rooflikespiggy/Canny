@@ -120,8 +120,8 @@ class CommentDetail extends StatelessWidget {
                                                               ? Icons.thumb_up_alt
                                                               : Icons.thumb_up_alt_outlined,
                                                           color: Colors.black),
-                                                      onPressed: () async {
-                                                        await CommentDatabaseService(inputId).updateLikes(snapshotData["liked_uid"],
+                                                      onPressed: () {
+                                                         CommentDatabaseService(inputId).updateLikes(snapshotData["liked_uid"],
                                                             snapshotData["disliked_uid"],
                                                             snapshotData.id);
                                                       }
@@ -132,8 +132,8 @@ class CommentDetail extends StatelessWidget {
                                                               ? Icons.thumb_down_alt
                                                               : Icons.thumb_down_alt_outlined,
                                                           color: Colors.black),
-                                                      onPressed: () async {
-                                                        await CommentDatabaseService(inputId).updateDislikes(snapshotData["liked_uid"],
+                                                      onPressed: () {
+                                                         CommentDatabaseService(inputId).updateDislikes(snapshotData["liked_uid"],
                                                             snapshotData["disliked_uid"],
                                                             snapshotData.id);
                                                       }
@@ -149,7 +149,7 @@ class CommentDetail extends StatelessWidget {
                                                     IconButton(
                                                       icon:
                                                       Icon(FontAwesomeIcons.edit),
-                                                      onPressed: () async {
+                                                      onPressed: () {
                                                         showDialog(
                                                           context: context,
                                                           builder: (BuildContext context) {
@@ -200,10 +200,10 @@ class CommentDetail extends StatelessWidget {
                                                                 SizedBox(
                                                                   width: 130,
                                                                   child: TextButton(
-                                                                      onPressed: () async {
+                                                                      onPressed: () {
                                                                         if (nameInputController.text.isNotEmpty &&
                                                                             descriptionInputController.text.isNotEmpty) {
-                                                                          await CommentDatabaseService(inputId).updateComment(
+                                                                          CommentDatabaseService(inputId).updateComment(
                                                                               snapshotData.id,
                                                                               nameInputController.text,
                                                                               descriptionInputController.text
@@ -268,12 +268,22 @@ class CommentDetail extends StatelessWidget {
                                                                     style: TextButton.styleFrom(
                                                                       backgroundColor: kDarkBlue,
                                                                     ),
-                                                                    onPressed: () async {
-                                                                      await CommentDatabaseService(inputId).removeComment(
+                                                                    onPressed: () {
+                                                                      CommentDatabaseService(inputId).removeComment(
                                                                         snapshotData.id,
                                                                       );
-                                                                      snapshot.data.docs.removeAt(index);
                                                                       Navigator.pop(context);
+                                                                      snapshot.data.docs.removeAt(index);
+                                                                      Flushbar(
+                                                                        message: "Comment deleted.",
+                                                                        icon: Icon(
+                                                                          Icons.check,
+                                                                          size: 28.0,
+                                                                          color: kLightBlueDark,
+                                                                        ),
+                                                                        duration: Duration(seconds: 3),
+                                                                        leftBarIndicatorColor: kLightBlueDark,
+                                                                      )..show(context);
                                                                     },
                                                                   ),
                                                                 ),

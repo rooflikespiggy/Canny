@@ -204,8 +204,8 @@ class _ForumScreenState extends State<ForumScreen> {
                                                                 color: snapshotData["liked_uid"].contains(uid)
                                                                     ? Colors.red
                                                                     : Colors.black),
-                                                            onPressed: () async {
-                                                              await _authForum.updateLikes(
+                                                            onPressed: () {
+                                                               _authForum.updateLikes(
                                                                   snapshotData["liked_uid"],
                                                                   snapshotData.id);
                                                             },
@@ -230,8 +230,8 @@ class _ForumScreenState extends State<ForumScreen> {
                                                             child: IconButton(
                                                               icon:
                                                               Icon(FontAwesomeIcons.edit),
-                                                              onPressed: () async {
-                                                                await showDialog(
+                                                              onPressed: () {
+                                                                showDialog(
                                                                   context: context,
                                                                   builder: (BuildContext context) {
                                                                     return AlertDialog(
@@ -353,14 +353,24 @@ class _ForumScreenState extends State<ForumScreen> {
                                                                               style: TextButton.styleFrom(
                                                                                 backgroundColor: kDarkBlue,
                                                                               ),
-                                                                            onPressed: () async {
-                                                                              await _authForum.removeDiscussion(
+                                                                            onPressed: () {
+                                                                              _authForum.removeDiscussion(
                                                                                 snapshotData.id,
                                                                               );
                                                                               setState(() {
                                                                                 snapshot.data.docs.removeAt(index);
                                                                               });
-                                                                              Navigator.pop(context);
+                                                                              Navigator.pop(context, true);
+                                                                              Flushbar(
+                                                                                message: "Discussion deleted.",
+                                                                                icon: Icon(
+                                                                                  Icons.check,
+                                                                                  size: 28.0,
+                                                                                  color: kLightBlueDark,
+                                                                                ),
+                                                                                duration: Duration(seconds: 3),
+                                                                                leftBarIndicatorColor: kLightBlueDark,
+                                                                              )..show(context);
                                                                             },
                                                                           ),),
                                                                           SizedBox(
