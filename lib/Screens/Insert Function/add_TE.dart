@@ -1,6 +1,7 @@
 import 'package:Canny/Database/all_database.dart';
 import 'package:Canny/Shared/colors.dart';
 import 'package:cloud_firestore/cloud_firestore.dart';
+import 'package:another_flushbar/flushbar.dart';
 import 'package:flutter/material.dart';
 import 'package:Canny/Shared/input_formatters.dart';
 import 'package:flutter/services.dart';
@@ -26,8 +27,8 @@ class _AddTEScreenState extends State<AddTEScreen> {
   @override
   Widget build(BuildContext context) {
     return SingleChildScrollView(
+      padding: EdgeInsets.only(bottom: MediaQuery.of(context).viewInsets.bottom),
       child: Container(
-          padding: EdgeInsets.only(bottom: MediaQuery.of(context).viewInsets.bottom),
           child: Column(
               mainAxisSize: MainAxisSize.max,
               mainAxisAlignment: MainAxisAlignment.start,
@@ -83,8 +84,18 @@ class _AddTEScreenState extends State<AddTEScreen> {
                               //    amount: double.parse(targetedExpensesController.text));
                               if (_formKey.currentState.validate()) {
                                 await _authTargetedExpenditure.updateTE(double.parse(targetedExpensesController.text));
-                                targetedExpensesController.clear();
+                                FocusScope.of(context).unfocus();
                                 Navigator.pop(context);
+                                Flushbar(
+                                  message: "Targeted Expenditure successfully edited.",
+                                  icon: Icon(
+                                    Icons.check,
+                                    size: 28.0,
+                                    color: kLightBlueDark,
+                                  ),
+                                  duration: Duration(seconds: 3),
+                                  leftBarIndicatorColor: kLightBlueDark,
+                                )..show(context);
                               }
                             },
                             child: Text('Submit',

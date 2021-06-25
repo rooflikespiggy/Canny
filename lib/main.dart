@@ -1,5 +1,6 @@
 import 'package:Canny/Models/own_user.dart';
 import 'package:Canny/Screens/wrapper.dart';
+import 'package:Canny/Services/Notification/notification_database.dart';
 import 'package:Canny/Services/Users/auth.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
@@ -9,8 +10,8 @@ import 'package:firebase_messaging/firebase_messaging.dart';
 import 'package:flutter_local_notifications/flutter_local_notifications.dart';
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:Canny/Database/all_database.dart';
-import 'package:Canny/Services/Notifications/notification_database.dart';
 
+/*
 const AndroidNotificationChannel channel = AndroidNotificationChannel(
     'high_importance_channel', // id
     'High Importance Notifications', // title
@@ -35,17 +36,18 @@ Future<void> _firebaseMessagingBackgroundHandler(RemoteMessage message) async {
               channel.name,
               channel.description,
             ),
-          ));
+          )
+      );
       print(message.notification.title);
       print(message.notification.body);
 }
-
-
+ */
 
 Future<void> main() async {
   WidgetsFlutterBinding.ensureInitialized();
   await Firebase.initializeApp();
 
+  /*
   notifCollection.doc('NotifStatus').get().then((value) async {
     if (value['notificationStatus'] == true) {
       print(value['notificationStatus']);
@@ -55,6 +57,7 @@ Future<void> main() async {
           ?.createNotificationChannel(channel);
     }
   });
+   */
   runApp(MyApp());
 }
 

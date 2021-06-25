@@ -1,4 +1,6 @@
 import 'package:Canny/Models/category.dart';
+import 'package:Canny/Shared/colors.dart';
+import 'package:another_flushbar/flushbar.dart';
 import 'package:flutter/material.dart';
 
 class CalcIconButton extends StatelessWidget {
@@ -31,6 +33,18 @@ class CalcIconButton extends StatelessWidget {
               content: Text(category.categoryName + ' chosen'),
               duration: Duration(seconds: 1),
             ));
+            /*
+            Flushbar(
+              message: category.categoryName + ' chosen.',
+              icon: Icon(
+                icon.icon,
+                size: 28.0,
+                color: kLightBlueDark,
+              ),
+              duration: Duration(seconds: 1),
+              leftBarIndicatorColor: kLightBlueDark,
+            )..show(context);
+             */
           },
           child: IconTheme(
               data: IconThemeData(color: categoryColor.withOpacity(1), size: 38),

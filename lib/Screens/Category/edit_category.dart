@@ -1,7 +1,6 @@
 import 'dart:math';
-
 import 'package:Canny/Shared/colors.dart';
-import 'package:flushbar/flushbar.dart';
+import 'package:another_flushbar/flushbar.dart';
 import 'package:flutter/material.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:Canny/Models/category.dart';
@@ -139,8 +138,8 @@ class _EditCategoryState extends State<EditCategory> {
             allCategories.sort((a, b) => a.categoryId.compareTo(b.categoryId));
             categoryId = (int.parse(allCategories.last.categoryId) + 1).toString();
             return SingleChildScrollView(
+                padding: EdgeInsets.only(bottom: MediaQuery.of(context).viewInsets.bottom),
                 child: Container(
-                    padding: EdgeInsets.only(bottom: MediaQuery.of(context).viewInsets.bottom),
                     child: Column(
                         mainAxisSize: MainAxisSize.max,
                         mainAxisAlignment: MainAxisAlignment.start,
@@ -346,7 +345,7 @@ class _EditCategoryState extends State<EditCategory> {
                                               ),
                                               SizedBox(height: 10.0),
                                               TextButton(
-                                                onPressed: () async {
+                                                onPressed: () {
                                                   if (_formKey.currentState.validate()) {
                                                     if (categoryNameChanged) {
                                                       _authCategory.updateCategoryName(widget.categoryId, categoryNameController.text);
@@ -360,6 +359,7 @@ class _EditCategoryState extends State<EditCategory> {
                                                     if (iconChanged) {
                                                       _authCategory.updateIcon(widget.categoryId, _icon.child);
                                                     }
+                                                    FocusScope.of(context).unfocus();
                                                     Navigator.pop(context);
                                                     Flushbar(
                                                       message: "Category successfully edited.",
@@ -371,7 +371,7 @@ class _EditCategoryState extends State<EditCategory> {
                                                       duration: Duration(seconds: 3),
                                                       leftBarIndicatorColor: kLightBlueDark,
                                                     )..show(context);
-                                                    categoryNameController.clear();
+                                                    // categoryNameController.clear();
                                                   }
                                                 },
                                                 child: Text('Submit',

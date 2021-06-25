@@ -2,7 +2,7 @@ import 'package:Canny/Models/category.dart';
 import 'package:Canny/Services/Category/category_database.dart';
 import 'package:Canny/Shared/colors.dart';
 import 'package:datetime_picker_formfield/datetime_picker_formfield.dart';
-import 'package:flushbar/flushbar.dart';
+import 'package:another_flushbar/flushbar.dart';
 import 'package:flutter/material.dart';
 import 'package:intl/intl.dart';
 
@@ -104,6 +104,7 @@ class _FilterScreenState extends State<FilterScreen> {
                                     backgroundColor: kDarkBlue,
                                   ),
                                 onPressed: () {
+                                  filteredCategories = [];
                                   Navigator.pop(context);
                                 },
                               ),),
@@ -299,11 +300,10 @@ class _FilterScreenState extends State<FilterScreen> {
                   icon: Icon(
                     Icons.info_outline,
                     size: 28.0,
-                    color: Theme.of(context).colorScheme.secondary,
+                    color: kLightBlueDark,
                   ),
                   duration: Duration(seconds: 3),
-                  leftBarIndicatorColor:
-                  Theme.of(context).colorScheme.secondary,
+                  leftBarIndicatorColor: kLightBlueDark,
                 )..show(context);
               }
             },

@@ -3,7 +3,7 @@ import 'package:Canny/Models/expense.dart';
 import 'package:Canny/Screens/Insert%20Function/select_category_screen.dart';
 import 'package:Canny/Services/Receipt/receipt_database.dart';
 import 'package:cloud_firestore/cloud_firestore.dart';
-import 'package:flushbar/flushbar.dart';
+import 'package:another_flushbar/flushbar.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:math_expressions/math_expressions.dart';
@@ -39,10 +39,19 @@ class ExpenseCalculatorState extends State<ExpenseCalculator> {
   bool evaluated = false;
 
   void numClick(String text) {
-    if ((_expression.contains('.') &&
+    if (_expression == '' && (text == '+' || text == '-' || text == '/' || text == '*')) {
+      setState(() => _expression += '');
+    } else if ((_expression.contains('.') &&
         text == '.' &&
         _expression.substring(_expression.length - 1, _expression.length) == ".") ||
         _expression.length > 10) {
+      setState(() => _expression += '');
+    } else if (_expression != '' &&
+        (text == '+' || text == '-' || text == '/' || text == '*') &&
+        (_expression[_expression.length - 1] == "x" ||
+            _expression[_expression.length - 1] == "÷" ||
+            _expression[_expression.length - 1] == "+" ||
+            _expression[_expression.length - 1] == "-")) {
       setState(() => _expression += '');
     } else if (text == '*') {
       setState(() => _expression += 'x');
@@ -51,14 +60,24 @@ class ExpenseCalculatorState extends State<ExpenseCalculator> {
     } else {
       setState(() => _expression += text);
     }
-    if ((_evaluate.contains('.') &&
+    if (_evaluate == '' && (text == '+' || text == '-' || text == '/' || text == '*')) {
+      setState(() => _evaluate += '');
+    } else if ((_evaluate.contains('.') &&
         text == '.' &&
         _evaluate.substring(_evaluate.length - 1, _evaluate.length) == ".") ||
         _evaluate.length > 10) {
       setState(() => _evaluate += '');
+    } else if (_evaluate != '' &&
+        (text == '+' || text == '-' || text == '/' || text == '*') &&
+        (_evaluate[_evaluate.length - 1] == "*" ||
+            _evaluate[_evaluate.length - 1] == "/" ||
+            _evaluate[_evaluate.length - 1] == "+" ||
+            _evaluate[_evaluate.length - 1] == "-")) {
+      setState(() => _evaluate += '');
     } else {
       setState(() => _evaluate += text);
     }
+    setState(() => evaluated = false);
   }
 
   void allClear(String text) {
@@ -86,7 +105,13 @@ class ExpenseCalculatorState extends State<ExpenseCalculator> {
       evaluated = true;
       _history = _expression;
       _evaluate = exp.evaluate(EvaluationType.REAL, cm).toString();
-      _evaluate = _evaluate.substring(0, 11);
+      if (_evaluate[_evaluate.length - 1] == '0' && _evaluate[_evaluate.length - 2] == '.') {
+        _evaluate = _evaluate.substring(0, _evaluate.length - 2);
+      }
+      if (_evaluate.length > 11) {
+        _evaluate = _evaluate.substring(0, 11);
+      }
+      _expression = _evaluate;
     });
   }
 
@@ -95,9 +120,10 @@ class ExpenseCalculatorState extends State<ExpenseCalculator> {
     return ((value * mod).round().toDouble() / mod);
   }
 
+
   @override
   Widget build(BuildContext context) {
-
+    /*
     return Scaffold(
       backgroundColor: kLightBlue,
       resizeToAvoidBottomInset: false,
@@ -414,8 +440,8 @@ class ExpenseCalculatorState extends State<ExpenseCalculator> {
         ),
       ),
     );
+    */
 
-    /*
     return Scaffold(
       backgroundColor: kLightBlue,
       resizeToAvoidBottomInset: false,
@@ -437,7 +463,7 @@ class ExpenseCalculatorState extends State<ExpenseCalculator> {
                 Icon(Icons.drive_file_rename_outline),
                 400.0,
               ),
-              SizedBox(height: 50),
+              SizedBox(height: 45),
               Container(
                 alignment: Alignment(1.0, 1.0),
                 child: Padding(
@@ -644,7 +670,7 @@ class ExpenseCalculatorState extends State<ExpenseCalculator> {
                 width: 350,
                 height: 60,
                 child: TextButton(
-                  onPressed: () async {
+                  onPressed: () {
                     if (_formKey.currentState.validate()) {
                       if (isNumeric(_evaluate) == false) {
                         Flushbar(
@@ -688,11 +714,11 @@ class ExpenseCalculatorState extends State<ExpenseCalculator> {
                           itemName: itemNameController.text,
                           uid: uid,
                         );
-                        await _authReceipt.addReceipt(expense);
+                        _authReceipt.addReceipt(expense);
                         itemNameController.clear();
                         Navigator.pop(context);
                         Flushbar(
-                          message: "Expense successfully added.",
+                          message: "Receipt successfully added.",
                           icon: Icon(
                             Icons.check,
                             size: 28.0,
@@ -725,8 +751,6 @@ class ExpenseCalculatorState extends State<ExpenseCalculator> {
         ),
       ),
     );
-
-     */
   }
 
   Widget _showTextFormFields(TextEditingController text, String label, Icon icon, double size) {

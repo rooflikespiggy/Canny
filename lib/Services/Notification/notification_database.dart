@@ -1,7 +1,7 @@
 import 'package:Canny/Database/all_database.dart';
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:Canny/Models/notification.dart';
-import 'package:Canny/Services/Notifications/default_notification.dart';
+import 'package:Canny/Services/Notification/default_notification.dart';
 
 class NotificationDatabaseService {
   final String uid;
@@ -22,11 +22,11 @@ class NotificationDatabaseService {
     return true;
   }
 
-  Future updateNotifStatus(bool status) async {
+  Future updateNotifStatus(bool newStatus) async {
     await notificationCollection
         .doc('NotifStatus')
         .update({
-      'notificationStatus': status
+      'notificationStatus': newStatus
     });
     return true;
   }

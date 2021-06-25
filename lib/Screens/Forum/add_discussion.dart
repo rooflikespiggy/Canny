@@ -3,7 +3,7 @@ import 'package:Canny/Screens/Home/homepage_screen.dart';
 import 'package:Canny/Services/Forum/forum_database.dart';
 import 'package:Canny/Shared/colors.dart';
 import 'package:firebase_auth/firebase_auth.dart';
-import 'package:flushbar/flushbar.dart';
+import 'package:another_flushbar/flushbar.dart';
 import 'package:flutter/material.dart';
 
 class AddDiscussion extends StatefulWidget {
@@ -70,15 +70,14 @@ class _AddDiscussionState extends State<AddDiscussion> {
                       mainAxisAlignment: MainAxisAlignment.spaceEvenly,
                       children: <Widget>[
                         ElevatedButton(
-                          onPressed: () async {
+                          onPressed: () {
                             final Forum forum = Forum(uid: uid,
                                 name: nameController.text,
                                 title: titleController.text,
                                 description: descriptionController.text);
                             if (_formKey.currentState.validate()) {
-                              await _authForum.addDiscussion(forum);
                               FocusScope.of(context).unfocus();
-                              await _authForum.addDiscussion(forum).then((_) {
+                              _authForum.addDiscussion(forum).then((_) {
                                 showDialog(
                                   context: context,
                                   builder: (BuildContext context) {

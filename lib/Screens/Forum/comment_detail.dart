@@ -3,8 +3,10 @@ import 'package:Canny/Services/Forum/comment_database.dart';
 import 'package:Canny/Shared/colors.dart';
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:firebase_auth/firebase_auth.dart';
+import 'package:another_flushbar/flushbar.dart';
 import 'package:flutter/material.dart';
 import 'package:font_awesome_flutter/font_awesome_flutter.dart';
+import 'package:intl/intl.dart';
 
 class CommentDetail extends StatelessWidget {
   final String uid = FirebaseAuth.instance.currentUser.uid;
@@ -60,12 +62,18 @@ class CommentDetail extends StatelessWidget {
                                         title: Text(
                                           snapshotData["name"],
                                           style: TextStyle(
+                                            fontFamily: 'Lato-Thin',
                                             fontSize: 20,
-
                                           ),
                                         ),
-                                        subtitle: Text(
-                                          snapshotData["description"],
+                                        subtitle: Padding(
+                                          padding: const EdgeInsets.only(top: 8.0),
+                                          child: Text(
+                                            snapshotData["description"],
+                                            style: TextStyle(
+                                              fontFamily: 'Lato-Thin',
+                                            ),
+                                          ),
                                         ),
                                         leading: CircleAvatar(
                                           backgroundColor: kPalePurple,
@@ -73,11 +81,29 @@ class CommentDetail extends StatelessWidget {
                                           child: Text(
                                             snapshotData["name"][0],
                                             style: TextStyle(
+                                              fontFamily: 'Lato',
                                               fontSize: 23,
                                               color: Colors.white,
                                             ),
                                           ),
                                         )
+                                    ),
+                                    Padding(
+                                      padding: EdgeInsets.fromLTRB(20.0, 0, 20.0, 10.0),
+                                      child: Row(
+                                        crossAxisAlignment: CrossAxisAlignment.start,
+                                        children: <Widget>[
+                                          Text(DateFormat("EEEE, d MMMM y")
+                                              .format(DateTime.fromMillisecondsSinceEpoch(
+                                              snapshotData["datetime"].seconds * 1000)),
+                                              style: TextStyle(
+                                                fontFamily: 'Lato-Thin',
+                                                fontSize: 16,
+                                                color: Colors.grey[850],
+                                              )
+                                          ),
+                                        ],
+                                      ),
                                     ),
                                     Padding(
                                       padding: EdgeInsets.only(left: 8.0, right: 8.0, top: 5.0),
@@ -94,8 +120,8 @@ class CommentDetail extends StatelessWidget {
                                                               ? Icons.thumb_up_alt
                                                               : Icons.thumb_up_alt_outlined,
                                                           color: Colors.black),
-                                                      onPressed: () async {
-                                                        await CommentDatabaseService(inputId).updateLikes(snapshotData["liked_uid"],
+                                                      onPressed: () {
+                                                         CommentDatabaseService(inputId).updateLikes(snapshotData["liked_uid"],
                                                             snapshotData["disliked_uid"],
                                                             snapshotData.id);
                                                       }
@@ -106,8 +132,8 @@ class CommentDetail extends StatelessWidget {
                                                               ? Icons.thumb_down_alt
                                                               : Icons.thumb_down_alt_outlined,
                                                           color: Colors.black),
-                                                      onPressed: () async {
-                                                        await CommentDatabaseService(inputId).updateDislikes(snapshotData["liked_uid"],
+                                                      onPressed: () {
+                                                         CommentDatabaseService(inputId).updateDislikes(snapshotData["liked_uid"],
                                                             snapshotData["disliked_uid"],
                                                             snapshotData.id);
                                                       }
@@ -123,7 +149,7 @@ class CommentDetail extends StatelessWidget {
                                                     IconButton(
                                                       icon:
                                                       Icon(FontAwesomeIcons.edit),
-                                                      onPressed: () async {
+                                                      onPressed: () {
                                                         showDialog(
                                                           context: context,
                                                           builder: (BuildContext context) {
@@ -174,17 +200,28 @@ class CommentDetail extends StatelessWidget {
                                                                 SizedBox(
                                                                   width: 130,
                                                                   child: TextButton(
-                                                                      onPressed: () async {
+                                                                      onPressed: () {
                                                                         if (nameInputController.text.isNotEmpty &&
                                                                             descriptionInputController.text.isNotEmpty) {
-                                                                          await CommentDatabaseService(inputId).updateComment(
+                                                                          CommentDatabaseService(inputId).updateComment(
                                                                               snapshotData.id,
                                                                               nameInputController.text,
                                                                               descriptionInputController.text
                                                                           ).then((_) {
+                                                                            FocusScope.of(context).unfocus();
                                                                             nameInputController.clear();
                                                                             descriptionInputController.clear();
                                                                             Navigator.pop(context);
+                                                                            Flushbar(
+                                                                              message: "Comment successfully edited.",
+                                                                              icon: Icon(
+                                                                                Icons.check,
+                                                                                size: 28.0,
+                                                                                color: kLightBlueDark,
+                                                                              ),
+                                                                              duration: Duration(seconds: 3),
+                                                                              leftBarIndicatorColor: kLightBlueDark,
+                                                                            )..show(context);
                                                                           }).catchError((error) => print(error));
                                                                         }
                                                                       },
@@ -231,12 +268,22 @@ class CommentDetail extends StatelessWidget {
                                                                     style: TextButton.styleFrom(
                                                                       backgroundColor: kDarkBlue,
                                                                     ),
-                                                                    onPressed: () async {
-                                                                      await CommentDatabaseService(inputId).removeComment(
+                                                                    onPressed: () {
+                                                                      CommentDatabaseService(inputId).removeComment(
                                                                         snapshotData.id,
                                                                       );
-                                                                      snapshot.data.docs.removeAt(index);
                                                                       Navigator.pop(context);
+                                                                      snapshot.data.docs.removeAt(index);
+                                                                      Flushbar(
+                                                                        message: "Comment deleted.",
+                                                                        icon: Icon(
+                                                                          Icons.check,
+                                                                          size: 28.0,
+                                                                          color: kLightBlueDark,
+                                                                        ),
+                                                                        duration: Duration(seconds: 3),
+                                                                        leftBarIndicatorColor: kLightBlueDark,
+                                                                      )..show(context);
                                                                     },
                                                                   ),
                                                                 ),

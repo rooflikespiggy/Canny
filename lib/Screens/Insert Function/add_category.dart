@@ -1,5 +1,5 @@
 import 'package:Canny/Shared/colors.dart';
-import 'package:flushbar/flushbar.dart';
+import 'package:another_flushbar/flushbar.dart';
 import 'package:flutter/material.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:Canny/Models/category.dart';
@@ -79,8 +79,8 @@ class _AddCategoryScreenState extends State<AddCategoryScreen> {
             allCategories.sort((a, b) => a.categoryId.compareTo(b.categoryId));
             categoryId = (int.parse(allCategories.last.categoryId) + 1).toString();
             return SingleChildScrollView(
+                padding: EdgeInsets.only(bottom: MediaQuery.of(context).viewInsets.bottom),
                 child: Container(
-                    padding: EdgeInsets.only(bottom: MediaQuery.of(context).viewInsets.bottom),
                     child: Column(
                         mainAxisSize: MainAxisSize.max,
                         mainAxisAlignment: MainAxisAlignment.start,
@@ -295,7 +295,7 @@ class _AddCategoryScreenState extends State<AddCategoryScreen> {
                                               ),
                                               SizedBox(height: 10.0),
                                               TextButton(
-                                                onPressed: () async {
+                                                onPressed: () {
                                                   final Category category = Category(
                                                     categoryName: categoryNameController.text,
                                                     categoryColor: currentColor,
@@ -305,11 +305,7 @@ class _AddCategoryScreenState extends State<AddCategoryScreen> {
                                                     isIncome: isIncome,
                                                   );
                                                   if (_formKey.currentState.validate()) {
-                                                    await _authCategory.addNewCategory(category, category.categoryId);
-                                                    categoryNameController.clear();
-                                                    pickerColor = Color(0xff443a49);
-                                                    currentColor = Color(0xff443a49);
-                                                    _icon = null;
+                                                    _authCategory.addNewCategory(category, category.categoryId);
                                                     FocusScope.of(context).unfocus();
                                                     Navigator.pop(context);
                                                     Flushbar(
