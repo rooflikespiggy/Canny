@@ -670,7 +670,7 @@ class ExpenseCalculatorState extends State<ExpenseCalculator> {
                 width: 350,
                 height: 60,
                 child: TextButton(
-                  onPressed: () async {
+                  onPressed: () {
                     if (_formKey.currentState.validate()) {
                       if (isNumeric(_evaluate) == false) {
                         Flushbar(
@@ -714,7 +714,7 @@ class ExpenseCalculatorState extends State<ExpenseCalculator> {
                           itemName: itemNameController.text,
                           uid: uid,
                         );
-                        await _authReceipt.addReceipt(expense);
+                        _authReceipt.addReceipt(expense);
                         itemNameController.clear();
                         Navigator.pop(context);
                         Flushbar(

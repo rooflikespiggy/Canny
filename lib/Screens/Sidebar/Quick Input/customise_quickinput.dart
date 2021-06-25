@@ -422,6 +422,7 @@ class _CustomiseQIState extends State<CustomiseQI> {
                                     backgroundColor: kDarkBlue,
                                   ),
                                   onPressed: () {
+                                    selectedCategories = [];
                                     Navigator.pop(context);
                                   },
                                 ),),
@@ -464,6 +465,7 @@ class _CustomiseQIState extends State<CustomiseQI> {
                                               : Colors.grey[300],
                                           onSelected: (value) {
                                             setState(() {
+                                              print(tempCtgs);
                                               if (!tempCtgs.contains(ctg) && tempCtgs.length < 3) {
                                                 tempCtgs.add(ctg);
                                               } else if (!tempCtgs.contains(ctg) && tempCtgs.length == 3) {

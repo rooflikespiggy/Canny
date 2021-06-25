@@ -104,6 +104,7 @@ class _FilterScreenState extends State<FilterScreen> {
                                     backgroundColor: kDarkBlue,
                                   ),
                                 onPressed: () {
+                                  filteredCategories = [];
                                   Navigator.pop(context);
                                 },
                               ),),

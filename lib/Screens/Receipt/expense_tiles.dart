@@ -172,8 +172,8 @@ class _ExpenseTileState extends State<ExpenseTile> {
                           style: TextButton.styleFrom(
                             backgroundColor: kDarkBlue,
                           ),
-                        onPressed: () async {
-                          await _authReceipt.removeReceipt(widget.receiptId,
+                        onPressed: () {
+                           _authReceipt.removeReceipt(widget.receiptId,
                               widget.categoryId,
                               widget.datetime,
                               widget.cost);

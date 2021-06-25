@@ -162,7 +162,7 @@ class _AddSpendingScreenState extends State<AddSpendingScreen> {
                                     ),
                                     SizedBox(height: 10,),
                                     TextButton(
-                                      onPressed: () async {
+                                      onPressed: () {
                                         final Expense expense = Expense(
                                           categoryId: categoryId, //selectedCategory[0].categoryId,
                                           cost: isIncome //selectedCategory[0].isIncome
@@ -172,7 +172,7 @@ class _AddSpendingScreenState extends State<AddSpendingScreen> {
                                           uid: uid,
                                         );
                                         if (_formKey.currentState.validate()) {
-                                          await _authReceipt.addReceipt(expense);
+                                          _authReceipt.addReceipt(expense);
                                           itemNameController.clear();
                                           costController.clear();
                                           Navigator.pop(context);

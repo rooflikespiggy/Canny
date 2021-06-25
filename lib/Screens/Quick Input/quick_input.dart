@@ -316,7 +316,7 @@ class QuickInputState extends State<QuickInput> {
                   width: 360,
                   height: 50,
                   child: TextButton(
-                      onPressed: () async {
+                      onPressed: () {
                         if (_chosenCategory == null) {
                           Flushbar(
                             message: "Choose a category.",
@@ -372,7 +372,7 @@ class QuickInputState extends State<QuickInput> {
                             itemName: _chosenCategory.categoryName,
                             uid: uid,
                           );
-                          await _authReceipt.addReceipt(expense);
+                          _authReceipt.addReceipt(expense);
                           Flushbar(
                             message: "Receipt successfully added.",
                             icon: Icon(

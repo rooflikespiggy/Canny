@@ -11,8 +11,6 @@ import 'package:flutter_local_notifications/flutter_local_notifications.dart';
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:Canny/Database/all_database.dart';
 
-import 'Screens/splash_screen.dart';
-
 /*
 const AndroidNotificationChannel channel = AndroidNotificationChannel(
     'high_importance_channel', // id

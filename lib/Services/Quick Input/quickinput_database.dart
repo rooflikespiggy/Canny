@@ -41,47 +41,37 @@ class QuickInputDatabaseService {
   }
 
   Future updateQuickInput(Category category, String quickInputId) async {
-    /*
-    String previousCategoryId = int.parse(quickInputs[userId][categoryNo].categoryId).toString();
-    await quickInputCollection
-        .doc(previousCategoryId)
-        .delete();
-     */
     await quickInputCollection
         .doc(quickInputId)
         .update(category.toMap());
     return true;
   }
 
-  /*
-  Category getQuickInput(int categoryNo) {
-    return quickInputs[userId][categoryNo];
-  }
-
-  Future addDefaultQuickInput(Category category, int categoryId) async {
+  Future updateFirstQuickInput(Category category) async {
     await quickInputCollection
-        .doc(categoryId.toString())
-        .set(category.toMap());
+        .doc('0')
+        .update(category.toMap());
     return true;
   }
 
-  Future updateQuickInput(Category category, String categoryId, int categoryNo) async {
-    /*
-    String previousCategoryId = int.parse(quickInputs[userId][categoryNo].categoryId).toString();
+  Future updateSecondQuickInput(Category category) async {
     await quickInputCollection
-        .doc(previousCategoryId)
-        .delete();
-     */
-    await quickInputCollection
-        .get()
-        .then((snapshot) =>
-        snapshot.docs.forEach((element) =>
-            element.reference.delete()));
-    await quickInputCollection
-        .doc(int.parse(categoryId).toString())
-        .set(category.toMap());
-    quickInputs[userId][categoryNo] = category;
+        .doc('1')
+        .update(category.toMap());
     return true;
   }
-   */
+
+  Future updateThirdQuickInput(Category category) async {
+    await quickInputCollection
+        .doc('2')
+        .update(category.toMap());
+    return true;
+  }
+
+  Future changeQuickInputToOthers(Category category, String quickInputId) async {
+    await quickInputCollection
+        .doc(quickInputId)
+        .update(category.toMap());
+    return true;
+  }
 }

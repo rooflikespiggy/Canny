@@ -74,14 +74,14 @@ class _AddCommentState extends State<AddComment> {
                       mainAxisAlignment: MainAxisAlignment.spaceEvenly,
                       children: <Widget>[
                         ElevatedButton(
-                            onPressed: () async {
+                            onPressed: () {
                               final Comment comment = Comment(uid: uid,
                                   did: inputId,
                                   name: nameController.text,
                                   description: descriptionController.text);
                               if (_formKey.currentState.validate()) {
                                 FocusScope.of(context).unfocus();
-                                await CommentDatabaseService(inputId)
+                                CommentDatabaseService(inputId)
                                     .addComment(comment).then((_) {
                                   showDialog(
                                     context: context,

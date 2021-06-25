@@ -295,7 +295,7 @@ class _AddCategoryScreenState extends State<AddCategoryScreen> {
                                               ),
                                               SizedBox(height: 10.0),
                                               TextButton(
-                                                onPressed: () async {
+                                                onPressed: () {
                                                   final Category category = Category(
                                                     categoryName: categoryNameController.text,
                                                     categoryColor: currentColor,
@@ -305,7 +305,7 @@ class _AddCategoryScreenState extends State<AddCategoryScreen> {
                                                     isIncome: isIncome,
                                                   );
                                                   if (_formKey.currentState.validate()) {
-                                                    await _authCategory.addNewCategory(category, category.categoryId);
+                                                    _authCategory.addNewCategory(category, category.categoryId);
                                                     FocusScope.of(context).unfocus();
                                                     Navigator.pop(context);
                                                     Flushbar(

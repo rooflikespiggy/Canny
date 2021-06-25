@@ -204,8 +204,8 @@ class _ForumScreenState extends State<ForumScreen> {
                                                                 color: snapshotData["liked_uid"].contains(uid)
                                                                     ? Colors.red
                                                                     : Colors.black),
-                                                            onPressed: () async {
-                                                              await _authForum.updateLikes(
+                                                            onPressed: () {
+                                                               _authForum.updateLikes(
                                                                   snapshotData["liked_uid"],
                                                                   snapshotData.id);
                                                             },
@@ -230,8 +230,8 @@ class _ForumScreenState extends State<ForumScreen> {
                                                             child: IconButton(
                                                               icon:
                                                               Icon(FontAwesomeIcons.edit),
-                                                              onPressed: () async {
-                                                                await showDialog(
+                                                              onPressed: () {
+                                                                showDialog(
                                                                   context: context,
                                                                   builder: (BuildContext context) {
                                                                     return AlertDialog(
@@ -353,8 +353,8 @@ class _ForumScreenState extends State<ForumScreen> {
                                                                               style: TextButton.styleFrom(
                                                                                 backgroundColor: kDarkBlue,
                                                                               ),
-                                                                            onPressed: () async {
-                                                                              await _authForum.removeDiscussion(
+                                                                            onPressed: () {
+                                                                              _authForum.removeDiscussion(
                                                                                 snapshotData.id,
                                                                               );
                                                                               setState(() {
