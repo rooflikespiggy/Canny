@@ -25,6 +25,7 @@ class _CategoryScreenState extends State<CategoryScreen> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
+      resizeToAvoidBottomInset: false,
         drawer: SideBarMenu(),
         appBar: AppBar(
           elevation: 0,
@@ -63,7 +64,7 @@ class _CategoryScreenState extends State<CategoryScreen> {
                       Visibility(
                         visible: !isDefault,
                         child: Container(
-                          width: 380,
+                          width: 360,
                           padding: EdgeInsets.all(8),
                           decoration: BoxDecoration(
                             borderRadius: BorderRadius.circular(5.0),

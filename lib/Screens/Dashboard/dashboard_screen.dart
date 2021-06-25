@@ -44,6 +44,7 @@ class _DashboardScreenState extends State<DashboardScreen> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
+      resizeToAvoidBottomInset: false,
       appBar: AppBar(
         backgroundColor: kDarkBlue,
         title: Text(
@@ -581,7 +582,13 @@ class _DashboardScreenState extends State<DashboardScreen> {
                                                             Visibility(
                                                               visible: snapshot.data.docs.length > 5 && !showMore,
                                                               child: TextButton(
-                                                                child: Text('SHOW MORE'),
+                                                                child: Text(
+                                                                  'SHOW MORE',
+                                                                  style: TextStyle(
+                                                                    fontFamily: "Lato",
+                                                                    color: kDarkBlue,
+                                                                  )
+                                                                ),
                                                                 onPressed: () {
                                                                   setState(() {
                                                                     showMore = !showMore;
@@ -593,7 +600,13 @@ class _DashboardScreenState extends State<DashboardScreen> {
                                                             Visibility(
                                                               visible: snapshot.data.docs.length > 5 && !showLess,
                                                               child: TextButton(
-                                                                  child: Text('SHOW LESS'),
+                                                                  child: Text(
+                                                                      'SHOW LESS',
+                                                                      style: TextStyle(
+                                                                        fontFamily: "Lato",
+                                                                        color: kDarkBlue,
+                                                                      )
+                                                                  ),
                                                                   onPressed: () {
                                                                     setState(() {
                                                                       showMore = !showMore;
@@ -701,7 +714,7 @@ class _DashboardScreenState extends State<DashboardScreen> {
                                                 children: <Widget> [
                                                   CircularProgressIndicator(color: kDarkBlue),
                                                   SizedBox(height: 15.0),
-                                                  Text('Loading data'),
+                                                  Text('Loading statistics'),
                                                 ]
                                             )
                                         )
@@ -726,7 +739,7 @@ class _DashboardScreenState extends State<DashboardScreen> {
                                           children: <Widget> [
                                             CircularProgressIndicator(color: kDarkBlue),
                                             SizedBox(height: 15.0),
-                                            Text('Loading data'),
+                                            Text('Loading statistics'),
                                           ]
                                       )
                                   )
@@ -751,7 +764,7 @@ class _DashboardScreenState extends State<DashboardScreen> {
                                 children: <Widget> [
                                   CircularProgressIndicator(color: kDarkBlue),
                                   SizedBox(height: 15.0),
-                                  Text('Loading data'),
+                                  Text('Loading statistics'),
                                 ]
                               )
                             )

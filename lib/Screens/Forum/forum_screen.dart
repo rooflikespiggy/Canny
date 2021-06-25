@@ -6,6 +6,7 @@ import 'package:Canny/Shared/colors.dart';
 import 'package:Canny/Shared/custom_route.dart';
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:firebase_auth/firebase_auth.dart';
+import 'package:another_flushbar/flushbar.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_autolink_text/flutter_autolink_text.dart';
 import 'package:font_awesome_flutter/font_awesome_flutter.dart';
@@ -28,6 +29,7 @@ class _ForumScreenState extends State<ForumScreen> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
+      resizeToAvoidBottomInset: false,
       backgroundColor: kBackgroundColour,
       appBar: AppBar(
         elevation: 0,
@@ -113,23 +115,29 @@ class _ForumScreenState extends State<ForumScreen> {
                                                   title: Text(
                                                     snapshotData["title"],
                                                     style: TextStyle(
+                                                      fontFamily: 'Lato-Thin',
                                                       fontSize: 20,
                                                     ),
                                                   ),
-                                                  subtitle: AutolinkText(
-                                                    text: snapshotData["description"].length > 500
-                                                        ? snapshotData["description"].substring(0, 500) + "..."
-                                                        : snapshotData["description"],
-                                                    textStyle: TextStyle(
-                                                      color: Colors.black,
-                                                      fontSize: 16,
+                                                  subtitle: Padding(
+                                                    padding: const EdgeInsets.only(top: 8.0),
+                                                    child: AutolinkText(
+                                                      text: snapshotData["description"].length > 500
+                                                          ? snapshotData["description"].substring(0, 500) + "..."
+                                                          : snapshotData["description"],
+                                                      textStyle: TextStyle(
+                                                        fontFamily: 'Lato-Thin',
+                                                        color: Colors.black,
+                                                        fontSize: 16,
+                                                      ),
+                                                      linkStyle: TextStyle(
+                                                        fontFamily: 'Lato-Thin',
+                                                        color: Colors.blue,
+                                                        fontSize: 16),
+                                                      humanize: false,
+                                                      onWebLinkTap: (link) => _launchInWebViewOrVC(link),
+                                                      onEmailTap: (link) => _launchEmail(link),
                                                     ),
-                                                    linkStyle: TextStyle(
-                                                      color: Colors.blue,
-                                                      fontSize: 16),
-                                                    humanize: false,
-                                                    onWebLinkTap: (link) => _launchInWebViewOrVC(link),
-                                                    onEmailTap: (link) => _launchEmail(link),
                                                   ),
                                                   /*
                                                   Text(
@@ -147,6 +155,7 @@ class _ForumScreenState extends State<ForumScreen> {
                                                     child: Text(
                                                       snapshotData["name"][0],
                                                       style: TextStyle(
+                                                        fontFamily: 'Lato',
                                                         fontSize: 23,
                                                         color: Colors.white,
                                                       ),
@@ -161,6 +170,7 @@ class _ForumScreenState extends State<ForumScreen> {
                                                   children: <Widget>[
                                                     Text("By: ${snapshotData["name"]}",
                                                       style: TextStyle(
+                                                        fontFamily: 'Lato-Thin',
                                                         fontSize: 16,
                                                         color: Colors.grey[850],
                                                       )
@@ -169,6 +179,7 @@ class _ForumScreenState extends State<ForumScreen> {
                                                         .format(DateTime.fromMillisecondsSinceEpoch(
                                                         snapshotData["datetime"].seconds * 1000)),
                                                         style: TextStyle(
+                                                          fontFamily: 'Lato-Thin',
                                                           fontSize: 16,
                                                           color: Colors.grey[850],
                                                         )
@@ -203,7 +214,7 @@ class _ForumScreenState extends State<ForumScreen> {
                                                             icon: Icon(Icons.add_comment_outlined),
                                                             onPressed: () {
                                                               Navigator.push(context,
-                                                                  NoAnimationMaterialPageRoute(builder: (context) =>
+                                                                  MaterialPageRoute(builder: (context) =>
                                                                       ForumDetailScreen(inputId: snapshotData.id)));
                                                             },
                                                           ),
@@ -283,13 +294,21 @@ class _ForumScreenState extends State<ForumScreen> {
                                                                                       nameInputController.text,
                                                                                       titleInputController.text,
                                                                                       descriptionInputController.text).then((_) {
-                                                                                        nameInputController.clear();
-                                                                                        titleInputController.clear();
-                                                                                        descriptionInputController.clear();
+                                                                                        FocusScope.of(context).unfocus();
                                                                                         Navigator.pop(context);
+                                                                                        Flushbar(
+                                                                                          message: "Discussion successfully edited.",
+                                                                                          icon: Icon(
+                                                                                            Icons.check,
+                                                                                            size: 28.0,
+                                                                                            color: kLightBlueDark,
+                                                                                          ),
+                                                                                          duration: Duration(seconds: 3),
+                                                                                          leftBarIndicatorColor: kLightBlueDark,
+                                                                                        )..show(context);
                                                                                       }).catchError((error) => print(error));
                                                                                 }
-                                                                                },
+                                                                              },
                                                                             child: Text("Update",
                                                                               style: TextStyle(
                                                                                 color: Colors.white,

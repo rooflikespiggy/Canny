@@ -5,7 +5,7 @@ import 'package:Canny/Services/Category/category_database.dart';
 import 'package:Canny/Services/Receipt/receipt_database.dart';
 import 'package:Canny/Shared/colors.dart';
 import 'package:cloud_firestore/cloud_firestore.dart';
-import 'package:flushbar/flushbar.dart';
+import 'package:another_flushbar/flushbar.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_slidable/flutter_slidable.dart';
@@ -181,7 +181,7 @@ class _ExpenseTileState extends State<ExpenseTile> {
                           Flushbar(
                             message: "Receipt Deleted.",
                             icon: Icon(
-                              Icons.info_outline,
+                              Icons.check,
                               size: 28.0,
                               color: kLightBlueDark,
                             ),

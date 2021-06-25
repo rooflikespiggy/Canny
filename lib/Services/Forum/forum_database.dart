@@ -13,7 +13,7 @@ class ForumDatabaseService {
     return true;
   }
 
-  Future<List<Forum>> getComments() async {
+  Future<List<Forum>> getDiscussion() async {
     List<DocumentSnapshot> snapshots = await forumCollection
         .get()
         .then((value) => value.docs);

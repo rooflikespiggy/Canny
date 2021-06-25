@@ -20,6 +20,8 @@ class _SignInState extends State<SignIn> {
   final AuthService _auth = AuthService();
   final _formKey = GlobalKey<FormState>();
   bool loading = false;
+  TextEditingController emailController = TextEditingController();
+  TextEditingController passwordController = TextEditingController();
 
   // text field state
   String email = '';
@@ -87,6 +89,7 @@ class _SignInState extends State<SignIn> {
                       children: <Widget>[
                         SizedBox(height: 20.0),
                         TextFormField(
+                          controller: emailController,
                           decoration: InputDecoration(
                             hintStyle: TextStyle(color: Colors.grey),
                             hintText: 'Email',
@@ -102,11 +105,15 @@ class _SignInState extends State<SignIn> {
                               ? 'Not a valid email.'
                               : null,
                           onChanged: (val) {
-                            setState(() => email = val);
+                            setState(() {
+                              error = '';
+                              email = val;
+                            });
                           },
                         ),
                         SizedBox(height: 18.0),
                         TextFormField(
+                          controller: passwordController,
                           decoration: InputDecoration(
                             hintStyle: TextStyle(color: Colors.grey),
                             hintText: 'Password',
@@ -136,7 +143,10 @@ class _SignInState extends State<SignIn> {
                               : null,
                           obscureText: obscurePwd,
                           onChanged: (val) {
-                            setState(() => password = val);
+                            setState(() {
+                              error = '';
+                              password = val;
+                            });
                           },
                         ),
                       ],

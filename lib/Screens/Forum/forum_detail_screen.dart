@@ -84,8 +84,19 @@ class _ForumDetailScreenState extends State<ForumDetailScreen> {
                                     title: Text(
                                       snapshot.data["title"],
                                       textScaleFactor: 1.5,
+                                      style: TextStyle(
+                                        fontFamily: 'Lato-Thin',
+                                      ),
                                     ),
-                                    subtitle: Text(snapshot.data["description"]),
+                                    subtitle: Padding(
+                                      padding: const EdgeInsets.only(top: 8.0),
+                                      child: Text(
+                                        snapshot.data["description"],
+                                        style: TextStyle(
+                                          fontFamily: 'Lato-Thin',
+                                        ),
+                                      ),
+                                    ),
                                   ),
                                   Padding(
                                     padding: EdgeInsets.fromLTRB(20.0, 5.0, 20.0, 10.0),
@@ -93,10 +104,19 @@ class _ForumDetailScreenState extends State<ForumDetailScreen> {
                                       crossAxisAlignment: CrossAxisAlignment.center,
                                       mainAxisAlignment: MainAxisAlignment.spaceBetween,
                                       children: <Widget>[
-                                        Text("By: ${snapshot.data["name"]}"),
-                                        Text(DateFormat("EEEE, d MMMM y")
+                                        Text(
+                                          "By: ${snapshot.data["name"]}",
+                                          style: TextStyle(
+                                            fontFamily: 'Lato-Thin',
+                                          ),
+                                        ),
+                                        Text(
+                                          DateFormat("EEEE, d MMMM y")
                                             .format(DateTime.fromMillisecondsSinceEpoch(
                                             snapshot.data["datetime"].seconds * 1000)),
+                                          style: TextStyle(
+                                            fontFamily: 'Lato-Thin',
+                                          ),
                                         ),
                                         IconWithText(
                                           Icons.add_comment_outlined,

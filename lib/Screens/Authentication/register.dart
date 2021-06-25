@@ -17,6 +17,9 @@ class _RegisterState extends State<Register> {
 
   final AuthService _auth = AuthService();
   final _formKey = GlobalKey<FormState>();
+  TextEditingController emailController = TextEditingController();
+  TextEditingController passwordController = TextEditingController();
+  TextEditingController rePasswordController = TextEditingController();
 
   // text field state
   String email = '';
@@ -87,6 +90,7 @@ class _RegisterState extends State<Register> {
                       children: <Widget>[
                         SizedBox(height: 15.0),
                         TextFormField(
+                          controller: emailController,
                           decoration: InputDecoration(
                             hintStyle: TextStyle(color: Colors.grey),
                             hintText: 'Email',
@@ -101,11 +105,15 @@ class _RegisterState extends State<Register> {
                               ? 'Not a valid email.'
                               : null,
                           onChanged: (val) {
-                            setState(() => email = val);
+                            setState(() {
+                              error = '';
+                              email = val;
+                            });
                           },
                         ),
                         SizedBox(height: 18.0),
                         TextFormField(
+                          controller: passwordController,
                           decoration: InputDecoration(
                             hintStyle: TextStyle(color: Colors.grey),
                             hintText: 'Password',
@@ -135,11 +143,15 @@ class _RegisterState extends State<Register> {
                               : null,
                           obscureText: obscurePwd,
                           onChanged: (val) {
-                            setState(() => password = val);
+                            setState(() {
+                              error = '';
+                              password = val;
+                            });
                           },
                         ),
                         SizedBox(height: 18.0),
                         TextFormField(
+                          controller: rePasswordController,
                           decoration: InputDecoration(
                             hintStyle: TextStyle(color: Colors.grey),
                             hintText: 'Confirm Password',
@@ -169,6 +181,7 @@ class _RegisterState extends State<Register> {
                               : null,
                           obscureText: obscurePwd2,
                           onChanged: (val) {
+                            error = '';
                             setState(() => confirmPassword = val);
                           },
                         ),
@@ -198,7 +211,6 @@ class _RegisterState extends State<Register> {
                         size: 20,
                       ),
                       onPressed: () async {
-
                         if(_formKey.currentState.validate()){
                           setState(() {
                             loading = true;
