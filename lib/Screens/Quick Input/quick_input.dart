@@ -317,19 +317,7 @@ class QuickInputState extends State<QuickInput> {
                   height: 50,
                   child: TextButton(
                       onPressed: () {
-                        if (_chosenCategory == null) {
-                          Flushbar(
-                            message: "Choose a category.",
-                            icon: Icon(
-                              Icons.info_outline,
-                              size: 28.0,
-                              color: kLightBlueDark,
-                            ),
-                            duration: Duration(seconds: 2),
-                            leftBarIndicatorColor: kLightBlueDark,
-                          )..show(context);
-                        }
-                        else if (isNumeric(_evaluate) == false) {
+                        if (isNumeric(_evaluate) == false) {
                           Flushbar(
                             message: "Enter a valid expense.",
                             icon: Icon(
@@ -354,6 +342,17 @@ class QuickInputState extends State<QuickInput> {
                         } else if (roundDouble(double.parse(_evaluate), 2) < 0.00) {
                           Flushbar(
                             message: "Cannot enter a negative number.",
+                            icon: Icon(
+                              Icons.info_outline,
+                              size: 28.0,
+                              color: kLightBlueDark,
+                            ),
+                            duration: Duration(seconds: 2),
+                            leftBarIndicatorColor: kLightBlueDark,
+                          )..show(context);
+                        } else if (_chosenCategory == null) {
+                          Flushbar(
+                            message: "Choose a category.",
                             icon: Icon(
                               Icons.info_outline,
                               size: 28.0,
@@ -500,7 +499,7 @@ class QuickInputState extends State<QuickInput> {
   }
 
   bool isNumeric(String str) {
-    if(str == null) {
+    if(str == null || str == 'Infinity') {
       return false;
     }
     return num.tryParse(str) != null;

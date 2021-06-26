@@ -37,11 +37,11 @@ class AuthService {
     try {
       UserCredential result = await _auth.createUserWithEmailAndPassword(email: email, password: password);
       User theUser = result.user;
-      await CategoryDatabaseService(uid: theUser.uid).initStartCategories();
-      await QuickInputDatabaseService(uid: theUser.uid).initStartQuickInputs();
-      await TEDatabaseService(uid: theUser.uid).initStartTE();
-      await DashboardDatabaseService(uid: theUser.uid).initStartSwitch();
-      await NotificationDatabaseService(uid: theUser.uid).initStartNotif();
+      CategoryDatabaseService(uid: theUser.uid).initStartCategories();
+      QuickInputDatabaseService(uid: theUser.uid).initStartQuickInputs();
+      TEDatabaseService(uid: theUser.uid).initStartTE();
+      DashboardDatabaseService(uid: theUser.uid).initStartSwitch();
+      NotificationDatabaseService(uid: theUser.uid).initStartNotif();
       //await TEDatabaseService(uid: theUser.uid).addTargetedExpenditure();
       return _userFromFirebaseUser(theUser);
     } catch (e) {

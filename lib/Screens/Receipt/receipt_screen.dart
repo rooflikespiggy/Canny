@@ -145,8 +145,8 @@ class _ReceiptScreenState extends State<ReceiptScreen> {
                                   size: 100.0,
                                 ),
                                 messageColor: Colors.grey,
-                                message: 'Nothing to show here yet. \n'
-                                    'Add a new receipt.',
+                                message: 'Nothing to show here. \n'
+                                    'Add a new receipt or refresh filter.',
                               ),
                             ],
                           );

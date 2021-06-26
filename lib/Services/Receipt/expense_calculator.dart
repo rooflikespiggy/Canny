@@ -788,7 +788,7 @@ class ExpenseCalculatorState extends State<ExpenseCalculator> {
   }
 
   bool isNumeric(String str) {
-    if(str == null) {
+    if(str == null || str == 'Infinity') {
       return false;
     }
     return num.tryParse(str) != null;
