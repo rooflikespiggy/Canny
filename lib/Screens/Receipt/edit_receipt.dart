@@ -283,7 +283,7 @@ class _EditReceiptState extends State<EditReceipt> {
                                           ),
                                           SizedBox(height: 10),
                                           TextButton(
-                                            onPressed: () async {
+                                            onPressed: () {
                                               if (_formKey.currentState.validate()) {
                                                 if (itemNameChanged) {
                                                   _authReceipt.updateItemName(widget.receiptId, itemNameController.text);
