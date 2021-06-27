@@ -10,7 +10,7 @@ import 'package:Canny/Services/Notification/notification_database.dart';
 class AuthService {
   final FirebaseAuth _auth = FirebaseAuth.instance;
 
-  OwnUser _userFromFirebaseUser( theUser) {
+  OwnUser _userFromFirebaseUser(theUser) {
     return theUser != null ? OwnUser(theUser: theUser) : null;
   }
 
@@ -37,12 +37,11 @@ class AuthService {
     try {
       UserCredential result = await _auth.createUserWithEmailAndPassword(email: email, password: password);
       User theUser = result.user;
-      CategoryDatabaseService(uid: theUser.uid).initStartCategories();
       QuickInputDatabaseService(uid: theUser.uid).initStartQuickInputs();
+      CategoryDatabaseService(uid: theUser.uid).initStartCategories();
       TEDatabaseService(uid: theUser.uid).initStartTE();
       DashboardDatabaseService(uid: theUser.uid).initStartSwitch();
       NotificationDatabaseService(uid: theUser.uid).initStartNotif();
-      //await TEDatabaseService(uid: theUser.uid).addTargetedExpenditure();
       return _userFromFirebaseUser(theUser);
     } catch (e) {
       print(e.toString());

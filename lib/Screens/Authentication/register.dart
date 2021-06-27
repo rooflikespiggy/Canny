@@ -216,6 +216,7 @@ class _RegisterState extends State<Register> {
                             loading = true;
                           });
                           dynamic result = await _auth.registerWithEmailAndPassword(email, password);
+                          await Future.delayed(Duration(seconds: 4));
                           print(result);
                           if(result == 'email-in-use') {
                             setState(() {
