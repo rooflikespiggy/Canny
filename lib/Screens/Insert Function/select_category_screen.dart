@@ -62,6 +62,7 @@ class _SelectCategoryScreenState extends State<SelectCategoryScreen> {
                   Visibility(
                     visible: !isDefault,
                     child: Container(
+                      width: 360,
                       padding: EdgeInsets.all(8),
                       decoration: BoxDecoration(
                         borderRadius: BorderRadius.circular(5.0),
