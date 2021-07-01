@@ -1,3 +1,5 @@
+import 'dart:math';
+
 import 'package:Canny/Database/all_database.dart';
 import 'package:Canny/Models/category.dart';
 import 'package:Canny/Screens/Dashboard/indicator.dart';
@@ -32,6 +34,7 @@ class _DashboardScreenState extends State<DashboardScreen> {
   final _expensesBreakdownKey = GlobalKey();
   final _expenseSummaryKey = GlobalKey();
   final _recentReceiptsKey = GlobalKey();
+  // final _expensesAverageKey = GlobalKey();
   double teAmount = 0;
   int donutTouchedIndex;
   double totalExpensesAmount = 0;
@@ -40,6 +43,7 @@ class _DashboardScreenState extends State<DashboardScreen> {
   double percent = 0;
   bool showMore = false;
   bool showLess = true;
+  bool showAvg = false;
 
   @override
   Widget build(BuildContext context) {
@@ -172,7 +176,7 @@ class _DashboardScreenState extends State<DashboardScreen> {
                                                       visible: snapshot3.data['recentReceipts'],
                                                       child: makeDirectoryButton(
                                                           'Recent Receipts',
-                                                          (snapshot3.data['recentReceipts'] && totalExpensesAmount > 0),
+                                                          (snapshot3.data['recentReceipts'] && (totalExpensesAmount > 0 || totalIncome > 0)),
                                                           _recentReceiptsKey),
                                                     ),
                                                   ],
@@ -255,16 +259,20 @@ class _DashboardScreenState extends State<DashboardScreen> {
                                                           Row(
                                                             mainAxisAlignment: MainAxisAlignment.spaceBetween,
                                                             children: <Widget>[
-                                                              Text('Balance Amount',
+                                                              Text(balance >= 0
+                                                                  ? 'Balance Amount'
+                                                                  : 'Deficit Amount',
                                                                 style: TextStyle(
                                                                   fontFamily: "Lato",
                                                                   color: Colors.black,
                                                                 ),
                                                               ),
-                                                              Text(balance.toStringAsFixed(2),
+                                                              Text(balance.abs().toStringAsFixed(2),
                                                                 style: TextStyle(
                                                                   fontFamily: "Lato",
-                                                                  color: Colors.teal,
+                                                                  color: balance >= 0
+                                                                      ? Colors.teal
+                                                                      : Colors.red,
                                                                 ),
                                                               )
                                                             ],
@@ -579,9 +587,9 @@ class _DashboardScreenState extends State<DashboardScreen> {
                                                                       categoryAmount: snapshotData['categoryAmount'][monthYear],
                                                                       categoryPercentage: totalExpensesAmount <= teAmount
                                                                           ? ((snapshotData['categoryAmount'][monthYear] / teAmount) * 100)
-                                                                          .toStringAsFixed(0)
+                                                                          .toStringAsFixed(1)
                                                                           : ((snapshotData['categoryAmount'][monthYear] / totalExpensesAmount) * 100)
-                                                                          .toStringAsFixed(0)
+                                                                          .toStringAsFixed(1)
                                                                   );
                                                                 },
                                                               )
@@ -635,10 +643,11 @@ class _DashboardScreenState extends State<DashboardScreen> {
                                           // may not be necessary
                                           Visibility(
                                             key: _recentReceiptsKey,
-                                            visible: totalExpensesAmount > 0 && snapshot3.data['recentReceipts'],
+                                            visible: (totalExpensesAmount > 0 || totalIncome > 0) && snapshot3.data['recentReceipts'],
                                             child: StreamBuilder(
                                                 stream: expensesCollection
                                                     .orderBy('datetime', descending: true)
+                                                    .where('datetime', isGreaterThanOrEqualTo: DateTime(DateTime.now().year, DateTime.now().month, 1))
                                                     .limit(5)
                                                     .snapshots(),
                                                 builder: (BuildContext context, AsyncSnapshot<QuerySnapshot> snapshot) {
@@ -878,6 +887,7 @@ class _DashboardScreenState extends State<DashboardScreen> {
               : null),
     );
   }
+
 
   Future _refreshData() async {
     await Future.delayed(Duration(seconds: 2));

@@ -34,8 +34,9 @@ class _ForumDetailScreenState extends State<ForumDetailScreen> {
       appBar: AppBar(
         backgroundColor: kDarkBlue,
         elevation: 0.0,
+        title: Text('COMMENTS'),
         leading: IconButton(
-          icon: Icon(Icons.arrow_back),
+          icon: Icon(Icons.clear),
           onPressed: () {
             Navigator.push(context,
                 MaterialPageRoute(builder: (context) => HomePageScreen(selectedTab: 3)));

@@ -72,7 +72,7 @@ class _SideBarMenuState extends State<SideBarMenu> with AutomaticKeepAliveClient
               ),
               onTap: () => {
                 Navigator.push(context,
-                    NoAnimationMaterialPageRoute(builder: (context) => CustomiseQI()))
+                    MaterialPageRoute(builder: (context) => CustomiseQI()))
               },
             ),
             Divider(thickness: 1.0),
@@ -91,6 +91,8 @@ class _SideBarMenuState extends State<SideBarMenu> with AutomaticKeepAliveClient
                           fontSize: 16,
                         )
                       ),
+                      textColor: kDarkBlue,
+                      iconColor: kDarkBlue,
                       children: <Widget>[
                         SwitchListTile(
                           value: snapshot.data['balance'],
@@ -124,6 +126,16 @@ class _SideBarMenuState extends State<SideBarMenu> with AutomaticKeepAliveClient
                           activeColor: kDarkBlue,
                           inactiveThumbColor: Colors.white,
                         ),
+                        /*
+                        SwitchListTile(
+                          value: snapshot.data['expenseAverage'],
+                          onChanged: (value) => _authDashboard.updateExpenseAverage(value),
+                          title: Text('Expenses Average'),
+                          activeTrackColor: kLightBlueDark,
+                          activeColor: kDarkBlue,
+                          inactiveThumbColor: Colors.white,
+                        ),
+                         */
                       ],
                     ),
                   );

@@ -71,7 +71,7 @@ class _ReceiptScreenState extends State<ReceiptScreen> {
             ),
             onPressed: () async {
               final Map<String, dynamic> result = await Navigator.push(context,
-                  NoAnimationMaterialPageRoute(builder: (context) => FilterScreen()));
+                  MaterialPageRoute(builder: (context) => FilterScreen()));
               //print(result);
               setState(() {
                 isActive = result['isActive'];

@@ -1,4 +1,6 @@
 import 'package:Canny/Database/all_database.dart';
+import 'package:Canny/Shared/colors.dart';
+import 'package:Canny/Shared/custom_route.dart';
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:flutter/material.dart';
 import 'package:Canny/Screens/Forum/forum_detail_screen.dart';
@@ -10,6 +12,15 @@ class ForumSearch extends SearchDelegate {
 
   @override
   String get searchFieldLabel => "Search Forum";
+
+  @override
+  // TODO: no idea how to change the theme
+  ThemeData appBarTheme(BuildContext context) {
+    return ThemeData(
+      scaffoldBackgroundColor: kLightBlueDark,
+      fontFamily: 'Lato-Thin',
+    );
+  }
 
   @override
   List<Widget> buildActions(BuildContext context) {
@@ -78,7 +89,8 @@ class ForumSearch extends SearchDelegate {
                           title: Text(
                             listToShow[index]['title'],
                             style: TextStyle(
-                              fontSize: 20,
+                              fontFamily: 'Lato-Thin',
+                              fontSize: 18,
                             ),
                           ),
                           onTap: () {

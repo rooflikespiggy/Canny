@@ -162,10 +162,11 @@ class _ExpenseTileState extends State<ExpenseTile> {
                     actions: <Widget>[
                       // usually buttons at the bottom of the dialog
                       SizedBox(
-                        width: 130,
+                        width: 120,
                         child: TextButton(
                           child: Text("Yes",
                             style: TextStyle(
+                              fontSize: 14,
                               color: Colors.white,
                             ),
                           ),
@@ -188,13 +189,14 @@ class _ExpenseTileState extends State<ExpenseTile> {
                             duration: Duration(seconds: 3),
                             leftBarIndicatorColor: kLightBlueDark,
                           )..show(context);
-                        },
-                      ),),
+                        }),
+                      ),
                       SizedBox(
-                        width: 130,
+                        width: 120,
                         child: TextButton(
                           child: Text("No",
                             style: TextStyle(
+                              fontSize: 14,
                               color: Colors.white,
                             ),
                           ),
@@ -205,7 +207,7 @@ class _ExpenseTileState extends State<ExpenseTile> {
                           Navigator.pop(context);
                         },
                       ),),
-                      SizedBox(width: 15,)
+                      SizedBox(width: 10)
                     ],
                   );
                 },

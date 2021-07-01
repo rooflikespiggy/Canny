@@ -127,6 +127,12 @@ class QuickInputState extends State<QuickInput> {
     _authQuickInput.initNewQuickInputs();
     return Scaffold(
       appBar: AppBar(
+        leading: IconButton(
+          icon: Icon(Icons.clear),
+          onPressed: () {
+            Navigator.pop(context);
+          },
+        ),
         title: Text("QUICK INPUT"),
         backgroundColor: kDarkBlue,
         elevation: 0.0,

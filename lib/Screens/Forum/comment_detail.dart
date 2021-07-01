@@ -258,10 +258,11 @@ class CommentDetail extends StatelessWidget {
                                                               actions: <Widget>[
                                                                 // usually buttons at the bottom of the dialog
                                                                 SizedBox(
-                                                                  width: 130,
+                                                                  width: 120,
                                                                   child: TextButton(
                                                                     child: Text("Yes",
                                                                       style: TextStyle(
+                                                                        fontSize: 14,
                                                                         color: Colors.white,
                                                                       ),
                                                                     ),
@@ -288,10 +289,11 @@ class CommentDetail extends StatelessWidget {
                                                                   ),
                                                                 ),
                                                                 SizedBox(
-                                                                  width: 130,
+                                                                  width: 120,
                                                                   child: TextButton(
                                                                     child: Text("No",
                                                                       style: TextStyle(
+                                                                        fontSize: 14,
                                                                         color: Colors.white,
                                                                       ),
                                                                     ),
@@ -303,7 +305,7 @@ class CommentDetail extends StatelessWidget {
                                                                     },
                                                                   ),
                                                                 ),
-                                                                SizedBox(width: 15,)
+                                                                SizedBox(width: 10)
                                                               ],
                                                             );
                                                           },

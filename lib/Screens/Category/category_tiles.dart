@@ -210,10 +210,11 @@ class _CategoryTileState extends State<CategoryTile> {
                                           actions: <Widget>[
                                             // usually buttons at the bottom of the dialog
                                             SizedBox(
-                                              width: 130,
+                                              width: 120,
                                               child: TextButton(
                                                 child: Text("Yes",
                                                   style: TextStyle(
+                                                    fontSize: 14,
                                                     color: Colors.white,
                                                   ),
                                                 ),
@@ -248,10 +249,11 @@ class _CategoryTileState extends State<CategoryTile> {
                                               ),
                                             ),
                                             SizedBox(
-                                              width: 130,
+                                              width: 120,
                                               child: TextButton(
                                                 child: Text("No",
                                                   style: TextStyle(
+                                                    fontSize: 14,
                                                     color: Colors.white,
                                                   ),
                                                 ),
@@ -263,7 +265,7 @@ class _CategoryTileState extends State<CategoryTile> {
                                                 },
                                               ),
                                             ),
-                                            SizedBox(width: 14,)
+                                            SizedBox(width: 10)
                                           ],
                                         );
                                       },

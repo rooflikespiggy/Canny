@@ -277,6 +277,7 @@ class _CustomiseQIState extends State<CustomiseQI> {
                                     child: TextButton(
                                       child: Text("ReEdit categories",
                                         style: TextStyle(
+                                          fontSize: 14,
                                           color: Colors.white,
                                         ),
                                       ),
@@ -292,6 +293,7 @@ class _CustomiseQIState extends State<CustomiseQI> {
                                     child: TextButton(
                                       child: Text("Back to homepage",
                                         style: TextStyle(
+                                          fontSize: 14,
                                           color: Colors.white,
                                         ),
                                       ),
@@ -308,6 +310,7 @@ class _CustomiseQIState extends State<CustomiseQI> {
                                     child: TextButton(
                                       child: Text("Check quick input",
                                         style: TextStyle(
+                                          fontSize: 14,
                                           color: Colors.white,
                                         ),
                                       ),

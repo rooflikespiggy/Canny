@@ -446,6 +446,12 @@ class ExpenseCalculatorState extends State<ExpenseCalculator> {
       backgroundColor: kLightBlue,
       resizeToAvoidBottomInset: false,
       appBar: AppBar(
+        leading: IconButton(
+          icon: Icon(Icons.clear),
+          onPressed: () {
+            Navigator.pop(context);
+          },
+        ),
         backgroundColor: kDarkBlue,
         title: Text('Enter your Receipt'),
         elevation: 0.0,
