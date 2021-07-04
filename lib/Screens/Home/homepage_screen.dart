@@ -226,21 +226,24 @@ class _HomePageScreenState extends State<HomePageScreen> {//with AutomaticKeepAl
 
       ),
       floatingActionButtonLocation: FloatingActionButtonLocation.endFloat,
-      floatingActionButton: SpeedDial(
-        elevation: 7,
-        marginBottom: 10,
-        icon: Icons.menu,
-        activeBackgroundColor: kLightBlueDark,
-        activeIcon: Icons.clear,
-        visible: true,
-        closeManually: false,
-        curve: Curves.bounceIn,
-        backgroundColor: kBlue,
-        shape: CircleBorder(),
-        buttonSize: 70.0,
-        childMarginTop: 15.0,
-        childMarginBottom: 15.0,
-        children: _speedDailItems
+      floatingActionButton: Visibility(
+        visible: widget.selectedTab == 0 || widget.selectedTab == 1 || widget.selectedTab == 2,
+        child: SpeedDial(
+          elevation: 7,
+          marginBottom: 10,
+          icon: Icons.menu,
+          activeBackgroundColor: kLightBlueDark,
+          activeIcon: Icons.clear,
+          visible: true,
+          closeManually: false,
+          curve: Curves.bounceIn,
+          backgroundColor: kBlue,
+          shape: CircleBorder(),
+          buttonSize: 70.0,
+          childMarginTop: 15.0,
+          childMarginBottom: 15.0,
+          children: _speedDailItems
+        ),
       ),
     );
   }

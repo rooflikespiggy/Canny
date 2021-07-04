@@ -160,7 +160,12 @@ class _ForumScreenState extends State<ForumScreen> {
                                                         color: Colors.white,
                                                       ),
                                                     ),
-                                                  )
+                                                  ),
+                                                onTap: () {
+                                                  Navigator.push(context,
+                                                      MaterialPageRoute(builder: (context) =>
+                                                          ForumDetailScreen(inputId: snapshotData.id)));
+                                                },
                                               ),
                                               Padding(
                                                 padding: EdgeInsets.fromLTRB(20.0, 0, 20.0, 10.0),

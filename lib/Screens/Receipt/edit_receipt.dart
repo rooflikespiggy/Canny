@@ -271,7 +271,7 @@ class _EditReceiptState extends State<EditReceipt> {
                                                   context: context,
                                                   firstDate: DateTime(DateTime.now().year, DateTime.now().month - 3),
                                                   initialDate: currentValue ?? DateTime.now(),
-                                                  lastDate: DateTime(DateTime.now().year, DateTime.now().month + 3),
+                                                  lastDate: DateTime.now(),
                                                 );
                                                 if (date != null) {
                                                   current = date;

@@ -139,7 +139,7 @@ class QuickInputState extends State<QuickInput> {
       ),
       body: MaterialApp(
         debugShowCheckedModeBanner: false,
-        title: 'Calculator',
+        title: 'Canny',
         home: Scaffold(
           backgroundColor: kLightBlue,
           body: Container(
@@ -154,12 +154,13 @@ class QuickInputState extends State<QuickInput> {
                     child: Text(
                       _history,
                       style: TextStyle(
-                          fontSize: 24,
-                          color: kDarkGrey,
-                        ),
+                        fontSize: 24,
+                        color: kDarkGrey,
                       ),
                     ),
                   ),
+                ),
+                SizedBox(height: 10),
                 Container(
                   alignment: Alignment(1.0, 1.0),
                   child: Padding(
@@ -170,9 +171,9 @@ class QuickInputState extends State<QuickInput> {
                         fontSize: 38,
                         color: Colors.blueGrey[900],
                       ),
-                      ),
                     ),
                   ),
+                ),
                 SizedBox(height: 12),
                 Row(
                   //this row of calculator buttons
@@ -391,7 +392,7 @@ class QuickInputState extends State<QuickInput> {
                         }
                       },
                       child: Text(
-                        "Enter",
+                        "Submit",
                         style: TextStyle(
                           color: Colors.white,
                           fontSize: 25,

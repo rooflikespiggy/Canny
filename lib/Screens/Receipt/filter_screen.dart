@@ -206,7 +206,7 @@ class _FilterScreenState extends State<FilterScreen> {
                         context: context,
                         firstDate: DateTime(DateTime.now().year - 5),
                         initialDate: currentValue ?? DateTime.now(),
-                        lastDate: DateTime(DateTime.now().year + 5),
+                        lastDate: DateTime.now(),
                       );
                       if (date != null) {
                         earliest = date;
@@ -234,7 +234,7 @@ class _FilterScreenState extends State<FilterScreen> {
                         context: context,
                         firstDate: DateTime(DateTime.now().year - 5),
                         initialDate: currentValue ?? DateTime.now(),
-                        lastDate: DateTime(DateTime.now().year + 5),
+                        lastDate: DateTime.now(),
                       );
                       if (date != null) {
                         latest = date;

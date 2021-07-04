@@ -78,11 +78,26 @@ class _DashboardScreenState extends State<DashboardScreen> {
               color: Colors.transparent,
               child: Column(
                 children: <Widget> [
-                  FutureBuilder<List<Category>>(
-                    future: _authCategory.getCategories(),
-                    builder: (BuildContext context, AsyncSnapshot<List<Category>> snapshot) {
+                  StreamBuilder(
+                    stream: categoryCollection.snapshots(),
+                    builder: (BuildContext context, AsyncSnapshot<QuerySnapshot> snapshot) {
                       if (snapshot.hasData) {
-                        List<Category> allCategories = snapshot.data;
+                        List<Category> allCategories = [];
+                        for (int i = 0; i < snapshot.data.docs.length; i++) {
+                          Category category = Category(
+                              categoryIcon: Icon(IconData(
+                                  snapshot.data.docs[i]['categoryIconCodePoint'],
+                                  fontFamily: snapshot.data.docs[i]['categoryFontFamily'],
+                                  fontPackage: snapshot.data.docs[i]['categoryFontPackage'])
+                              ),
+                              categoryColor: Color(snapshot.data.docs[i]['categoryColorValue']),
+                              categoryName: snapshot.data.docs[i]['categoryName'],
+                              categoryId: snapshot.data.docs[i]['categoryId'],
+                              categoryAmount: snapshot.data.docs[i]['categoryAmount'],
+                              isIncome: snapshot.data.docs[i]['isIncome']
+                          );
+                          allCategories.add(category);
+                        }
                         allCategories.sort((a, b) => a.categoryId.compareTo(b.categoryId));
                         totalExpensesAmount = allCategories
                             .where((category) => !category.isIncome)

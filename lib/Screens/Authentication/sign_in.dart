@@ -92,6 +92,7 @@ class _SignInState extends State<SignIn> {
                           SizedBox(height: 20.0),
                           TextFormField(
                             controller: emailController,
+                            keyboardType: TextInputType.emailAddress,
                             decoration: InputDecoration(
                               hintStyle: TextStyle(color: Colors.grey),
                               hintText: 'Email',
