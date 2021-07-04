@@ -98,7 +98,7 @@ class CommentDetail extends StatelessWidget {
                                               snapshotData["datetime"].seconds * 1000)),
                                               style: TextStyle(
                                                 fontFamily: 'Lato-Thin',
-                                                fontSize: 16,
+                                                fontSize: 14,
                                                 color: Colors.grey[850],
                                               )
                                           ),

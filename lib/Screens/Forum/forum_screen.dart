@@ -176,7 +176,7 @@ class _ForumScreenState extends State<ForumScreen> {
                                                     Text("By: ${snapshotData["name"]}",
                                                       style: TextStyle(
                                                         fontFamily: 'Lato-Thin',
-                                                        fontSize: 16,
+                                                        fontSize: 14,
                                                         color: Colors.grey[850],
                                                       )
                                                     ),
@@ -185,7 +185,7 @@ class _ForumScreenState extends State<ForumScreen> {
                                                         snapshotData["datetime"].seconds * 1000)),
                                                         style: TextStyle(
                                                           fontFamily: 'Lato-Thin',
-                                                          fontSize: 16,
+                                                          fontSize: 14,
                                                           color: Colors.grey[850],
                                                         )
                                                     ),
