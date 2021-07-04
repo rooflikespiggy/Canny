@@ -97,7 +97,12 @@ class _SideBarMenuState extends State<SideBarMenu> with AutomaticKeepAliveClient
                         SwitchListTile(
                           value: snapshot.data['balance'],
                           onChanged: (value) => _authDashboard.updateBudget(value),
-                          title: Text('Balance'),
+                          title: Text(
+                            'Balance',
+                            style: TextStyle(
+                              fontFamily: 'Lato-Thin'
+                            ),
+                          ),
                           activeTrackColor: kLightBlueDark,
                           activeColor: kDarkBlue,
                           inactiveThumbColor: Colors.white,
@@ -105,7 +110,12 @@ class _SideBarMenuState extends State<SideBarMenu> with AutomaticKeepAliveClient
                         SwitchListTile(
                           value: snapshot.data['expenseBreakdown'],
                           onChanged: (value) => _authDashboard.updateExpenseBreakdown(value),
-                          title: Text('Expenses Breakdown'),
+                          title: Text(
+                            'Expenses Breakdown',
+                            style: TextStyle(
+                                fontFamily: 'Lato-Thin'
+                            ),
+                          ),
                           activeTrackColor: kLightBlueDark,
                           activeColor: kDarkBlue,
                           inactiveThumbColor: Colors.white,
@@ -113,29 +123,42 @@ class _SideBarMenuState extends State<SideBarMenu> with AutomaticKeepAliveClient
                         SwitchListTile(
                           value: snapshot.data['expenseSummary'],
                           onChanged: (value) => _authDashboard.updateExpenseSummary(value),
-                          title: Text('Expenses Summary'),
+                          title: Text(
+                            'Expenses Summary',
+                            style: TextStyle(
+                                fontFamily: 'Lato-Thin'
+                            ),
+                          ),
                           activeTrackColor: kLightBlueDark,
                           activeColor: kDarkBlue,
                           inactiveThumbColor: Colors.white,
                         ),
                         SwitchListTile(
-                          value: snapshot.data['recentReceipts'],
-                          onChanged: (value) => _authDashboard.updateRecentReceipts(value),
-                          title: Text('Recent Receipts'),
+                          value: snapshot.data['expenseReceipts'],
+                          onChanged: (value) => _authDashboard.updateExpenseReceipts(value),
+                          title: Text(
+                            'Expenses Receipts',
+                            style: TextStyle(
+                                fontFamily: 'Lato-Thin'
+                            ),
+                          ),
                           activeTrackColor: kLightBlueDark,
                           activeColor: kDarkBlue,
                           inactiveThumbColor: Colors.white,
                         ),
-                        /*
                         SwitchListTile(
-                          value: snapshot.data['expenseAverage'],
-                          onChanged: (value) => _authDashboard.updateExpenseAverage(value),
-                          title: Text('Expenses Average'),
+                          value: snapshot.data['incomeReceipts'],
+                          onChanged: (value) => _authDashboard.updateIncomeReceipts(value),
+                          title: Text(
+                            'Income Receipts',
+                            style: TextStyle(
+                                fontFamily: 'Lato-Thin'
+                            ),
+                          ),
                           activeTrackColor: kLightBlueDark,
                           activeColor: kDarkBlue,
                           inactiveThumbColor: Colors.white,
                         ),
-                         */
                       ],
                     ),
                   );

@@ -253,7 +253,7 @@ class CommentDetail extends StatelessWidget {
                                                               (BuildContext context) {
                                                             return AlertDialog(
                                                               backgroundColor: kLightBlue,
-                                                              title: Text("Are you sure you want to delete your comment"),
+                                                              title: Text("Are you sure you want to delete your comment?"),
                                                               content: Text("Once your comment is deleted, you will not be able to retrieve it back."),
                                                               actions: <Widget>[
                                                                 // usually buttons at the bottom of the dialog

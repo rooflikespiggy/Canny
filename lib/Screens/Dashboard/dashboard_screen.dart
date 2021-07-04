@@ -32,18 +32,24 @@ class _DashboardScreenState extends State<DashboardScreen> {
   final String monthYear = DateFormat('MMM y').format(DateTime.now());
   final _balanceKey = GlobalKey();
   final _expensesBreakdownKey = GlobalKey();
-  final _expenseSummaryKey = GlobalKey();
-  final _recentReceiptsKey = GlobalKey();
-  // final _expensesAverageKey = GlobalKey();
+  final _expensesSummaryKey = GlobalKey();
+  final _expensesReceiptsKey = GlobalKey();
+  final _incomeReceiptsKey = GlobalKey();
   double teAmount = 0;
   int donutTouchedIndex;
   double totalExpensesAmount = 0;
   double totalIncome = 0;
   double balance = 0;
   double percent = 0;
-  bool showMore = false;
-  bool showLess = true;
-  bool showAvg = false;
+  bool showMoreCat = false;
+  bool showLessCat = true;
+  bool showMoreExp = false;
+  bool showLessExp = true;
+  bool showMoreInc = false;
+  bool showLessInc = true;
+  List<String> incomeCategoryId = [];
+  List<String> expensesCategoryId = [];
+  List<String> expensesCategoryId2 = [];
 
   @override
   Widget build(BuildContext context) {
@@ -97,6 +103,13 @@ class _DashboardScreenState extends State<DashboardScreen> {
                               isIncome: snapshot.data.docs[i]['isIncome']
                           );
                           allCategories.add(category);
+                          if (category.isIncome == true
+                              && incomeCategoryId.contains(category.categoryId) == false) {
+                            incomeCategoryId.add(category.categoryId);
+                          } else if (category.isIncome == false
+                              && expensesCategoryId.contains(category.categoryId) == false) {
+                            expensesCategoryId.add(category.categoryId);
+                          }
                         }
                         allCategories.sort((a, b) => a.categoryId.compareTo(b.categoryId));
                         totalExpensesAmount = allCategories
@@ -142,7 +155,7 @@ class _DashboardScreenState extends State<DashboardScreen> {
                                                     });
                                               },
                                               child: Text(
-                                                'Monthly Targeted Expenditure: \n' + teAmount.toStringAsFixed(2),
+                                                '$monthYear Targeted Expenditure: \n' + teAmount.toStringAsFixed(2),
                                                 textAlign: TextAlign.center,
                                                 style: TextStyle(
                                                     fontSize: 18,
@@ -185,14 +198,21 @@ class _DashboardScreenState extends State<DashboardScreen> {
                                                       child: makeDirectoryButton(
                                                           'Expenses Summary',
                                                           (snapshot3.data['expenseSummary'] && totalExpensesAmount > 0),
-                                                          _expenseSummaryKey),
+                                                          _expensesSummaryKey),
                                                     ),
                                                     Visibility(
-                                                      visible: snapshot3.data['recentReceipts'],
+                                                      visible: snapshot3.data['expenseReceipts'],
                                                       child: makeDirectoryButton(
-                                                          'Recent Receipts',
-                                                          (snapshot3.data['recentReceipts'] && (totalExpensesAmount > 0 || totalIncome > 0)),
-                                                          _recentReceiptsKey),
+                                                          'Expenses Receipts',
+                                                          (snapshot3.data['expenseReceipts'] && totalExpensesAmount > 0),
+                                                          _expensesReceiptsKey),
+                                                    ),
+                                                    Visibility(
+                                                      visible: snapshot3.data['incomeReceipts'],
+                                                      child: makeDirectoryButton(
+                                                          'Income Receipts',
+                                                          (snapshot3.data['incomeReceipts'] && totalIncome > 0),
+                                                          _incomeReceiptsKey),
                                                     ),
                                                   ],
                                                 ),
@@ -543,7 +563,7 @@ class _DashboardScreenState extends State<DashboardScreen> {
                                           /// Expenses Summary card
                                           // TODO: find a nice way to display this card
                                           Visibility(
-                                            key: _expenseSummaryKey,
+                                            key: _expensesSummaryKey,
                                             visible: totalExpensesAmount > 0 && snapshot3.data['expenseSummary'],
                                             child: StreamBuilder(
                                                 stream: categoryCollection
@@ -587,7 +607,7 @@ class _DashboardScreenState extends State<DashboardScreen> {
                                                                 padding: EdgeInsets.fromLTRB(7, 4, 7, 4),
                                                                 shrinkWrap: true,
                                                                 physics: const NeverScrollableScrollPhysics(),
-                                                                itemCount: snapshot.data.docs.length > 5 && !showMore
+                                                                itemCount: snapshot.data.docs.length > 5 && !showMoreCat
                                                                     ? 5
                                                                     : snapshot.data.docs.length,
                                                                 itemBuilder: (BuildContext context, int index) {
@@ -610,7 +630,7 @@ class _DashboardScreenState extends State<DashboardScreen> {
                                                               )
                                                             ),
                                                             Visibility(
-                                                              visible: snapshot.data.docs.length > 5 && !showMore,
+                                                              visible: snapshot.data.docs.length > 5 && !showMoreCat,
                                                               child: TextButton(
                                                                 child: Text(
                                                                   'SHOW MORE',
@@ -621,14 +641,14 @@ class _DashboardScreenState extends State<DashboardScreen> {
                                                                 ),
                                                                 onPressed: () {
                                                                   setState(() {
-                                                                    showMore = !showMore;
-                                                                    showLess = !showLess;
+                                                                    showMoreCat = !showMoreCat;
+                                                                    showLessCat = !showLessCat;
                                                                   });
                                                                 }
                                                               ),
                                                             ),
                                                             Visibility(
-                                                              visible: snapshot.data.docs.length > 5 && !showLess,
+                                                              visible: snapshot.data.docs.length > 5 && !showLessCat,
                                                               child: TextButton(
                                                                   child: Text(
                                                                       'SHOW LESS',
@@ -639,8 +659,8 @@ class _DashboardScreenState extends State<DashboardScreen> {
                                                                   ),
                                                                   onPressed: () {
                                                                     setState(() {
-                                                                      showMore = !showMore;
-                                                                      showLess = !showLess;
+                                                                      showMoreCat = !showMoreCat;
+                                                                      showLessCat = !showLessCat;
                                                                     });
                                                                   }
                                                               ),
@@ -654,19 +674,25 @@ class _DashboardScreenState extends State<DashboardScreen> {
                                                 }
                                             ),
                                           ),
-                                          /// Receipt card
+                                          /// Expenses Receipt card
                                           // may not be necessary
                                           Visibility(
-                                            key: _recentReceiptsKey,
-                                            visible: (totalExpensesAmount > 0 || totalIncome > 0) && snapshot3.data['recentReceipts'],
+                                            key: _expensesReceiptsKey,
+                                            visible: totalExpensesAmount > 0 && snapshot3.data['expenseReceipts'],
                                             child: StreamBuilder(
                                                 stream: expensesCollection
                                                     .orderBy('datetime', descending: true)
                                                     .where('datetime', isGreaterThanOrEqualTo: DateTime(DateTime.now().year, DateTime.now().month, 1))
-                                                    .limit(5)
+                                                    .where('datetime', isLessThan: DateTime(DateTime.now().year, DateTime.now().month + 1, 1))
                                                     .snapshots(),
                                                 builder: (BuildContext context, AsyncSnapshot<QuerySnapshot> snapshot) {
                                                   if (snapshot.hasData) {
+                                                    List expensesData = [];
+                                                    for (int i = 0; i < snapshot.data.docs.length; i++) {
+                                                      if (expensesCategoryId.contains(snapshot.data.docs[i]['categoryId'])) {
+                                                        expensesData.add(snapshot.data.docs[i]);
+                                                      }
+                                                    }
                                                     return Container(
                                                       padding: EdgeInsets.only(bottom: 10.0),
                                                       width: 370,
@@ -682,7 +708,7 @@ class _DashboardScreenState extends State<DashboardScreen> {
                                                               mainAxisAlignment: MainAxisAlignment.start,
                                                               children: <Widget> [
                                                                 SizedBox(width: 15.0),
-                                                                Text('Recent Receipts',
+                                                                Text('Expenses Receipts',
                                                                   style: TextStyle(
                                                                       fontSize: 16,
                                                                       fontFamily: "Lato",
@@ -701,9 +727,11 @@ class _DashboardScreenState extends State<DashboardScreen> {
                                                                   padding: EdgeInsets.fromLTRB(7, 4, 7, 4),
                                                                   shrinkWrap: true,
                                                                   physics: const NeverScrollableScrollPhysics(),
-                                                                  itemCount: snapshot.data.docs.length,
+                                                                  itemCount: expensesData.length > 5 && !showMoreExp
+                                                                      ? 5
+                                                                      : expensesData.length,
                                                                   itemBuilder: (BuildContext context, int index) {
-                                                                    final snapshotData = snapshot.data.docs[index];
+                                                                    final snapshotData = expensesData[index];
                                                                     return RExpenseTile(
                                                                       categoryId: snapshotData['categoryId'],
                                                                       cost: snapshotData['cost'],
@@ -713,7 +741,43 @@ class _DashboardScreenState extends State<DashboardScreen> {
                                                                       uid: snapshotData['uid'],
                                                                     );
                                                                   },
-                                                                )
+                                                                ),
+                                                            ),
+                                                            Visibility(
+                                                              visible: expensesData.length > 5 && !showMoreExp,
+                                                              child: TextButton(
+                                                                  child: Text(
+                                                                      'SHOW MORE',
+                                                                      style: TextStyle(
+                                                                        fontFamily: "Lato",
+                                                                        color: kDarkBlue,
+                                                                      )
+                                                                  ),
+                                                                  onPressed: () {
+                                                                    setState(() {
+                                                                      showMoreExp = !showMoreExp;
+                                                                      showLessExp = !showLessExp;
+                                                                    });
+                                                                  }
+                                                              ),
+                                                            ),
+                                                            Visibility(
+                                                              visible: expensesData.length > 5 && !showLessExp,
+                                                              child: TextButton(
+                                                                  child: Text(
+                                                                      'SHOW LESS',
+                                                                      style: TextStyle(
+                                                                        fontFamily: "Lato",
+                                                                        color: kDarkBlue,
+                                                                      )
+                                                                  ),
+                                                                  onPressed: () {
+                                                                    setState(() {
+                                                                      showMoreExp = !showMoreExp;
+                                                                      showLessExp = !showLessExp;
+                                                                    });
+                                                                  }
+                                                              ),
                                                             ),
                                                           ],
                                                         ),
@@ -724,8 +788,119 @@ class _DashboardScreenState extends State<DashboardScreen> {
                                                 }
                                             ),
                                           ),
-                                          // TODO: maybe add in a card to show past 5 days spending
-                                          // for milestone 3
+                                          /// Income Receipt card
+                                          Visibility(
+                                            key: _incomeReceiptsKey,
+                                            visible: totalIncome > 0 && snapshot3.data['incomeReceipts'],
+                                            child: StreamBuilder(
+                                                stream: expensesCollection
+                                                    .orderBy('datetime', descending: true)
+                                                    .where('datetime', isGreaterThanOrEqualTo: DateTime(DateTime.now().year, DateTime.now().month, 1))
+                                                    .where('datetime', isLessThan: DateTime(DateTime.now().year, DateTime.now().month + 1, 1))
+                                                    .snapshots(),
+                                                builder: (BuildContext context, AsyncSnapshot<QuerySnapshot> snapshot) {
+                                                  if (snapshot.hasData) {
+                                                    List incomeData = [];
+                                                    for (int i = 0; i < snapshot.data.docs.length; i++) {
+                                                      if (incomeCategoryId.contains(snapshot.data.docs[i]['categoryId'])) {
+                                                        incomeData.add(snapshot.data.docs[i]);
+                                                      }
+                                                    }
+                                                    return Container(
+                                                      padding: EdgeInsets.only(bottom: 10.0),
+                                                      width: 370,
+                                                      child: Card(
+                                                        shape: RoundedRectangleBorder(
+                                                            borderRadius: BorderRadius.all(Radius.circular(12.0))),
+                                                        color: Colors.white.withOpacity(0.9),
+                                                        child: Column(
+                                                          crossAxisAlignment: CrossAxisAlignment.center,
+                                                          children: <Widget> [
+                                                            SizedBox(height: 15.0),
+                                                            Row(
+                                                              mainAxisAlignment: MainAxisAlignment.start,
+                                                              children: <Widget> [
+                                                                SizedBox(width: 15.0),
+                                                                Text('Income Receipts',
+                                                                  style: TextStyle(
+                                                                      fontSize: 16,
+                                                                      fontFamily: "Lato",
+                                                                      color: kDarkBlue
+                                                                  ),
+                                                                ),
+                                                              ],
+                                                            ),
+                                                            Padding(
+                                                              padding: const EdgeInsets.only(left: 12.0, right: 12.0),
+                                                              child: Divider(thickness: 2.0),
+                                                            ),
+                                                            Align(
+                                                              alignment: Alignment.topCenter,
+                                                              child: ListView.builder(
+                                                                padding: EdgeInsets.fromLTRB(7, 4, 7, 4),
+                                                                shrinkWrap: true,
+                                                                physics: const NeverScrollableScrollPhysics(),
+                                                                itemCount: incomeData.length > 5 && !showMoreInc
+                                                                    ? 5
+                                                                    : incomeData.length,
+                                                                itemBuilder: (BuildContext context, int index) {
+                                                                  final snapshotData = incomeData[index];
+                                                                  return RExpenseTile(
+                                                                    categoryId: snapshotData['categoryId'],
+                                                                    cost: snapshotData['cost'],
+                                                                    itemName: snapshotData['itemName'],
+                                                                    datetime: snapshotData['datetime'],
+                                                                    receiptId: snapshotData.id,
+                                                                    uid: snapshotData['uid'],
+                                                                  );
+                                                                },
+                                                              ),
+                                                            ),
+                                                            Visibility(
+                                                              visible: incomeData.length > 5 && !showMoreInc,
+                                                              child: TextButton(
+                                                                  child: Text(
+                                                                      'SHOW MORE',
+                                                                      style: TextStyle(
+                                                                        fontFamily: "Lato",
+                                                                        color: kDarkBlue,
+                                                                      )
+                                                                  ),
+                                                                  onPressed: () {
+                                                                    setState(() {
+                                                                      showMoreInc = !showMoreInc;
+                                                                      showLessInc = !showLessInc;
+                                                                    });
+                                                                  }
+                                                              ),
+                                                            ),
+                                                            Visibility(
+                                                              visible: incomeData.length > 5 && !showLessInc,
+                                                              child: TextButton(
+                                                                  child: Text(
+                                                                      'SHOW LESS',
+                                                                      style: TextStyle(
+                                                                        fontFamily: "Lato",
+                                                                        color: kDarkBlue,
+                                                                      )
+                                                                  ),
+                                                                  onPressed: () {
+                                                                    setState(() {
+                                                                      showMoreInc = !showMoreInc;
+                                                                      showLessInc = !showLessInc;
+                                                                    });
+                                                                  }
+                                                              ),
+                                                            ),
+                                                          ],
+                                                        ),
+                                                      ),
+                                                    );
+                                                  }
+                                                  return CircularProgressIndicator();
+                                                }
+                                            ),
+                                          ),
                                         ],
                                       ),
                                     );

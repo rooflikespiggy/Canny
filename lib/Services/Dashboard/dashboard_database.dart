@@ -56,6 +56,25 @@ class DashboardDatabaseService {
     return true;
   }
 
+  Future updateExpenseReceipts(bool expenseReceiptCustom) async {
+    await dashboardCollection
+        .doc('Switch')
+        .update({
+      'recentReceipts': expenseReceiptCustom,
+    });
+    return true;
+  }
+
+  Future updateIncomeReceipts(bool incomeReceiptCustom) async {
+    await dashboardCollection
+        .doc('Switch')
+        .update({
+      'recentReceipts': incomeReceiptCustom,
+    });
+    return true;
+  }
+
+  /*
   Future updateRecentReceipts(bool receiptCustom) async {
     await dashboardCollection
         .doc('Switch')
@@ -64,15 +83,6 @@ class DashboardDatabaseService {
     });
     return true;
   }
-
-  /*
-  Future updateExpenseAverage(bool averageCustom) async {
-    await dashboardCollection
-        .doc('Switch')
-        .update({
-      'sevenDaysExpense': averageCustom,
-    });
-    return true;
-  }
    */
+
 }

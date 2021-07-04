@@ -343,7 +343,7 @@ class _ForumScreenState extends State<ForumScreen> {
                                                                     builder: (BuildContext context) {
                                                                       return AlertDialog(
                                                                         backgroundColor: kLightBlue,
-                                                                        title: Text("Are you sure you want to delete your discussion"),
+                                                                        title: Text("Are you sure you want to delete your discussion?"),
                                                                         content: Text("Once your discussion is deleted, you will not be able to retrieve it back."),
                                                                         actions: <Widget>[
                                                                           // usually buttons at the bottom of the dialog

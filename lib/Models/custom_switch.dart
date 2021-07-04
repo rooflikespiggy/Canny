@@ -4,15 +4,15 @@ class CustomSwitch {
   bool balance;
   bool expenseBreakdown;
   bool expenseSummary;
-  bool recentReceipts;
-  // bool expenseAverage;
+  bool expenseReceipts;
+  bool incomeReceipts;
 
   CustomSwitch({
     this.balance = true,
     this.expenseBreakdown = true,
     this.expenseSummary = true,
-    this.recentReceipts = true,
-    // this.expenseAverage = true,
+    this.expenseReceipts = true,
+    this.incomeReceipts = true,
   });
 
   factory CustomSwitch.fromMap(DocumentSnapshot doc) {
@@ -22,8 +22,8 @@ class CustomSwitch {
       balance: json['balance'],
       expenseBreakdown: json['expenseBreakdown'],
       expenseSummary: json['expenseSummary'],
-      recentReceipts: json['recentReceipts'],
-      // expenseAverage: json['expenseAverage'],
+      expenseReceipts: json['expenseReceipts'],
+      incomeReceipts: json['incomeReceipts'],
     );
   }
 
@@ -32,8 +32,8 @@ class CustomSwitch {
       'balance': balance,
       'expenseBreakdown': expenseBreakdown,
       'expenseSummary': expenseSummary,
-      'recentReceipts': recentReceipts,
-      // 'expenseAverage': expenseAverage,
+      'expenseReceipts': expenseReceipts,
+      'incomeReceipts': incomeReceipts,
     };
   }
 }
