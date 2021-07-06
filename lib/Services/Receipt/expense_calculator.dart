@@ -465,7 +465,7 @@ class ExpenseCalculatorState extends State<ExpenseCalculator> {
             children: <Widget>[
               SizedBox(height: 5),
               _showTextFormFields(itemNameController,
-                "Name of expense",
+                "Name of receipt",
                 Icon(Icons.drive_file_rename_outline),
                 400.0,
               ),

@@ -26,7 +26,6 @@ class _ReceiptScreenState extends State<ReceiptScreen> {
 
   final String uid = FirebaseAuth.instance.currentUser.uid;
   bool isActive = false;
-  bool reload = false;
   DateTime earliest = DateTime(DateTime.now().year - 1);
   DateTime latest;
   List<Category> filteredCategories = [];

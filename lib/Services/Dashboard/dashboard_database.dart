@@ -60,7 +60,7 @@ class DashboardDatabaseService {
     await dashboardCollection
         .doc('Switch')
         .update({
-      'recentReceipts': expenseReceiptCustom,
+      'expenseReceipts': expenseReceiptCustom,
     });
     return true;
   }
@@ -69,7 +69,7 @@ class DashboardDatabaseService {
     await dashboardCollection
         .doc('Switch')
         .update({
-      'recentReceipts': incomeReceiptCustom,
+      'incomeReceipts': incomeReceiptCustom,
     });
     return true;
   }

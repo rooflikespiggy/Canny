@@ -21,7 +21,6 @@ class _FilterScreenState extends State<FilterScreen> {
   bool showExpenses = true;
   bool selected = false;
 
-
   Widget _getCategoriesChips() {
     return filteredCategories.isEmpty
         ? Text(

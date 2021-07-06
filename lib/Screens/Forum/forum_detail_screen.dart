@@ -36,7 +36,7 @@ class _ForumDetailScreenState extends State<ForumDetailScreen> {
         elevation: 0.0,
         title: Text('COMMENTS'),
         leading: IconButton(
-          icon: Icon(Icons.clear),
+          icon: Icon(Icons.arrow_back),
           onPressed: () {
             Navigator.push(context,
                 MaterialPageRoute(builder: (context) => HomePageScreen(selectedTab: 3)));

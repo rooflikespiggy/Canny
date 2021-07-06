@@ -1,6 +1,7 @@
 import 'package:Canny/Database/all_database.dart';
 import 'package:Canny/Models/category.dart';
 import 'package:Canny/Screens/Category/edit_category.dart';
+import 'package:Canny/Screens/Receipt/receipt_screen.dart';
 import 'package:Canny/Services/Category/category_database.dart';
 import 'package:Canny/Services/Category/default_categories.dart';
 import 'package:Canny/Services/Quick%20Input/quickinput_database.dart';

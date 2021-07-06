@@ -1,4 +1,5 @@
 import 'package:Canny/Database/all_database.dart';
+import 'package:Canny/Screens/Help%20Center/help_center_screen.dart';
 import 'package:Canny/Screens/Sidebar/Quick%20Input/customise_quickinput.dart';
 import 'package:Canny/Services/Dashboard/dashboard_database.dart';
 import 'package:Canny/Services/Notification/notification_database.dart';
@@ -197,6 +198,21 @@ class _SideBarMenuState extends State<SideBarMenu> with AutomaticKeepAliveClient
                   }
                   return Container();
                 }
+            ),
+            Divider(thickness: 1.0),
+            ListTile(
+              leading: Icon(Icons.help_center),
+              trailing: Icon(Icons.arrow_right),
+              title: Text(
+                  'Help Center',
+                  style: TextStyle(fontFamily: 'Lato',
+                    fontSize: 16,
+                  )
+              ),
+              onTap: () {
+                Navigator.push(context,
+                    MaterialPageRoute(builder: (context) => HelpCenterScreen()));
+              },
             ),
             Divider(thickness: 1.0),
             ListTile(
