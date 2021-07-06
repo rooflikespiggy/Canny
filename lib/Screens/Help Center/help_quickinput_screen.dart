@@ -85,7 +85,12 @@ class _HelpQuickInputScreenState extends State<HelpQuickInputScreen> {
                               child: Align(
                                 alignment: Alignment.centerLeft,
                                 child: Text(
-                                  'Words on how to use',
+                                  'Enter your expenses amount, choose a category by pressing on one of the '
+                                      'three categories button. \n \n'
+                                      'If you do not choose a category, there will be '
+                                      'an error. If you enter an invalid expenses amount (amount less than or equal to '
+                                      'zero or infinity), there will be an error. \n \n'
+                                      'Press on the "Submit" button to submit your expenses.',
                                   style: TextStyle(
                                       fontSize: 14,
                                       fontFamily: 'Lato=Thin'
@@ -130,7 +135,14 @@ class _HelpQuickInputScreenState extends State<HelpQuickInputScreen> {
                               child: Align(
                                 alignment: Alignment.centerLeft,
                                 child: Text(
-                                  'Words on how to use',
+                                  'At the Customise Quick Input Screen, '
+                                      'tap on the "Tap to select Categories for Quick Input" text to '
+                                      'choose your 3 category buttons for the Quick Input screen. '
+                                      'Press on "Apply" to select the 3 categories. \n \n'
+                                      'The 3 categories chip will appear on the screen. If you select less '
+                                      'than 3 categories to submit, there will be an error. Therefore, ensure '
+                                      'that you have selected 3 categories before submitting. \n \n'
+                                      'Press on the "Submit" button to submit your customised category choices.',
                                   style: TextStyle(
                                       fontSize: 14,
                                       fontFamily: 'Lato=Thin'
