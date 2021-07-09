@@ -3,7 +3,7 @@
 ## Team Members:
 Kang Yunru, Ruth
 
-Emily Kok Fang Ning hiiiiiiiiiiiii
+Emily Kok Fang Ning 
 
 ## Project Documentation:
 [Team Canny Documentation](https://docs.google.com/document/d/1h3EhTxIGTq1qZNmJ-EMcCXW4EAvF8Qw_jmZqraAEv-4/edit?usp=sharing)

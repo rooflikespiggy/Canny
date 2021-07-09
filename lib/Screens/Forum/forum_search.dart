@@ -74,7 +74,7 @@ class ForumSearch extends SearchDelegate {
                     child: Column(
                       children: <Widget>[
                         ListTile(
-                          contentPadding: EdgeInsets.all(5.0),
+                          contentPadding: EdgeInsets.symmetric(vertical: 3.0, horizontal: 10.0),
                           title: Text(
                             listToShow[index]['title'],
                             style: TextStyle(
