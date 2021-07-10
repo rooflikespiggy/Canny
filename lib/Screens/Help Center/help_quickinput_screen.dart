@@ -85,11 +85,10 @@ class _HelpQuickInputScreenState extends State<HelpQuickInputScreen> {
                               child: Align(
                                 alignment: Alignment.centerLeft,
                                 child: Text(
-                                  'Enter your expenses amount, choose a category by pressing on one of the '
-                                      'three categories button. \n \n'
-                                      'If you do not choose a category, there will be '
-                                      'an error. If you enter an invalid expenses amount (amount less than or equal to '
-                                      'zero or infinity), there will be an error. \n \n'
+                                  'Enter your expenses amount and choose a category by pressing one of the '
+                                      'three category buttons. \n \n'
+                                      'If you do not choose a category or if you enter an invalid expense amount (amount less than or equal to '
+                                      'zero or infinity), there will be an error message displayed. \n \n'
                                       'Press on the "Submit" button to submit your expenses.',
                                   style: TextStyle(
                                       fontSize: 14,
@@ -117,7 +116,7 @@ class _HelpQuickInputScreenState extends State<HelpQuickInputScreen> {
                               mainAxisAlignment: MainAxisAlignment.start,
                               children: <Widget> [
                                 SizedBox(width: 15.0),
-                                Text('Customisation of Quick Input',
+                                Text('Customise Quick Input Category Buttons',
                                   style: TextStyle(
                                       fontSize: 16,
                                       fontFamily: "Lato",
@@ -135,12 +134,12 @@ class _HelpQuickInputScreenState extends State<HelpQuickInputScreen> {
                               child: Align(
                                 alignment: Alignment.centerLeft,
                                 child: Text(
-                                  'At the Customise Quick Input Screen, '
-                                      'tap on the "Tap to select Categories for Quick Input" text to '
+                                  'At the Customise Quick Input Screen which can be found on the sidebar, '
+                                      'tap on "Tap to select Categories for Quick Input" text to '
                                       'choose your 3 category buttons for the Quick Input screen. '
-                                      'Press on "Apply" to select the 3 categories. \n \n'
-                                      'The 3 categories chip will appear on the screen. If you select less '
-                                      'than 3 categories to submit, there will be an error. Therefore, ensure '
+                                      'Press on "Apply" after selecting the 3 categories. \n \n'
+                                      'The selected 3 category chips will appear on the screen. If you select less '
+                                      'than 3 categories to submit, there will be an error message displayed. Ensure '
                                       'that you have selected 3 categories before submitting. \n \n'
                                       'Press on the "Submit" button to submit your customised category choices.',
                                   style: TextStyle(
