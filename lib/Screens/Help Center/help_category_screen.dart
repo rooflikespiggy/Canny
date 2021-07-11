@@ -85,7 +85,15 @@ class _HelpCategoryScreenState extends State<HelpCategoryScreen> {
                               child: Align(
                                 alignment: Alignment.centerLeft,
                                 child: Text(
-                                  'Words on how to use',
+                                  'To add a category, tap on the circular floating button at the bottom '
+                                      'of the screen, then tap "Add Category". \n \n'
+                                      'Key in the name of the new category, and pick a suitable category colour '
+                                      'and icon from the range of colours and icons provided. If a colour or '
+                                      'an icon is not chosen, the default colour and icon will be used. Indicate if '
+                                      'the new category will be an expense or an income category. An expense category '
+                                      'deducts money from the total amount, while an income category adds money to the '
+                                      'total amount.\n \n'
+                                      'Press on the "Submit" button to submit your new category.',
                                   style: TextStyle(
                                       fontSize: 14,
                                       fontFamily: 'Lato=Thin'
@@ -130,7 +138,12 @@ class _HelpCategoryScreenState extends State<HelpCategoryScreen> {
                               child: Align(
                                 alignment: Alignment.centerLeft,
                                 child: Text(
-                                  'Words on how to use',
+                                  'Only non-default categories (categories added by the user) can be edited. \n \n'
+                                      'To edit a category, go to the "Categories" screen and tap on the pencil icon of '
+                                      'the non-default category tile. The name, colour, icon and category type of a category '
+                                      'can be edited. \n \n'
+                                      'The fields will already be filled in based on the previous inputs. \n \n'
+                                      'Press on the "Submit" button to submit the edited category.',
                                   style: TextStyle(
                                       fontSize: 14,
                                       fontFamily: 'Lato=Thin'
@@ -175,7 +188,12 @@ class _HelpCategoryScreenState extends State<HelpCategoryScreen> {
                               child: Align(
                                 alignment: Alignment.centerLeft,
                                 child: Text(
-                                  'Words on how to use',
+                                  'Only non-default categories (categories added by the user) can be deleted. \n \n'
+                                      'To delete a category, go to the "Categories" screen and tap on the bin icon of '
+                                      'the non-default category tile. A message box will pop up to confirm receipt '
+                                      'deletion.\n \n'
+                                      'By clicking "Yes", the category can no longer be recovered, and all receipts '
+                                      'for that category will be moved to the "Others" category.',
                                   style: TextStyle(
                                       fontSize: 14,
                                       fontFamily: 'Lato=Thin'
@@ -220,7 +238,9 @@ class _HelpCategoryScreenState extends State<HelpCategoryScreen> {
                               child: Align(
                                 alignment: Alignment.centerLeft,
                                 child: Text(
-                                  'Words on how to use',
+                                  'To view only non-default categories, tap the eye icon at the top of the '
+                                      '"Categories" page. To undo, tap on the eye again to view both default '
+                                      'and non-default categories.',
                                   style: TextStyle(
                                       fontSize: 14,
                                       fontFamily: 'Lato=Thin'

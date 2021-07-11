@@ -85,7 +85,16 @@ class _HelpReceiptScreenState extends State<HelpReceiptScreen> {
                               child: Align(
                                 alignment: Alignment.centerLeft,
                                 child: Text(
-                                  'Words on how to use',
+                                  'There are 2 ways to add a receipt, through the quick input, or through the '
+                                      'circular floating button at the bottom of the screens. To find out how to '
+                                      'to add a receipt through quick input, refer to the quick input tab in the '
+                                      'help screen. \n \n'
+                                      'To add a receipt, tap on the circular floating button at the bottom of the screen, '
+                                      'then tap "Add Receipt". \n \n'
+                                      'Key in the name of the expense, followed by the expense amount, then choose '
+                                      'a suitable category for the expense. If you enter an invalid expense amount (amount less '
+                                      'than or equal to zero or infinity), there will be an error message displayed. \n \n'
+                                      'Press on the "Submit" button to submit your expenses.',
                                   style: TextStyle(
                                       fontSize: 14,
                                       fontFamily: 'Lato=Thin'
@@ -130,7 +139,12 @@ class _HelpReceiptScreenState extends State<HelpReceiptScreen> {
                               child: Align(
                                 alignment: Alignment.centerLeft,
                                 child: Text(
-                                  'Words on how to use',
+                                  'To edit a receipt, go to the "Receipt" screen and tap on the receipt tile. '
+                                      'The name, amount, category and date of a receipt can be edited. \n \n'
+                                      'The fields will already be filled in based on the previous '
+                                      'inputs. If the receipt was added from Quick Inputs, the expense '
+                                      'name will be set as the category name. \n \n'
+                                      'Press on the "Submit" button to submit the edited receipt.',
                                   style: TextStyle(
                                       fontSize: 14,
                                       fontFamily: 'Lato=Thin'
@@ -175,7 +189,9 @@ class _HelpReceiptScreenState extends State<HelpReceiptScreen> {
                               child: Align(
                                 alignment: Alignment.centerLeft,
                                 child: Text(
-                                  'Words on how to use',
+                                  'To delete a receipt, long tap on the receipt tile. A message box will'
+                                      'pop up to confirm receipt deletion. \n \n'
+                                      'By clicking "Yes", the receipt can no longer be recovered.',
                                   style: TextStyle(
                                       fontSize: 14,
                                       fontFamily: 'Lato=Thin'
@@ -220,7 +236,18 @@ class _HelpReceiptScreenState extends State<HelpReceiptScreen> {
                               child: Align(
                                 alignment: Alignment.centerLeft,
                                 child: Text(
-                                  'Words on how to use',
+                                  'The receipts listed can be filtered 2 ways. After filtering, only the'
+                                      ' receipts that match the filtering requirements will be displayed. \n \n'
+                                      'To filter by categories, tap on "Tap to select Categories to filter by" text to'
+                                      'choose the categories to filter by. Only the receipts which are part of these '
+                                      'selected categories will be displayed. \n \n'
+                                      'To filter by dates, choose a start date and an end date. Only the receipts which '
+                                      'were added in between the start date and end date will be displayed. If the start date '
+                                      'chosen is later than the end date, the start date will automatically be changed to be '
+                                      'the same as the end date. \n \n'
+                                      'Tap on the tick to confirm the filtering options. \n \n'
+                                      'To return to having all the receipts displayed, tap on the refresh button at the '
+                                      'top of the receipt screen.',
                                   style: TextStyle(
                                       fontSize: 14,
                                       fontFamily: 'Lato=Thin'

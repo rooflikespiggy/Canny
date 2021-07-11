@@ -85,7 +85,12 @@ class _HelpDashboardScreenState extends State<HelpDashboardScreen> {
                               child: Align(
                                 alignment: Alignment.centerLeft,
                                 child: Text(
-                                  'Words on how to use',
+                                  'Tap on the monthly Targeted Expenditure tile to change the '
+                                    'targeted expenditure for the month. The default expenditure '
+                                    'is set at \$500. \n \n'
+                                      'If you enter an invalid expense amount (amount less than or equal to '
+                                      'zero or infinity), there will be an error message displayed. \n \n'
+                                      'Press on the "Submit" button to submit your target expenditure.' ,
                                   style: TextStyle(
                                       fontSize: 14,
                                       fontFamily: 'Lato=Thin'
@@ -130,7 +135,9 @@ class _HelpDashboardScreenState extends State<HelpDashboardScreen> {
                               child: Align(
                                 alignment: Alignment.centerLeft,
                                 child: Text(
-                                  'Words on how to use',
+                                  'Swipe right to view all the buttons that show what cards are '
+                                      'displayed on the Dashboard page. \n \n'
+                                      'Click on a button to go directly to the chosen card.',
                                   style: TextStyle(
                                       fontSize: 14,
                                       fontFamily: 'Lato=Thin'
@@ -157,7 +164,7 @@ class _HelpDashboardScreenState extends State<HelpDashboardScreen> {
                               mainAxisAlignment: MainAxisAlignment.start,
                               children: <Widget> [
                                 SizedBox(width: 15.0),
-                                Text('Budget Card',
+                                Text('Balance Card',
                                   style: TextStyle(
                                       fontSize: 16,
                                       fontFamily: "Lato",
@@ -175,7 +182,17 @@ class _HelpDashboardScreenState extends State<HelpDashboardScreen> {
                               child: Align(
                                 alignment: Alignment.centerLeft,
                                 child: Text(
-                                  'Words on how to use',
+                                  'A Balance card shows the sum of each Income-type and '
+                                      'Expense-type in a bar separately. \n \n'
+                                      'If the total income is more than the total expenses, '
+                                      'the card will show the balance amount (difference between total '
+                                      'income and total expenditure) but if the total '
+                                      'expenses is more than the total income, the card will show '
+                                      'the deficit amount (the absolute value of the difference between total '
+                                      'income and total expenditure). \n \n'
+                                      'This card will only be visible if the users have keyed in '
+                                      'receipts with income, as the Balance card becomes meaningless '
+                                      'with just expenses receipts.',
                                   style: TextStyle(
                                       fontSize: 14,
                                       fontFamily: 'Lato=Thin'
@@ -220,7 +237,14 @@ class _HelpDashboardScreenState extends State<HelpDashboardScreen> {
                               child: Align(
                                 alignment: Alignment.centerLeft,
                                 child: Text(
-                                  'Words on how to use',
+                                  'The expenses breakdown card shows a pie chart with the '
+                                      'expenses amount for each Expense-type category. \n \n'
+                                      'Click on each section to view the amount for '
+                                      'each Expense-type category. \n \n'
+                                      'If the total expenses is more than the targeted expenditure, '
+                                      'the card will show the overspent amount but if the targeted '
+                                      'expenditure is more than the total expenses, the card will show '
+                                      'the amount left to spend.',
                                   style: TextStyle(
                                       fontSize: 14,
                                       fontFamily: 'Lato=Thin'
@@ -265,7 +289,13 @@ class _HelpDashboardScreenState extends State<HelpDashboardScreen> {
                               child: Align(
                                 alignment: Alignment.centerLeft,
                                 child: Text(
-                                  'Words on how to use',
+                                  'The expenses summary card shows the total amount for each Expense-type '
+                                      'category and the percentage of the category with respect to the '
+                                      'targeted expenditure. \n \n '
+                                      'If the total expenses exits the targeted expenditure, the percentage '
+                                      'shown will be with respect to the total expenses. \n \n'
+                                      'The top 5 category amount tiles will be shown. Click “show more” '
+                                      'to view the summary for the other categories.',
                                   style: TextStyle(
                                       fontSize: 14,
                                       fontFamily: 'Lato=Thin'
@@ -310,7 +340,10 @@ class _HelpDashboardScreenState extends State<HelpDashboardScreen> {
                               child: Align(
                                 alignment: Alignment.centerLeft,
                                 child: Text(
-                                  'Words on how to use',
+                                  'The expenses receipts card shows the top 5 expenses receipts based on the '
+                                      'spending amount. If there are no added expenses receipts yet, the card will '
+                                      'be empty. \n \n'
+                                      'Click “show more” to view all other expenses receipts.',
                                   style: TextStyle(
                                       fontSize: 14,
                                       fontFamily: 'Lato=Thin'
@@ -355,7 +388,10 @@ class _HelpDashboardScreenState extends State<HelpDashboardScreen> {
                               child: Align(
                                 alignment: Alignment.centerLeft,
                                 child: Text(
-                                  'Words on how to use',
+                                  'The income receipts card shows the top 5 income receipts based on the '
+                                      'spending amount. If there are no added income receipts yet, the card will '
+                                      'be empty. \n \n'
+                                      'Click “show more” to view all other income receipts.',
                                   style: TextStyle(
                                       fontSize: 14,
                                       fontFamily: 'Lato=Thin'
