@@ -16,9 +16,27 @@ class ForumSearch extends SearchDelegate {
   @override
   // TODO: no idea how to change the theme
   ThemeData appBarTheme(BuildContext context) {
+    assert(context != null);
+    final ThemeData theme = Theme.of(context);
+    assert(theme != null);
     return ThemeData(
-      scaffoldBackgroundColor: kLightBlueDark,
+      scaffoldBackgroundColor: Colors.white,
+      appBarTheme: theme.appBarTheme.copyWith(backgroundColor: kDarkBlue),  // appbar background color
+      primaryColor: kDarkBlue,
+      textSelectionTheme: TextSelectionThemeData(
+        cursorColor: Colors.white, // cursor color
+      ),
+      hintColor: Colors.white, //hint text color
+      primaryIconTheme: theme.primaryIconTheme.copyWith(color: Colors.white), // icons color
+      primaryColorBrightness: Brightness.dark,
       fontFamily: 'Lato-Thin',
+      textTheme: theme.textTheme.copyWith(
+        headline6: TextStyle(
+            fontFamily: 'Lato-Thin',
+            fontWeight: FontWeight.normal,
+            color: Colors.white
+        ),  // query Color
+      ),
     );
   }
 
@@ -85,12 +103,12 @@ class ForumSearch extends SearchDelegate {
                     child: Column(
                       children: <Widget>[
                         ListTile(
-                          contentPadding: EdgeInsets.all(5.0),
+                          contentPadding: EdgeInsets.only(left: 5.0, right: 5.0),
                           title: Text(
                             listToShow[index]['title'],
                             style: TextStyle(
                               fontFamily: 'Lato-Thin',
-                              fontSize: 18,
+                              fontSize: 16,
                             ),
                           ),
                           onTap: () {
