@@ -15,6 +15,7 @@ class Wrapper extends StatelessWidget {
     if (theUser == null) {
       return Authenticate();
     } else {
+      Future.delayed(Duration(seconds: 2));
       return FunctionScreen();
     }
   }

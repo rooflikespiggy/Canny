@@ -7,7 +7,7 @@ import 'package:another_flushbar/flushbar.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:math_expressions/math_expressions.dart';
-import 'package:Canny/Services/Quick%20Input/calculator_buttons.dart';
+import 'package:Canny/Screens/Quick%20Input/calculator_buttons.dart';
 import 'package:Canny/Shared/colors.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'dart:math';

@@ -112,7 +112,7 @@ class _HelpForumScreenState extends State<HelpForumScreen> {
                               mainAxisAlignment: MainAxisAlignment.start,
                               children: <Widget> [
                                 SizedBox(width: 15.0),
-                                Text('Editing of Discussions',
+                                Text('Editing of Discussions or Comments',
                                   style: TextStyle(
                                       fontSize: 16,
                                       fontFamily: "Lato",
@@ -157,7 +157,7 @@ class _HelpForumScreenState extends State<HelpForumScreen> {
                               mainAxisAlignment: MainAxisAlignment.start,
                               children: <Widget> [
                                 SizedBox(width: 15.0),
-                                Text('Deleting of Discussions',
+                                Text('Deleting of Discussions or Comments',
                                   style: TextStyle(
                                       fontSize: 16,
                                       fontFamily: "Lato",

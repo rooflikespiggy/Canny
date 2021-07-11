@@ -29,11 +29,6 @@ class CalcIconButton extends StatelessWidget {
           onPressed: () {
             // print(category);
             callback(category);
-            ScaffoldMessenger.of(context).showSnackBar(SnackBar(
-              content: Text(category.categoryName + ' chosen'),
-              duration: Duration(seconds: 1),
-            ));
-            /*
             Flushbar(
               message: category.categoryName + ' chosen.',
               icon: Icon(
@@ -44,7 +39,6 @@ class CalcIconButton extends StatelessWidget {
               duration: Duration(seconds: 1),
               leftBarIndicatorColor: kLightBlueDark,
             )..show(context);
-             */
           },
           child: IconTheme(
               data: IconThemeData(color: categoryColor.withOpacity(1), size: 38),

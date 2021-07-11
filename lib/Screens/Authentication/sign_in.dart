@@ -81,7 +81,7 @@ class _SignInState extends State<SignIn> {
                       style: TextStyle(
                         fontSize: 14.0,
                         fontFamily: 'Lato',
-                        color: Colors.blueGrey[400],
+                        color: Colors.blueGrey[900],
                       ),
                       textAlign: TextAlign.center,
                     ),

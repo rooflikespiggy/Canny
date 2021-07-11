@@ -80,7 +80,7 @@ class _RegisterState extends State<Register> {
                     style: TextStyle(
                       fontSize: 14.0,
                       fontFamily: 'Lato',
-                      color: Colors.blueGrey[400],
+                      color: Colors.blueGrey[900],
                     ),
                     textAlign: TextAlign.center,
                   ),
@@ -217,7 +217,6 @@ class _RegisterState extends State<Register> {
                             loading = true;
                           });
                           dynamic result = await _auth.registerWithEmailAndPassword(email, password);
-                          await Future.delayed(Duration(seconds: 4));
                           print(result);
                           if(result == 'email-in-use') {
                             setState(() {
