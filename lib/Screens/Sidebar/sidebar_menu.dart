@@ -167,6 +167,7 @@ class _SideBarMenuState extends State<SideBarMenu> with AutomaticKeepAliveClient
                 return Container();
               }
             ),
+            /*
             Divider(thickness: 1.0),
             StreamBuilder(
                 stream: notifCollection.doc('NotifStatus').snapshots(),
@@ -199,6 +200,7 @@ class _SideBarMenuState extends State<SideBarMenu> with AutomaticKeepAliveClient
                   return Container();
                 }
             ),
+             */
             Divider(thickness: 1.0),
             ListTile(
               leading: Icon(Icons.help_center),

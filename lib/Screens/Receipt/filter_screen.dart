@@ -92,10 +92,11 @@ class _FilterScreenState extends State<FilterScreen> {
                             backgroundColor: kLightBlue,
                             actions: <Widget>[
                               SizedBox(
-                                width: 130,
+                                width: 120,
                                 child: TextButton(
                                   child: Text("CANCEL",
                                     style: TextStyle(
+                                      fontSize: 14,
                                       color: Colors.white,
                                     ),
                                   ),
@@ -108,10 +109,11 @@ class _FilterScreenState extends State<FilterScreen> {
                                 },
                               ),),
                               SizedBox(
-                                width: 130,
+                                width: 120,
                                 child: TextButton(
                                   child: Text("APPLY",
                                     style: TextStyle(
+                                      fontSize: 14,
                                       color: Colors.white,
                                     ),
                                   ),
@@ -125,7 +127,7 @@ class _FilterScreenState extends State<FilterScreen> {
                                   Navigator.pop(context);
                                 },
                               ),),
-                              SizedBox(width: 15,)
+                              SizedBox(width: 10)
                             ],
                             title: Text("Select Categories",
                               style: TextStyle(

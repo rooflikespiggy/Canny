@@ -20,7 +20,7 @@ class ForumSearch extends SearchDelegate {
     final ThemeData theme = Theme.of(context);
     assert(theme != null);
     return ThemeData(
-      scaffoldBackgroundColor: Colors.white,
+      scaffoldBackgroundColor: kLightBlue,
       appBarTheme: theme.appBarTheme.copyWith(backgroundColor: kDarkBlue),  // appbar background color
       primaryColor: kDarkBlue,
       textSelectionTheme: TextSelectionThemeData(

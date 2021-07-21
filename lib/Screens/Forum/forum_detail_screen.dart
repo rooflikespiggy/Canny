@@ -7,7 +7,9 @@ import 'package:Canny/Shared/icon_with_text.dart';
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter_autolink_text/flutter_autolink_text.dart';
 import 'package:intl/intl.dart';
+import 'package:url_launcher/url_launcher.dart';
 
 
 class ForumDetailScreen extends StatefulWidget {
@@ -91,11 +93,20 @@ class _ForumDetailScreenState extends State<ForumDetailScreen> {
                                     ),
                                     subtitle: Padding(
                                       padding: const EdgeInsets.only(top: 8.0),
-                                      child: Text(
-                                        snapshot.data["description"],
-                                        style: TextStyle(
+                                      child: AutolinkText(
+                                        text: snapshot.data["description"],
+                                        textStyle: TextStyle(
                                           fontFamily: 'Lato-Thin',
+                                          color: Colors.black,
+                                          fontSize: 15,
                                         ),
+                                        linkStyle: TextStyle(
+                                            fontFamily: 'Lato-Thin',
+                                            color: Colors.blue,
+                                            fontSize: 15),
+                                        humanize: false,
+                                        onWebLinkTap: (link) => _launchInWebViewOrVC(link),
+                                        onEmailTap: (link) => _launchEmail(link),
                                       ),
                                     ),
                                   ),
@@ -108,6 +119,7 @@ class _ForumDetailScreenState extends State<ForumDetailScreen> {
                                         Text(
                                           "By: ${snapshot.data["name"]}",
                                           style: TextStyle(
+                                            color: Colors.grey[800],
                                             fontFamily: 'Lato-Thin',
                                           ),
                                         ),
@@ -116,6 +128,7 @@ class _ForumDetailScreenState extends State<ForumDetailScreen> {
                                             .format(DateTime.fromMillisecondsSinceEpoch(
                                             snapshot.data["datetime"].seconds * 1000)),
                                           style: TextStyle(
+                                            color: Colors.grey[800],
                                             fontFamily: 'Lato-Thin',
                                           ),
                                         ),
@@ -150,4 +163,42 @@ class _ForumDetailScreenState extends State<ForumDetailScreen> {
       ),
     );
   }
+
+  Future<void> _launchInWebViewOrVC(String url) async {
+    await launch(
+      url,
+      forceSafariVC: false,
+      forceWebView: false,
+      headers: <String, String>{'my_header_key': 'my_header_value'},
+    );
+    /*
+    if (await canLaunch(url)) {
+      await launch(
+        url,
+        forceSafariVC: false,
+        forceWebView: false,
+        headers: <String, String>{'my_header_key': 'my_header_value'},
+      );
+    } else {
+      throw 'Could not launch $url';
+    }
+     */
+  }
+
+  Future<void> _launchEmail(String url) async {
+    final Uri params = Uri(
+      scheme: 'mailto',
+      path: url,
+    );
+    String newUrl = params.toString();
+    await launch(newUrl);
+    /*
+    if (await canLaunch(newUrl)) {
+      await launch(newUrl);
+    } else {
+      throw 'Could not launch $newUrl';
+    }
+     */
+  }
+
 }

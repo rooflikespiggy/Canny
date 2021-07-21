@@ -128,12 +128,12 @@ class _ForumScreenState extends State<ForumScreen> {
                                                       textStyle: TextStyle(
                                                         fontFamily: 'Lato-Thin',
                                                         color: Colors.black,
-                                                        fontSize: 16,
+                                                        fontSize: 15,
                                                       ),
                                                       linkStyle: TextStyle(
                                                         fontFamily: 'Lato-Thin',
                                                         color: Colors.blue,
-                                                        fontSize: 16),
+                                                        fontSize: 15),
                                                       humanize: false,
                                                       onWebLinkTap: (link) => _launchInWebViewOrVC(link),
                                                       onEmailTap: (link) => _launchEmail(link),
@@ -177,7 +177,7 @@ class _ForumScreenState extends State<ForumScreen> {
                                                       style: TextStyle(
                                                         fontFamily: 'Lato-Thin',
                                                         fontSize: 14,
-                                                        color: Colors.grey[850],
+                                                        color: Colors.grey[800],
                                                       )
                                                     ),
                                                     Text(DateFormat("EEEE, d MMMM y")
@@ -186,7 +186,7 @@ class _ForumScreenState extends State<ForumScreen> {
                                                         style: TextStyle(
                                                           fontFamily: 'Lato-Thin',
                                                           fontSize: 14,
-                                                          color: Colors.grey[850],
+                                                          color: Colors.grey[800],
                                                         )
                                                     ),
                                                   ],

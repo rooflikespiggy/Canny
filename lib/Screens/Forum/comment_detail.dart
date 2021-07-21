@@ -71,6 +71,8 @@ class CommentDetail extends StatelessWidget {
                                           child: Text(
                                             snapshotData["description"],
                                             style: TextStyle(
+                                              color: Colors.black,
+                                              fontSize: 15,
                                               fontFamily: 'Lato-Thin',
                                             ),
                                           ),
@@ -99,7 +101,7 @@ class CommentDetail extends StatelessWidget {
                                               style: TextStyle(
                                                 fontFamily: 'Lato-Thin',
                                                 fontSize: 14,
-                                                color: Colors.grey[850],
+                                                color: Colors.grey[800],
                                               )
                                           ),
                                         ],
