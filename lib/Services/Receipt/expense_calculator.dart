@@ -721,7 +721,6 @@ class ExpenseCalculatorState extends State<ExpenseCalculator> {
                           uid: uid,
                         );
                         _authReceipt.addReceipt(expense);
-                        itemNameController.clear();
                         Navigator.pop(context);
                         Flushbar(
                           message: "Receipt successfully added.",
