@@ -125,20 +125,26 @@ class _CategoryTileState extends State<CategoryTile> {
           ),
         ),
         subtitle: widget.isIncome ?
-        Text(
-          "Income Category",
-          style: TextStyle(
-            fontSize: 15.5,
-            color: Colors.teal[400],
-            fontFamily: "Lato",
+        Padding(
+          padding: EdgeInsets.only(top: 3.0),
+          child: Text(
+            "Income Category",
+            style: TextStyle(
+              fontSize: 14,
+              color: Colors.teal[400],
+              fontFamily: "Lato",
+            ),
           ),
         )
-        : Text(
-          "Expense Category",
-          style: TextStyle(
-            fontSize: 15.5,
-            color: Colors.red[300],
-            fontFamily: "Lato",
+        : Padding(
+          padding: EdgeInsets.only(top: 3.0),
+          child: Text(
+            "Expense Category",
+            style: TextStyle(
+              fontSize: 14,
+              color: Colors.red[300],
+              fontFamily: "Lato",
+            ),
           ),
         ),
         onTap: widget.tappable
