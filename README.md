@@ -47,6 +47,7 @@ The following technologies will be used in the process of developing the mobile 
 ### Dashboard Function
 * **Targeted Expenditure**
   * Shows the users total expenditure and total income, together with their balance amount.
+![targeted expenditure](styles/images/targeted expenditure card.jpg)
 * **Expenses Breakdown**
   * Keeping track of the percentage spent on each category. There will be a part showing the total amount spent so far by the user and the amount left for them to spend based on their monthly targeted spending amount.
 * **Expenses Summary**
