@@ -34,7 +34,7 @@ The following technologies will be used in the process of developing the mobile 
   * Consists of just a number pad and buttons for the most used categories, which makes it easier for the user to just key in the amount and pick the category for the spending on the go.This segment will be linked to the receipt function.
     <img src="https://github.com/ruthkangyr/Canny/blob/main/styles/images/quick%20input.jpg?raw=true" height="600" width="350">
 
-### Dashboard Function
+### Dashboard
 * **Targeted Expenditure**
   * Shows the users total expenditure and total income, together with their balance amount.
 * **Expenses Breakdown**
@@ -46,13 +46,13 @@ The following technologies will be used in the process of developing the mobile 
 * **Recent Receipts**
   * Shows the top 5 most recent receipts of the user.
 
-### Receipt Function
+### Receipt
 * **Spending**
   * Where the user's history of transactions will be displayed, together with its category and date of transaction. 
 * **Filter**
   * Users are able to filter their receipt screen by categories and dates.
 
-#### Category Function
+### Categories
 * **View Categories**
   * Users are able to view all their current categories.
 * **Filter**
