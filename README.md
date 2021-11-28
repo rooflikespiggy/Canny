@@ -32,7 +32,7 @@ The following technologies will be used in the process of developing the mobile 
 ### Quick Input Function
 * **Quick Input Screen**
   * Consists of just a number pad and buttons for the most used categories, which makes it easier for the user to just key in the amount and pick the category for the spending on the go.This segment will be linked to the receipt function.
-    <img src="https://github.com/ruthkangyr/Canny/blob/main/styles/images/quick%20input.jpg?raw=true" height="600" width="400">
+    <img src="https://github.com/ruthkangyr/Canny/blob/main/styles/images/quick%20input.jpg?raw=true" height="600" width="350">
 
 ### Dashboard Function
 * **Targeted Expenditure**
