@@ -30,15 +30,16 @@ The following technologies will be used in the process of developing the mobile 
   * Users can choose between inputting a quick input or viewing a comprehensive home screen. 
 
 ### Quick Input Function
-* **Calculator Screen**
+* **Quick Input Screen**
   * Consists of just a number pad and buttons for the most used categories, which makes it easier for the user to just key in the amount and pick the category for the spending on the go.This segment will be linked to the receipt function.
+    <img src="https://github.com/ruthkangyr/Canny/blob/main/styles/images/quick%20input.jpg?raw=true" height="500" width="400">
 
 ### Dashboard Function
 * **Targeted Expenditure**
   * Shows the users total expenditure and total income, together with their balance amount.
 * **Expenses Breakdown**
   * Keeping track of the percentage spent on each category. There will be a part showing the total amount spent so far by the user and the amount left for them to spend based on their monthly targeted spending amount.
-    <img src="https://github.com/ruthkangyr/Canny/blob/main/styles/images/expense%20breakdown%20card.gif?raw=true" height="440" width="400">
+    <img src="https://github.com/ruthkangyr/Canny/blob/main/styles/images/expense%20breakdown%20card.gif?raw=true" height="400" width="350">
 
 * **Expenses Summary**
   * Shows the users expenditure categories. In each category, there will be the total amount spent by the user for that category.
