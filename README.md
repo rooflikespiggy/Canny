@@ -22,14 +22,12 @@ The following technologies will be used in the process of developing the mobile 
 
 ## 2. Features
 ### Login Function
-***Login Page (email + password)***
-* Users will login using their registered email and password. If they do not have an account, link them to the register page. Login page will be linked to the Functions page.
-
-***Register Page***
-* Users will register an account with the app using their email and password if they are a first time user.
-
-***Functions Page***
-* Users can choose between inputting a quick input or viewing a comprehensive home screen. 
+* **Login Page (email + password)**
+  * Users will login using their registered email and password. If they do not have an account, link them to the register page. Login page will be linked to the Functions page.
+* **Register Page**
+  * Users will register an account with the app using their email and password if they are a first time user.
+* **Functions Page**
+  * Users can choose between inputting a quick input or viewing a comprehensive home screen. 
 
 ### Quick Input Function
 * **Quick Input Screen**
