@@ -1,9 +1,4 @@
-# NUS Orbital Project 2021 - Canny
-
-## Team Members:
-Kang Yunru, Ruth
-
-Emily Kok Fang Ning
+# NUS Orbital Project 2021 - Expense Tracker App 💰
 
 ## Project Documentation:
 [Team Canny Documentation](https://docs.google.com/document/d/1WoM_8MpcHSbMwac13FGqDmxby7W3UP0leAfCGIvcXTU/edit?usp=sharing)
@@ -77,3 +72,8 @@ The following technologies will be used in the process of developing the mobile 
   * Users can choose what to include in their dashboard.
 * **Help Center**
   * Users can read up to understand how to use the features in the application.
+
+## Team Members:
+Kang Yunru, Ruth
+
+Emily Kok Fang Ning
