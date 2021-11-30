@@ -21,8 +21,8 @@ The following technologies will be used in the process of developing the mobile 
 | Login Page | Users will login using their registered email and password |  - |
 | Register Page | Users will register an account using their email and password |  - |
 | Functions Page | Users can choose between inputting a quick input or viewing a comprehensive home screen | -  |
-| Quick Input | Users can key in the amount and pick the cateogry for the spending on the go | <img src="https://github.com/ruthkangyr/Canny/blob/main/styles/images/quick%20input.jpg?raw=true" height="500" width="450"> |
-| Dashboard | Consist of targeted expenditure, expenses breakdown, expenses summary, expenses and income receipt cards | <img src="https://github.com/ruthkangyr/Canny/blob/main/styles/images/expense%20breakdown%20card.gif?raw=true" height="450" width="450"> |
+| Quick Input | Users can key in the amount and pick the cateogry for the spending on the go | <img src="https://github.com/ruthkangyr/Canny/blob/main/styles/images/quick%20input.jpg?raw=true" height="300" width="250"> |
+| Dashboard | Consist of targeted expenditure, expenses breakdown, expenses summary, expenses and income receipt cards | <img src="https://github.com/ruthkangyr/Canny/blob/main/styles/images/expense%20breakdown%20card.gif?raw=true" height="250" width="250"> |
 | Receipt | Where the user's history of transactions will be displayed, together with its category and date of transaction. Users are able to filter their receipt screen by categories and dates | - |
 | Category | Users are able to view all their current categories and filter based on default or non-default categories | - |
 | Forum | For users to interact and share with their peers good tips to save money | - |
