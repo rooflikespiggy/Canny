@@ -16,6 +16,12 @@ The following technologies will be used in the process of developing the mobile 
 * **Git & GitHub:** for repository and source-code control
 
 ## 2. Features
+| Features | Description | Screenshot |
+| -------- | ----------- | ---------- |
+| Login Page | Users will login using their registered email and password |  - |
+| Register Page | Users will register an account using their email and password |  - |
+| Functions Page | Users can choose between inputting a quick input or viewing a comprehensive home screen | -  |
+
 ### Login Function
 * **Login Page (email + password)**
   * Users will login using their registered email and password. If they do not have an account, link them to the register page. Login page will be linked to the Functions page.
