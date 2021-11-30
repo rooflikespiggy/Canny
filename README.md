@@ -18,16 +18,16 @@ The following technologies will be used in the process of developing the mobile 
 ## Features
 | Features | Description | Screenshot |
 | -------- | ----------- | ---------- |
-| Login Page | Users will login using their registered email and password |  - |
-| Register Page | Users will register an account using their email and password |  - |
-| Functions Page | Users can choose between inputting a quick input or viewing a comprehensive home screen | -  |
+| Login Page | Users will login using their registered email and password | <img src="https://github.com/ruthkangyr/Canny/blob/main/styles/images/login%20page.jpg?raw=true" height="300" width="250"> |
+| Register Page | Users will register an account using their email and password | <img src="https://github.com/ruthkangyr/Canny/blob/main/styles/images/register%20page.jpg?raw=true" height="300" width="250"> |
+| Functions Page | Users can choose between inputting a quick input or viewing a comprehensive home screen | <img src="https://github.com/ruthkangyr/Canny/blob/main/styles/images/functions%20page.jpg?raw=true" height="300" width="250"> |
 | Quick Input | Users can key in the amount and pick the cateogry for the spending on the go | <img src="https://github.com/ruthkangyr/Canny/blob/main/styles/images/quick%20input.jpg?raw=true" height="300" width="250"> |
-| Dashboard | Consist of targeted expenditure, expenses breakdown, expenses summary, expenses and income receipt cards | <img src="https://github.com/ruthkangyr/Canny/blob/main/styles/images/expense%20breakdown%20card.gif?raw=true" height="250" width="250"> |
-| Receipt | Where the user's history of transactions will be displayed, together with its category and date of transaction. Users are able to filter their receipt screen by categories and dates | - |
-| Category | Users are able to view all their current categories and filter based on default or non-default categories | - |
-| Forum | For users to interact and share with their peers good tips to save money | - |
-| Side Bar | Consists of customer quick input and dashboard, help center and logout function | - |
-| Insert Menu | Consists of entering targeted expenditure and adding of category and receipt | - |
+| Dashboard | Consist of targeted expenditure, expenses breakdown, expenses summary, expenses and income receipt cards | <img src="https://github.com/ruthkangyr/Canny/blob/main/styles/images/dashboard.gif?raw=true" height="300" width="250"> |
+| Receipt | Where the user's history of transactions will be displayed, together with its category and date of transaction. Users are able to filter their receipt screen by categories and dates | <img src="https://github.com/ruthkangyr/Canny/blob/main/styles/images/receipt.gif?raw=true" height="300" width="250"> |
+| Categories | Users are able to view all their current categories and filter based on default or non-default categories | <img src="https://github.com/ruthkangyr/Canny/blob/main/styles/images/catogories.gif?raw=true" height="300" width="250"> |
+| Forum | For users to interact and share with their peers good tips to save money | <img src="https://github.com/ruthkangyr/Canny/blob/main/styles/images/forum.gif?raw=true" height="300" width="250"> |
+| Side Bar | Consists of customer quick input and dashboard, help center and logout function | <img src="https://github.com/ruthkangyr/Canny/blob/main/styles/images/side%20bar.gif?raw=true" height="300" width="250"> |
+| Insert Menu | Consists of entering targeted expenditure and adding of category and receipt | <img src="https://github.com/ruthkangyr/Canny/blob/main/styles/images/insert%20function.gif?raw=true" height="300" width="250"> |
 
 ## Contributors:
 1. Kang Yunru, Ruth
