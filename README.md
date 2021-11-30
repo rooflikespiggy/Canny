@@ -29,6 +29,6 @@ The following technologies will be used in the process of developing the mobile 
 | Side Bar | Consists of customer quick input and dashboard, help center and logout function | <img src="https://github.com/ruthkangyr/Canny/blob/main/styles/images/side%20bar.gif?raw=true" height="300" width="250"> |
 | Insert Menu | Consists of entering targeted expenditure and adding of category and receipt | <img src="https://github.com/ruthkangyr/Canny/blob/main/styles/images/insert%20function.gif?raw=true" height="300" width="250"> |
 
-## Contributors:
+## Contributors 👩‍💻
 1. Kang Yunru, Ruth
 2. Emily Kok Fang Ning
