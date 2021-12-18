@@ -42,7 +42,6 @@ class _RExpenseTileState extends State<RExpenseTile> {
   Widget build(BuildContext context) {
     return Card(
       color: Colors.white.withOpacity(0.9),
-      elevation: 1,
       shape: RoundedRectangleBorder(
           borderRadius: BorderRadius.all(Radius.circular(12.0))),
       child: ListTile(

@@ -2,16 +2,16 @@ import 'package:Canny/Database/all_database.dart';
 import 'package:Canny/Models/custom_switch.dart';
 import 'package:cloud_firestore/cloud_firestore.dart';
 
+import 'default_dashboard.dart';
+
 class DashboardDatabaseService {
   final String uid;
-
-  final CustomSwitch customSwitch = CustomSwitch();
   final CollectionReference dashboardCollection = Database().dashboardDatabase();
 
   DashboardDatabaseService({this.uid});
 
   Future initStartSwitch() async {
-    await addSwitch(customSwitch);
+    await addSwitch(defaultSwitch);
     return true;
   }
 
@@ -56,6 +56,25 @@ class DashboardDatabaseService {
     return true;
   }
 
+  Future updateExpenseReceipts(bool expenseReceiptCustom) async {
+    await dashboardCollection
+        .doc('Switch')
+        .update({
+      'expenseReceipts': expenseReceiptCustom,
+    });
+    return true;
+  }
+
+  Future updateIncomeReceipts(bool incomeReceiptCustom) async {
+    await dashboardCollection
+        .doc('Switch')
+        .update({
+      'incomeReceipts': incomeReceiptCustom,
+    });
+    return true;
+  }
+
+  /*
   Future updateRecentReceipts(bool receiptCustom) async {
     await dashboardCollection
         .doc('Switch')
@@ -64,5 +83,6 @@ class DashboardDatabaseService {
     });
     return true;
   }
+   */
 
 }

@@ -80,7 +80,7 @@ class _RegisterState extends State<Register> {
                     style: TextStyle(
                       fontSize: 14.0,
                       fontFamily: 'Lato',
-                      color: Colors.blueGrey[400],
+                      color: Colors.blueGrey[900],
                     ),
                     textAlign: TextAlign.center,
                   ),
@@ -91,6 +91,7 @@ class _RegisterState extends State<Register> {
                         SizedBox(height: 15.0),
                         TextFormField(
                           controller: emailController,
+                          keyboardType: TextInputType.emailAddress,
                           decoration: InputDecoration(
                             hintStyle: TextStyle(color: Colors.grey),
                             hintText: 'Email',

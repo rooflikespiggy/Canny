@@ -1,6 +1,7 @@
 import 'package:Canny/Database/all_database.dart';
 import 'package:Canny/Models/category.dart';
 import 'package:Canny/Screens/Category/edit_category.dart';
+import 'package:Canny/Screens/Receipt/receipt_screen.dart';
 import 'package:Canny/Services/Category/category_database.dart';
 import 'package:Canny/Services/Category/default_categories.dart';
 import 'package:Canny/Services/Quick%20Input/quickinput_database.dart';
@@ -123,6 +124,29 @@ class _CategoryTileState extends State<CategoryTile> {
             color: Colors.blueGrey[900],
           ),
         ),
+        subtitle: widget.isIncome ?
+        Padding(
+          padding: EdgeInsets.only(top: 3.0),
+          child: Text(
+            "Income Category",
+            style: TextStyle(
+              fontSize: 14,
+              color: Colors.teal[400],
+              fontFamily: "Lato",
+            ),
+          ),
+        )
+        : Padding(
+          padding: EdgeInsets.only(top: 3.0),
+          child: Text(
+            "Expense Category",
+            style: TextStyle(
+              fontSize: 14,
+              color: Colors.red[300],
+              fontFamily: "Lato",
+            ),
+          ),
+        ),
         onTap: widget.tappable
             ? () => Navigator.pop(context,
             {'categoryId': int.parse(widget.categoryId) < 10
@@ -210,10 +234,11 @@ class _CategoryTileState extends State<CategoryTile> {
                                           actions: <Widget>[
                                             // usually buttons at the bottom of the dialog
                                             SizedBox(
-                                              width: 130,
+                                              width: 120,
                                               child: TextButton(
                                                 child: Text("Yes",
                                                   style: TextStyle(
+                                                    fontSize: 14,
                                                     color: Colors.white,
                                                   ),
                                                 ),
@@ -248,10 +273,11 @@ class _CategoryTileState extends State<CategoryTile> {
                                               ),
                                             ),
                                             SizedBox(
-                                              width: 130,
+                                              width: 120,
                                               child: TextButton(
                                                 child: Text("No",
                                                   style: TextStyle(
+                                                    fontSize: 14,
                                                     color: Colors.white,
                                                   ),
                                                 ),
@@ -263,7 +289,7 @@ class _CategoryTileState extends State<CategoryTile> {
                                                 },
                                               ),
                                             ),
-                                            SizedBox(width: 14,)
+                                            SizedBox(width: 10)
                                           ],
                                         );
                                       },

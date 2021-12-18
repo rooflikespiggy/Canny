@@ -128,12 +128,12 @@ class _ForumScreenState extends State<ForumScreen> {
                                                       textStyle: TextStyle(
                                                         fontFamily: 'Lato-Thin',
                                                         color: Colors.black,
-                                                        fontSize: 16,
+                                                        fontSize: 15,
                                                       ),
                                                       linkStyle: TextStyle(
                                                         fontFamily: 'Lato-Thin',
                                                         color: Colors.blue,
-                                                        fontSize: 16),
+                                                        fontSize: 15),
                                                       humanize: false,
                                                       onWebLinkTap: (link) => _launchInWebViewOrVC(link),
                                                       onEmailTap: (link) => _launchEmail(link),
@@ -160,7 +160,12 @@ class _ForumScreenState extends State<ForumScreen> {
                                                         color: Colors.white,
                                                       ),
                                                     ),
-                                                  )
+                                                  ),
+                                                onTap: () {
+                                                  Navigator.push(context,
+                                                      MaterialPageRoute(builder: (context) =>
+                                                          ForumDetailScreen(inputId: snapshotData.id)));
+                                                },
                                               ),
                                               Padding(
                                                 padding: EdgeInsets.fromLTRB(20.0, 0, 20.0, 10.0),
@@ -171,8 +176,8 @@ class _ForumScreenState extends State<ForumScreen> {
                                                     Text("By: ${snapshotData["name"]}",
                                                       style: TextStyle(
                                                         fontFamily: 'Lato-Thin',
-                                                        fontSize: 16,
-                                                        color: Colors.grey[850],
+                                                        fontSize: 14,
+                                                        color: Colors.grey[800],
                                                       )
                                                     ),
                                                     Text(DateFormat("EEEE, d MMMM y")
@@ -180,8 +185,8 @@ class _ForumScreenState extends State<ForumScreen> {
                                                         snapshotData["datetime"].seconds * 1000)),
                                                         style: TextStyle(
                                                           fontFamily: 'Lato-Thin',
-                                                          fontSize: 16,
-                                                          color: Colors.grey[850],
+                                                          fontSize: 14,
+                                                          color: Colors.grey[800],
                                                         )
                                                     ),
                                                   ],
@@ -338,15 +343,16 @@ class _ForumScreenState extends State<ForumScreen> {
                                                                     builder: (BuildContext context) {
                                                                       return AlertDialog(
                                                                         backgroundColor: kLightBlue,
-                                                                        title: Text("Are you sure you want to delete your discussion"),
+                                                                        title: Text("Are you sure you want to delete your discussion?"),
                                                                         content: Text("Once your discussion is deleted, you will not be able to retrieve it back."),
                                                                         actions: <Widget>[
                                                                           // usually buttons at the bottom of the dialog
                                                                           SizedBox(
-                                                                            width: 130,
+                                                                            width: 120,
                                                                             child: TextButton(
                                                                               child: Text("Yes",
                                                                                 style: TextStyle(
+                                                                                  fontSize: 14,
                                                                                   color: Colors.white,
                                                                                 ),
                                                                               ),
@@ -374,10 +380,11 @@ class _ForumScreenState extends State<ForumScreen> {
                                                                             },
                                                                           ),),
                                                                           SizedBox(
-                                                                            width: 130,
+                                                                            width: 120,
                                                                             child: TextButton(
                                                                               child: Text("No",
                                                                                 style: TextStyle(
+                                                                                  fontSize: 14,
                                                                                   color: Colors.white,
                                                                                 ),
                                                                               ),
@@ -388,7 +395,7 @@ class _ForumScreenState extends State<ForumScreen> {
                                                                               Navigator.pop(context);
                                                                             },
                                                                           ),),
-                                                                          SizedBox(width: 15,)
+                                                                          SizedBox(width: 10)
                                                                         ],
                                                                       );
                                                                     },

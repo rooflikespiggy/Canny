@@ -26,7 +26,6 @@ class _ReceiptScreenState extends State<ReceiptScreen> {
 
   final String uid = FirebaseAuth.instance.currentUser.uid;
   bool isActive = false;
-  bool reload = false;
   DateTime earliest = DateTime(DateTime.now().year - 1);
   DateTime latest;
   List<Category> filteredCategories = [];
@@ -71,7 +70,7 @@ class _ReceiptScreenState extends State<ReceiptScreen> {
             ),
             onPressed: () async {
               final Map<String, dynamic> result = await Navigator.push(context,
-                  NoAnimationMaterialPageRoute(builder: (context) => FilterScreen()));
+                  MaterialPageRoute(builder: (context) => FilterScreen()));
               //print(result);
               setState(() {
                 isActive = result['isActive'];
@@ -145,8 +144,8 @@ class _ReceiptScreenState extends State<ReceiptScreen> {
                                   size: 100.0,
                                 ),
                                 messageColor: Colors.grey,
-                                message: 'Nothing to show here yet. \n'
-                                    'Add a new receipt.',
+                                message: 'Nothing to show here. \n'
+                                    'Add a new receipt or refresh filter.',
                               ),
                             ],
                           );

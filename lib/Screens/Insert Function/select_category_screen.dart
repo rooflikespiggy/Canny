@@ -25,6 +25,12 @@ class _SelectCategoryScreenState extends State<SelectCategoryScreen> {
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
+        leading: IconButton(
+          icon: Icon(Icons.clear),
+          onPressed: () {
+            Navigator.pop(context);
+          },
+        ),
         elevation: 0,
         backgroundColor: kDarkBlue,
         title: Text(
@@ -62,6 +68,7 @@ class _SelectCategoryScreenState extends State<SelectCategoryScreen> {
                   Visibility(
                     visible: !isDefault,
                     child: Container(
+                      width: 360,
                       padding: EdgeInsets.all(8),
                       decoration: BoxDecoration(
                         borderRadius: BorderRadius.circular(5.0),

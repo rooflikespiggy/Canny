@@ -71,6 +71,8 @@ class CommentDetail extends StatelessWidget {
                                           child: Text(
                                             snapshotData["description"],
                                             style: TextStyle(
+                                              color: Colors.black,
+                                              fontSize: 15,
                                               fontFamily: 'Lato-Thin',
                                             ),
                                           ),
@@ -98,8 +100,8 @@ class CommentDetail extends StatelessWidget {
                                               snapshotData["datetime"].seconds * 1000)),
                                               style: TextStyle(
                                                 fontFamily: 'Lato-Thin',
-                                                fontSize: 16,
-                                                color: Colors.grey[850],
+                                                fontSize: 14,
+                                                color: Colors.grey[800],
                                               )
                                           ),
                                         ],
@@ -253,15 +255,16 @@ class CommentDetail extends StatelessWidget {
                                                               (BuildContext context) {
                                                             return AlertDialog(
                                                               backgroundColor: kLightBlue,
-                                                              title: Text("Are you sure you want to delete your comment"),
+                                                              title: Text("Are you sure you want to delete your comment?"),
                                                               content: Text("Once your comment is deleted, you will not be able to retrieve it back."),
                                                               actions: <Widget>[
                                                                 // usually buttons at the bottom of the dialog
                                                                 SizedBox(
-                                                                  width: 130,
+                                                                  width: 120,
                                                                   child: TextButton(
                                                                     child: Text("Yes",
                                                                       style: TextStyle(
+                                                                        fontSize: 14,
                                                                         color: Colors.white,
                                                                       ),
                                                                     ),
@@ -288,10 +291,11 @@ class CommentDetail extends StatelessWidget {
                                                                   ),
                                                                 ),
                                                                 SizedBox(
-                                                                  width: 130,
+                                                                  width: 120,
                                                                   child: TextButton(
                                                                     child: Text("No",
                                                                       style: TextStyle(
+                                                                        fontSize: 14,
                                                                         color: Colors.white,
                                                                       ),
                                                                     ),
@@ -303,7 +307,7 @@ class CommentDetail extends StatelessWidget {
                                                                     },
                                                                   ),
                                                                 ),
-                                                                SizedBox(width: 15,)
+                                                                SizedBox(width: 10)
                                                               ],
                                                             );
                                                           },

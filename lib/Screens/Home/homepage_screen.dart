@@ -8,6 +8,7 @@ import 'package:Canny/Services/Receipt/expense_calculator.dart';
 import 'package:Canny/Screens/Insert Function/add_TE.dart';
 import 'package:Canny/Screens/Receipt/receipt_screen.dart';
 import 'package:Canny/Shared/colors.dart';
+import 'package:Canny/Shared/custom_route.dart';
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
@@ -24,7 +25,7 @@ class HomePageScreen extends StatefulWidget {
   _HomePageScreenState createState() => _HomePageScreenState();
 }
 
-class _HomePageScreenState extends State<HomePageScreen> {//with AutomaticKeepAliveClientMixin {
+class _HomePageScreenState extends State<HomePageScreen> {
   String uid = FirebaseAuth.instance.currentUser.uid;
   final CollectionReference categoryCollection = Database().categoryDatabase();
   final TextEditingController itemNameController = TextEditingController();
@@ -32,9 +33,6 @@ class _HomePageScreenState extends State<HomePageScreen> {//with AutomaticKeepAl
   final TextEditingController categoryNameController = TextEditingController();
   List<Category> selectedCategory = [];
   String categoryId = '00';
-
-  // @override
-  // bool get wantKeepAlive => true;
 
   @override
   Widget build(BuildContext context) {
@@ -225,21 +223,24 @@ class _HomePageScreenState extends State<HomePageScreen> {//with AutomaticKeepAl
 
       ),
       floatingActionButtonLocation: FloatingActionButtonLocation.endFloat,
-      floatingActionButton: SpeedDial(
-        elevation: 7,
-        marginBottom: 10,
-        icon: Icons.menu,
-        activeBackgroundColor: kLightBlueDark,
-        activeIcon: Icons.clear,
-        visible: true,
-        closeManually: false,
-        curve: Curves.bounceIn,
-        backgroundColor: kBlue,
-        shape: CircleBorder(),
-        buttonSize: 70.0,
-        childMarginTop: 15.0,
-        childMarginBottom: 15.0,
-        children: _speedDailItems
+      floatingActionButton: Visibility(
+        visible: widget.selectedTab == 0 || widget.selectedTab == 1 || widget.selectedTab == 2,
+        child: SpeedDial(
+          elevation: 7,
+          marginBottom: 10,
+          icon: Icons.menu,
+          activeBackgroundColor: kLightBlueDark,
+          activeIcon: Icons.clear,
+          visible: true,
+          closeManually: false,
+          curve: Curves.bounceIn,
+          backgroundColor: kBlue,
+          shape: CircleBorder(),
+          buttonSize: 70.0,
+          childMarginTop: 15.0,
+          childMarginBottom: 15.0,
+          children: _speedDailItems
+        ),
       ),
     );
   }

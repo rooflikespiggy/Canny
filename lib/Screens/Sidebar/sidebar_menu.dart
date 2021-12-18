@@ -1,4 +1,5 @@
 import 'package:Canny/Database/all_database.dart';
+import 'package:Canny/Screens/Help%20Center/help_center_screen.dart';
 import 'package:Canny/Screens/Sidebar/Quick%20Input/customise_quickinput.dart';
 import 'package:Canny/Services/Dashboard/dashboard_database.dart';
 import 'package:Canny/Services/Notification/notification_database.dart';
@@ -72,7 +73,7 @@ class _SideBarMenuState extends State<SideBarMenu> with AutomaticKeepAliveClient
               ),
               onTap: () => {
                 Navigator.push(context,
-                    NoAnimationMaterialPageRoute(builder: (context) => CustomiseQI()))
+                    MaterialPageRoute(builder: (context) => CustomiseQI()))
               },
             ),
             Divider(thickness: 1.0),
@@ -91,11 +92,18 @@ class _SideBarMenuState extends State<SideBarMenu> with AutomaticKeepAliveClient
                           fontSize: 16,
                         )
                       ),
+                      textColor: kDarkBlue,
+                      iconColor: kDarkBlue,
                       children: <Widget>[
                         SwitchListTile(
                           value: snapshot.data['balance'],
                           onChanged: (value) => _authDashboard.updateBudget(value),
-                          title: Text('Balance'),
+                          title: Text(
+                            'Balance',
+                            style: TextStyle(
+                              fontFamily: 'Lato-Thin'
+                            ),
+                          ),
                           activeTrackColor: kLightBlueDark,
                           activeColor: kDarkBlue,
                           inactiveThumbColor: Colors.white,
@@ -103,7 +111,12 @@ class _SideBarMenuState extends State<SideBarMenu> with AutomaticKeepAliveClient
                         SwitchListTile(
                           value: snapshot.data['expenseBreakdown'],
                           onChanged: (value) => _authDashboard.updateExpenseBreakdown(value),
-                          title: Text('Expenses Breakdown'),
+                          title: Text(
+                            'Expenses Breakdown',
+                            style: TextStyle(
+                                fontFamily: 'Lato-Thin'
+                            ),
+                          ),
                           activeTrackColor: kLightBlueDark,
                           activeColor: kDarkBlue,
                           inactiveThumbColor: Colors.white,
@@ -111,15 +124,38 @@ class _SideBarMenuState extends State<SideBarMenu> with AutomaticKeepAliveClient
                         SwitchListTile(
                           value: snapshot.data['expenseSummary'],
                           onChanged: (value) => _authDashboard.updateExpenseSummary(value),
-                          title: Text('Expenses Summary'),
+                          title: Text(
+                            'Expenses Summary',
+                            style: TextStyle(
+                                fontFamily: 'Lato-Thin'
+                            ),
+                          ),
                           activeTrackColor: kLightBlueDark,
                           activeColor: kDarkBlue,
                           inactiveThumbColor: Colors.white,
                         ),
                         SwitchListTile(
-                          value: snapshot.data['recentReceipts'],
-                          onChanged: (value) => _authDashboard.updateRecentReceipts(value),
-                          title: Text('Recent Receipts'),
+                          value: snapshot.data['expenseReceipts'],
+                          onChanged: (value) => _authDashboard.updateExpenseReceipts(value),
+                          title: Text(
+                            'Expenses Receipts',
+                            style: TextStyle(
+                                fontFamily: 'Lato-Thin'
+                            ),
+                          ),
+                          activeTrackColor: kLightBlueDark,
+                          activeColor: kDarkBlue,
+                          inactiveThumbColor: Colors.white,
+                        ),
+                        SwitchListTile(
+                          value: snapshot.data['incomeReceipts'],
+                          onChanged: (value) => _authDashboard.updateIncomeReceipts(value),
+                          title: Text(
+                            'Income Receipts',
+                            style: TextStyle(
+                                fontFamily: 'Lato-Thin'
+                            ),
+                          ),
                           activeTrackColor: kLightBlueDark,
                           activeColor: kDarkBlue,
                           inactiveThumbColor: Colors.white,
@@ -131,6 +167,7 @@ class _SideBarMenuState extends State<SideBarMenu> with AutomaticKeepAliveClient
                 return Container();
               }
             ),
+            /*
             Divider(thickness: 1.0),
             StreamBuilder(
                 stream: notifCollection.doc('NotifStatus').snapshots(),
@@ -162,6 +199,22 @@ class _SideBarMenuState extends State<SideBarMenu> with AutomaticKeepAliveClient
                   }
                   return Container();
                 }
+            ),
+             */
+            Divider(thickness: 1.0),
+            ListTile(
+              leading: Icon(Icons.help_center),
+              trailing: Icon(Icons.arrow_right),
+              title: Text(
+                  'Help Center',
+                  style: TextStyle(fontFamily: 'Lato',
+                    fontSize: 16,
+                  )
+              ),
+              onTap: () {
+                Navigator.push(context,
+                    MaterialPageRoute(builder: (context) => HelpCenterScreen()));
+              },
             ),
             Divider(thickness: 1.0),
             ListTile(

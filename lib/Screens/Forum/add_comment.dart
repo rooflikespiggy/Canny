@@ -98,10 +98,11 @@ class _AddCommentState extends State<AddComment> {
                                         ),
                                         actions: <Widget> [
                                           SizedBox(
-                                            width: 140,
+                                            width: 130,
                                             child: TextButton(
                                               child: Text("Back to discussion",
                                                 style: TextStyle(
+                                                fontSize: 13,
                                                 color: Colors.white,
                                               ),
                                             ),
@@ -114,10 +115,11 @@ class _AddCommentState extends State<AddComment> {
                                             },
                                           ),),
                                           SizedBox(
-                                            width: 165,
+                                            width: 150,
                                             child: TextButton(
                                               child: Text("Add another comment",
                                                 style: TextStyle(
+                                                  fontSize: 13,
                                                   color: Colors.white,
                                                 ),
                                               ),

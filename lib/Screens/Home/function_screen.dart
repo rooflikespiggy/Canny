@@ -2,6 +2,7 @@ import 'package:Canny/Screens/Home/homepage_screen.dart';
 import 'package:Canny/Screens/Quick Input/quick_input.dart';
 import 'package:Canny/Services/Category/category_database.dart';
 import 'package:Canny/Services/Quick%20Input/quickinput_database.dart';
+import 'package:Canny/Shared/custom_route.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
 import 'package:Canny/Services/Users/auth.dart';

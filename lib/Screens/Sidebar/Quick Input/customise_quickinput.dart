@@ -277,6 +277,7 @@ class _CustomiseQIState extends State<CustomiseQI> {
                                     child: TextButton(
                                       child: Text("ReEdit categories",
                                         style: TextStyle(
+                                          fontSize: 14,
                                           color: Colors.white,
                                         ),
                                       ),
@@ -292,6 +293,7 @@ class _CustomiseQIState extends State<CustomiseQI> {
                                     child: TextButton(
                                       child: Text("Back to homepage",
                                         style: TextStyle(
+                                          fontSize: 14,
                                           color: Colors.white,
                                         ),
                                       ),
@@ -308,6 +310,7 @@ class _CustomiseQIState extends State<CustomiseQI> {
                                     child: TextButton(
                                       child: Text("Check quick input",
                                         style: TextStyle(
+                                          fontSize: 14,
                                           color: Colors.white,
                                         ),
                                       ),
@@ -411,10 +414,11 @@ class _CustomiseQIState extends State<CustomiseQI> {
                             backgroundColor: kLightBlue,
                             actions: <Widget>[
                               SizedBox(
-                                width: 130,
+                                width: 120,
                                 child: TextButton(
                                   child: Text("CANCEL",
                                     style: TextStyle(
+                                      fontSize: 14,
                                       color: Colors.white,
                                     ),
                                   ),
@@ -427,10 +431,11 @@ class _CustomiseQIState extends State<CustomiseQI> {
                                   },
                                 ),),
                               SizedBox(
-                                width: 130,
+                                width: 120,
                                 child: TextButton(
                                   child: Text("APPLY",
                                     style: TextStyle(
+                                      fontSize: 14,
                                       color: Colors.white,
                                     ),
                                   ),
@@ -444,7 +449,7 @@ class _CustomiseQIState extends State<CustomiseQI> {
                                     Navigator.pop(context);
                                   },
                                 ),),
-                              SizedBox(width: 15,)
+                              SizedBox(width: 10)
                             ],
                             title: Text("Select Categories",
                               style: TextStyle(

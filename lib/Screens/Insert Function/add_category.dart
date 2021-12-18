@@ -52,12 +52,12 @@ class _AddCategoryScreenState extends State<AddCategoryScreen> {
       RoundedRectangleBorder(borderRadius: BorderRadius.circular(20)));
     if (icon == null) {
       _icon = IconTheme(
-          data: IconThemeData(color: pickerColor),
+          data: IconThemeData(color: currentColor),
           child: Icon(FontAwesomeIcons.question)
       );
     } else {
       _icon = IconTheme(
-          data: IconThemeData(color: pickerColor),
+          data: IconThemeData(color: currentColor),
           child: Icon(icon, size: 40)
       );
     }
@@ -110,7 +110,6 @@ class _AddCategoryScreenState extends State<AddCategoryScreen> {
                                           _icon = null;
                                           pickerColor = Color(0xff443a49);
                                           currentColor = Color(0xff443a49);
-                                          categoryNameController.clear();
                                           Navigator.pop(context);
                                         },
                                         child: Icon(Icons.clear),
@@ -131,7 +130,7 @@ class _AddCategoryScreenState extends State<AddCategoryScreen> {
                                                   children: <Widget> [
                                                     SizedBox(width: 10.0),
                                                     CircleAvatar(
-                                                      backgroundColor: pickerColor.withOpacity(0.1),
+                                                      backgroundColor: currentColor.withOpacity(0.1),
                                                       radius: 35,
                                                       child: AnimatedSwitcher(
                                                           duration: Duration(milliseconds: 300),
@@ -179,7 +178,7 @@ class _AddCategoryScreenState extends State<AddCategoryScreen> {
                                                             color: Colors.white
                                                         ),
                                                         style: TextButton.styleFrom(
-                                                            backgroundColor: pickerColor,
+                                                            backgroundColor: currentColor,
                                                             minimumSize: Size(50,50)
                                                         ),
                                                         onPressed: () {
@@ -246,7 +245,7 @@ class _AddCategoryScreenState extends State<AddCategoryScreen> {
                                                       TextButton(
                                                         child: _icon,
                                                         style: TextButton.styleFrom(
-                                                            backgroundColor: pickerColor.withOpacity(0.2),
+                                                            backgroundColor: currentColor.withOpacity(0.2),
                                                           minimumSize: Size(50,50)
                                                         ),
                                                         onPressed: _pickIcon,

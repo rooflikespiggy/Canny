@@ -86,11 +86,11 @@ class _AddTEScreenState extends State<AddTEScreen> {
                           ),
                           SizedBox(height: 10,),
                           TextButton(
-                            onPressed: () async {
+                            onPressed: () {
                               //final TargetedExpenditure targetedExpenditure = TargetedExpenditure(
                               //    amount: double.parse(targetedExpensesController.text));
                               if (_formKey.currentState.validate()) {
-                                await _authTargetedExpenditure.updateTE(double.parse(targetedExpensesController.text));
+                                _authTargetedExpenditure.updateTE(double.parse(targetedExpensesController.text));
                                 FocusScope.of(context).unfocus();
                                 Navigator.pop(context);
                                 Flushbar(

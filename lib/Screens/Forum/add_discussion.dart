@@ -93,10 +93,11 @@ class _AddDiscussionState extends State<AddDiscussion> {
                                       ),
                                       actions: <Widget> [
                                         SizedBox(
-                                          width: 130,
+                                          width: 115,
                                           child: TextButton(
                                             child: Text("Back to forum",
                                               style: TextStyle(
+                                                fontSize: 13,
                                                 color: Colors.white,
                                               ),
                                             ),
@@ -109,10 +110,11 @@ class _AddDiscussionState extends State<AddDiscussion> {
                                           },
                                         ),),
                                         SizedBox(
-                                          width: 175,
+                                          width: 160,
                                           child: TextButton(
                                             child: Text("Add another discussion",
                                               style: TextStyle(
+                                                fontSize: 13,
                                                 color: Colors.white,
                                               ),
                                             ),

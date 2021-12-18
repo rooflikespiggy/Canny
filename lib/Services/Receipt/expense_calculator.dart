@@ -7,7 +7,7 @@ import 'package:another_flushbar/flushbar.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:math_expressions/math_expressions.dart';
-import 'package:Canny/Services/Quick%20Input/calculator_buttons.dart';
+import 'package:Canny/Screens/Quick%20Input/calculator_buttons.dart';
 import 'package:Canny/Shared/colors.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'dart:math';
@@ -446,6 +446,12 @@ class ExpenseCalculatorState extends State<ExpenseCalculator> {
       backgroundColor: kLightBlue,
       resizeToAvoidBottomInset: false,
       appBar: AppBar(
+        leading: IconButton(
+          icon: Icon(Icons.clear),
+          onPressed: () {
+            Navigator.pop(context);
+          },
+        ),
         backgroundColor: kDarkBlue,
         title: Text('Enter your Receipt'),
         elevation: 0.0,
@@ -459,7 +465,7 @@ class ExpenseCalculatorState extends State<ExpenseCalculator> {
             children: <Widget>[
               SizedBox(height: 5),
               _showTextFormFields(itemNameController,
-                "Name of expense",
+                "Name of receipt",
                 Icon(Icons.drive_file_rename_outline),
                 400.0,
               ),
@@ -715,7 +721,6 @@ class ExpenseCalculatorState extends State<ExpenseCalculator> {
                           uid: uid,
                         );
                         _authReceipt.addReceipt(expense);
-                        itemNameController.clear();
                         Navigator.pop(context);
                         Flushbar(
                           message: "Receipt successfully added.",
@@ -788,7 +793,7 @@ class ExpenseCalculatorState extends State<ExpenseCalculator> {
   }
 
   bool isNumeric(String str) {
-    if(str == null) {
+    if(str == null || str == 'Infinity') {
       return false;
     }
     return num.tryParse(str) != null;

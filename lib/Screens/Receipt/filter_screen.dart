@@ -21,7 +21,6 @@ class _FilterScreenState extends State<FilterScreen> {
   bool showExpenses = true;
   bool selected = false;
 
-
   Widget _getCategoriesChips() {
     return filteredCategories.isEmpty
         ? Text(
@@ -93,10 +92,11 @@ class _FilterScreenState extends State<FilterScreen> {
                             backgroundColor: kLightBlue,
                             actions: <Widget>[
                               SizedBox(
-                                width: 130,
+                                width: 120,
                                 child: TextButton(
                                   child: Text("CANCEL",
                                     style: TextStyle(
+                                      fontSize: 14,
                                       color: Colors.white,
                                     ),
                                   ),
@@ -109,10 +109,11 @@ class _FilterScreenState extends State<FilterScreen> {
                                 },
                               ),),
                               SizedBox(
-                                width: 130,
+                                width: 120,
                                 child: TextButton(
                                   child: Text("APPLY",
                                     style: TextStyle(
+                                      fontSize: 14,
                                       color: Colors.white,
                                     ),
                                   ),
@@ -126,7 +127,7 @@ class _FilterScreenState extends State<FilterScreen> {
                                   Navigator.pop(context);
                                 },
                               ),),
-                              SizedBox(width: 15,)
+                              SizedBox(width: 10)
                             ],
                             title: Text("Select Categories",
                               style: TextStyle(
@@ -206,7 +207,7 @@ class _FilterScreenState extends State<FilterScreen> {
                         context: context,
                         firstDate: DateTime(DateTime.now().year - 5),
                         initialDate: currentValue ?? DateTime.now(),
-                        lastDate: DateTime(DateTime.now().year + 5),
+                        lastDate: DateTime.now(),
                       );
                       if (date != null) {
                         earliest = date;
@@ -234,7 +235,7 @@ class _FilterScreenState extends State<FilterScreen> {
                         context: context,
                         firstDate: DateTime(DateTime.now().year - 5),
                         initialDate: currentValue ?? DateTime.now(),
-                        lastDate: DateTime(DateTime.now().year + 5),
+                        lastDate: DateTime.now(),
                       );
                       if (date != null) {
                         latest = date;

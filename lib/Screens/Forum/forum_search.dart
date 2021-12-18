@@ -1,4 +1,6 @@
 import 'package:Canny/Database/all_database.dart';
+import 'package:Canny/Shared/colors.dart';
+import 'package:Canny/Shared/custom_route.dart';
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:flutter/material.dart';
 import 'package:Canny/Screens/Forum/forum_detail_screen.dart';
@@ -10,6 +12,33 @@ class ForumSearch extends SearchDelegate {
 
   @override
   String get searchFieldLabel => "Search Forum";
+
+  @override
+  // TODO: no idea how to change the theme
+  ThemeData appBarTheme(BuildContext context) {
+    assert(context != null);
+    final ThemeData theme = Theme.of(context);
+    assert(theme != null);
+    return ThemeData(
+      scaffoldBackgroundColor: kLightBlue,
+      appBarTheme: theme.appBarTheme.copyWith(backgroundColor: kDarkBlue),  // appbar background color
+      primaryColor: kDarkBlue,
+      textSelectionTheme: TextSelectionThemeData(
+        cursorColor: Colors.white, // cursor color
+      ),
+      hintColor: Colors.white, //hint text color
+      primaryIconTheme: theme.primaryIconTheme.copyWith(color: Colors.white), // icons color
+      primaryColorBrightness: Brightness.dark,
+      fontFamily: 'Lato-Thin',
+      textTheme: theme.textTheme.copyWith(
+        headline6: TextStyle(
+            fontFamily: 'Lato-Thin',
+            fontWeight: FontWeight.normal,
+            color: Colors.white
+        ),  // query Color
+      ),
+    );
+  }
 
   @override
   List<Widget> buildActions(BuildContext context) {
@@ -74,11 +103,12 @@ class ForumSearch extends SearchDelegate {
                     child: Column(
                       children: <Widget>[
                         ListTile(
-                          contentPadding: EdgeInsets.symmetric(vertical: 3.0, horizontal: 10.0),
+                          contentPadding: EdgeInsets.only(left: 5.0, right: 5.0),
                           title: Text(
                             listToShow[index]['title'],
                             style: TextStyle(
-                              fontSize: 20,
+                              fontFamily: 'Lato-Thin',
+                              fontSize: 16,
                             ),
                           ),
                           onTap: () {
