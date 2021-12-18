@@ -9,6 +9,9 @@ As university students who are venturing into adulthood, we find ourselves strug
 
 A simple solution that many use would be money tracking applications on their phones, which are not user friendly, and are hard to use. When in a rush, one would not be in the right frame of mind to slowly navigate their way through the application, just to key in that they spent $3.50 on their chicken rice for lunch. And by the time the day ends, one would simply forget that they had spent that money on lunch. This might not seem to be a problem at the start, but as the amount snowballs, their spending habits are not accurately reflected through the application, thus the application is now purposeless to the user. At the end of the day, the user would simply delete the application.
 
+### Aim 📌
+We intend to create an **android application** to allow university students to have a proper budget planning as they venture into adulthood. This enables students to determine in advance whether they will have enough money to do the things they need to do or would like to do in the future.
+
 ### Tech Stack 💻
 The following technologies will be used in the process of developing the mobile app:
 * **Flutter & Dart:** for app development and front-end purposes
